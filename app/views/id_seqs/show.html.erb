@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pre:</strong>
+  <%= @id_seq.pre_id %>
+</p>
+
+<p>
+  <strong>Seq:</strong>
+  <%= @id_seq.seq %>
+</p>
+
+<%= link_to 'Edit', edit_id_seq_path(@id_seq) %> |
+<%= link_to 'Back', id_seqs_path %>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Area:</strong>
+  <%= @store_area.area_id %>
+</p>
+
+<p>
+  <strong>Area name:</strong>
+  <%= @store_area.area_name %>
+</p>
+
+<%= link_to 'Edit', edit_store_area_path(@store_area) %> |
+<%= link_to 'Back', store_areas_path %>

@@ -1,0 +1,25 @@
+<%= form_for(@id_seq) do |f| %>
+  <% if @id_seq.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@id_seq.errors.count, "error") %> prohibited this id_seq from being saved:</h2>
+
+      <ul>
+      <% @id_seq.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pre_id %><br>
+    <%= f.text_field :pre_id %>
+  </div>
+  <div class="field">
+    <%= f.label :seq %><br>
+    <%= f.number_field :seq %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

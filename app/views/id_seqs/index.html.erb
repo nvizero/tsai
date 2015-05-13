@@ -1,0 +1,29 @@
+<h1>Listing id_seqs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pre</th>
+      <th>Seq</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @id_seqs.each do |id_seq| %>
+      <tr>
+        <td><%= id_seq.pre_id %></td>
+        <td><%= id_seq.seq %></td>
+        <td><%= link_to 'Show', id_seq %></td>
+        <td><%= link_to 'Edit', edit_id_seq_path(id_seq) %></td>
+        <td><%= link_to 'Destroy', id_seq, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Id seq', new_id_seq_path %>

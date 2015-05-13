@@ -1,0 +1,29 @@
+<h1>Listing store_areas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Area</th>
+      <th>Area name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @store_areas.each do |store_area| %>
+      <tr>
+        <td><%= store_area.area_id %></td>
+        <td><%= store_area.area_name %></td>
+        <td><%= link_to 'Show', store_area %></td>
+        <td><%= link_to 'Edit', edit_store_area_path(store_area) %></td>
+        <td><%= link_to 'Destroy', store_area, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Store area', new_store_area_path %>
