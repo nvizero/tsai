@@ -11,31 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513013218) do
-
-  create_table "id_seqs", primary_key: "pre_id", force: true do |t|
-    t.string   "seq"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "store_areas", primary_key: "area_id", force: true do |t|
-    t.string   "area_name",  limit: 8
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "trades", force: true do |t|
-    t.string   "description", limit: 60
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "users", force: true do |t|
-    t.string   "email"
-    t.string   "address"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 0) do
 
 end

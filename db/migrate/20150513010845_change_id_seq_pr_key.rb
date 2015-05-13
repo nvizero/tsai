@@ -12,7 +12,7 @@ class ChangeIdSeqPrKey < ActiveRecord::Migration
   end
 
   def down
-    execute "ALTER TABLE `id_seqs` MODIFY pre_id INT NOT NULL;"
+    #execute "ALTER TABLE `id_seqs` MODIFY pre_id INT NOT NULL;"
     execute "ALTER TABLE `id_seqs` DROP PRIMARY KEY;"
     add_column :id_seqs, :id, :primary_key
   end
