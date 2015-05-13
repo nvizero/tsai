@@ -1,6 +1,10 @@
 class StoreAreasController < ApplicationController
-  before_action :set_store_area, only: [:show, :edit, :update, :destroy]
 
+  layout "admin"
+
+
+  before_action :set_store_area, only: [:show, :edit, :update, :destroy]
+  
   # GET /store_areas
   # GET /store_areas.json
   def index
@@ -51,8 +55,8 @@ class StoreAreasController < ApplicationController
     end
   end
 
-  # DELETE /store_areas/1
-  # DELETE /store_areas/1.json
+  # DEadminE /store_areas/1
+  # DEadminE /store_areas/1.json
   def destroy
     @store_area.destroy
     respond_to do |format|

@@ -9,7 +9,7 @@ Tsai::Application.routes.draw do
 
   #root "demo#index"
 
-
+  get 'cc', :to => "users#cc"
   get 'login', :to => "users#login"
   post 'do_login', :to => "users#do_login"
 

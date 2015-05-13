@@ -1,29 +1,52 @@
-<h1>Listing id_seqs</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Pre</th>
-      <th>Seq</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @id_seqs.each do |id_seq| %>
-      <tr>
-        <td><%= id_seq.pre_id %></td>
-        <td><%= id_seq.seq %></td>
-        <td><%= link_to 'Show', id_seq %></td>
-        <td><%= link_to 'Edit', edit_id_seq_path(id_seq) %></td>
-        <td><%= link_to 'Destroy', id_seq, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+      List id_seqs
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
 
-<br>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+      <div class="col-lg-3 col-xs-6">
 
-<%= link_to 'New Id seq', new_id_seq_path %>
+
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Pre</th>
+              <th>Seq</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @id_seqs.each do |id_seq| %>
+              <tr>
+                <td><%= id_seq.pre_id %></td>
+                <td><%= id_seq.seq %></td>
+                <td><%= link_to 'Show', id_seq %></td>
+                <td><%= link_to 'Edit', edit_id_seq_path(id_seq) %></td>
+                <td><%= link_to 'Destroy', id_seq, method: :deadmine, data: { confirm: 'Are you sure?' } %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <br>
+
+        <%= link_to 'New Id seq', new_id_seq_path %>
+
+      </div>
+  </div>
+</section><!-- /.content -->

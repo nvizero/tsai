@@ -41,7 +41,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should destroy user" do
     assert_difference('User.count', -1) do
-      delete :destroy, id: @user
+      deadmine :destroy, id: @user
     end
 
     assert_redirected_to users_path

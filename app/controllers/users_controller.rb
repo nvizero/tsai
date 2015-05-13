@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  #layout "admin"
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -6,6 +8,11 @@ class UsersController < ApplicationController
   def index
     @users = User.all
   end
+
+  def cc
+    render('test_admin')
+  end
+
 
   def do_login
 
@@ -69,8 +76,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
+  # DEadminE /users/1
+  # DEadminE /users/1.json
   def destroy
     @user.destroy
     respond_to do |format|
@@ -87,6 +94,10 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :address)
+      params.require(:user).permit(:email, :company_address,:role_id, :name,  :boss, :serial_code , :tel,
+                                    :send_address,  :check_date, :password, :re_password,
+                                  :forget_password, :text,   :trade_id, :store_area_id)
+
     end
+
 end

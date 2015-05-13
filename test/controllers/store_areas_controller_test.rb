@@ -41,7 +41,7 @@ class StoreAreasControllerTest < ActionController::TestCase
 
   test "should destroy store_area" do
     assert_difference('StoreArea.count', -1) do
-      delete :destroy, id: @store_area
+      deadmine :destroy, id: @store_area
     end
 
     assert_redirected_to store_areas_path

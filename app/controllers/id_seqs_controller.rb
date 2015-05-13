@@ -1,4 +1,7 @@
 class IdSeqsController < ApplicationController
+  
+  layout "admin"
+
   before_action :set_id_seq, only: [:show, :edit, :update, :destroy]
 
   # GET /id_seqs
@@ -51,8 +54,8 @@ class IdSeqsController < ApplicationController
     end
   end
 
-  # DELETE /id_seqs/1
-  # DELETE /id_seqs/1.json
+  # DEadminE /id_seqs/1
+  # DEadminE /id_seqs/1.json
   def destroy
     @id_seq.destroy
     respond_to do |format|

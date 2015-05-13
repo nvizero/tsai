@@ -1,4 +1,8 @@
 class TradesController < ApplicationController
+
+  layout "admin"
+
+  
   before_action :set_trade, only: [:show, :edit, :update, :destroy]
 
   # GET /trades
@@ -51,8 +55,8 @@ class TradesController < ApplicationController
     end
   end
 
-  # DELETE /trades/1
-  # DELETE /trades/1.json
+  # DEadminE /trades/1
+  # DEadminE /trades/1.json
   def destroy
     @trade.destroy
     respond_to do |format|

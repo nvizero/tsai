@@ -41,7 +41,7 @@ class TradesControllerTest < ActionController::TestCase
 
   test "should destroy trade" do
     assert_difference('Trade.count', -1) do
-      delete :destroy, id: @trade
+      deadmine :destroy, id: @trade
     end
 
     assert_redirected_to trades_path

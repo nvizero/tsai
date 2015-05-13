@@ -41,7 +41,7 @@ class IdSeqsControllerTest < ActionController::TestCase
 
   test "should destroy id_seq" do
     assert_difference('IdSeq.count', -1) do
-      delete :destroy, id: @id_seq
+      deadmine :destroy, id: @id_seq
     end
 
     assert_redirected_to id_seqs_path
