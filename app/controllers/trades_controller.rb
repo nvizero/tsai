@@ -2,12 +2,17 @@ class TradesController < ApplicationController
 
   layout "admin"
 
-  
+
   before_action :set_trade, only: [:show, :edit, :update, :destroy]
 
+
+  def comm
+    return ['main1'=>'交易代碼', 'main2'=>'trades','sub1'=>'首頁' , 'sub2'=>'交易代碼']
+  end
   # GET /trades
   # GET /trades.json
   def index
+    @title  = self.comm
     @trades = Trade.all
   end
 

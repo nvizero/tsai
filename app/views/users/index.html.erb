@@ -1,31 +1,65 @@
-<h1>Listing users</h1>
-<div class="table-responsive">
-  <table class="table table-bordered table-hover table-striped">
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th>name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.email %></td>
-        <td><%= user.name %></td>
 
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :deadmine, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <%=@title%>
+        <small>Users</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/">  首頁</a> </li>
+        <li class="active">人員</li>
+    </ol>
+</section>
 
-</div>
-<br>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Hover Data Table</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
 
-<%= link_to 'New User', new_user_path %>
+
+              <table id="example2" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Email</th>
+                      <th>姓名</th>
+                      <th>交易代碼</th>
+                      <th>庫位</th>
+
+                      <th><%= link_to '新增使用者', new_user_path %></th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% @users.each do |user| %>
+                      <tr>
+                        <td><%= user.email %></td>
+                        <td><%= user.name %></td>
+                        <td><%= user.trade_id %></td>
+                        <td><%= user.store_area_id %></td>
+
+                        <td>
+                            <%= link_to 'Show', user %>|
+                            <%= link_to 'Edit', edit_user_path(user) %>|
+                            <%= link_to 'Destroy', user, method: :destroy, data: { confirm: 'Are you sure?' } %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+</section><!-- /.content -->
+
+
+       

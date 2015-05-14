@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513030300) do
+ActiveRecord::Schema.define(version: 20150514014707) do
 
   create_table "id_seqs", primary_key: "pre_id", force: true do |t|
     t.string   "seq"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20150513030300) do
     t.text     "text"
     t.string   "trade_id",        limit: 2
     t.string   "store_area_id",   limit: 8
+    t.string   "state",           limit: 1
   end
 
 end

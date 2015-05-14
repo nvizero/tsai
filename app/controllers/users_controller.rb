@@ -1,17 +1,23 @@
 class UsersController < ApplicationController
-  #layout "admin"
+  layout "admin"
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
+
+  def _construct
+    return '人員列表'
+  end
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @title = self._construct
+    @users = User.live
+    @trades = Trade.sorted
   end
 
-  def cc
-    render('test_admin')
-  end
+  # def cc
+  #   render('test_admin')
+  # end
 
 
   def do_login
@@ -40,10 +46,14 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @trades = Trade.sorted
+    @sotre_area = StoreArea.all
   end
 
   # GET /users/1/edit
   def edit
+    @trades = Trade.sorted
+    @sotre_area = StoreArea.all
   end
 
   # POST /users
@@ -52,7 +62,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     respond_to do |format|
+      
       if @user.save
+
+         @user.state = 'Y'
+         @user.save
+
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
       else

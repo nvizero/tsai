@@ -84,17 +84,20 @@
 
   <div class="field">
     <%= f.label :trade_id %><br>
-    <%= f.text_field :trade_id  %>
+
+    <%= f.select(:trade_id, @trades.map {|s| [s.id, s.description]}) %>
   </div>
 
   <div class="field">
     <%= f.label :store_area_id %><br>
-    <%= f.text_field :store_area_id  %>
+    
+    <%= f.select(:store_area_id, @sotre_area.map {|s| [s.area_id, s.area_name]}) %>
+
   </div>
 
 
 
- 
+
 
 
   <div class="actions">
