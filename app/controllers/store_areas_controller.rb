@@ -2,12 +2,20 @@ class StoreAreasController < ApplicationController
 
   layout "admin"
 
+  before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
 
   before_action :set_store_area, only: [:show, :edit, :update, :destroy]
-  
+
   # GET /store_areas
   # GET /store_areas.json
+  def comm
+    return ['main1'=>'庫位', 'main2'=>'store_area','sub1'=>'首頁' , 'sub2'=>'庫位' ]
+  end
+  # GET /trades
+  # GET /trades.json
   def index
+    @title  = self.comm
+    @table_title = "庫位列表"
     @store_areas = StoreArea.all
   end
 
@@ -18,11 +26,13 @@ class StoreAreasController < ApplicationController
 
   # GET /store_areas/new
   def new
+    @table_title = "新增庫位"
     @store_area = StoreArea.new
   end
 
   # GET /store_areas/1/edit
   def edit
+    @table_title = "編輯庫位"
   end
 
   # POST /store_areas
@@ -67,8 +77,12 @@ class StoreAreasController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_store_area
+    def set_store_area      
       @store_area = StoreArea.find(params[:id])
+    end
+
+    def set_title
+      @title  = self.comm      
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

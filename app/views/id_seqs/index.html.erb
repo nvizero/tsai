@@ -1,52 +1,44 @@
 
-
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-      List id_seqs
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
+<%= render 'comm/top'%>
 
 <!-- Main content -->
 <section class="content">
   <div class="row">
-      <div class="col-lg-3 col-xs-6">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title"><%=@table_title%></h3>
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
 
 
+              <table id="example2" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>區域</th>
+                      <th>名稱</th>
+                      <th><% link_to '新增id_seqs', new_id_seq_path %></th>
+                    </tr>
+                  </thead>
 
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Pre</th>
-              <th>Seq</th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
+                  <tbody>
+                    <% @id_seqs.each do |id_seq| %>
+                      <tr>
+                        <td><%= id_seq.pre_id %></td>
+                        <td><%= id_seq.seq %></td>
+                        <td>
+                          <% link_to 'Show', id_seq %>
+                          <% link_to 'Edit', edit_id_seq_path(id_seq) %>
+                          <%= link_to '删除', id_seq, method: :deadmine, data: { confirm: 'Are you sure?' } %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
 
-          <tbody>
-            <% @id_seqs.each do |id_seq| %>
-              <tr>
-                <td><%= id_seq.pre_id %></td>
-                <td><%= id_seq.seq %></td>
-                <td><%= link_to 'Show', id_seq %></td>
-                <td><%= link_to 'Edit', edit_id_seq_path(id_seq) %></td>
-                <td><%= link_to 'Destroy', id_seq, method: :deadmine, data: { confirm: 'Are you sure?' } %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+              </div>
 
-        <br>
 
-        <%= link_to 'New Id seq', new_id_seq_path %>
-
-      </div>
-  </div>
+            </div>
+          </div>
+        </div>
 </section><!-- /.content -->

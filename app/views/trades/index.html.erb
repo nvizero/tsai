@@ -7,7 +7,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Hover Data Table</h3>
+                <h3 class="box-title"><%=@table_title%></h3>
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
 
@@ -30,7 +30,8 @@
                         <td>
 
                             <%= link_to '編輯', edit_trade_path(trade.id) %>|
-                            <%= link_to '删除', trade, method: :deadmine, data: { confirm: 'Are you sure?' } %>
+                            <% link_to '删除', trade, method: :deadmine, data: { confirm: 'Are you sure?' } %>
+                            <%= link_to("删除", {:action => 'del', :id => trade.id}, :class => 'action delete') %>
                         </td>
 
                       </tr>

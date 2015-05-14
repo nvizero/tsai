@@ -1,12 +1,18 @@
 class IdSeqsController < ApplicationController
-  
+
   layout "admin"
 
   before_action :set_id_seq, only: [:show, :edit, :update, :destroy]
 
+  def comm
+    return ['main1'=>'Id_seqs', 'main2'=>'id_seqs','sub1'=>'首頁' , 'sub2'=>'id_seqs' ]
+  end
+
   # GET /id_seqs
   # GET /id_seqs.json
   def index
+    @title  = self.comm
+    @table_title = "Id_seqs列表"
     @id_seqs = IdSeq.all
   end
 
@@ -22,6 +28,7 @@ class IdSeqsController < ApplicationController
 
   # GET /id_seqs/1/edit
   def edit
+    @title  = self.comm
   end
 
   # POST /id_seqs

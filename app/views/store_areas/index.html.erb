@@ -1,29 +1,43 @@
-<h1>Listing store_areas</h1>
+<%= render 'comm/top'%>
 
-<table>
-  <thead>
-    <tr>
-      <th>Area</th>
-      <th>Area name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title"><%=@table_title%></h3>
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
 
-  <tbody>
-    <% @store_areas.each do |store_area| %>
-      <tr>
-        <td><%= store_area.area_id %></td>
-        <td><%= store_area.area_name %></td>
-        <td><%= link_to 'Show', store_area %></td>
-        <td><%= link_to 'Edit', edit_store_area_path(store_area) %></td>
-        <td><%= link_to 'Destroy', store_area, method: :deadmine, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
-<br>
+              <table id="example2" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>區域</th>
+                      <th>名稱</th>
+                      <th><%= link_to '新增庫位', new_store_area_path %></th>
+                    </tr>
+                  </thead>
 
-<%= link_to 'New Store area', new_store_area_path %>
+                  <tbody>
+                    <% @store_areas.each do |store_area| %>
+                      <tr>
+                        <td><%= store_area.area_id %></td>
+                        <td><%= store_area.area_name %></td>
+                        <td>
+                            <%= link_to 'Show', store_area %>
+                            <%= link_to 'Edit', edit_store_area_path(store_area) %>
+                            <%= link_to 'Destroy', store_area, method: :deadmine, data: { confirm: 'Are you sure?' } %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+</section><!-- /.content -->
