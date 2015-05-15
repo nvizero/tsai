@@ -14,7 +14,10 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @title = self.comm
-    @users = User.live
+    # @users = User.order("id desc")
+    #分頁
+    @users = User.order(:name).page params[:page]
+    #User.order(:name).page params[:page]
     @trades = Trade.sorted
   end
 
@@ -25,19 +28,19 @@ class UsersController < ApplicationController
 
   def do_login
 
-    @mail = params[:email]
-
-
-    @address = Digest::SHA256.hexdigest params[:address]+'tsai'
-
-    @is_login = User.where(:email=>@mail , :address=>@address).first
-
-    render('type')
+    # @mail = params[:email]
+    # @address = Digest::SHA256.hexdigest params[:address]+'tsai'
+    #
+    # @is_login = User.where(:email=>@mail , :address=>@address).first
+    #
+    # render('type')
   end
 
 
 
   def login
+    @table_title = '使用者登入'
+    @title = ['main1'=>'登入', 'LOGIN'=>'Users','sub1'=>'首頁' , 'sub2'=>'登入']
     @user = User.new
   end
 
@@ -66,16 +69,33 @@ class UsersController < ApplicationController
 
     respond_to do |format|
 
-      if @user.save
+      if params[:password] == params[:re_password]
 
-         @user.state = 'Y'
-         @user.save
+          if @user.save
 
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user }
+             #密碼
+             #@user.password = Digest::MD5.hexdigest( params[:password].to_s )
+             @user.password = ''
+             #壯態
+             @user.state = 'Y'
+             @user.save
+
+             @user.password = Digest::SHA256.hexdigest params[:password].to_s.rstrip.lstrip
+             @user.save
+
+
+            format.html { redirect_to @user, notice: 'User was successfully created.' }
+            format.json { render action: 'show', status: :created, location: @user }
+          else
+            format.html { render action: 'new' }
+            format.json { render json: @user.errors, status: :unprocessable_entity }
+          end
+
       else
+
         format.html { render action: 'new' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+
       end
     end
   end

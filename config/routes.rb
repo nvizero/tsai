@@ -12,7 +12,7 @@ Tsai::Application.routes.draw do
 
   # get 'cc', :to => "users#cc"
   get 'login', :to => "users#login"
-  post 'do_login', :to => "users#do_login"
+  post 'do_login', :to => "login#do_login"
 
   #get "demo/index"
   match ':controller(/:action(/:id))', :via => [:get, :post]
