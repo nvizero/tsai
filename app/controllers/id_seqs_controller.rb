@@ -1,7 +1,8 @@
 class IdSeqsController < ApplicationController
 
   layout "admin"
-
+  #登入
+  before_action :confirm_logged_in
   before_action :set_id_seq, only: [:show, :edit, :update, :destroy]
 
   def comm

@@ -44,6 +44,16 @@
             </aside><!-- /.left-side -->
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">
+                        <% if !flash[:notice].blank? %>
+                          <h2>
+
+                            <p class="text-primary">
+                              <%= flash[:notice] %>
+                            </p>
+                          </h2>
+                        <% end %>
+
+
                         <%= yield %>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->

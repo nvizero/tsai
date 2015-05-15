@@ -1,7 +1,9 @@
 class TradesController < ApplicationController
 
   layout "admin"
-
+  #登入
+  before_action :confirm_logged_in
+  #設定上面的TITLT
   before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
 
   before_action :set_trade, only: [:show, :edit, :update, :destroy]
@@ -13,7 +15,7 @@ class TradesController < ApplicationController
   # GET /trades
   # GET /trades.json
   def index
-    @table_title  = "交易代碼列表"    
+    @table_title  = "交易代碼列表"
     @trades = Trade.all
   end
 
@@ -77,7 +79,7 @@ class TradesController < ApplicationController
     @trade = Trade.find(params[:id])
     @trade.destroy
     redirect_to '/trades'
-    
+
   end
 
   private
@@ -88,7 +90,7 @@ class TradesController < ApplicationController
 
     def set_title
       @title  = self.comm
-    end  
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trade_params

@@ -2,6 +2,9 @@ class StoreAreasController < ApplicationController
 
   layout "admin"
 
+  #登入
+  before_action :confirm_logged_in
+  #設定上面的TITLT
   before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
 
   before_action :set_store_area, only: [:show, :edit, :update, :destroy]
@@ -77,12 +80,12 @@ class StoreAreasController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_store_area      
+    def set_store_area
       @store_area = StoreArea.find(params[:id])
     end
 
     def set_title
-      @title  = self.comm      
+      @title  = self.comm
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

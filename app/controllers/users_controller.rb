@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   layout "admin"
-
+  #登入
+  before_action :confirm_logged_in
+  #設定上面的TITLT
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
   def comm
@@ -16,7 +18,7 @@ class UsersController < ApplicationController
     @title = self.comm
     # @users = User.order("id desc")
     #分頁
-    @users = User.order(:name).page params[:page]
+    @users = User.live.order(:name).page params[:page]
     #User.order(:name).page params[:page]
     @trades = Trade.sorted
   end

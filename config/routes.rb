@@ -1,4 +1,6 @@
 Tsai::Application.routes.draw do
+  resources :roles
+
   get "dashboard/index"
   resources :id_seqs
 
@@ -11,7 +13,9 @@ Tsai::Application.routes.draw do
   root "dashboard#index"
 
   # get 'cc', :to => "users#cc"
-  get 'login', :to => "users#login"
+  get 'login', :to => "login#login_form"
+  get 'logout', :to => "login#logout"
+
   post 'do_login', :to => "login#do_login"
 
   #get "demo/index"

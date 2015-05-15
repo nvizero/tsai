@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514014707) do
+ActiveRecord::Schema.define(version: 20150515051538) do
 
   create_table "id_seqs", primary_key: "pre_id", force: true do |t|
     t.string   "seq"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "title"
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -35,7 +42,7 @@ ActiveRecord::Schema.define(version: 20150514014707) do
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "role_id",         limit: 2
+    t.string   "role_id",         limit: 6
     t.string   "name",            limit: 60
     t.string   "boss",            limit: 20
     t.string   "serial_code",     limit: 20
@@ -43,8 +50,8 @@ ActiveRecord::Schema.define(version: 20150514014707) do
     t.string   "company_address", limit: 80
     t.string   "send_address",    limit: 80
     t.string   "check_date",      limit: 45
-    t.string   "password",        limit: 20
-    t.string   "re_password",     limit: 20
+    t.string   "password"
+    t.string   "re_password"
     t.string   "forget_pas",      limit: 60
     t.text     "text"
     t.string   "trade_id",        limit: 2
