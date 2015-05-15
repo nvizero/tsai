@@ -2,7 +2,10 @@ class UsersController < ApplicationController
   layout "admin"
 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
+  def comm
+    return ['main1'=>'使用者', 'main2'=>'Users','sub1'=>'首頁' , 'sub2'=>'使用者']
+  end
 
   def _construct
     return '人員列表'
@@ -10,7 +13,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @title = self._construct
+    @title = self.comm
     @users = User.live
     @trades = Trade.sorted
   end
@@ -25,7 +28,7 @@ class UsersController < ApplicationController
     @mail = params[:email]
 
 
-    @address = Digest::SHA256.hexdigest params[:address]+'GGqweqweqwe'
+    @address = Digest::SHA256.hexdigest params[:address]+'tsai'
 
     @is_login = User.where(:email=>@mail , :address=>@address).first
 
@@ -62,7 +65,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     respond_to do |format|
-      
+
       if @user.save
 
          @user.state = 'Y'
@@ -105,6 +108,10 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_title
+      @title  = self.comm
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
