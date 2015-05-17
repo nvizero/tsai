@@ -1,7 +1,8 @@
 class StoreAreasController < ApplicationController
 
   layout "admin"
-
+  #取得一些基本資訊
+  before_action :get_base_data
   #登入
   before_action :confirm_logged_in
   #設定上面的TITLT

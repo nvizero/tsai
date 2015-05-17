@@ -1,7 +1,10 @@
 Tsai::Application.routes.draw do
+  resources :msgs
+
   resources :roles
 
   get "dashboard/index"
+  
   resources :id_seqs
 
   resources :store_areas

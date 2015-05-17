@@ -1,0 +1,27 @@
+<%=render 'comm/top' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>標題</th>
+      <th>內容</th>
+      <th>裝態</th>
+      <th><%= link_to 'New Msg', new_msg_path %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @msgs.each do |msg| %>
+      <tr>
+        <td><%= msg.title %></td>
+        <td><%= msg.content %></td>
+        <td><%= (msg.state=='Y')?'顯示':'不顯示' %></td>
+        <td>
+            <%= link_to 'Show', msg %>
+            <%= link_to 'Edit', edit_msg_path(msg) %>
+            <%= link_to 'Destroy', msg, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

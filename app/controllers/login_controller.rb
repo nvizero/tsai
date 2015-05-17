@@ -2,16 +2,20 @@ class LoginController < ApplicationController
 
   layout "admin"
 
+  #取得一些基本資訊
+  before_action :get_base_data
 
   def do_login
     #eeee
-    @mail = params[:email].rstrip.lstrip
-    @old = params[:password].rstrip.lstrip
+    @username = params[:username].rstrip.lstrip
+    @old  = params[:password].rstrip.lstrip
     @check_pas    = Digest::SHA256.hexdigest @old.to_s
     @password = @check_pas
-    @is_login = User.where(:email=>@mail , :re_password => @old ).first
+    @is_login = User.where(:username=>@username , :re_password => @old ).first
+
     if @is_login
       self.set_user_sesssion
+      redirect_to(:controller=> 'dashboard' , :action => "index")
     end
 
     #rebder 'login/do_login'
@@ -19,6 +23,7 @@ class LoginController < ApplicationController
 
   def set_user_sesssion
     session[:user_id] = @is_login.id
+    session[:user_name] = @is_login.name
   end
 
   def login_form
@@ -31,8 +36,8 @@ class LoginController < ApplicationController
   def logout
 
     session[:user_id] = nil
-    
-    flash[:notice] = "Logged out"
+
+    flash[:notice] = "登出成功"
     redirect_to(:controller=> 'login' , :action => "login_form")
 
   end

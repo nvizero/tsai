@@ -4,7 +4,10 @@ class UsersController < ApplicationController
   before_action :confirm_logged_in
   #設定上面的TITLT
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  #取得一些基本資訊
+  before_action :get_base_data
   before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
+
   def comm
     return ['main1'=>'使用者', 'main2'=>'Users','sub1'=>'首頁' , 'sub2'=>'使用者']
   end

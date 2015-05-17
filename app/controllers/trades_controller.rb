@@ -3,6 +3,8 @@ class TradesController < ApplicationController
   layout "admin"
   #登入
   before_action :confirm_logged_in
+  #取得一些基本資訊
+  before_action :get_base_data
   #設定上面的TITLT
   before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
 

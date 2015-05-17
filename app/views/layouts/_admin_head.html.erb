@@ -1,27 +1,72 @@
 
     <a href="/" class="logo">
         <!-- Add the class icon to your logo image or logo icon to add the margining -->
-        管理後台
+        智富國際店子商務平台
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
-        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+
+        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button" style="display:none;">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
+
+        <div class="navbar-left">
+            <ul class="nav navbar-nav">
+
+              <% @head_msgs.each do |msg| %>
+                <li class="user user-menu">
+                    <a href="/msgs/<%=msg.id%>" >
+                        <span> <%=msg.title%></span>
+                    </a>
+                </li>
+              <% end %>
+
+              <li class="user user-menu" style="display:none;">
+                  <a href="#" >
+                      <span> 服務項目</span>
+                  </a>
+              </li>
+
+              <li class="user user-menu" style="display:none;">
+                  <a href="/roles" >
+                      <span> 三證說明</span>
+                  </a>
+              </li>
+
+              <li class="user user-menu">
+                  <a href="#" >
+                      <span> 聯絡我們</span>
+                  </a>
+              </li>
+
+              <li class="user user-menu">
+                  <a href="#" >
+                      <span> 後台管理</span>
+                  </a>
+              </li>
+
+              <% if !session[:user_id].nil?   %>
+              <li class="user user-menu">
+                  <a href="/login" >                    
+                      <span> 會員登入</span>
+                  </a>
+              </li>
+              <% end %>
+
+            </ul>
+        </div>
+
+
+
         <div class="navbar-right">
             <ul class="nav navbar-nav">
 
-              <li >
-                <ul class="dropdown-menu">
-                  <li>a</li>
-                  <li>b</li>
-                </ul>
-              </li>
                 <!-- Messages: style can be found in dropdown.less-->
+
                 <li class="dropdown messages-menu" style="display:none;">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope"></i>
@@ -212,22 +257,26 @@
                 <!-- User Account: style can be found in dropdown.less -->
 
 
+
+
+
+                <% if session[:user_id] %>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="glyphicon glyphicon-user"></i>
-                        <span>Jane Doe <i class="caret"></i></span>
+                        <span><%=session[:user_name] %> <i class="caret"></i></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
-                        <li class="user-header bg-light-blue">
-                            <img src="/LET/img/avatar3.png" class="img-circle" alt="User Image" />
+                        <li class="user-header bg-light-blue"  style="display:none;" >
+                            <img src="/LET/img/avatar3.png" class="img-circle" alt="User Image"  style="display:none;" />
                             <p>
-                                Jane Doe - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                <%=session[:user_name] %>
+                                <small style="display:none;" >Member since Nov. 2012</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="user-body">
+                        <li class="user-body" style="display:none;">
                             <div class="col-xs-4 text-center">
                                 <a href="#">Followers</a>
                             </div>
@@ -240,16 +289,26 @@
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                            </div>
-                            <div class="pull-right">
 
+                            <div class="pull-left">
+                                <a href="/users/<%=session[:user_id]%>/edit" class="btn btn-default btn-flat">個人檔案</a>
+                            </div>
+
+                            <div class="pull-right">
                                 <a href="/logout" class="btn btn-default btn-flat">登出</a>
                             </div>
+
                         </li>
                     </ul>
                 </li>
+                <% end %>
+
             </ul>
         </div>
     </nav>
+
+<style media="screen">
+  .user-menu{
+    float:left;
+  }
+</style>

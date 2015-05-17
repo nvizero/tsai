@@ -1,7 +1,9 @@
 class RolesController < ApplicationController
   before_action :set_role, only: [:show, :edit, :update, :destroy]
-  
+
   layout "admin"
+  #取得一些基本資訊
+  before_action :get_base_data
   # GET /roles
   # GET /roles.json
   def index

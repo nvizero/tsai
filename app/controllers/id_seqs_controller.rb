@@ -3,6 +3,9 @@ class IdSeqsController < ApplicationController
   layout "admin"
   #登入
   before_action :confirm_logged_in
+  #取得一些基本資訊
+  before_action :get_base_data
+  
   before_action :set_id_seq, only: [:show, :edit, :update, :destroy]
 
   def comm
