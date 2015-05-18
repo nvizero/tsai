@@ -15,7 +15,7 @@ class LoginController < ApplicationController
 
     if @is_login
       self.set_user_sesssion
-      redirect_to(:controller=> 'dashboard' , :action => "index")
+      redirect_to(:controller=> 'dashboard' , :action => "main")
     end
 
     #rebder 'login/do_login'
@@ -86,7 +86,7 @@ class LoginController < ApplicationController
     session[:user_id] = nil
 
     flash[:notice] = "登出成功"
-    redirect_to(:controller=> 'login' , :action => "login_form")
+    redirect_to(:controller=> 'dashboard' , :action => "index")
 
   end
 

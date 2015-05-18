@@ -27,9 +27,7 @@ class MsgsController < ApplicationController
   # GET /msgs/1
   # GET /msgs/1.json
   def show
-
     @title = ['main1'=>@msg.title, 'main2'=>'','sub1'=>'首頁' , 'sub2'=>@msg.title]
-
   end
 
   # GET /msgs/new

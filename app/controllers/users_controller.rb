@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @title = self.comm
     # @users = User.order("id desc")
     #分頁
-    @users = User.live.order(:name).page params[:page]
+    @users = User.order(:name).page params[:page]
     #User.order(:name).page params[:page]
     @trades = Trade.sorted
   end
@@ -89,8 +89,8 @@ class UsersController < ApplicationController
              @user.save
 
 
-            format.html { redirect_to @user, notice: 'User was successfully created.' }
-            format.json { render action: 'show', status: :created, location: @user }
+            format.html { redirect_to @user, notice: '新增成功！' }
+            format.json { render action: 'index', status: :created, location: @user }
           else
             format.html { render action: 'new' }
             format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -110,8 +110,10 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
+
+        format.html { render action: 'index' }
+        # format.html { redirect_to @user , :action =>'index' , notice: '更新成功' }
+        # format.json { head :no_content }
       else
         format.html { render action: 'edit' }
         format.json { render json: @user.errors, status: :unprocessable_entity }

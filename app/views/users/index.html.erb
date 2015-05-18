@@ -27,7 +27,7 @@
                   <tbody>
                     <% @users.each do |user| %>
                       <tr>
-                        <td><%= user.email %><%= user.id %></td>
+                        <td><%= user.email %></td>
                         <td><%= user.name %></td>
                         <td><%= user.trade_id %></td>
                         <td><%= user.store_area_id %></td>
@@ -43,7 +43,7 @@
                 </table>
                 <%= paginate @users  %>
               </div>
- 
+
 
             </div>
           </div>

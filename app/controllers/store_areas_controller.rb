@@ -47,7 +47,7 @@ class StoreAreasController < ApplicationController
     respond_to do |format|
       if @store_area.save
         format.html { redirect_to @store_area, notice: 'Store area was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @store_area }
+        format.json { render action: 'index', status: :created, location: @store_area }
       else
         format.html { render action: 'new' }
         format.json { render json: @store_area.errors, status: :unprocessable_entity }

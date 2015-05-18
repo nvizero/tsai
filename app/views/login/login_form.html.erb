@@ -5,37 +5,38 @@
           <!-- left column -->
           <div class="col-lg-8">
 <!-- general form elements -->
-<div class="box box-primary">
-  <div class="box-header">
-      <h3 class="box-title"><%=@table_title %></h3>
-      <% if session[:user_id].nil? %>
-        <%= session[:user_id]%>
-      <% end %>
-  </div><!-- /.box-header -->
+        <div class="box box-primary">
+
+          <div class="box-header">
+              <h3 class="box-title"><%=@table_title %></h3>
+              <% if session[:user_id].nil? %>
+                <%= session[:user_id]%>
+              <% end %>
+          </div><!-- /.box-header -->
 
 
-  <%= form_tag('/do_login' , method: 'post' ) do %>
-          <div class="box-body">
-              <div class="form-group">
-                <%= label_tag :username ,'帳號',:for =>'exampleInputEmail1' %><br>
-                <%= text_field_tag :username%>
+          <%= form_tag('/do_login' , method: 'post' ) do %>
+              <div class="box-body">
+                  <div class="form-group">
+                    <%= label_tag :username ,'帳號',:for =>'exampleInputEmail1' %><br>
+                    <%= text_field_tag :username%>
+                  </div>
+
+                  <div class="form-group">
+                    <%= label_tag :password ,'密碼',:for =>'exampleInputEmail1' %><br>
+                    <input type="password" name="password" value="">
+                  </div>
+
+                  <div class="form-group">
+                    <a href="/forget_pas">忘記密碼</a>|
+                    <a href="/advance_pas">密碼提示</a>
+                  </div>
               </div>
 
-              <div class="form-group">
-                <%= label_tag :password ,'密碼',:for =>'exampleInputEmail1' %><br>
-                <input type="password" name="password" value="">
+              <div class="box-footer">
+                  <button type="submit" class="btn btn-primary">登入</button>
               </div>
-
-              <div class="form-group">
-                <a href="/forget_pas">忘記密碼</a>|
-                <a href="/advance_pas">密碼提示</a>
-              </div>
-          </div>
-
-          <div class="box-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-    <% end %>
+            <% end %>
           </div>
       </div>
   </div>
