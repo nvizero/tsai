@@ -4,7 +4,7 @@ Tsai::Application.routes.draw do
   resources :roles
 
   get "dashboard/index"
-  
+
   resources :id_seqs
 
   resources :store_areas
@@ -18,9 +18,13 @@ Tsai::Application.routes.draw do
   # get 'cc', :to => "users#cc"
   get 'login', :to => "login#login_form"
   get 'logout', :to => "login#logout"
+  get 'forget_pas', :to => "login#forget_pas"
+  get 'advance_pas', :to => "login#advance_pas"
 
+  post 'do_forget_pas', :to => "login#do_forget_pas"
   post 'do_login', :to => "login#do_login"
-
+  post 'do_advance_pas', :to => "login#do_advance_pas"
+  
   #get "demo/index"
   match ':controller(/:action(/:id))', :via => [:get, :post]
   # The priority is based upon order of creation: first created -> highest priority.

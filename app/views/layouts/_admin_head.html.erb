@@ -49,9 +49,9 @@
                   </a>
               </li>
 
-              <% if !session[:user_id].nil?   %>
+              <% if session[:user_id].nil?   %>
               <li class="user user-menu">
-                  <a href="/login" >                    
+                  <a href="/login" >
                       <span> 會員登入</span>
                   </a>
               </li>

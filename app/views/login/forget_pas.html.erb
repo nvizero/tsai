@@ -14,22 +14,26 @@
   </div><!-- /.box-header -->
 
 
-  <%= form_tag('/do_login' , method: 'post' ) do %>
+  <%= form_tag('/do_forget_pas' , method: 'post' ) do %>
           <div class="box-body">
+
               <div class="form-group">
-                <%= label_tag :username ,'帳號',:for =>'exampleInputEmail1' %><br>
+                <%= label_tag :username ,'帳號',:for =>'exampleInputEmail1' %>
                 <%= text_field_tag :username%>
               </div>
 
               <div class="form-group">
-                <%= label_tag :password ,'密碼',:for =>'exampleInputEmail1' %><br>
-                <input type="password" name="password" value="">
+                <%= label_tag :email ,'E-Mail'%>
+                <input type="text" name="email" value="">
               </div>
 
               <div class="form-group">
-                <a href="/forget_pas">忘記密碼</a>|
-                <a href="/advance_pas">密碼提示</a>
+                <% if @ou %>
+                  <%=@ou.username %>：您的密碼己寄出
+                <% end %>                
               </div>
+
+
           </div>
 
           <div class="box-footer">

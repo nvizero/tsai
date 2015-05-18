@@ -31,6 +31,54 @@ class LoginController < ApplicationController
     @table_title = '使用者登入'
     @title = ['main1'=>'登入', 'LOGIN'=>'Users','sub1'=>'首頁' , 'sub2'=>'登入']
     @user = User.new
+
+  end
+
+
+  def forget_pas
+
+    @table_title = '忘記密碼'
+    @title = ['main1'=>'忘記密碼', 'LOGIN'=>'Users','sub1'=>'首頁' , 'sub2'=>'忘記密碼']
+    @user = User.new
+
+  end
+
+  def do_forget_pas
+
+    @table_title = '忘記密碼'
+    @title = ['main1'=>'忘記密碼', 'LOGIN'=>'Users','sub1'=>'首頁' , 'sub2'=>'忘記密碼']
+
+    @ou =  User.where(:username => params[:username]).first
+
+    if @ou
+      render 'forget_pas'
+    else
+      render action: 'forget_pas'
+    end
+
+
+
+  end
+
+  def advance_pas
+    @table_title = '密碼提示'
+    @title = ['main1'=>'密碼提示', 'LOGIN'=>'Users','sub1'=>'首頁' , 'sub2'=>'密碼提示']
+    @user = User.new
+  end
+
+  def do_advance_pas
+    @table_title = '密碼提示2'
+    @title = ['main1'=>'密碼提示2', 'LOGIN'=>'Users','sub1'=>'首頁' , 'sub2'=>'密碼提示']
+
+
+
+    @one =  User.where(:username => params[:username]).first
+
+    if @one
+      render 'advance_pas'
+    else
+      render action: 'advance_pas'
+    end
   end
 
   def logout
