@@ -11,7 +11,7 @@ class LoginController < ApplicationController
     @old  = params[:password].rstrip.lstrip
     @check_pas    = Digest::SHA256.hexdigest @old.to_s
     @password = @check_pas
-    @is_login = User.where(:username=>@username , :re_password => @old ).first
+    @is_login = User.where(:username=>@username , :re_password => params[:password] ).first
 
     if @is_login
       self.set_user_sesssion
@@ -50,11 +50,9 @@ class LoginController < ApplicationController
 
     @ou =  User.where(:username => params[:username]).first
 
-    if @ou
-      render 'forget_pas'
-    else
-      render action: 'forget_pas'
-    end
+
+    render 'do_forget_pas'
+
 
 
 

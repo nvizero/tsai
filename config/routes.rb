@@ -1,6 +1,7 @@
 Tsai::Application.routes.draw do
+  # get "pact/post_username"
+  #get "ajax/post_username"
   resources :msgs
-
   resources :roles
 
   get "dashboard/index"
@@ -21,10 +22,12 @@ Tsai::Application.routes.draw do
   get 'forget_pas', :to => "login#forget_pas"
   get 'advance_pas', :to => "login#advance_pas"
 
-  post 'do_forget_pas', :to => "login#do_forget_pas"
-  post 'do_login', :to => "login#do_login"
-  post 'do_advance_pas', :to => "login#do_advance_pas"
-  
+  post 'do_forget_pas' , :to => "login#do_forget_pas"
+  post 'do_login' , :to => "login#do_login"
+  post 'do_advance_pas' , :to => "login#do_advance_pas"
+  post 'post_username' , :to => "pact#post_username"
+  #ajax/post_username
+
   #get "demo/index"
   match ':controller(/:action(/:id))', :via => [:get, :post]
   # The priority is based upon order of creation: first created -> highest priority.

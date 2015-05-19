@@ -1,0 +1,39 @@
+<%= render 'comm/top' %>
+
+<section class="content">
+      <div class="row">
+          <!-- left column -->
+          <div class="col-lg-8">
+<!-- general form elements -->
+
+
+
+          <div class="box-body">
+
+              <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+              <div class="form-group">
+                <% if @ou %>
+                    <script>
+                    $( document ).ready(function() {
+                        alert('<%=@ou.username%> 您的密碼己寄出!');
+                        document.location.href="/login";
+                    });
+                    </script>
+                <% else %>
+                    <script>
+                    $( document ).ready(function() {
+                        alert('帳號密碼有誤!!請重新輸入!');
+                        document.location.href="/login";
+                    });
+                    </script>
+                  <% end %>
+              </div>
+
+
+          </div>
+
+
+          </div>
+      </div>
+
+</section>

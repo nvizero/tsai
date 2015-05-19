@@ -1,5 +1,38 @@
 <%= render 'comm/top' %>
 
+
+
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('a#advance_pas').click(function(){
+
+        var username = $('#username').val() ;
+        //alert('username ==werwer');
+          if(username!=''){
+
+
+                $.post( 'post_username', { 'username': username },
+                  function( data ) {
+
+                      alert(data+'aaa');
+                      // var content = $( data ).find( '#content' );
+                      // $( "#result" ).empty().append( content );
+                  }
+                );
+
+          }else{
+
+              alert('請輸入帳號！');
+
+          }
+
+    });
+});
+
+</script>
+
 <section class="content">
       <div class="row">
           <!-- left column -->
@@ -19,7 +52,8 @@
               <div class="box-body">
                   <div class="form-group">
                     <%= label_tag :username ,'帳號',:for =>'exampleInputEmail1' %><br>
-                    <%= text_field_tag :username%>
+                    <%= text_field_tag :username, params[:barcode], id: 'username' %>
+
                   </div>
 
                   <div class="form-group">
@@ -29,7 +63,7 @@
 
                   <div class="form-group">
                     <a href="/forget_pas">忘記密碼</a>|
-                    <a href="/advance_pas">密碼提示</a>
+                    <a href="#" id="advance_pas" >密碼提示</a>
                   </div>
               </div>
 

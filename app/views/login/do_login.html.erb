@@ -1,6 +1,17 @@
+<% if session[:user_id].nil? %>
 
-email : <%= @mail %><br>
-password : <%= @password %><br>
-old_password : <%= @old %><br>
-is login :<%= @is_login %><br>
-session   <%=session[:user_id] %>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script>
+
+  $( document ).ready(function() {
+
+      alert('帳號密碼有誤!!請重新輸入!');
+
+      document.location.href="/login";
+  });
+
+  </script>
+
+  <div id="cc">輸入錯誤！！</div>
+
+<% end %>
