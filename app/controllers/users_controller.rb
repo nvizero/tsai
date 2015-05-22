@@ -2,8 +2,10 @@ class UsersController < ApplicationController
   layout "admin"
   #登入
   before_action :confirm_logged_in
+
   #設定上面的TITLT
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+
   #取得一些基本資訊
   before_action :get_base_data
   before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
@@ -31,15 +33,7 @@ class UsersController < ApplicationController
   # end
 
 
-  def do_login
 
-    # @mail = params[:email]
-    # @address = Digest::SHA256.hexdigest params[:address]+'tsai'
-    #
-    # @is_login = User.where(:email=>@mail , :address=>@address).first
-    #
-    # render('type')
-  end
 
 
 
@@ -52,6 +46,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @trades = Trade.sorted
   end
 
   # GET /users/new
@@ -108,17 +103,26 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-
-        format.html { render action: 'index' }
-        # format.html { redirect_to @user , :action =>'index' , notice: '更新成功' }
-        # format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params_update)
+      flash[:notice] = "User更新成功!"
+      redirect_to action: "index"
+    else
+      render action: 'edit'
     end
+    # respond_to do |format|
+    #   if @user.update(user_params_update)
+    #
+    #     format.html { render action: 'index' }
+    #
+    #     format.html { redirect_to @user , :action =>'index' , notice: '更新成功' }
+    #     # format.json { head :no_content }
+    #
+    #   else
+    #
+    #     format.html { render action: 'edit' }
+    #     format.json { render json: @user.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # DEadminE /users/1
@@ -143,9 +147,20 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :company_address,:role_id, :name,  :boss, :serial_code , :tel,
-                                    :send_address,  :check_date, :password, :re_password,
-                                  :forget_password, :text,   :trade_id, :store_area_id)
+      params.require(:user).permit( :email, :company_address,:role_id,
+                                    :name,  :boss, :serial_code , :tel,
+                                    :send_address,  :check_date, :password,
+                                    :re_password, :forget_password, :text,
+                                    :trade_id, :store_area_id , :username)
+
+    end
+
+    def user_params_update
+      params.require(:user).permit( :email, :company_address,:role_id,
+                                    :name,  :boss, :serial_code , :tel,
+                                    :send_address,  :check_date,
+                                    :forget_password, :text,
+                                    :trade_id, :store_area_id, :username )
 
     end
 

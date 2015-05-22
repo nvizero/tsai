@@ -1,0 +1,29 @@
+<h1>Listing accesses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accesses.each do |access| %>
+      <tr>
+        <td><%= access.title %></td>
+        <td><%= access.code %></td>
+        <td><%= link_to 'Show', access %></td>
+        <td><%= link_to 'Edit', edit_access_path(access) %></td>
+        <td><%= link_to 'Destroy', access, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Access', new_access_path %>

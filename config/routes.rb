@@ -1,4 +1,6 @@
 Tsai::Application.routes.draw do
+  resources :accesses
+
   # get "pact/post_username"
   #get "ajax/post_username"
   resources :msgs

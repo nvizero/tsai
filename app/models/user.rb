@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
   has_many :pages
   #belongs_to :trade
   scope :live, lambda { where("users.state = 'y' ") }
+  
 end

@@ -28,93 +28,100 @@
 
 
 
-                                    <div class="box-body">
-                                        <div class="form-group">
-                                          <%= f.label :email ,'電子信箱',:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_field :email, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"輸入email" %>
-                                        </div>
+                    <div class="box-body">
 
-                                        <div class="form-group">
-                                          <%= f.label :role_id ,'角色',:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_field :role_id, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"Enter Role id" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label :name ,'姓名',:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_field :name, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"輪入姓名" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label :boss ,'負責人',:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_field :boss, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"負責人" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label :serial_code ,'公司統編' ,:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_field :serial_code, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"公司統編" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label :tel ,'電話'  ,:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_field :tel, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"電話" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label  :company_address,'公司住址' ,:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_field :company_address, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"公司住址" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label  :send_address,'送貨住址' ,:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_field :send_address , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"送貨住址" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label  :check_date,'日期'  ,:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_field :check_date, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"日期" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label :password ,'密碼' ,:for =>'exampleInputEmail1' %><br>
-                                          <%= f.password_field :password , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"密碼" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label :re_password,'認確密碼'  ,:for =>'exampleInputEmail1' %><br>
-                                          <%= f.password_field :re_password, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"認確密碼" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label  :forget_pas,'忘記密碼' ,:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_field :forget_pas , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"忘記密碼" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label  :text,'備註' ,:for =>'exampleInputEmail1' %><br>
-                                          <%= f.text_area :text , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"備註" %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label  :trade_id ,'交易代碼' %><br>
-
-                                          <%= f.select(:trade_id, @trades.map {|s| [s.id, s.description]}) %>
-                                        </div>
-
-                                        <div class="form-group">
-                                          <%= f.label :store_area_id ,'庫位' %><br>
-
-                                          <%= f.select(:store_area_id, @sotre_area.map {|s| [s.area_id, s.area_name]}) %>
-                                        </div>
+                        <div class="form-group">
+                          <%= f.label :username ,'帳號',:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :username, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"輸入帳號" %>
+                        </div>
 
 
+                        <div class="form-group">
+                          <%= f.label :email ,'電子信箱',:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :email, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"輸入email" %>
+                        </div>
 
-                                    </div><!-- /.box-body -->
+                        <div class="form-group">
+                          <%= f.label :role_id ,'角色',:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :role_id, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"角色" %>
+                        </div>
 
-                                    <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
+                        <div class="form-group">
+                          <%= f.label :name ,'姓名',:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :name, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"輪入姓名" %>
+                        </div>
 
-                                <div class="box-body">
+                        <div class="form-group">
+                          <%= f.label :boss ,'負責人',:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :boss, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"負責人" %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label :serial_code ,'公司統編' ,:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :serial_code, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"公司統編" %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label :tel ,'電話'  ,:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :tel, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"電話" %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label  :company_address,'公司住址' ,:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :company_address, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"公司住址" %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label  :send_address,'送貨住址' ,:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :send_address , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"送貨住址" %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label  :check_date,'日期'  ,:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :check_date, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"日期" %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label :password ,'密碼' ,:for =>'exampleInputEmail1' %><br>
+                          <%= f.password_field :password , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"密碼" %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label :re_password,'認確密碼'  ,:for =>'exampleInputEmail1' %><br>
+                          <%= f.password_field :re_password, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"認確密碼" %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label  :forget_pas,'忘記密碼' ,:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :forget_pas , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"忘記密碼" %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label  :text,'備註' ,:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_area :text , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"備註" %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label  :trade_id ,'交易代碼' %><br>
+
+                          <%= f.select(:trade_id, @trades.map {|s| [s.id, s.description]}) %>
+                        </div>
+
+                        <div class="form-group">
+                          <%= f.label :store_area_id ,'庫位' %><br>
+
+                          <%= f.select(:store_area_id, @sotre_area.map {|s| [s.area_id, s.area_name]}) %>
+                        </div>
+
+
+
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                <div class="box-body">
 
 
 
