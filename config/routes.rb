@@ -3,20 +3,16 @@ Tsai::Application.routes.draw do
   #get "ajax/post_username"
   resources :msgs
   resources :roles
-
-  get "dashboard/index"
-
   resources :id_seqs
-
   resources :store_areas
-
   resources :trades
-
   resources :users
 
+  get "dashboard/index"
   root "dashboard#index"
 
   # get 'cc', :to => "users#cc"
+
   get 'login', :to => "login#login_form"
   get 'logout', :to => "login#logout"
   get 'forget_pas', :to => "login#forget_pas"
@@ -25,7 +21,8 @@ Tsai::Application.routes.draw do
   post 'do_forget_pas' , :to => "login#do_forget_pas"
   post 'do_login' , :to => "login#do_login"
   post 'do_advance_pas' , :to => "login#do_advance_pas"
-  post 'post_username' , :to => "pact#post_username"
+
+  post 'post_username' , :to => "pact#post_username"  
   #ajax/post_username
 
   #get "demo/index"

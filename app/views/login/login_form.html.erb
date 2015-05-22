@@ -12,13 +12,12 @@ $(document).ready(function(){
         //alert('username ==werwer');
           if(username!=''){
 
+                //alert(username);
 
                 $.post( 'post_username', { 'username': username },
                   function( data ) {
-
-                      alert(data+'aaa');
-                      // var content = $( data ).find( '#content' );
-                      // $( "#result" ).empty().append( content );
+                      $("#forget_pas").html(
+                        "您的密碼提示是 ：  <font color=red>"+data +'</font>');
                   }
                 );
 
@@ -53,7 +52,7 @@ $(document).ready(function(){
                   <div class="form-group">
                     <%= label_tag :username ,'帳號',:for =>'exampleInputEmail1' %><br>
                     <%= text_field_tag :username, params[:barcode], id: 'username' %>
-
+                    <span id="forget_pas"></span>
                   </div>
 
                   <div class="form-group">
