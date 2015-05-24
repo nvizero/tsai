@@ -1,13 +1,27 @@
-<h1>Listing roles</h1>
+<%= render 'comm/top' %>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">角色名稱列表</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
 
-<table>
+
+              <table id="example2" class="table table-bordered table-striped">
+
+
+
+
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Text</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>角色名稱</th>
+
+      <th>
+        <%= link_to '新增角色', new_role_path %>
+      </th>
     </tr>
   </thead>
 
@@ -15,15 +29,25 @@
     <% @roles.each do |role| %>
       <tr>
         <td><%= role.title %></td>
-        <td><%= role.text %></td>
-        <td><%= link_to 'Show', role %></td>
-        <td><%= link_to 'Edit', edit_role_path(role) %></td>
-        <td><%= link_to 'Destroy', role, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+
+            <%= link_to '編輯', edit_role_path(role) %>
+            <%= link_to '删除', role, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
+
+
+
+
+
 </table>
+<%= paginate @roles  %>
+</div>
 
-<br>
 
-<%= link_to 'New Role', new_role_path %>
+</div>
+</div>
+</div>
+</section><!-- /.content -->

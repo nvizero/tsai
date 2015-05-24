@@ -103,6 +103,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    
     if @user.update(user_params_update)
       flash[:notice] = "User更新成功!"
       redirect_to action: "index"

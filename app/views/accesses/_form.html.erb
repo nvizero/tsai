@@ -12,14 +12,19 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :title %><br>
+    <%= f.label :title , '名稱' %><br>
     <%= f.text_field :title %>
   </div>
+
   <div class="field">
-    <%= f.label :code %><br>
+    <%= f.label :code , '代碼' %><br>
     <%= f.text_field :code %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="field">
+    <%= f.submit  %><br>    
   </div>
+
+
+
 <% end %>

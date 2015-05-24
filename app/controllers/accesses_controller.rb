@@ -1,10 +1,22 @@
 class AccessesController < ApplicationController
+
+  layout 'admin'
+
   before_action :set_access, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_title
+  #要登入
+  before_action :confirm_logged_in
+
+  #取得一些基本資訊
+  before_action :get_base_data
+
 
   # GET /accesses
   # GET /accesses.json
   def index
-    @accesses = Access.all
+    # @users = User.order(:name).page params[:page]
+    @accesses = Access.order(:id).page params[:page]
   end
 
   # GET /accesses/1
@@ -62,6 +74,10 @@ class AccessesController < ApplicationController
   end
 
   private
+
+    def set_title
+      @title  = ['main1'=>'權限', 'main2'=>'accesses','sub1'=>'權限' , 'sub2'=>'accesses' ]
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_access
       @access = Access.find(params[:id])

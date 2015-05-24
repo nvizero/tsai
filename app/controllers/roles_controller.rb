@@ -1,13 +1,16 @@
 class RolesController < ApplicationController
   before_action :set_role, only: [:show, :edit, :update, :destroy]
 
+  before_action :set_title
+
   layout "admin"
   #取得一些基本資訊
   before_action :get_base_data
   # GET /roles
   # GET /roles.json
   def index
-    @roles = Role.all
+    # @users = User.order(:name).page params[:page]
+    @roles = Role.page params[:page]
   end
 
   # GET /roles/1
@@ -68,6 +71,10 @@ class RolesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_role
       @role = Role.find(params[:id])
+    end
+
+    def set_title
+      @title = ['main1'=>'⻆色管理', 'main2'=>'role','sub1'=>'首頁' , 'sub2'=>'⻆色管理']
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

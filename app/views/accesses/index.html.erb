@@ -1,13 +1,24 @@
-<h1>Listing accesses</h1>
+<%= render 'comm/top' %>
 
-<table>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">使用者列表</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
+
+
+              <table id="example2" class="table table-bordered table-striped">
+
+
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Code</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>名稱</th>
+      <th>代碼</th>
+      <th><%= link_to '新增權限', new_access_path %></th>
     </tr>
   </thead>
 
@@ -16,14 +27,20 @@
       <tr>
         <td><%= access.title %></td>
         <td><%= access.code %></td>
-        <td><%= link_to 'Show', access %></td>
-        <td><%= link_to 'Edit', edit_access_path(access) %></td>
-        <td><%= link_to 'Destroy', access, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+            <% link_to 'Show', access %>
+            <%= link_to '編輯', edit_access_path(access) %>
+            <%= link_to '删除', access, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= paginate @accesses  %>
+</div>
 
-<br>
 
-<%= link_to 'New Access', new_access_path %>
+</div>
+</div>
+</div>
+</section><!-- /.content -->

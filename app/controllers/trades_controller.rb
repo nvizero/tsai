@@ -40,31 +40,48 @@ class TradesController < ApplicationController
   # POST /trades
   # POST /trades.json
   def create
-    @trade = Trade.new(trade_params)
 
-    respond_to do |format|
-      if @trade.save
-        format.html { redirect_to @trade, notice: 'Trade was successfully created.' }
-        format.json { render action: 'index', status: :created, location: @trade }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @trade.errors, status: :unprocessable_entity }
-      end
+    @trade = Trade.new(trade_params)
+    if @trade.save
+      # flash[:notice] = "trades新增成功!......"
+      render :text => @trade.id
+      # redirect_to action: "index"
+    else
+      # render action: 'edit'
+      render action: 'new'
     end
+
+    # respond_to do |format|
+    #   if @trade.save
+    #     format.html { redirect_to @trade, notice: 'Trade was successfully created.' }
+    #     format.json { render action: 'index', status: :created, location: @trade }
+    #   else
+    #     format.html { render action: 'new' }
+    #     format.json { render json: @trade.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /trades/1
   # PATCH/PUT /trades/1.json
   def update
-    respond_to do |format|
-      if @trade.update(trade_params)
-        format.html { redirect_to @trade, notice: 'Trade was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @trade.errors, status: :unprocessable_entity }
-      end
+
+    if @trade.update(trade_params)
+      flash[:notice] = "trades更新成功!"
+      redirect_to action: "index"
+    else
+      render action: 'edit'
     end
+
+    # respond_to do |format|
+    #   if @trade.update(trade_params)
+    #     format.html { redirect_to @trade, notice: 'Trade was successfully updated.' }
+    #     format.json { head :no_content }
+    #   else
+    #     format.html { render action: 'edit' }
+    #     format.json { render json: @trade.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # DEadminE /trades/1

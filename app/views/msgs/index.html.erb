@@ -1,12 +1,26 @@
-<%=render 'comm/top' %>
+<%= render 'comm/top' %>
 
-<table>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">使用者列表</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
+
+
+              <table id="example2" class="table table-bordered table-striped">
+
+
   <thead>
     <tr>
       <th>標題</th>
       <th>內容</th>
-      <th>裝態</th>
-      <th><%= link_to 'New Msg', new_msg_path %></th>
+      <th>裝態/位置</th>
+      <th><%= link_to '新增訊息', new_msg_path %></th>
+
     </tr>
   </thead>
 
@@ -15,13 +29,48 @@
       <tr>
         <td><%= msg.title %></td>
         <td><%= msg.content %></td>
-        <td><%= (msg.state=='Y')?'顯示':'不顯示' %></td>
         <td>
-            <%= link_to 'Show', msg %>
-            <%= link_to 'Edit', edit_msg_path(msg) %>
-            <%= link_to 'Destroy', msg, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+            <%= (msg.state=='Y')?'顯示':'不顯示' %>
+            <%= (msg.place=='top')?'上':'中' %>
+
+        </td>
+
+        <td>
+
+            <%= link_to '編輯', edit_msg_path(msg) %>
+
+
+            <a url="#" class="del" id='/msgs/destroy/<%=msg.id %>'> 删除 </a>
+
+
         </td>
       </tr>
     <% end %>
   </tbody>
+
 </table>
+<%= paginate @msgs  %>
+</div>
+
+    <script src="/admin/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+      $('document').ready(function(){
+
+          $('.del').click(function(){
+
+              var url = $(this).attr('id');
+              var n =confirm('確定删除！？');
+              if(n){
+                document.location.href=url;
+              }
+
+          });
+
+      })
+    </script>
+
+</div>
+</div>
+</div>
+</section><!-- /.content -->
