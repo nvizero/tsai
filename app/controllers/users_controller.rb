@@ -84,8 +84,12 @@ class UsersController < ApplicationController
              @user.save
 
 
-            format.html { redirect_to @user, notice: '新增成功！' }
-            format.json { render action: 'index', status: :created, location: @user }
+            # format.html { redirect_to @user, notice: '新增成功！' }
+            # format.json { render action: 'index', status: :created, location: @user }
+
+            flash[:notice] = "會員-更新成功!"
+            redirect_to action: "index"
+
           else
             format.html { render action: 'new' }
             format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -103,7 +107,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    
+
     if @user.update(user_params_update)
       flash[:notice] = "User更新成功!"
       redirect_to action: "index"

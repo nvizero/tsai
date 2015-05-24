@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <title>AdminLTE | Dashboard</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-
         <!-- bootstrap 3.0.2 -->
         <link href="/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
@@ -44,16 +43,16 @@
             </aside><!-- /.left-side -->
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">
-                        <% if !flash[:notice].blank? %>
-                          <h2>
-                            <p class="text-primary">
-                              <%= flash[:notice] %>
-                            </p>
-                          </h2>
-                        <% end %>
+              <% if !flash[:notice].blank? %>
+                <h2>
+                  <p class="text-primary">
+                    <%= flash[:notice] %>
+                  </p>
+                </h2>
+              <% end %>
 
 
-                        <%= yield %>
+              <%= yield %>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 

@@ -30,8 +30,8 @@
                         <td>
 
                             <%= link_to '編輯', edit_trade_path(trade.id) %>|
-                            <% link_to '删除', trade, method: :deadmine, data: { confirm: 'Are you sure?' } %>
-                            <%= link_to("删除", {:action => 'del', :id => trade.id}, :class => 'action delete') %>
+
+                            <a url="#" class="del" id='/trades/destroy/<%=trade.id %>'> 删除 </a>
                         </td>
 
                       </tr>
@@ -41,8 +41,26 @@
 
               </div>
 
-
+              <%= paginate @trades  %>
             </div>
+
+            <script src="/admin/js/jquery-2.1.4.min.js"></script>
+            <script type="text/javascript">
+              $('document').ready(function(){
+
+                  $('.del').click(function(){
+
+                      var url = $(this).attr('id');
+                      var n =confirm('確定删除！？');
+                      if(n){
+                        document.location.href=url;
+                      }
+
+                  });
+
+              })
+            </script>
+
           </div>
         </div>
 </section><!-- /.content -->

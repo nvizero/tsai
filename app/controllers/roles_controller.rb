@@ -32,29 +32,44 @@ class RolesController < ApplicationController
   def create
     @role = Role.new(role_params)
 
-    respond_to do |format|
-      if @role.save
-        format.html { redirect_to @role, notice: 'Role was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @role }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @role.errors, status: :unprocessable_entity }
-      end
+
+    if @role.save
+      flash[:notice] = "角色-新增成功!"
+      redirect_to action: "index"
+    else
+      render action: 'new'
     end
+
+    # respond_to do |format|
+    #   if @role.save
+    #     format.html { redirect_to @role, notice: 'Role was successfully created.' }
+    #     format.json { render action: 'show', status: :created, location: @role }
+    #   else
+    #     format.html { render action: 'new' }
+    #     format.json { render json: @role.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /roles/1
   # PATCH/PUT /roles/1.json
   def update
-    respond_to do |format|
-      if @role.update(role_params)
-        format.html { redirect_to @role, notice: 'Role was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @role.errors, status: :unprocessable_entity }
-      end
+
+    if @role.update(role_params)
+      flash[:notice] = "角色-更新成功!"
+      redirect_to action: "index"
+    else
+      render action: 'edit'
     end
+    # respond_to do |format|
+    #   if @role.update(role_params)
+    #     format.html { redirect_to @role, notice: 'Role was successfully updated.' }
+    #     format.json { head :no_content }
+    #   else
+    #     format.html { render action: 'edit' }
+    #     format.json { render json: @role.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # DELETE /roles/1

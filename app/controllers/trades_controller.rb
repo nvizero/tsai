@@ -18,7 +18,8 @@ class TradesController < ApplicationController
   # GET /trades.json
   def index
     @table_title  = "交易代碼列表"
-    @trades = Trade.all
+    @trades = Trade.page params[:page]
+
   end
 
   # GET /trades/1
@@ -43,11 +44,14 @@ class TradesController < ApplicationController
 
     @trade = Trade.new(trade_params)
     if @trade.save
-      # flash[:notice] = "trades新增成功!......"
-      render :text => @trade.id
-      # redirect_to action: "index"
+      flash[:notice] = "trades新增成功!......"
+      # render :text => @trade.id
+      redirect_to :action => :index
+
     else
+
       # render action: 'edit'
+
       render action: 'new'
     end
 
@@ -67,7 +71,7 @@ class TradesController < ApplicationController
   def update
 
     if @trade.update(trade_params)
-      flash[:notice] = "trades更新成功!"
+      flash[:notice] = "交易碼更新成功!"
       redirect_to action: "index"
     else
       render action: 'edit'

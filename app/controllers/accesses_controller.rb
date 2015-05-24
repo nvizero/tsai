@@ -38,29 +38,35 @@ class AccessesController < ApplicationController
   def create
     @access = Access.new(access_params)
 
-    respond_to do |format|
+
       if @access.save
-        format.html { redirect_to @access, notice: 'Access was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @access }
+        flash[:notice] = "權限-新增成功!"
+        redirect_to :action=> :index
       else
-        format.html { render action: 'new' }
-        format.json { render json: @access.errors, status: :unprocessable_entity }
+        render action: 'new'
       end
-    end
+
   end
 
   # PATCH/PUT /accesses/1
   # PATCH/PUT /accesses/1.json
   def update
-    respond_to do |format|
-      if @access.update(access_params)
-        format.html { redirect_to @access, notice: 'Access was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @access.errors, status: :unprocessable_entity }
-      end
+    if @access.update(access_params)
+      flash[:notice] = "權限更新成功!"
+      redirect_to action: "index"
+    else
+      render action: 'edit'
     end
+
+    # respond_to do |format|
+    #   if @access.update(access_params)
+    #     format.html { redirect_to @access, notice: 'Access was successfully updated.' }
+    #     format.json { head :no_content }
+    #   else
+    #     format.html { render action: 'edit' }
+    #     format.json { render json: @access.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # DELETE /accesses/1

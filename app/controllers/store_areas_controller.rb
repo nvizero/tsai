@@ -20,7 +20,7 @@ class StoreAreasController < ApplicationController
   def index
     @title  = self.comm
     @table_title = "庫位列表"
-    @store_areas = StoreArea.all
+    @store_areas = StoreArea.page params[:page]
   end
 
   # GET /store_areas/1
@@ -43,30 +43,43 @@ class StoreAreasController < ApplicationController
   # POST /store_areas.json
   def create
     @store_area = StoreArea.new(store_area_params)
-
-    respond_to do |format|
-      if @store_area.save
-        format.html { redirect_to @store_area, notice: 'Store area was successfully created.' }
-        format.json { render action: 'index', status: :created, location: @store_area }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @store_area.errors, status: :unprocessable_entity }
-      end
+    if @store_area.save
+      flash[:notice] = "庫位-新增成功!"
+      redirect_to action: "index"
+    else
+      render action: 'new'
     end
+
+    # respond_to do |format|
+    #   if @store_area.save
+    #     format.html { redirect_to @store_area, notice: 'Store area was successfully created.' }
+    #     format.json { render action: 'index', status: :created, location: @store_area }
+    #   else
+    #     format.html { render action: 'new' }
+    #     format.json { render json: @store_area.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /store_areas/1
   # PATCH/PUT /store_areas/1.json
   def update
-    respond_to do |format|
-      if @store_area.update(store_area_params)
-        format.html { redirect_to @store_area, notice: 'Store area was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @store_area.errors, status: :unprocessable_entity }
-      end
+
+    if @store_area.update(store_area_params)
+      flash[:notice] = "庫位-更新成功!"
+      redirect_to action: "index"
+    else
+      render action: 'edit'
     end
+    # respond_to do |format|
+    #   if @store_area.update(store_area_params)
+    #     format.html { redirect_to @store_area, notice: 'Store area was successfully updated.' }
+    #     format.json { head :no_content }
+    #   else
+    #     format.html { render action: 'edit' }
+    #     format.json { render json: @store_area.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # DEadminE /store_areas/1

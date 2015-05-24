@@ -26,18 +26,34 @@
                         <td><%= store_area.area_id %></td>
                         <td><%= store_area.area_name %></td>
                         <td>
-                            <%= link_to 'Show', store_area %>
-                            <%= link_to 'Edit', edit_store_area_path(store_area) %>
-                            <%= link_to 'Destroy', store_area, method: :deadmine, data: { confirm: 'Are you sure?' } %></td>
+
+                            <%= link_to '編輯', edit_store_area_path(store_area) %>
+                            <a url="#" class="del" id='/store_areas/destroy/<%=store_area.id %>'> 删除 </a>
                       </tr>
                     <% end %>
                   </tbody>
                 </table>
 
               </div>
-
+              <%=paginate @store_areas %>
 
             </div>
+            <script src="/admin/js/jquery-2.1.4.min.js"></script>
+            <script type="text/javascript">
+              $('document').ready(function(){
+
+                  $('.del').click(function(){
+
+                      var url = $(this).attr('id');
+                      var n =confirm('確定删除！？');
+                      if(n){
+                        document.location.href=url;
+                      }
+
+                  });
+
+              })
+            </script>
           </div>
         </div>
 </section><!-- /.content -->

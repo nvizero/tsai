@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
 
   def index
     first_msg = Msg.first
-    @title = ['main1'=>first_msg.title, 'main2'=>'index','sub1'=>first_msg.title , 'sub2'=>'index']
+    @title = ['main1'=>'首頁' , 'main2'=>'index','sub1'=>'首頁' , 'sub2'=>'index']
     #@title = ['main1' => @msg.first, 'main2'=>'','sub1'=>'首頁' , 'sub2'=>first_msg.title]
     @msg = first_msg
     @users = User.all.count

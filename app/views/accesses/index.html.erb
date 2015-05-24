@@ -28,9 +28,9 @@
         <td><%= access.title %></td>
         <td><%= access.code %></td>
         <td>
-            <% link_to 'Show', access %>
+
             <%= link_to '編輯', edit_access_path(access) %>
-            <%= link_to '删除', access, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <a url="#" class="del" id='/accesses/destroy/<%=access.id %>'> 删除 </a>
         </td>
       </tr>
     <% end %>
@@ -39,7 +39,22 @@
 <%= paginate @accesses  %>
 </div>
 
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
 
+      $('.del').click(function(){
+
+          var url = $(this).attr('id');
+          var n =confirm('確定删除！？');
+          if(n){
+            document.location.href=url;
+          }
+
+      });
+
+  })
+</script>
 </div>
 </div>
 </div>

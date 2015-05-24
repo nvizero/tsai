@@ -29,7 +29,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
 
-
+          <% if session[:user_id] %>
           <li class="active" style="background-color: #3c8dbc;">
               <a href="/users" style="background: #3c8dbc;">
                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span>會員專區</span>
@@ -131,6 +131,7 @@
                 </ul>
             </li>
 
+
             <li class="treeview" >
                 <a href="#">
                     <i class="fa fa-table"></i> <span>基礎資料</span>
@@ -145,6 +146,18 @@
 
                 </ul>
             </li>
+
+            <% else %>
+              <% @mid_msgs.each do |msg| %>
+              <li class="active">
+                  <a href="/msgs/<%= msg.id %>">
+                      <span>
+                        <%= msg.title %>
+                      </span>
+                  </a>
+              </li>
+              <% end %>
+            <% end %>
 
             <li id="hiden">
                 <a href="pages/calendar.html">

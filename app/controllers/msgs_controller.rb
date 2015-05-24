@@ -1,7 +1,7 @@
 class MsgsController < ApplicationController
 
-  before_action :confirm_logged_in
-  
+
+
   layout 'admin'
 
   before_action :set_msg, only: [:show, :edit, :update, :destroy]
@@ -19,6 +19,8 @@ class MsgsController < ApplicationController
   # GET /msgs
   # GET /msgs.json
   def index
+    
+    self.confirm_logged_in
 
     @title = self.comm
     @msgs  = Msg.page params[:page]
@@ -37,6 +39,7 @@ class MsgsController < ApplicationController
 
   # GET /msgs/new
   def new
+    before_action :confirm_logged_in
     @msg = Msg.new
   end
 

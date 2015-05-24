@@ -3,5 +3,6 @@ class Msg < ActiveRecord::Base
 
   scope :live, lambda { where("msgs.state = 'Y' ") }
   scope :top, lambda { where("msgs.place = 'top' ") }
+  scope :mid, lambda { where("msgs.place = 'mid' ") }
 
 end

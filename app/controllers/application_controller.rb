@@ -16,7 +16,8 @@ class ApplicationController < ActionController::Base
   end
 
   def get_base_data
-    @head_msgs = Msg.top
+    @head_msgs = Msg.top.live
+    @mid_msgs = Msg.mid.live
   end
 
 
