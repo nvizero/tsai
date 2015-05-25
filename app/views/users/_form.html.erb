@@ -1,17 +1,14 @@
 
 
 <%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <% if @user.errors.any? %>
+      <div id="error_explanation"  style="display:none;">
+        <% @user.errors.full_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
+      </div>
+   <% end %>
 
 
 
@@ -30,24 +27,25 @@
 
                     <div class="box-body">
 
-                        <div class="form-group">
-                          <%= f.label :username ,'帳號',:for =>'exampleInputEmail1' %><br>
+
+                        <div class="form-group has-error">
+                          <%= f.label :username ,'帳號',:for =>'exampleInputEmail1' %> <font color="red" >*</font>
                           <%= f.text_field :username, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"輸入帳號" %>
                         </div>
 
 
-                        <div class="form-group">
-                          <%= f.label :email ,'電子信箱',:for =>'exampleInputEmail1' %><br>
+                        <div class="form-group has-error">
+                          <%= f.label :email ,'電子信箱',:for =>'exampleInputEmail1' %><font color="red" >*</font>
                           <%= f.text_field :email, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"輸入email" %>
                         </div>
 
-                        <div class="form-group">
-                          <%= f.label :role_id ,'角色',:for =>'exampleInputEmail1' %><br>
+                        <div class="form-group has-error">
+                          <%= f.label :role_id ,'角色',:for =>'exampleInputEmail1' %><font color="red" >*</font><br>
                           <%= f.text_field :role_id, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"角色" %>
                         </div>
 
-                        <div class="form-group">
-                          <%= f.label :name ,'姓名',:for =>'exampleInputEmail1' %><br>
+                        <div class="form-group has-error">
+                          <%= f.label :name ,'姓名',:for =>'exampleInputEmail1' %><font color="red" >*</font><br>
                           <%= f.text_field :name, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"輪入姓名" %>
                         </div>
 
@@ -77,22 +75,22 @@
                         </div>
 
                         <div class="form-group">
-                          <%= f.label  :check_date,'日期'  ,:for =>'exampleInputEmail1' %><br>
-                          <%= f.text_field :check_date, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"日期" %>
+                          <%= f.label  :check_date,'簽約日期'  ,:for =>'exampleInputEmail1' %><br>
+                          <%= f.text_field :check_date, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"簽約日期" %>
                         </div>
 
-                        <div class="form-group">
-                          <%= f.label :password ,'密碼' ,:for =>'exampleInputEmail1' %><br>
+                        <div class="form-group has-error">
+                          <%= f.label :password ,'密碼' ,:for =>'exampleInputEmail1' %><font color="red" >*</font><br>
                           <%= f.password_field :password , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"密碼" %>
                         </div>
 
-                        <div class="form-group">
-                          <%= f.label :re_password,'認確密碼'  ,:for =>'exampleInputEmail1' %><br>
+                        <div class="form-group has-error">
+                          <%= f.label :re_password,'認確密碼'  ,:for =>'exampleInputEmail1' %><font color="red" >*</font><br>
                           <%= f.password_field :re_password, :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"認確密碼" %>
                         </div>
 
-                        <div class="form-group">
-                          <%= f.label  :forget_pas,'忘記密碼' ,:for =>'exampleInputEmail1' %><br>
+                        <div class="form-group has-error">
+                          <%= f.label  :forget_pas,'忘記密碼提示' ,:for =>'exampleInputEmail1' %><font color="red" >*</font>
                           <%= f.text_field :forget_pas , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"忘記密碼" %>
                         </div>
 
@@ -101,7 +99,7 @@
                           <%= f.text_area :text , :class=>'form-control', :id=>"exampleInputEmail1", :placeholder=>"備註" %>
                         </div>
 
-                        
+
 
 
 
@@ -134,4 +132,18 @@
 </div>
 </div>
 </div>
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+    var errors_msg =$('#error_explanation').html();
+
+    if( errors_msg.length > 3 ){
+      alert( errors_msg );
+    }
+
+
+  })
+</script>
+
 </div>

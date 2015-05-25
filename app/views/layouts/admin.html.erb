@@ -42,15 +42,29 @@
               <%= render 'layouts/admin_left' %>
             </aside><!-- /.left-side -->
             <!-- Right side column. Contains the navbar and content of the page -->
-            <aside class="right-side">
-              <% if !flash[:notice].blank? %>
-                <h2>
-                  <p class="text-primary">
-                    <%= flash[:notice] %>
-                  </p>
-                </h2>
-              <% end %>
+            <aside class="right-side" >
+              <div class="" style="display:none;">
 
+
+                <% if !flash[:notice].blank? %>
+                  <h2 class="notice">
+                      <%= flash[:notice] %>
+                  </h2>
+                <% end %>
+              </div>
+
+              <script src="/admin/js/jquery-2.1.4.min.js"></script>
+              <script type="text/javascript">
+                $('document').ready(function(){
+                  var notice_msg =$('.notice').html();
+
+                  if( notice_msg.length > 4 ){
+                    alert( notice_msg );
+                  }
+
+
+                })
+              </script>
 
               <%= yield %>
             </aside><!-- /.right-side -->

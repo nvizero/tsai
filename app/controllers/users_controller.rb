@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   #取得一些基本資訊
   before_action :get_base_data
-  before_action :set_title 
+  before_action :set_title
 
   def comm
     return ['main1'=>'使用者', 'main2'=>'Users','sub1'=>'首頁' , 'sub2'=>'使用者']
@@ -112,7 +112,8 @@ class UsersController < ApplicationController
   def update
 
     if @user.update(user_params_update)
-      flash[:notice] = "User更新成功!"
+      
+      flash[:notice] = "會員更新成功!"
       redirect_to action: "index"
     else
       render action: 'edit'
@@ -164,7 +165,7 @@ class UsersController < ApplicationController
     end
 
     def user_params_update
-      params.require(:user).permit( :email, :company_address,:role_id,
+      params.require(:user).permit( :email, :company_address, :role_id,
                                     :name,  :boss, :serial_code , :tel,
                                     :send_address,  :check_date,
                                     :forget_password, :text,

@@ -11,8 +11,6 @@ class DashboardController < ApplicationController
 
   def index
 
-    
-
     first_msg = Msg.first
     @title = ['main1'=>'首頁' , 'main2'=>'index','sub1'=>'首頁' , 'sub2'=>'index']
     #@title = ['main1' => @msg.first, 'main2'=>'','sub1'=>'首頁' , 'sub2'=>first_msg.title]
