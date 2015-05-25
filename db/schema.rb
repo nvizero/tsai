@@ -69,9 +69,9 @@ ActiveRecord::Schema.define(version: 20150522151607) do
     t.string   "company_address", limit: 80
     t.string   "send_address",    limit: 80
     t.string   "check_date",      limit: 45
-    t.string   "password",        limit: 20
-    t.string   "re_password",     limit: 20
-    t.string   "forget_pas",      limit: 60
+    t.string   "password"
+    t.string   "re_password"
+    t.string   "forget_pas",      limit: 100
     t.text     "text"
     t.string   "trade_id",        limit: 2
     t.string   "store_area_id",   limit: 8

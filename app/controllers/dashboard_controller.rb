@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
 
   def index
 
-    UserMailer.notify_comment
+    
 
     first_msg = Msg.first
     @title = ['main1'=>'首頁' , 'main2'=>'index','sub1'=>'首頁' , 'sub2'=>'index']

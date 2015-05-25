@@ -10,10 +10,10 @@ class AddUserColumn < ActiveRecord::Migration
     add_column :users ,:company_address, :string, :limit=>80
     add_column :users ,:send_address, :string, :limit=>80
     add_column :users ,:check_date, :string, :limit=>45
-    add_column :users ,:password, :string, :limit=>20
-    add_column :users ,:re_password, :string, :limit=>20
+    add_column :users ,:password, :string, :limit=>255
+    add_column :users ,:re_password, :string, :limit=>255
 
-    add_column :users ,:forget_pas, :string, :limit=>60
+    add_column :users ,:forget_pas, :string, :limit=>100
     add_column :users ,:text, :text
     add_column :users ,:trade_id, :string, :limit=>2
     add_column :users ,:store_area_id, :string, :limit=>8

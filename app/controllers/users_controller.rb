@@ -67,7 +67,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
+    # respond_to do |format|
 
       if params[:password] == params[:re_password]
 
@@ -78,29 +78,33 @@ class UsersController < ApplicationController
              @user.password = ''
              #壯態
              @user.state = 'Y'
-             @user.save
 
-             @user.password = Digest::SHA256.hexdigest params[:password].to_s.rstrip.lstrip
-             @user.save
+
+            #  @user.password = Digest::SHA256.hexdigest params[:password].to_s.rstrip.lstrip
+
 
 
             # format.html { redirect_to @user, notice: '新增成功！' }
             # format.json { render action: 'index', status: :created, location: @user }
 
-            flash[:notice] = "會員-更新成功!"
-            redirect_to action: "index"
+             uu = @user
+             UserMailer.new_user(uu).deliver
+            #  notify_comment
+             @user.save
+             flash[:notice] = "會員-新增成功!"
+             redirect_to :action=> :index
 
           else
             format.html { render action: 'new' }
             format.json { render json: @user.errors, status: :unprocessable_entity }
           end
 
-      else
-
-        format.html { render action: 'new' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-
-      end
+      # else
+      #
+      #   format.html { render action: 'new' }
+      #   format.json { render json: @user.errors, status: :unprocessable_entity }
+      #
+      # end
     end
   end
 
