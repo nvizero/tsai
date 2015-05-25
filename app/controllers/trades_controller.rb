@@ -6,7 +6,7 @@ class TradesController < ApplicationController
   #取得一些基本資訊
   before_action :get_base_data
   #設定上面的TITLT
-  before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
+  before_action :set_title
 
   before_action :set_trade, only: [:show, :edit, :update, :destroy]
 
@@ -44,7 +44,7 @@ class TradesController < ApplicationController
 
     @trade = Trade.new(trade_params)
     if @trade.save
-      flash[:notice] = "trades新增成功!......"
+      flash[:notice] = "交易碼新增成功!"
       # render :text => @trade.id
       redirect_to :action => :index
 

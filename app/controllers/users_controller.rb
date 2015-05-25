@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   #取得一些基本資訊
   before_action :get_base_data
-  before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
+  before_action :set_title 
 
   def comm
     return ['main1'=>'使用者', 'main2'=>'Users','sub1'=>'首頁' , 'sub2'=>'使用者']
@@ -95,8 +95,7 @@ class UsersController < ApplicationController
              redirect_to :action=> :index
 
           else
-            format.html { render action: 'new' }
-            format.json { render json: @user.errors, status: :unprocessable_entity }
+            render action: 'new'
           end
 
       # else

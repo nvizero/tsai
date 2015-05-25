@@ -45,11 +45,30 @@ class LoginController < ApplicationController
 
   def do_forget_pas
 
+    o    = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+    str  = (0...6).map { o[rand(o.length)] }.join
+
+    # user = User.find_by(username: params[:username])
+    @ou =  User.where(:username => params[:username],:email=>params[:email] ).first
+
     @table_title = '忘記密碼'
     @title = ['main1'=>'忘記密碼', 'LOGIN'=>'Users','sub1'=>'首頁' , 'sub2'=>'忘記密碼']
 
-    @ou =  User.where(:username => params[:username]).first
 
+
+    if @ou
+      @ou.forget_pas = str
+      @ou.save
+      # user = User.find_by(username: params[:username])
+      # user.update(forget_pas: str)
+      # user.save
+
+      @ou.forget_pas = str
+      @ou.save
+
+      user = @ou
+      UserMailer.forget_pas(user , str).deliver
+    end
 
     render 'do_forget_pas'
 
@@ -85,8 +104,9 @@ class LoginController < ApplicationController
 
     flash[:notice] = "登出成功"
     redirect_to(:controller=> 'dashboard' , :action => "index")
-
   end
+
+
 
 
 end

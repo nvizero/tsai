@@ -6,7 +6,7 @@ class StoreAreasController < ApplicationController
   #登入
   before_action :confirm_logged_in
   #設定上面的TITLT
-  before_action :set_title , only: [:new, :index, :show, :edit, :update, :destroy]
+  before_action :set_title
 
   before_action :set_store_area, only: [:show, :edit, :update, :destroy]
 

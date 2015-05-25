@@ -15,10 +15,10 @@
               <table id="example2" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>Email</th>
+                      <th>E-mail</th>
                       <th>姓名</th>
-                      <th>交易代碼</th>
-                      <th>庫位</th>
+                      <th>負責人</th>
+                      <th>公司</th>
 
                       <th><%= link_to '新增使用者', new_user_path %></th>
                     </tr>
@@ -29,13 +29,14 @@
                       <tr>
                         <td><%= user.email %></td>
                         <td><%= user.name %></td>
-                        <td><%= user.trade_id %></td>
+                        <td><%= user.boss %></td>
                         <td><%= user.store_area_id %></td>
 
                         <td>
-                            <%= link_to 'Show', user %>|
-                            <%= link_to 'Edit', edit_user_path(user) %>|
-                            <%= link_to 'Destroy', user, method: :destroy, data: { confirm: 'Are you sure?' } %>
+
+                            <%= link_to '編輯', edit_user_path(user) %>|
+
+                            <a url="#" class="del" id='/users/destroy/<%=user.id %>'> 删除 </a>
                         </td>
                       </tr>
                     <% end %>
@@ -44,6 +45,22 @@
                 <%= paginate @users  %>
               </div>
 
+              <script src="/admin/js/jquery-2.1.4.min.js"></script>
+              <script type="text/javascript">
+                $('document').ready(function(){
+
+                    $('.del').click(function(){
+
+                        var url = $(this).attr('id');
+                        var n =confirm('確定删除！？');
+                        if(n){
+                          document.location.href=url;
+                        }
+
+                    });
+
+                })
+              </script>
 
             </div>
           </div>
