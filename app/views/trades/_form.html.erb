@@ -1,14 +1,11 @@
 <%= form_for(@trade) do |f| %>
 
     <% if @trade.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@trade.errors.count, "error") %> prohibited this trade from being saved:</h2>
-
-          <ul>
+        <div id="error_explanation" style="display:none;">
           <% @trade.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
+            <%= msg %>
           <% end %>
-          </ul>
+
         </div>
     <% end %>
 
@@ -27,21 +24,21 @@
                         <form role="form">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <%= f.label :id , '交易代碼' %>                                                                                        
+                                    <%= f.label :id , '交易代碼' %>
                                     <%= f.text_field :id , :id=>"exampleInputFile",:class=>"form-control" %>
-                                    
+
                                 </div>
-                                
+
                                 <div class="form-group">
-                                    
-                                    
+
+
                                     <%= f.label :description , '說明' %>
                                     <%= f.text_field :description , :id=>"exampleInputFile",:class=>"form-control" %>
-                                    
-                                    
-                                    
+
+
+
                                 </div>
-                                
+
                             </div><!-- /.box-body -->
 
                             <div class="box-footer">
@@ -50,7 +47,20 @@
                         </form>
                     </div><!-- /.box -->
                 </div>
-            </div>    
+            </div>
             </section><!-- /.content -->
     </aside><!-- /.right-side -->
-<% end %>            
+<% end %>
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+    var errors_msg =$('#error_explanation').html();
+
+    if( errors_msg.length > 3 ){
+      alert( errors_msg );
+    }
+
+
+  })
+</script>

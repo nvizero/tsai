@@ -1,23 +1,21 @@
 <%= form_for(@access) do |f| %>
   <% if @access.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@access.errors.count, "error") %> prohibited this access from being saved:</h2>
+    <div id="error_explanation" style="display:none;">
 
-      <ul>
-      <% @access.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+          <% @access.errors.full_messages.each do |msg| %>
+            <%= msg %>
+          <% end %>
+
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :title , '名稱' %><br>
+  <div class="form-group has-error">
+    <%= f.label :title , '名稱' %><font color="red">*</font>
     <%= f.text_field :title ,:id=>"exampleInputFile",:class=>"form-control"  %>
   </div>
 
-  <div class="field">
-    <%= f.label :code , '代碼' %><br>
+  <div class="form-group has-error">
+    <%= f.label :code , '代碼' %><font color="red">*</font>
     <%= f.text_field :code ,:id=>"exampleInputFile",:class=>"form-control"  %>
   </div>
 
@@ -28,3 +26,17 @@
 
 
 <% end %>
+
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+    var errors_msg =$('#error_explanation').html();
+
+    if( errors_msg.length > 3 ){
+      alert( errors_msg );
+    }
+
+
+  })
+</script>

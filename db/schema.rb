@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20150522151607) do
   end
 
   create_table "store_areas", primary_key: "area_id", force: true do |t|
-    t.string   "area_name",  limit: 8
+    t.string   "area_name",  limit: 100
     t.datetime "created_at"
     t.datetime "updated_at"
   end

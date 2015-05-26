@@ -7,7 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-User.create!( :username => "nvizero", :re_password => '123456', :name =>'nvizero', :state=>'Y')
+User.create!( :username => "nvizero", :role_id=> 1 ,:re_password => '123456',
+              :name =>'nvizero', :state=>'Y' ,:password=>'123456' ,
+              :email =>"withvictor@gmail.com" , :forget_pas=>'123456')
 
 Msg.create!( :title => "關於我們", :content => '關於我們＿' , :state=>'Y' , :place=>'top')
 Msg.create!( :title => "服務項目", :content => '服務項目＿' , :state=>'Y' , :place=>'top')

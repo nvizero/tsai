@@ -1,13 +1,10 @@
 <%= form_for(@role) do |f| %>
   <% if @role.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@role.errors.count, "error") %> prohibited this role from being saved:</h2>
-
-      <ul>
+    <div id="error_explanation" style="display:none;">
       <% @role.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <%= msg %>
       <% end %>
-      </ul>
+
     </div>
   <% end %>
 
@@ -53,3 +50,17 @@
 </section><!-- /.content -->
 </aside><!-- /.right-side -->
 <% end %>
+
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+    var errors_msg =$('#error_explanation').html();
+
+    if( errors_msg.length > 3 ){
+      alert( errors_msg );
+    }
+
+
+  })
+</script>

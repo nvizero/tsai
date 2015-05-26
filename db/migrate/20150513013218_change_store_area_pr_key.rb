@@ -4,7 +4,7 @@ class ChangeStoreAreaPrKey < ActiveRecord::Migration
       remove_column :store_areas, :id
       change_column :store_areas, :area_id, :primary_key
       change_column :store_areas, :area_id, :string, :limit=>8
-      change_column :store_areas, :area_name, :string, :limit=>8
+      change_column :store_areas, :area_name, :string, :limit=>10
   end
 
   def down

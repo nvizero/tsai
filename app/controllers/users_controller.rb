@@ -74,13 +74,13 @@ class UsersController < ApplicationController
           if @user.save
 
              #密碼
-             #@user.password = Digest::MD5.hexdigest( params[:password].to_s )
-             @user.password = ''
+            #  @user.password = Digest::MD5.hexdigest( params[:password].to_s )
+            #  @user.password = ''
              #壯態
              @user.state = 'Y'
 
 
-            #  @user.password = Digest::SHA256.hexdigest params[:password].to_s.rstrip.lstrip
+             @user.password = Digest::SHA256.hexdigest @user.password
 
 
 
@@ -112,7 +112,7 @@ class UsersController < ApplicationController
   def update
 
     if @user.update(user_params_update)
-      
+
       flash[:notice] = "會員更新成功!"
       redirect_to action: "index"
     else

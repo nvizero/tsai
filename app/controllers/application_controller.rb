@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   def confirm_logged_in
 
       unless session[:user_id]
-        flash[:notice] = "請先登入"
+        flash[:notice] = "會員專區請先登入!"
         redirect_to(:controller => 'login', :action => 'login_form')
         return false # halts the before_action
       else

@@ -7,20 +7,34 @@ class LoginController < ApplicationController
 
   def do_login
     #eeee
-    @username = params[:username].rstrip.lstrip
-    @old  = params[:password].rstrip.lstrip
-    @check_pas    = Digest::SHA256.hexdigest @old.to_s
-    @password = @check_pas
-    @is_login = User.where(:username=>@username , :re_password => params[:password] ).first
+    # @username = params[:username].rstrip.lstrip
+    user_data = params[:user]
+
+
+    @pas= Digest::SHA256.hexdigest user_data["password"].to_s.rstrip.lstrip
+
+    @is_login = User.where(:username => user_data["username"] , :password  => @pas ).first
+    #
+    # @login_name = User.where(:username => params[:username].to_s.rstrip.lstrip ).first
+    #
+    # @login_pas = User.where(password:  @password ).first
+    # if @is_login
+
+    # end
+
 
     if @is_login
-      self.set_user_sesssion
-      redirect_to(:controller=> 'dashboard' , :action => "main")
+        self.set_user_sesssion
+        flash[:notice]  = "#{@is_login.name}您好!登入成功"
+        redirect_to(:controller=> 'dashboard' , :action => "main")
+    else
+        flash[:notice]  = "輸入的帳號密碼有誤！請重新輸入！"
+        redirect_to(:controller=> 'login' , :action => "login_form")
     end
 
-    #rebder 'login/do_login'
   end
 
+  #找到帳號後設定SESSION
   def set_user_sesssion
     session[:user_id] = @is_login.id
     session[:user_name] = @is_login.name
@@ -49,7 +63,10 @@ class LoginController < ApplicationController
     str  = (0...6).map { o[rand(o.length)] }.join
 
     # user = User.find_by(username: params[:username])
-    @ou =  User.where(:username => params[:username],:email=>params[:email] ).first
+    @ou  =  User.where(:username => params[:username],:email=>params[:email] ).first
+
+    @pas = Digest::SHA256.hexdigest str
+    @ou.password = @pas
 
     @table_title = '忘記密碼'
     @title = ['main1'=>'忘記密碼', 'LOGIN'=>'Users','sub1'=>'首頁' , 'sub2'=>'忘記密碼']
@@ -57,11 +74,6 @@ class LoginController < ApplicationController
 
 
     if @ou
-      @ou.forget_pas = str
-      @ou.save
-      # user = User.find_by(username: params[:username])
-      # user.update(forget_pas: str)
-      # user.save
 
       @ou.forget_pas = str
       @ou.save

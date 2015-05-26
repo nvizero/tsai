@@ -15,16 +15,16 @@ class User < ActiveRecord::Base
   validates :role_id,  :presence => { :message => "角色－不能空白" },
             :length => {:minimum => 1, :maximum => 8,:message => "帳號-要6到8個字元"}
 
-
   validates :email,     :presence => { :message => "不能空白" } ,
                         :uniqueness => { :message => "有重複,請重新輸入" }
 
   validates :password,        :presence => { :message => "密碼－不能空白" }
   validates :re_password,     :presence => { :message => "重複密碼－不能空白" }
-  # validates :forget_pas,      :presence => { :message => "忘記密碼提示－不能空白" }
+
 
   validates_format_of :email, :with => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i ,:message => "email－格式有誤！請重新輸入！"
   validates_format_of :username, :with => /\A([a-z0-9]+)/i ,:message => "帳號－格式有誤請重新輸入！"
+  validates_confirmation_of :password, :re_password ,message: 'should match confirmation'
 
   # column
   # :email, :company_address,:role_id,
