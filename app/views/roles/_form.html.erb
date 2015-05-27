@@ -25,12 +25,12 @@
                       <div class="box-body">
 
 
-                    <div class="field">
+                    <div class="form-group <% if !@role.errors[:title].blank? %> has-error <% end %> ">
                       <%= f.label :title ,'名稱' %><br>
                       <%= f.text_field :title ,:id=>"exampleInputFile",:class=>"form-control"  %>
                     </div>
 
-                    <div class="field">
+                    <div class="form-group <% if !@role.errors[:text].blank? %> has-error <% end %> " >
                       <%= f.label :text  ,'說明' %><br>
                       <%= f.text_area :text ,:id=>"exampleInputFile",:class=>"form-control" %>
                     </div>

@@ -1,2 +1,82 @@
 <%= render 'comm/top'%>
 <%= render 'form' %>
+
+
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+
+          //帳號檢查
+          $('#username').blur(function(){
+            var username = $(this).val();
+            if(username.length >5 ){
+                $.post( '/check_username', { 'username': username },
+                  function( data ) {
+
+                      if( data == 'n' ){
+                        alert('帳號可以使用！');
+                      }else if(data == 'y'){
+                        alert('帳號己有人使用請重新輸入！');
+                        $('#username').val('').focus() ;
+                      }
+
+                  }
+                );
+
+            }else{
+              $('#username').focus();
+              alert('帳號要大於五個字元！');
+            }
+
+          })
+
+          //check email
+          $('#email').blur(function(){
+
+            var email = $(this).val();
+
+            if(email.length >1 ){
+                $.post( '/check_email', { 'email': email },
+                  function( data ) {
+
+                      if( data == 'n' ){
+                        alert('email可以使用！');
+                      }else if(data == 'y'){
+                        alert('email己有人使用請重新輸入！');
+                        $('#email').val('').focus() ;
+                      }
+
+                  }
+                );
+
+            }else{
+
+              $('#email').focus();
+              // alert('帳號要大於五個字元！');
+            }
+
+          })
+
+
+
+          $('#forget_pas').blur(function(){
+
+            var forget_pas = $(this).val();
+
+            if(forget_pas.length >2 ){
+
+            }else{
+
+              $('#forget_pas').focus();
+              // alert('帳號要大於五個字元！');
+            }
+
+          })
+
+
+
+
+
+  })
+</script>

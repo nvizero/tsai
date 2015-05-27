@@ -1,8 +1,6 @@
 Tsai::Application.routes.draw do
-  resources :accesses
 
-  # get "pact/post_username"
-  #get "ajax/post_username"
+  resources :accesses
   resources :msgs
   resources :roles
   resources :id_seqs
@@ -24,8 +22,12 @@ Tsai::Application.routes.draw do
   post 'do_login' , :to => "login#do_login"
   post 'do_advance_pas' , :to => "login#do_advance_pas"
 
-  post 'post_username' , :to => "pact#post_username"  
+  post 'post_username' , :to => "pact#post_username"
   #ajax/post_username
+
+  post 'check_username' , :to => "pact#check_username"
+  post 'check_email' , :to => "pact#check_email"
+
 
   #get "demo/index"
   match ':controller(/:action(/:id))', :via => [:get, :post]
