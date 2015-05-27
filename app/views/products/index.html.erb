@@ -1,0 +1,73 @@
+<%= render 'comm/top'%>
+
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">產品列表</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
+
+
+              <table id="example2" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>名稱</th>
+                      <th>說明</th>
+                      <th>數量</th>
+                      <th>屬於</th>
+                      <th>
+                          <%= link_to '新增產品', new_product_path %>
+                      </th>
+                    </tr>
+                  </thead>
+
+
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.title %></td>
+        <td><%= product.content %></td>
+        <td><%= product.num %></td>
+        <td><%= product.user.name %></td>
+        <td>
+            <%= link_to '編輯', edit_product_path(product) %>
+
+            <a url="#" class="del" id='/products/destroy/<%=product.id %>'> 删除 </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @products  %>
+
+
+
+
+</div>
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+
+      $('.del').click(function(){
+
+          var url = $(this).attr('id');
+          var n =confirm('確定删除！？');
+          if(n){
+            document.location.href=url;
+          }
+
+      });
+
+  })
+</script>
+
+</div>
+</div>
+</div>
+</section><!-- /.content -->

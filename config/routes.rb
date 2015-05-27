@@ -1,5 +1,7 @@
 Tsai::Application.routes.draw do
 
+  resources :products
+
   resources :accesses
   resources :msgs
   resources :roles

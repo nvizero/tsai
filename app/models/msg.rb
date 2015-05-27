@@ -1,5 +1,5 @@
 class Msg < ActiveRecord::Base
-  paginates_per 5
+  paginates_per 10
 
   scope :live, lambda { where("msgs.state = 'Y' ") }
   scope :top, lambda { where("msgs.place = 'top' ") }

@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   #has_one :trade
   #分頁 每一頁5筆
+
+  has_many :products
+
   paginates_per 10
 
   scope :live, lambda { where("users.state = 'y' ") }
