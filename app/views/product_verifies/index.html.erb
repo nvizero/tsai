@@ -7,8 +7,9 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">使用者列表</h3>
+                <h3 class="box-title">產品－三證進度列表</h3>
             </div><!-- /.box-header -->
+
             <div class="box-body table-responsive">
 
 
@@ -16,10 +17,10 @@
 
   <thead>
     <tr>
-      <th>Product ID</th>
-      <th>Status</th>
-      <th>Product verify type</th>
-      <th><%= link_to 'New Product verify', new_product_verify_path %></th>
+      <th>產品名稱</th>
+      <th>裝態</th>
+      <th>申請類別</th>
+      <th><%  link_to '申請三證', new_product_verify_path %></th>
     </tr>
   </thead>
 
@@ -27,21 +28,16 @@
 
     <% @product_verifies.each do |product_verify| %>
       <tr>
-        <td>
-          [<%= product_verify.id %>]
-          <%= product_verify.product_id %>
-        </td>
+        <td><%= product_verify.product.title %></td>
         <td><%= product_verify.status %></td>
         <td>
-            <%= product_verify.product_verify_type_id %>|
             <%= product_verify.product_verify_type.name %>
-
         </td>
 
         <td>
 
-            <%= link_to 'Edit', edit_product_verify_path(product_verify) %>
-            <%= link_to 'Destroy', product_verify, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to '編輯', edit_product_verify_path(product_verify) %>
+            <% link_to 'Destroy', product_verify, method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
 
       </tr>
@@ -50,3 +46,26 @@
   </tbody>
 
 </table>
+
+</div>
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$('document').ready(function(){
+    $('.del').click(function(){
+
+        var url = $(this).attr('id');
+        var n =confirm('確定删除！？');
+        if(n){
+          document.location.href=url;
+        }
+
+    });
+
+})
+</script>
+
+</div>
+</div>
+</div>
+</section><!-- /.content -->
