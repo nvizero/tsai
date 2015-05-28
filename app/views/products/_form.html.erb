@@ -1,6 +1,6 @@
 <%= form_for(@product) do |f| %>
   <% if @product.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" style="display:none;">
       <% @product.errors.full_messages.each do |msg| %>
         <%= msg %>
       <% end %>
@@ -27,16 +27,16 @@
                           </div>
 
 
-  <div class="form-group">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+  <div class="form-group <% if !@product.errors[:title].blank? %> has-error <% end %> ">
+    <%= f.label :title ,'產品名稱'%>
+    <%= f.text_field :title , :class=>'form-control' %>
+  </div>
+  <div class="form-group <% if !@product.errors[:content].blank? %> has-error <% end %> ">
+    <%= f.label :content , '產品內容' %>
+    <%= f.text_area :content, :class=>'form-control' %>
   </div>
   <div class="form-group">
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </div>
-  <div class="form-group">
-    <%= f.label :num %><br>
+    <%= f.label :num ,'數量' %>
     <%= f.number_field :num %>
   </div>
 

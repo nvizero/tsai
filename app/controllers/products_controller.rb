@@ -7,6 +7,8 @@ class ProductsController < ApplicationController
   #取得一些基本資訊
   before_action :get_base_data
 
+  #要登入
+  before_action :confirm_logged_in
 
   # GET /products
   # GET /products.json
