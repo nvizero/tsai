@@ -1,0 +1,52 @@
+<%= render 'comm/top' %>
+
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">使用者列表</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
+
+
+              <table id="example2" class="table table-bordered table-striped">
+
+  <thead>
+    <tr>
+      <th>Product ID</th>
+      <th>Status</th>
+      <th>Product verify type</th>
+      <th><%= link_to 'New Product verify', new_product_verify_path %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <% @product_verifies.each do |product_verify| %>
+      <tr>
+        <td>
+          [<%= product_verify.id %>]
+          <%= product_verify.product_id %>
+        </td>
+        <td><%= product_verify.status %></td>
+        <td>
+            <%= product_verify.product_verify_type_id %>|
+            <%= product_verify.product_verify_type.name %>
+
+        </td>
+
+        <td>
+
+            <%= link_to 'Edit', edit_product_verify_path(product_verify) %>
+            <%= link_to 'Destroy', product_verify, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+
+      </tr>
+    <% end %>
+
+  </tbody>
+
+</table>

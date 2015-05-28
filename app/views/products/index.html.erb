@@ -36,8 +36,14 @@
         <td><%= product.user.name %></td>
         <td>
             <%= link_to '編輯', edit_product_path(product) %>
-
             <a url="#" class="del" id='/products/destroy/<%=product.id %>'> 删除 </a>
+
+            <% if product.product_verifies.count > 0 %>
+              <%= link_to '三證進度', :controller=>'product_verifies' , :action=>'index' ,:id=>product.id %>
+            <% else %>
+              <%= link_to '辨理三證', :controller=>'product_verifies' , :action=>'make' ,:id=>product.id %>
+            <% end %>
+
         </td>
       </tr>
     <% end %>

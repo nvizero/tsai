@@ -1,5 +1,9 @@
 Tsai::Application.routes.draw do
 
+  resources :product_verify_types
+
+  resources :product_verifies
+
   resources :products
 
   resources :accesses

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @product_verify.product_id %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @product_verify.status %>
+</p>
+
+<p>
+  <strong>Product verify type:</strong>
+  <%= @product_verify.product_verify_type_id %>
+</p>
+
+<%= link_to 'Edit', edit_product_verify_path(@product_verify) %> |
+<%= link_to 'Back', product_verifies_path %>

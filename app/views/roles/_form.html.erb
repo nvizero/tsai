@@ -26,12 +26,12 @@
 
 
                     <div class="form-group <% if !@role.errors[:title].blank? %> has-error <% end %> ">
-                      <%= f.label :title ,'名稱' %><br>
+                      <%= f.label :title ,'名稱' %><font color="red" >*</font>
                       <%= f.text_field :title ,:id=>"exampleInputFile",:class=>"form-control"  %>
                     </div>
 
                     <div class="form-group <% if !@role.errors[:text].blank? %> has-error <% end %> " >
-                      <%= f.label :text  ,'說明' %><br>
+                      <%= f.label :text  ,'說明' %><font color="red" >*</font>
                       <%= f.text_area :text ,:id=>"exampleInputFile",:class=>"form-control" %>
                     </div>
 

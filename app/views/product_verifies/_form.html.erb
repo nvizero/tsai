@@ -1,0 +1,26 @@
+<%= form_for(@product_verify) do |f| %>
+  <% if @product_verify.errors.any? %>
+
+    <div id="error_explanation" style="display:none;">
+      <% @product_verify.errors.full_messages.each do |msg| %>
+        <%= msg %>
+      <% end %>
+    </div>
+  <% end %>
+
+
+
+    <%= f.hidden_field :product_id , :value=>@product_id%>
+
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.text_field :status %>
+  </div>
+  <div class="field">
+    <%= f.label :product_verify_type_id %><br>
+    <%= f.text_field :product_verify_type_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<h1>Listing product_verify_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Content</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @product_verify_types.each do |product_verify_type| %>
+      <tr>
+        <td><%= product_verify_type.name %></td>
+        <td><%= product_verify_type.content %></td>
+        <td><%= link_to 'Show', product_verify_type %></td>
+        <td><%= link_to 'Edit', edit_product_verify_type_path(product_verify_type) %></td>
+        <td><%= link_to 'Destroy', product_verify_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Product verify type', new_product_verify_type_path %>

@@ -1,0 +1,2 @@
+module ProductVerifyTypesHelper
+end

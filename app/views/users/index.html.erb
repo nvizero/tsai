@@ -30,7 +30,11 @@
                         <td><%= user.email %></td>
                         <td><%= user.name %></td>
                         <td><%= user.boss %></td>
-                        <td><%= user.store_area_id %></td>
+                        <td>
+                            <%= user.store_area_id %>
+                            |
+                            <%= user.products.count %>
+                        </td>
 
                         <td>
 
