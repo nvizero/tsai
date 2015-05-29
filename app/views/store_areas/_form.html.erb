@@ -1,14 +1,15 @@
+  <%= form_for(@store_area) do |f| %>
 
+    <% if @store_area.errors.any? %>
 
+        <div id="error_explanation"  style="display:none;">
+          <% @store_area.errors.full_messages.each do |msg| %>
+            <% @mss = "#{@mss}"+"<font style='color:red' >#{msg}<br>\n" %>
+          <% end %>
+        </div>
+     <% end %>
 
-<%= form_for(@store_area) do |f| %>
-  <% if @store_area.errors.any? %>
-    <div id="error_explanation"  style="display:none;">
-      <% @store_area.errors.full_messages.each do |msg| %>
-        <%= msg %>
-      <% end %>
-    </div>
-  <% end %>
+  <%= render 'comm/ckbox' , :mss => @mss%>
 
 
 
@@ -66,7 +67,8 @@
     var errors_msg =$('#error_explanation').html();
 
     if( errors_msg.length > 3 ){
-      alert( errors_msg );
+      // alert( errors_msg );
+      $('#ckbox-modal').modal('show');
     }
 
 

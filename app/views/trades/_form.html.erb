@@ -1,13 +1,16 @@
-<%= form_for(@trade) do |f| %>
 
-    <% if @trade.errors.any? %>
-        <div id="error_explanation" style="display:none;">
-          <% @trade.errors.full_messages.each do |msg| %>
-            <%= msg %>
-          <% end %>
+    <%= form_for(@trade) do |f| %>
 
-        </div>
-    <% end %>
+      <% if @trade.errors.any? %>
+
+          <div id="error_explanation"  style="display:none;">
+            <% @trade.errors.full_messages.each do |msg| %>
+              <% @mss = "#{@mss}"+"<font style='color:red' >#{msg}<br>\n" %>
+            <% end %>
+          </div>
+       <% end %>
+
+    <%= render 'comm/ckbox' , :mss => @mss%>
 
 
 <!-- Main content -->
@@ -27,7 +30,7 @@
                                 <div class="form-group">
                                   <%= label_tag :username ,'紅色',:for =>'exampleInputEmail1' %><font color="red" >*</font>號必填
                                 </div>
-                                
+
                                 <div class="form-group <% if !@trade.errors[:id].blank? %> has-error <% end %> ">
                                     <%= f.label :id , '交易代碼' %><font color="red" >*</font>
                                     <%= f.text_field :id , :id=>"exampleInputFile",:class=>"form-control" %>
@@ -57,7 +60,8 @@
     var errors_msg =$('#error_explanation').html();
 
     if( errors_msg.length > 3 ){
-      alert( errors_msg );
+      // alert( errors_msg );
+      $('#ckbox-modal').modal('show');
     }
 
 

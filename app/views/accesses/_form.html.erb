@@ -1,13 +1,16 @@
 <%= form_for(@access) do |f| %>
-  <% if @access.errors.any? %>
-    <div id="error_explanation" style="display:none;">
 
+    <% if @access.errors.any? %>
+
+        <div id="error_explanation"  style="display:none;">
           <% @access.errors.full_messages.each do |msg| %>
-            <%= msg %>
+            <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
           <% end %>
+        </div>
+     <% end %>
 
-    </div>
-  <% end %>
+  <%= render 'comm/ckbox' , :mss => @mss%>
+
 
   <div class="form-group <% if !@access.errors[:title].blank? %> has-error <% end %>">
     <%= f.label :title , '名稱' %><font color="red">*</font>
@@ -34,7 +37,8 @@
     var errors_msg =$('#error_explanation').html();
 
     if( errors_msg.length > 3 ){
-      alert( errors_msg );
+      // alert( errors_msg );
+      $('#ckbox-modal').modal('show');
     }
 
 

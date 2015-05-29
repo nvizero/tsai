@@ -1,13 +1,18 @@
-<%= form_for(@role) do |f| %>
-  <% if @role.errors.any? %>
-    <div id="error_explanation" style="display:none;">
-      <% @role.errors.full_messages.each do |msg| %>
-        <%= msg %>
-      <% end %>
 
-    </div>
-  <% end %>
 
+
+  <%= form_for(@role) do |f| %>
+
+    <% if @role.errors.any? %>
+
+        <div id="error_explanation"  style="display:none;">
+          <% @role.errors.full_messages.each do |msg| %>
+            <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
+          <% end %>
+        </div>
+     <% end %>
+
+  <%= render 'comm/ckbox' , :mss => @mss%>
 
 
   <section class="content">
@@ -58,7 +63,8 @@
     var errors_msg =$('#error_explanation').html();
 
     if( errors_msg.length > 3 ){
-      alert( errors_msg );
+      // alert( errors_msg );
+      $('#ckbox-modal').modal('show');
     }
 
 
