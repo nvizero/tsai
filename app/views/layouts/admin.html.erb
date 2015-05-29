@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>AdminLTE | Dashboard</title>
+        <title>智富國際</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- bootstrap 3.0.2 -->
         <link href="/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -36,6 +36,8 @@
           <%= render 'layouts/admin_head' %>
         </header>
 
+
+
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="left-side sidebar-offcanvas">
@@ -43,23 +45,24 @@
             </aside><!-- /.left-side -->
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side" >
-              <div class="" style="display:none;">
 
 
                 <% if !flash[:notice].blank? %>
-                  <h2 class="notice">
-                      <%= flash[:notice] %>
+                  <h2 class="notice" style="display:none;">
+                      <% @f_msg = flash[:notice] %>
                   </h2>
                 <% end %>
-              </div>
+
+                <%= render 'comm/box' , :message => @f_msg%>
 
               <script src="/admin/js/jquery-2.1.4.min.js"></script>
               <script type="text/javascript">
                 $('document').ready(function(){
-                  var notice_msg =$('.notice').html();
 
+                  var notice_msg =$('.notice').html();
                   if( notice_msg.length > 4 ){
-                    alert( notice_msg );
+                    // alert( notice_msg );
+                    $('#compose-modal').modal('show')
                   }
 
 
@@ -67,6 +70,7 @@
               </script>
 
               <%= yield %>
+
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 

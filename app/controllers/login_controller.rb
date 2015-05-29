@@ -36,8 +36,11 @@ class LoginController < ApplicationController
 
   #找到帳號後設定SESSION
   def set_user_sesssion
-    session[:user_id] = @is_login.id
+
+    session[:user_role_id] = @is_login.role_id
+    session[:user_id]   = @is_login.id
     session[:user_name] = @is_login.name
+
   end
 
   def login_form

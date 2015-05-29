@@ -1,6 +1,9 @@
 class ProductVerifyTypesController < ApplicationController
+  
   before_action :set_product_verify_type, only: [:show, :edit, :update, :destroy]
 
+  #登入
+  before_action :confirm_logged_in
   # GET /product_verify_types
   # GET /product_verify_types.json
   def index

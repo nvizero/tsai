@@ -8,6 +8,14 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">產品－三證進度列表</h3>
+                <%= get_url_3 %>
+                /
+                <% role = get_role_access %>
+                /
+                <%=role.title%>
+                /
+                <%=session[:user_role_id] %>
+
             </div><!-- /.box-header -->
 
             <div class="box-body table-responsive">
@@ -31,6 +39,8 @@
         <td><%= product_verify.product.title %></td>
         <td><%= product_verify.status %></td>
         <td>
+            <%= appli_helper_access(product_verify) %>
+
             <%= product_verify.product_verify_type.name %>
         </td>
 
@@ -46,6 +56,9 @@
   </tbody>
 
 </table>
+<% if @product_verifies.count > 5 %>
+  <%= paginate @product_verifies  %>
+<% end %>
 
 </div>
 

@@ -19,6 +19,8 @@ Tsai::Application.routes.draw do
 
   # get 'cc', :to => "users#cc"
 
+  get 'box', :to => "pact#box"
+
   get 'login', :to => "login#login_form"
   get 'logout', :to => "login#logout"
   get 'forget_pas', :to => "login#forget_pas"

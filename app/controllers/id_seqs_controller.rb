@@ -5,18 +5,18 @@ class IdSeqsController < ApplicationController
   before_action :confirm_logged_in
   #取得一些基本資訊
   before_action :get_base_data
-  
+
   before_action :set_id_seq, only: [:show, :edit, :update, :destroy]
 
   def comm
-    return ['main1'=>'Id_seqs', 'main2'=>'id_seqs','sub1'=>'首頁' , 'sub2'=>'id_seqs' ]
+    return ['main1'=>'流水號', 'main2'=>'id_seqs','sub1'=>'首頁' , 'sub2'=>'流水號' ]
   end
 
   # GET /id_seqs
   # GET /id_seqs.json
   def index
     @title  = self.comm
-    @table_title = "Id_seqs列表"
+    @table_title = "流水號列表"
     @id_seqs = IdSeq.all
   end
 

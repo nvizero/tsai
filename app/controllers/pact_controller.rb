@@ -24,13 +24,18 @@ class PactController < ApplicationController
 
 
   def check_email
-    
+
     user = User.where(:email=>params['email']).first
     if user
         render :text => 'y'
     else
         render :text => 'n'
     end
+  end
+
+  def box
+
+    render 'comm/_box'
   end
 
 

@@ -8,7 +8,8 @@ class ProductVerifiesController < ApplicationController
   #設定上面的TITLT
   before_action :set_title
 
-
+  #登入
+  before_action :confirm_logged_in
 
 
 
@@ -18,7 +19,12 @@ class ProductVerifiesController < ApplicationController
   # GET /product_verifies
   # GET /product_verifies.json
   def index
-    @product_verifies = ProductVerify.where(:product_id=>params[:id])
+
+    if params[:id]
+      @product_verifies = ProductVerify.where(:product_id=>params[:id])
+    else
+      @product_verifies = ProductVerify.page params[:page]
+    end
   end
 
   # GET /product_verifies/1
