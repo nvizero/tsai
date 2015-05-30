@@ -2,16 +2,12 @@ class ProductVerifiesController < ApplicationController
   before_action :set_product_verify, only: [:show, :edit, :update, :destroy]
   layout 'admin'
 
-
   #取得一些基本資訊
   before_action :get_base_data
   #設定上面的TITLT
   before_action :set_title
-
   #登入
   before_action :confirm_logged_in
-
-
 
   #取得一些基本資訊
   before_action :get_base_data
@@ -46,7 +42,7 @@ class ProductVerifiesController < ApplicationController
     p_v_types.each do |type|
 
       ProductVerify.create( :product_id => product_id ,
-                            :status => '0',
+                            :status => 0,
                             :product_verify_type_id=>type.id)
     end
 

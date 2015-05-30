@@ -1,9 +1,21 @@
 class ProductVerifyTypesController < ApplicationController
-  
+
   before_action :set_product_verify_type, only: [:show, :edit, :update, :destroy]
 
+  layout 'admin'
+
+  #取得一些基本資訊
+  before_action :get_base_data
+  #設定上面的TITLT
+  before_action :set_title
   #登入
   before_action :confirm_logged_in
+
+  #取得一些基本資訊
+  before_action :get_base_data
+
+
+
   # GET /product_verify_types
   # GET /product_verify_types.json
   def index
@@ -68,6 +80,10 @@ class ProductVerifyTypesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_product_verify_type
       @product_verify_type = ProductVerifyType.find(params[:id])
+    end
+
+    def set_title
+      @title = ['main1'=>'三證類型', 'main2'=>'product_verify_types','sub1'=>'首頁' , 'sub2'=>'三證類型']
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

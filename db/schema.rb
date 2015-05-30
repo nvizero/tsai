@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528070304) do
+ActiveRecord::Schema.define(version: 20150529151855) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 20150528070304) do
     t.integer  "product_verify_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "type",                   limit: 2
+    t.string   "type_name",              limit: 30
   end
 
   create_table "product_verify_types", force: true do |t|
@@ -48,6 +50,8 @@ ActiveRecord::Schema.define(version: 20150528070304) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "type",       limit: 2
+    t.string   "type_name",  limit: 30
   end
 
   create_table "products", force: true do |t|
@@ -70,7 +74,7 @@ ActiveRecord::Schema.define(version: 20150528070304) do
   end
 
   create_table "store_areas", primary_key: "area_id", force: true do |t|
-    t.string   "area_name",  limit: 100
+    t.string   "area_name",  limit: 10
     t.datetime "created_at"
     t.datetime "updated_at"
   end
