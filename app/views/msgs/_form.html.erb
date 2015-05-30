@@ -1,3 +1,4 @@
+
 <%= form_for(@msg) do |f| %>
   <% if @msg.errors.any? %>
     <div id="error_explanation">
@@ -22,6 +23,7 @@
   <div class="form-group">
       <label>內容</label>
       <%= f.text_area :content  ,:class=>'form-control' %>
+
   </div>
 
   <div class="form-group">
@@ -39,3 +41,17 @@
     <%= f.submit %>
   </div>
 <% end %>
+
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    if ($('textarea').length > 0) {
+        var data = $('textarea');
+        $.each(data, function(i) {
+
+            CKEDITOR.replace(data[i].id);
+        });
+    }
+});
+</script>
