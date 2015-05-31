@@ -47,3 +47,5 @@ gem 'paperclip'
 # Use debugger
 gem 'debugger', group: [:development, :test]
 gem "ckeditor"
+
+gem 'to_xls-rails'# Last officially released gem

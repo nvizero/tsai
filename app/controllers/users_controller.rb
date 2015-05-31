@@ -26,6 +26,12 @@ class UsersController < ApplicationController
     @users = User.order(:name).page params[:page]
     #User.order(:name).page params[:page]
     @trades = Trade.sorted
+
+
+
+
+
+
   end
 
   # def cc
@@ -142,6 +148,16 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url }
       format.json { head :no_content }
     end
+  end
+
+
+
+  def excel
+
+    @users = User.all
+    excel  = @users.to_xls(:only => [:email, :name,:username],:prepend => [["電子信箱", "姓名",'帳號']])
+    filename = "users-#{Time.now.strftime("%Y%m%d%H%M%S")}.xls"
+    send_data(excel, :type => "application/excel; charset=utf-8; header=present", :filename => filename)
   end
 
   private
