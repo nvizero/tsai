@@ -33,7 +33,7 @@
         <td><%= product.title %></td>
         <td><%= product.content %></td>
         <td><%= product.num %></td>
-        <td><%= product.user.name %></td>
+        <td><%= product.user %></td>
         <td>
             <%= link_to '編輯', edit_product_path(product) %>
             <a url="#" class="del" id='/products/destroy/<%=product.id %>'> 删除 </a>
