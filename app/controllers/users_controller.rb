@@ -154,10 +154,13 @@ class UsersController < ApplicationController
 
   def excel
 
-    @users = User.all
-    excel  = @users.to_xls(:only => [:email, :name,:username],:prepend => [["電子信箱", "姓名",'帳號']])
+    users = User.all
+    excel  = users.to_xls(:only => [:email, :name,:username],
+                          :prepend => [["電子信箱", "姓名",'帳號']] ,
+                          :header => false)
     filename = "users-#{Time.now.strftime("%Y%m%d%H%M%S")}.xls"
     send_data(excel, :type => "application/excel; charset=utf-8; header=present", :filename => filename)
+
   end
 
   private
