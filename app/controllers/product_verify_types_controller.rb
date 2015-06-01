@@ -36,6 +36,7 @@ class ProductVerifyTypesController < ApplicationController
 
   # GET /product_verify_types/1/edit
   def edit
+    @verify_type_mains = VerifyTypeMain.live
   end
 
   # POST /product_verify_types
@@ -57,15 +58,16 @@ class ProductVerifyTypesController < ApplicationController
   # PATCH/PUT /product_verify_types/1
   # PATCH/PUT /product_verify_types/1.json
   def update
-    respond_to do |format|
+    # respond_to do |format|
       if @product_verify_type.update(product_verify_type_params)
-        format.html { redirect_to @product_verify_type, notice: 'Product verify type was successfully updated.' }
-        format.json { head :no_content }
+        flash[:notice] =  '三證類型修改成功'
+        redirect_to :action => 'index'
+
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @product_verify_type.errors, status: :unprocessable_entity }
+        render action: 'edit'
+
       end
-    end
+    # end
   end
 
   # DELETE /product_verify_types/1
@@ -90,6 +92,6 @@ class ProductVerifyTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_verify_type_params
-      params.require(:product_verify_type).permit(:name, :content)
+      params.require(:product_verify_type).permit(:name, :content,:verify_type_main_id)
     end
 end

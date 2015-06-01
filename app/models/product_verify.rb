@@ -7,6 +7,7 @@ class ProductVerify < ActiveRecord::Base
   # def products
   #
   # end
+  scope :live, lambda { where("product_verifies.state = 'Y' ") }
   before_create do
     self.state = "Y"
   end

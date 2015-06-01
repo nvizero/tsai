@@ -42,7 +42,7 @@ class ProductVerifiesController < ApplicationController
     p_v_types.each do |type|
 
       ProductVerify.create( :product_id => product_id ,
-                            :status => 0,
+                            :state => "Y",
                             :product_verify_type_id=>type.id)
     end
 

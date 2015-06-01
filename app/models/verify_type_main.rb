@@ -1,5 +1,10 @@
 class VerifyTypeMain < ActiveRecord::Base
+
+
   paginates_per 5
+  has_many :product_verify_types
+
+
   scope :live, lambda { where(" verify_type_mains.state = 'Y' ") }
 
   validates :title,  :presence => { :message => "名稱 不能空白" }

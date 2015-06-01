@@ -14,7 +14,7 @@ class Trade < ActiveRecord::Base
   # validates_length_of :registration_number, :is => 6 # 剛好 6
 
   scope :sorted, lambda { order("trades.id ASC") }
-
+  scope :live, lambda { where("trades.state = 'Y' ") }
 
 
   validates :id,  :presence => { :message => "交易代碼－不能空白" } ,

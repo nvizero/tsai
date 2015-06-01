@@ -14,7 +14,16 @@ class VerifyTypeMainsController < ApplicationController
   # GET /verify_type_mains
   # GET /verify_type_mains.json
   def index
+
+    # mains = VerifyTypeMain.all
+    # mains.each do |min|
+    #   min.state = "Y"
+    #   min.save
+    # end
+
     @verify_type_mains = VerifyTypeMain.live.page params[:page]
+
+
   end
 
   # GET /verify_type_mains/1
@@ -72,7 +81,7 @@ class VerifyTypeMainsController < ApplicationController
     # @verify_type_main.destroy
     @verify_type_main.state = 'N'
     @verify_type_main.save
-    
+
     respond_to do |format|
       format.html { redirect_to verify_type_mains_url }
       format.json { head :no_content }

@@ -4,6 +4,7 @@ class Product < ActiveRecord::Base
   belongs_to :user
   has_many   :product_verifies
 
+  scope :live, lambda { where("products.state = 'Y' ") }
 
   validates :title,        :presence => { :message => "產品名稱－不能空白" }
   validates :content,      :presence => { :message => "產品內容－不能空白" }

@@ -20,10 +20,20 @@ class MsgsController < ApplicationController
   # GET /msgs.json
   def index
 
-    self.confirm_logged_in
+    msgg = Msg.all
+    msgg.each do |ms|
+      # ms.state = 'Y'
+      # ms.save
+    end
 
+    self.confirm_logged_in
     @title = self.comm
     @msgs  = Msg.page params[:page]
+
+
+
+
+
 
   end
 
@@ -94,7 +104,9 @@ class MsgsController < ApplicationController
   # DELETE /msgs/1.json
   def destroy
 
-    @msg.destroy
+    # @msg.destroy
+    @msg.state = 'N'
+    @msg.save
     redirect_to :action => :index
 
   end

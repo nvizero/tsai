@@ -1,4 +1,4 @@
- 
+
 <!-- Main content -->
 <section class="content">
   <div class="row">
@@ -40,7 +40,7 @@
             <%= link_to '編輯', edit_msg_path(msg) %>
 
 
-            <a url="#" class="del" id='/msgs/destroy/<%=msg.id %>'> 删除 </a>
+            <a url="#" class="del" id='/msgs/destroy/<%=msg.id %>'> 停用 </a>
 
 
         </td>
@@ -59,7 +59,7 @@
           $('.del').click(function(){
 
               var url = $(this).attr('id');
-              var n =confirm('確定删除！？');
+              var n =confirm('確定停用！？');
               if(n){
                 document.location.href=url;
               }
