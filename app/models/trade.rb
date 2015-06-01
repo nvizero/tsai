@@ -23,7 +23,9 @@ class Trade < ActiveRecord::Base
 
 
   validates :description,  :presence => { :message => "說明－不能空白" }
-
+  before_create do
+    self.state = "Y"
+  end
 
   # validate :my_validation
   #

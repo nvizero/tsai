@@ -13,8 +13,8 @@ class VerifyTypeMain < ActiveRecord::Base
   #   self.state = 'Y'
   #   save
   # end
-  
-  before_save do
+
+  before_create do
     self.state = "Y"
   end
 

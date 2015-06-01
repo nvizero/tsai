@@ -29,6 +29,9 @@ class User < ActiveRecord::Base
   validates_format_of :username, :with => /\A([a-z0-9]+)/i ,:message => "帳號－格式有誤請重新輸入！"
   validates_confirmation_of :password, :re_password ,message: 'should match confirmation'
 
+  before_create do
+    self.state = "Y"
+  end
   # column
   # :email, :company_address,:role_id,
   # :name,  :boss, :serial_code , :tel,

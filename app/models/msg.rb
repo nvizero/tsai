@@ -10,5 +10,7 @@ class Msg < ActiveRecord::Base
                   :uniqueness => { :message => "名稱－有重複,請重新輸入!!" }
 
   validates :content,  :presence => { :message => "內容－不能空白" }
-
+  before_create do
+    self.state = "Y"
+  end
 end

@@ -1,5 +1,5 @@
 class ProductVerify < ActiveRecord::Base
-  
+
   paginates_per 10
   belongs_to   :product
   belongs_to   :product_verify_type
@@ -7,4 +7,7 @@ class ProductVerify < ActiveRecord::Base
   # def products
   #
   # end
+  before_create do
+    self.state = "Y"
+  end
 end
