@@ -24,6 +24,7 @@ class ProductsController < ApplicationController
   # GET /products/new
   def new
     @product = Product.new
+    @verify_type_mains = VerifyTypeMain.live
   end
 
   # GET /products/1/edit

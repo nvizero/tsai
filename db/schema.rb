@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150531003202) do
+ActiveRecord::Schema.define(version: 20150601084430) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state",      limit: 1
   end
 
   create_table "ckeditor_assets", force: true do |t|
@@ -53,7 +54,7 @@ ActiveRecord::Schema.define(version: 20150531003202) do
 
   create_table "product_verifies", force: true do |t|
     t.integer  "product_id"
-    t.string   "status"
+    t.string   "state"
     t.integer  "product_verify_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -66,8 +67,10 @@ ActiveRecord::Schema.define(version: 20150531003202) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "type",       limit: 2
-    t.string   "type_name",  limit: 30
+    t.integer  "type",                limit: 2
+    t.string   "type_name",           limit: 30
+    t.integer  "verify_type_main_id", limit: 2
+    t.string   "state",               limit: 1
   end
 
   create_table "products", force: true do |t|
@@ -77,6 +80,8 @@ ActiveRecord::Schema.define(version: 20150531003202) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "verify_type_main_id", limit: 2
+    t.string   "state",               limit: 1
   end
 
   create_table "roles", force: true do |t|
@@ -87,18 +92,21 @@ ActiveRecord::Schema.define(version: 20150531003202) do
     t.integer  "user_id"
     t.string   "main",       limit: 40
     t.string   "code",       limit: 50
+    t.string   "state",      limit: 1
   end
 
   create_table "store_areas", primary_key: "area_id", force: true do |t|
     t.string   "area_name",  limit: 10
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state",      limit: 1
   end
 
   create_table "trades", force: true do |t|
     t.string   "description", limit: 60
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state",       limit: 1
   end
 
   create_table "users", force: true do |t|
@@ -121,6 +129,14 @@ ActiveRecord::Schema.define(version: 20150531003202) do
     t.string   "store_area_id",   limit: 8
     t.string   "state",           limit: 1
     t.string   "username",        limit: 100
+  end
+
+  create_table "verify_type_mains", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "state",      limit: 1
   end
 
 end

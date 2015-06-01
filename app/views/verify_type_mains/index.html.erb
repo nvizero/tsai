@@ -1,0 +1,62 @@
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">使用者列表</h3>
+
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
+
+
+              <table id="example2" class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>名稱</th>
+      <th>內容</th>
+      <th>
+        <%= link_to '新增主檔類型', new_verify_type_main_path %>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @verify_type_mains.each do |verify_type_main| %>
+      <tr>
+        <td><%= verify_type_main.title %></td>
+        <td><%= verify_type_main.content %></td>
+        <td>
+          <%= link_to '編輯', edit_verify_type_main_path(verify_type_main) %>
+
+          <a url="#" class="del" id='/verify_type_mains/destroy/<%=verify_type_main.id %>'> 停用 </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @verify_type_mains  %>
+</div>
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$('document').ready(function(){
+
+    $('.del').click(function(){
+
+        var url = $(this).attr('id');
+        var n =confirm('確定停用！？');
+        if(n){
+          document.location.href=url;
+        }
+
+    });
+
+})
+</script>
+
+</div>
+</div>
+</div>
+</section><!-- /.content -->

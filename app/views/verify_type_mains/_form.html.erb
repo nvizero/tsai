@@ -1,0 +1,42 @@
+<%= form_for(@verify_type_main) do |f| %>
+  <% if @verify_type_main.errors.any? %>
+    <div id="error_explanation" style="display:none;">
+      <% @verify_type_main.errors.full_messages.each do |msg| %>
+        <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= render 'comm/ckbox' , :mss => @mss%>
+
+  <div class="form-group">
+    <%= label_tag :username ,'紅色',:for =>'exampleInputEmail1' %><font color="red" >*</font>號必填
+  </div>
+
+  <div class="form-group <% if !@verify_type_main.errors[:title].blank? %> has-error <% end %> ">
+    <%= f.label :title ,'名稱' %><font color="red" >*</font>
+    <%= f.text_field :title ,:class=>'form-control' %>
+  </div>
+
+  <div class="form-group <% if !@verify_type_main.errors[:content].blank? %> has-error <% end %> ">
+    <%= f.label :content,'內容' %>
+    <%= f.text_area :content,:class=>'form-control' %>
+  </div>
+  <div class="box-footer">
+      <button type="submit" class="btn btn-primary">確定</button>
+  </div>
+<% end %>
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+    var errors_msg =$('#error_explanation').html();
+
+    if( errors_msg.length > 3 ){
+      // alert( errors_msg );
+      $('#ckbox-modal').modal('show');
+    }
+
+
+  })
+</script>

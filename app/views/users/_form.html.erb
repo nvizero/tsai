@@ -1,9 +1,7 @@
 
 
 <%= form_for(@user) do |f| %>
-
   <% if @user.errors.any? %>
-
       <div id="error_explanation"  style="display:none;">
         <% @user.errors.full_messages.each do |msg| %>
           <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
@@ -17,7 +15,7 @@
 <section class="content">
       <div class="row">
           <!-- left column -->
-          <div class="col-lg-8">
+          <div class="col-lg-12">
               <!-- general form elements -->
               <div class="box box-primary">
                   <div class="box-header">

@@ -30,6 +30,8 @@ class ProductVerifyTypesController < ApplicationController
   # GET /product_verify_types/new
   def new
     @product_verify_type = ProductVerifyType.new
+    @verify_type_mains = VerifyTypeMain.live
+
   end
 
   # GET /product_verify_types/1/edit

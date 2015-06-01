@@ -1,5 +1,7 @@
 Tsai::Application.routes.draw do
 
+  resources :verify_type_mains
+
   mount Ckeditor::Engine => '/ckeditor'
   resources :product_verify_types
 

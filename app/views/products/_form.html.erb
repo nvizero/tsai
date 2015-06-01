@@ -42,6 +42,12 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :num ,'主檔分類' %>
+    <%= f.select(:verify_type_main_id, @verify_type_mains.map {|m| [m.title , m.id] }) %>
+  </div>
+
+
+  <div class="form-group">
     <%= f.label :num ,'數量' %>
     <%= f.number_field :num %>
   </div>
