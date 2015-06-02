@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   #has_one :trade
   #分頁 每一頁5筆
   paginates_per 10
-  
+
   has_many :products
 
 

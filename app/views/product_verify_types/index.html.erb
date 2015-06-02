@@ -28,12 +28,26 @@
         <td><%= product_verify_type.name %></td>
         <td><%= product_verify_type.verify_type_main.title %></td>
         <td>
-          <%= link_to 'Edit', edit_product_verify_type_path(product_verify_type) %>
-          <%= link_to 'Destroy', product_verify_type, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to '編輯', edit_product_verify_type_path(product_verify_type) %>
+          <a url="#" class="del" id='/product_verify_types/destroy/<%=product_verify_type.id %>'> 停用 </a>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
 
-<br>
+      $('.del').click(function(){
+
+          var url = $(this).attr('id');
+          var n =confirm('確定停用！？');
+          if(n){
+            document.location.href=url;
+          }
+
+      });
+
+  })
+</script>

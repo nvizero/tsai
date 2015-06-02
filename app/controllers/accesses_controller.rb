@@ -72,11 +72,13 @@ class AccessesController < ApplicationController
   # DELETE /accesses/1
   # DELETE /accesses/1.json
   def destroy
-    @access.destroy
-    respond_to do |format|
-      format.html { redirect_to accesses_url }
-      format.json { head :no_content }
-    end
+    # @access.destroy
+    @access.state = "N"
+    @access.save
+    # respond_to do |format|
+    #   format.html { redirect_to accesses_url }
+    #   format.json { head :no_content }
+    # end
   end
 
   private

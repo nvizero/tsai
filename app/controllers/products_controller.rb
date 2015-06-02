@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :get_verify_type_main, only: [:new, :edit]
 
   before_action :set_title
 
@@ -13,7 +14,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.page params[:page]
+    @products = Product.live.page params[:page]
   end
 
   # GET /products/1
@@ -23,12 +24,13 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
+    @title[0]['main1'] = "新增產品"
     @product = Product.new
-    @verify_type_mains = VerifyTypeMain.live
   end
 
   # GET /products/1/edit
   def edit
+
   end
 
   # POST /products
@@ -78,7 +80,9 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    @product.destroy
+    # @product.destroy
+    @product.state = 'N'
+    @product.save
     respond_to do |format|
       format.html { redirect_to products_url }
       format.json { head :no_content }
@@ -86,6 +90,10 @@ class ProductsController < ApplicationController
   end
 
   private
+
+    def get_verify_type_main
+      @verify_type_mains = VerifyTypeMain.live
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
@@ -97,6 +105,6 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:title, :content, :num, :user_id)
+      params.require(:product).permit(:title, :content, :num, :user_id, :verify_type_main_id)
     end
 end

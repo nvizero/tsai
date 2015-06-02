@@ -19,7 +19,17 @@ class ProductVerifyTypesController < ApplicationController
   # GET /product_verify_types
   # GET /product_verify_types.json
   def index
-    @product_verify_types = ProductVerifyType.all
+    # pps = ProductVerifyType.all
+    # pps.each do |pvt|
+    #   pvt.state = "Y"
+    #   pvt.save
+    #
+    # end
+
+
+    @product_verify_types = ProductVerifyType.live
+
+
   end
 
   # GET /product_verify_types/1
@@ -44,15 +54,16 @@ class ProductVerifyTypesController < ApplicationController
   def create
     @product_verify_type = ProductVerifyType.new(product_verify_type_params)
 
-    respond_to do |format|
+    # respond_to do |format|
       if @product_verify_type.save
-        format.html { redirect_to @product_verify_type, notice: 'Product verify type was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @product_verify_type }
+        flash[:notice] = "三證類型－新增成功"
+        redirect_to action: 'index'
+
       else
-        format.html { render action: 'new' }
-        format.json { render json: @product_verify_type.errors, status: :unprocessable_entity }
+        render action: 'new'
+        # format.json { render json: @product_verify_type.errors, status: :unprocessable_entity }
       end
-    end
+    # end
   end
 
   # PATCH/PUT /product_verify_types/1
@@ -73,7 +84,9 @@ class ProductVerifyTypesController < ApplicationController
   # DELETE /product_verify_types/1
   # DELETE /product_verify_types/1.json
   def destroy
-    @product_verify_type.destroy
+    # @product_verify_type.destroy
+    @product_verify_type.state = "N"
+    @product_verify_type.save
     respond_to do |format|
       format.html { redirect_to product_verify_types_url }
       format.json { head :no_content }

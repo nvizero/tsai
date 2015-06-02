@@ -91,7 +91,10 @@ class TradesController < ApplicationController
   # DEadminE /trades/1
   # DEadminE /trades/1.json
   def destroy
-    @trade.delete
+    # @trade.delete
+    @trade.state = 'N'
+    @trade.save
+    
     respond_to do |format|
       format.html { redirect_to trades_url }
       format.json { head :no_content }
@@ -100,7 +103,8 @@ class TradesController < ApplicationController
 
   def del
     @trade = Trade.find(params[:id])
-    @trade.destroy
+    @trade.state = 'N'
+    @trade.save
     redirect_to '/trades'
 
   end

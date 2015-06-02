@@ -1,4 +1,4 @@
- 
+
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
@@ -28,7 +28,7 @@
         <td>
 
             <%= link_to '編輯', edit_access_path(access) %>
-            <a url="#" class="del" id='/accesses/destroy/<%=access.id %>'> 删除 </a>
+            <a url="#" class="del" id='/accesses/destroy/<%=access.id %>'> 停用 </a>
         </td>
       </tr>
     <% end %>
@@ -44,7 +44,7 @@
       $('.del').click(function(){
 
           var url = $(this).attr('id');
-          var n =confirm('確定删除！？');
+          var n =confirm('確定停用！？');
           if(n){
             document.location.href=url;
           }

@@ -26,7 +26,11 @@
 
     <% @product_verifies.each do |product_verify| %>
       <tr>
-        <td><%= product_verify.product.title %></td>
+        <td>
+          <% if product_verify.product %>
+          <%= product_verify.product.title %>
+          <% end %>
+        </td>
         <td><%= product_verify.state %></td>
         <td>
             <%= appli_helper_access(product_verify) %>
@@ -37,7 +41,8 @@
         <td>
 
             <%= link_to '編輯', edit_product_verify_path(product_verify) %>
-            <% link_to 'Destroy', product_verify, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+            <a url="#" class="del" id='/product_verifies/destroy/<%=product_verify.id %>'> 停用 </a>
         </td>
 
       </tr>
@@ -58,7 +63,7 @@ $('document').ready(function(){
     $('.del').click(function(){
 
         var url = $(this).attr('id');
-        var n =confirm('確定删除！？');
+        var n =confirm('確定停用！？');
         if(n){
           document.location.href=url;
         }

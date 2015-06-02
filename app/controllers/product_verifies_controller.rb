@@ -36,9 +36,10 @@ class ProductVerifiesController < ApplicationController
 
 
   def make
+
     p_v_types = ProductVerifyType.all
     product_id = params[:id]
-
+    Product.find(product_id)
     p_v_types.each do |type|
 
       ProductVerify.create( :product_id => product_id ,
@@ -90,7 +91,9 @@ class ProductVerifiesController < ApplicationController
   # DELETE /product_verifies/1
   # DELETE /product_verifies/1.json
   def destroy
-    @product_verify.destroy
+    @product_verify.state = "N"
+    @product_verify.save
+
     respond_to do |format|
       format.html { redirect_to product_verifies_url }
       format.json { head :no_content }
@@ -108,6 +111,6 @@ class ProductVerifiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_verify_params
-      params.require(:product_verify).permit(:product_id, :status, :product_verify_type_id)
+      params.require(:product_verify).permit(:product_id, :status, :product_verify_type_id )
     end
 end

@@ -2,6 +2,8 @@ class Product < ActiveRecord::Base
 
   paginates_per 10
   belongs_to :user
+  belongs_to :verify_type_main
+  
   has_many   :product_verifies
 
   scope :live, lambda { where("products.state = 'Y' ") }

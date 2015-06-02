@@ -1,4 +1,4 @@
- 
+
 <!-- Main content -->
 <section class="content">
   <div class="row">
@@ -26,10 +26,8 @@
                         <td><%= trade.description %></td>
 
                         <td>
-
                             <%= link_to '編輯', edit_trade_path(trade.id) %>|
-
-                            <a url="#" class="del" id='/trades/destroy/<%=trade.id %>'> 删除 </a>
+                            <a url="#" class="del" id='/trades/destroy/<%=trade.id %>'> 停用 </a>
                         </td>
 
                       </tr>
@@ -49,7 +47,7 @@
                   $('.del').click(function(){
 
                       var url = $(this).attr('id');
-                      var n =confirm('確定删除！？');
+                      var n =confirm('確定停用！？');
                       if(n){
                         document.location.href=url;
                       }

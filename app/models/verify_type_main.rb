@@ -3,6 +3,7 @@ class VerifyTypeMain < ActiveRecord::Base
 
   paginates_per 5
   has_many :product_verify_types
+  has_many :product
 
 
   scope :live, lambda { where(" verify_type_mains.state = 'Y' ") }

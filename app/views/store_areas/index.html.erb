@@ -1,4 +1,4 @@
- 
+
 <!-- Main content -->
 <section class="content">
   <div class="row">
@@ -27,7 +27,7 @@
                         <td>
 
                             <%= link_to '編輯', edit_store_area_path(store_area) %>
-                            <a url="#" class="del" id='/store_areas/destroy/<%=store_area.id %>'> 删除 </a>
+                            <a url="#" class="del" id='/store_areas/destroy/<%=store_area.id %>'> 停用 </a>
                       </tr>
                     <% end %>
                   </tbody>
@@ -44,7 +44,7 @@
                   $('.del').click(function(){
 
                       var url = $(this).attr('id');
-                      var n =confirm('確定删除！？');
+                      var n =confirm('確定停用！？');
                       if(n){
                         document.location.href=url;
                       }

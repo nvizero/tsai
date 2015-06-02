@@ -17,6 +17,7 @@
                       <th>名稱</th>
                       <th>說明</th>
                       <th>數量</th>
+                      <th>分類</th>
                       <th>屬於</th>
                       <th>
                           <%= link_to '新增產品', new_product_path %>
@@ -33,13 +34,18 @@
         <td><%= product.content %></td>
         <td><%= product.num %></td>
         <td>
+          <% if product.verify_type_main %>
+            <%= product.verify_type_main.title %>
+          <% end %>
+        </td>
+        <td>
           <% if product.user %>
             <%= product.user.name %>
           <% end %>
         </td>
         <td>
             <%= link_to '編輯', edit_product_path(product) %>
-            <a url="#" class="del" id='/products/destroy/<%=product.id %>'> 删除 </a>
+            <a url="#" class="del" id='/products/destroy/<%=product.id %>'> 停用 </a>
 
             <% if product.product_verifies.count > 0 %>
               <%= link_to '三證進度', :controller=>'product_verifies' , :action=>'index' ,:id=>product.id %>
@@ -66,7 +72,7 @@
       $('.del').click(function(){
 
           var url = $(this).attr('id');
-          var n =confirm('確定删除！？');
+          var n =confirm('確定停用！？');
           if(n){
             document.location.href=url;
           }
