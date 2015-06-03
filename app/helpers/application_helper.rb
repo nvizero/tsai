@@ -17,4 +17,26 @@ module ApplicationHelper
   def get_role_access
      Role.find(session[:user_role_id])
   end
+
+  def get_user_access
+     session[:user["access"]]
+  end
+
+  #判斷權限
+  def judgment_access _str
+
+    judge_flag = false
+
+    session[:user["access"]].split(',').each do |ja|
+        if ja.to_s.start_with? _str
+          judge_flag = true
+        end
+    end
+
+    return judge_flag
+  end
+
+
+
+
 end

@@ -22,3 +22,8 @@ Msg.create!( :title => "三證說明", :content => '三證說明＿' , :state=>'
 
 VerifyTypeMain.create!( :title => "食品", :content => '' , :state=>'Y' )
 VerifyTypeMain.create!( :title => "化裝品", :content => '' , :state=>'Y')
+
+VerifyTypeMain.create!(:title => '三檔類型主檔－首頁', :code=>'verify_type_mains/index' , :state =>'Y')
+VerifyTypeMain.create!(:title => '三檔類型主檔－新增', :code=>'verify_type_mains/new'   , :state =>'Y')
+VerifyTypeMain.create!(:title => '三檔類型主檔－編輯', :code=>'verify_type_mains/edit'  , :state =>'Y')
+VerifyTypeMain.create!(:title => '三檔類型主檔－删除', :code=>'verify_type_mains/del'   , :state =>'Y')

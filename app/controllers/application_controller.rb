@@ -30,13 +30,6 @@ class ApplicationController < ActionController::Base
           redirect_to(:controller => 'dashboard', :action => 'main')
           return false # halts the before_action
         end
-        # render :text => session[:user["access"]]
-
-
-        # flash[:notice] = "您的權限不足!!"
-        # redirect_to(:controller => 'dashboard', :action => 'main')
-        # return false # halts the before_action
-      # end
 
     end
 
