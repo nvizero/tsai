@@ -22,6 +22,7 @@ class DashboardController < ApplicationController
 
   def main
 
+    # render :text => session[:user["access"]]
     self.confirm_logged_in
     @title = ['main1'=>'看板管理', 'main2'=>'Dashboard','sub1'=>'首頁' , 'sub2'=>'看板管理']
     @msgs = Msg.all

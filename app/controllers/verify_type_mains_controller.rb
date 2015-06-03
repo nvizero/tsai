@@ -21,6 +21,10 @@ class VerifyTypeMainsController < ApplicationController
     #   min.save
     # end
 
+    # render :text => self.get_self_url[3]
+
+    self.jadge_access 'verify_type_mains/index'
+
     @verify_type_mains = VerifyTypeMain.live.page params[:page]
 
 

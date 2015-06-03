@@ -41,6 +41,22 @@ class LoginController < ApplicationController
     session[:user_id]   = @is_login.id
     session[:user_name] = @is_login.name
 
+    session[:user["role_id"]] = @is_login.role_id
+    session[:user["id"]]   = @is_login.id
+    session[:user["name"]] = @is_login.name
+
+    aces = Access.all
+    @aces_str = ''
+    aces.each do |ac|
+      @aces_str = @aces_str + ac.code.to_s + ','
+    end
+    session[:user["access"]] = @aces_str
+
+    # session[:user=>["role_id"]] = @is_login.role_id
+    # session[:user=>["id"]]   = @is_login.id
+    # session[:user=>["name"]] = @is_login.name
+    # session[:user=>["access"]] = "all"
+
   end
 
   def login_form

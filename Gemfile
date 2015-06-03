@@ -49,3 +49,4 @@ gem 'debugger', group: [:development, :test]
 gem "ckeditor"
 
 gem 'to_xls-rails'# Last officially released gem
+gem 'bootstrap-wysihtml5-rails'
