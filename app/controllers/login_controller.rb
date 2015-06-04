@@ -92,31 +92,46 @@ class LoginController < ApplicationController
 
   def do_forget_pas
 
-    o    = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
-    str  = (0...6).map { o[rand(o.length)] }.join
+    username  =  params["username"]
+    email     =  params["email"]
 
-    # user = User.find_by(username: params[:username])
-    @ou  =  User.where(:username => params[:username],:email=>params[:email] ).first
+    if email == '' || username == ''
 
-    @pas = Digest::SHA256.hexdigest str
-    @ou.password = @pas
+      flash[:notice] = '帳號＆＆EMAIL請勿為空'
+      redirect_to :controller => 'login' , :action => 'forget_pas'
 
-    @table_title = '忘記密碼'
-    @title = ['main1'=>'忘記密碼', 'LOGIN'=>'Users','sub1'=>'首頁' , 'sub2'=>'忘記密碼']
+    else
 
+        o    = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+        str  = (0...6).map { o[rand(o.length)] }.join
+        # user = User.find_by(username: params[:username])
+        @ou  =  User.where(:username => params[:username],:email=>params[:email] ).first
 
+        
+        if @ou
 
-    if @ou
+            @pas = Digest::SHA256.hexdigest str
+            @ou.password = @pas
 
-      @ou.forget_pas = str
-      @ou.save
+            @table_title = '忘記密碼'
+            @title = ['main1'=>'忘記密碼', 'LOGIN'=>'Users','sub1'=>'首頁' , 'sub2'=>'忘記密碼']
 
-      user = @ou
-      UserMailer.forget_pas(user , str).deliver
+            if @ou
+              @ou.forget_pas = str
+              @ou.save
+              user = @ou
+              UserMailer.forget_pas(user , str).deliver
+            end
+
+            render 'do_forget_pas'
+
+        else
+
+            flash[:notice] = '找不到帳號&&EMAIL請重新輸入'
+            redirect_to :controller => 'login' , :action => 'forget_pas'
+
+        end
     end
-
-    render 'do_forget_pas'
-
 
 
 

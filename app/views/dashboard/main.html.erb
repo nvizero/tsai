@@ -4,6 +4,7 @@
 
   <!-- Small boxes (Stat box) -->
   <div class="row">
+    <% if judgment_access 'products/index' %>
       <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
@@ -19,13 +20,14 @@
                   <i class="ion ion-bag"></i>
               </div>
 
-              <% if judgment_access 'products/index' %>
-                  <a href="#" class="small-box-footer">
+
+                  <a href="/products" class="small-box-footer">
                       More info <i class="fa fa-arrow-circle-right"></i>
                   </a>
-              <% end %>
+
           </div>
       </div><!-- ./col -->
+      <% end %>
 
       <div class="col-lg-3 col-xs-6">
           <!-- small box -->
@@ -46,6 +48,7 @@
               </a>
           </div>
       </div><!-- ./col -->
+      <% if judgment_access 'users/index' %>
       <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
@@ -60,13 +63,15 @@
               <div class="icon">
                   <i class="ion ion-person-add"></i>
               </div>
-              <% if judgment_access 'users/index' %>
-              <a href="/users" class="small-box-footer">
-                  More info <i class="fa fa-arrow-circle-right"></i>
-              </a>
-              <% end %>
+
+                <a href="/users" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+
           </div>
       </div><!-- ./col -->
+      <% end %>
+      
       <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-red">

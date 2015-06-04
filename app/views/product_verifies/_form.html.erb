@@ -13,14 +13,17 @@
     <%= f.hidden_field :product_id , :value=>@product_id%>
 
   <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
+    <%= f.label :state ,'狀態' %><br>
+    <%= f.text_field :state %>
   </div>
+
   <div class="field">
-    <%= f.label :product_verify_type_id %><br>
+    <%= f.label :product_verify_type_id, '產品名稱' %><br>
     <%= f.text_field :product_verify_type_id %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="box-footer">
+      <button type="submit" class="btn btn-primary">確定</button>
   </div>
+
 <% end %>
