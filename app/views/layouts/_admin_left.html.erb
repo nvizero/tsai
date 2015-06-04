@@ -42,11 +42,15 @@
                   <span>辨證進度查詢</span>
               </a>
           </li>
-          <li class="active">
-              <a href="/products">
-                   <span>商品管理</span>
-              </a>
-          </li>
+
+          <% if judgment_access 'products/index' %>
+              <li class="active">
+                  <a href="/products">
+                       <span>商品管理</span>
+                  </a>
+              </li>
+          <% end %>
+
           <li class="active">
               <a href="/">
                   <span>商品庫存查詢</span>
@@ -78,11 +82,13 @@
                 </a>
             </li>
 
-            <li class="active">
-                <a href="/msgs">
-                    <span>最近消息</span>
-                </a>
-            </li>
+            <% if judgment_access 'msgs/index' %>
+                <li class="active">
+                    <a href="/msgs">
+                        <span>最近消息</span>
+                    </a>
+                </li>
+            <% end %>
 
 
 

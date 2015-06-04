@@ -9,18 +9,21 @@
           <div class="small-box bg-aqua">
               <div class="inner">
                   <h3>
-                      150
+                      <%=@products.count%>
                   </h3>
                   <p>
-                      New Orders
+                      商品數量
                   </p>
               </div>
               <div class="icon">
                   <i class="ion ion-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">
-                  More info <i class="fa fa-arrow-circle-right"></i>
-              </a>
+
+              <% if judgment_access 'products/index' %>
+                  <a href="#" class="small-box-footer">
+                      More info <i class="fa fa-arrow-circle-right"></i>
+                  </a>
+              <% end %>
           </div>
       </div><!-- ./col -->
 
@@ -48,18 +51,20 @@
           <div class="small-box bg-yellow">
               <div class="inner">
                   <h3>
-                    <%= @users %>
+                    <%= @users.count %>
                   </h3>
                   <p>
-                      User Registrations
+                      使用者
                   </p>
               </div>
               <div class="icon">
                   <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">
+              <% if judgment_access 'users/index' %>
+              <a href="/users" class="small-box-footer">
                   More info <i class="fa fa-arrow-circle-right"></i>
               </a>
+              <% end %>
           </div>
       </div><!-- ./col -->
       <div class="col-lg-3 col-xs-6">

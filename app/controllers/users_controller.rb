@@ -30,8 +30,6 @@ class UsersController < ApplicationController
 
 
 
-
-
   end
 
   # def cc
@@ -52,18 +50,23 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @roles = Role.live
     @trades = Trade.sorted
   end
 
   # GET /users/new
   def new
+    
     @user = User.new
+    @roles = Role.live
     @trades = Trade.sorted
     @sotre_area = StoreArea.all
   end
 
   # GET /users/1/edit
   def edit
+
+    @roles = Role.live
     @trades = Trade.sorted
     @sotre_area = StoreArea.all
   end
@@ -143,7 +146,7 @@ class UsersController < ApplicationController
   # DEadminE /users/1
   # DEadminE /users/1.json
   def destroy
-    
+
     @user.state = 'N'
     @user.save
     respond_to do |format|

@@ -43,7 +43,10 @@
 
                         <div class="form-group <% if !@user.errors[:role_id].blank? %> has-error <% end %> ">
                           <%= f.label :role_id ,'角色',:for =>'exampleInputEmail1' %><font color="red" >*</font><br>
-                          <%= f.text_field :role_id, :class=>'form-control', :id=>"rele_id", :placeholder=>"角色" %>
+
+                          
+                          <%= f.select(:role_id, @roles.map {|m| [m.title , m.id] }) %>
+
                         </div>
 
                         <div class="form-group <% if !@user.errors[:name].blank? %> has-error <% end %> ">
