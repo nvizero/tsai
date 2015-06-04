@@ -25,15 +25,30 @@ module ApplicationHelper
   #判斷權限
   def judgment_access _str
 
-    judge_flag = false
+    #判斷是否ALL
+    if session[:user["access"]] == 'all'
 
-    session[:user["access"]].split(',').each do |ja|
-        if ja.to_s.start_with? _str
-          judge_flag = true
-        end
+      return true
+
+    else
+
+      judge_flag = false
+      
+      session[:user["access"]].split(',').each do |ja|
+          if ja.to_s.start_with? _str
+            judge_flag = true
+          end
+      end
+
+      return judge_flag
+
     end
 
-    return judge_flag
+  end
+
+  #只是顯示
+  def show_session
+    session[:user["access"]]
   end
 
 

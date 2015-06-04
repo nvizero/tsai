@@ -45,12 +45,27 @@ class LoginController < ApplicationController
     session[:user["id"]]   = @is_login.id
     session[:user["name"]] = @is_login.name
 
-    aces = Access.all
-    @aces_str = ''
-    aces.each do |ac|
-      @aces_str = @aces_str + ac.code.to_s + ','
+
+
+    role = Role.find(@is_login.role_id)
+
+    if role.text.to_s == 'all'
+
+        session[:user["access"]] = role.text.to_s
+
+    else
+      
+        session[:user["access"]] = ''
+        role.text.to_s.split(",").each do |ace|
+            #寫入權限到SESSION
+            if ace.to_s.length > 0
+              aces = Access.find(ace)
+              session[:user["access"]] += aces.code.to_s + ','
+            end
+
+        end
     end
-    session[:user["access"]] = @aces_str
+
 
     # session[:user=>["role_id"]] = @is_login.role_id
     # session[:user=>["id"]]   = @is_login.id
@@ -58,6 +73,10 @@ class LoginController < ApplicationController
     # session[:user=>["access"]] = "all"
 
   end
+
+
+
+
 
   def login_form
 

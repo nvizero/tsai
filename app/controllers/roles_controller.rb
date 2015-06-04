@@ -20,11 +20,13 @@ class RolesController < ApplicationController
 
   # GET /roles/new
   def new
-    @role = Role.new
+    @role   = Role.new
+    @aces   = Access.all
   end
 
   # GET /roles/1/edit
   def edit
+    @aces   = Access.all
   end
 
   # POST /roles
@@ -32,8 +34,15 @@ class RolesController < ApplicationController
   def create
     @role = Role.new(role_params)
 
+    #權限
+    @atext = ''
+    params['point'].each do |po|
+      @atext += po[0].to_s + ','
+    end
+    @role.text = @atext
 
     if @role.save
+
       flash[:notice] = "角色-新增成功!"
       redirect_to action: "index"
     else
@@ -55,12 +64,24 @@ class RolesController < ApplicationController
   # PATCH/PUT /roles/1.json
   def update
 
+
+    @atext = ''
+    params['point'].each do |po|
+      @atext += po[0].to_s + ','
+    end
+
+    @role.text = @atext
+
     if @role.update(role_params)
       flash[:notice] = "角色-更新成功!"
       redirect_to action: "index"
     else
       render action: 'edit'
     end
+
+
+
+
     # respond_to do |format|
     #   if @role.update(role_params)
     #     format.html { redirect_to @role, notice: 'Role was successfully updated.' }

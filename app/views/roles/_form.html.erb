@@ -36,8 +36,13 @@
                     </div>
 
                     <div class="form-group <% if !@role.errors[:text].blank? %> has-error <% end %> " >
-                      <%= f.label :text  ,'說明' %><font color="red" >*</font>
-                      <%= f.text_area :text ,:id=>"exampleInputFile",:class=>"form-control" %>
+                      
+                      <%= f.label :text  ,'權限' %><font color="red" >*</font>
+                      <br>
+                      <% @aces.each do |ace| %>
+                        <input type="checkbox" name="point[<%=ace.id %>]" value="1" ><%=ace.title %><br>
+                      <% end %>
+
                     </div>
 
 
