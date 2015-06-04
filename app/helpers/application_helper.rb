@@ -24,31 +24,40 @@ module ApplicationHelper
 
   #判斷權限
   def judgment_access _str
-
     #判斷是否ALL
-    if session[:user["access"]] == 'all'
+    if session[:user["access"]]
 
-      return true
+      if session[:user["access"]] == 'all'
 
-    else
+        return true
 
-      judge_flag = false
+      else
 
-      session[:user["access"]].split(',').each do |ja|
-          if ja.to_s.start_with? _str
-            judge_flag = true
-          end
+        if session.nil?
+          return false
+        end
+
+        judge_flag = false
+        session[:user["access"]].split(',').each do |ja|
+            if ja.to_s.start_with? _str
+              judge_flag = true
+            end
+        end
+
+        return judge_flag
+
       end
 
-      return judge_flag
-
+    else
+      return true
     end
 
   end
 
   #只是顯示
   def show_session
-    session[:user["access"]]
+    # session[:user["access"]]
+    !session.nil?
   end
 
   def role_checkbox text , num
@@ -65,7 +74,6 @@ module ApplicationHelper
     else
       return ''
     end
-
 
   end
 

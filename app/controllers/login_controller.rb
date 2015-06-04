@@ -45,16 +45,11 @@ class LoginController < ApplicationController
     session[:user["id"]]   = @is_login.id
     session[:user["name"]] = @is_login.name
 
-
-
     role = Role.find(@is_login.role_id)
-
     if role.text.to_s == 'all'
-
         session[:user["access"]] = role.text.to_s
-
     else
-      
+
         session[:user["access"]] = ''
         role.text.to_s.split(",").each do |ace|
             #寫入權限到SESSION
@@ -148,9 +143,18 @@ class LoginController < ApplicationController
     end
   end
 
+
+  #登出
   def logout
 
     session[:user_id] = nil
+    session[:user_role_id] = nil
+    session[:user_id]   = nil
+    session[:user_name] = nil
+    session[:user["role_id"]] = nil
+    session[:user["id"]]   = nil
+    session[:user["name"]] = nil
+    session[:user["access"]] = nil
 
     flash[:notice] = "登出成功"
     redirect_to(:controller=> 'dashboard' , :action => "index")
