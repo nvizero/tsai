@@ -18,7 +18,11 @@
       <th>產品名稱</th>
       <th>裝態</th>
       <th>申請類別</th>
-      <th><%  link_to '申請三證', new_product_verify_path %></th>
+      <th>
+
+          <%  link_to '申請三證', new_product_verify_path %>
+
+      </th>
     </tr>
   </thead>
 
@@ -39,10 +43,13 @@
         </td>
 
         <td>
-
+          <% if judgment_access 'product_verifies/edit' %>
             <%= link_to '編輯', edit_product_verify_path(product_verify) %>
+          <% end %>
 
+          <% if judgment_access 'product_verifies/del' %>
             <a url="#" class="del" id='/product_verifies/destroy/<%=product_verify.id %>'> 停用 </a>
+          <% end %>
         </td>
 
       </tr>

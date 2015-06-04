@@ -29,12 +29,13 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
 
-
+          <% if judgment_access 'users/index' %>
           <li class="active" style="background-color: #3c8dbc;">
               <a href="/users" style="background: #3c8dbc;">
                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span>會員專區</span>
               </a>
           </li>
+          <% end %>
 
           <li >
               <a href="/product_verifies">
@@ -138,15 +139,33 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/trades"><i class="fa fa-angle-double-right"></i>交易碼</a></li>
-                    <li><a href="/store_areas"><i class="fa fa-angle-double-right"></i>庫位</a></li>
-                    <li><a href="/id_seqs"><i class="fa fa-angle-double-right"></i>流水號</a></li>
-                    <li><a href="/roles"><i class="fa fa-angle-double-right"></i>角色</a></li>
-                    <li><a href="/accesses"><i class="fa fa-angle-double-right"></i>權限設定</a></li>
-                    <li><a href="/product_verify_types"><i class="fa fa-angle-double-right"></i>三證類型</a></li>
+
+                    <% if judgment_access 'trades/index' %>
+                        <li><a href="/trades"><i class="fa fa-angle-double-right"></i>交易碼</a></li>
+                    <% end %>
+
+                    <% if judgment_access 'store_areas/index' %>
+                        <li><a href="/store_areas"><i class="fa fa-angle-double-right"></i>庫位</a></li>
+                    <% end %>
+
+                    <% if judgment_access 'id_seqs/index' %>
+                        <li><a href="/id_seqs"><i class="fa fa-angle-double-right"></i>流水號</a></li>
+                    <% end %>
+
+                    <% if judgment_access 'roles/index' %>
+                        <li><a href="/roles"><i class="fa fa-angle-double-right"></i>角色</a></li>
+                    <% end %>
+
+                    <% if judgment_access 'accesses/index' %>
+                        <li><a href="/accesses"><i class="fa fa-angle-double-right"></i>權限設定</a></li>
+                    <% end %>
+
+                    <% if judgment_access 'product_verify_types/index' %>
+                        <li><a href="/product_verify_types"><i class="fa fa-angle-double-right"></i>三證類型</a></li>
+                    <% end %>
 
                     <% if judgment_access 'verify_type_mains/index' %>
-                      <li><a href="/verify_type_mains"><i class="fa fa-angle-double-right"></i>三證類型主檔</a></li>
+                        <li><a href="/verify_type_mains"><i class="fa fa-angle-double-right"></i>三證類型主檔</a></li>
                     <% end %>
 
 

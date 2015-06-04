@@ -18,7 +18,14 @@
     <tr>
       <th>名稱</th>
       <th>說明</th>
-      <th><%= link_to '新增三證類型', new_product_verify_type_path %></th>
+      <th>
+
+        <% if judgment_access 'product_verify_types/new' %>
+            <%= link_to '新增三證類型', new_product_verify_type_path %>
+        <% end %>
+
+      </th>
+
     </tr>
   </thead>
 
@@ -28,8 +35,13 @@
         <td><%= product_verify_type.name %></td>
         <td><%= product_verify_type.verify_type_main.title %></td>
         <td>
-          <%= link_to '編輯', edit_product_verify_type_path(product_verify_type) %>
-          <a url="#" class="del" id='/product_verify_types/destroy/<%=product_verify_type.id %>'> 停用 </a>
+          <% if judgment_access 'product_verify_types/edit' %>
+              <%= link_to '編輯', edit_product_verify_type_path(product_verify_type) %>
+          <% end %>
+
+          <% if judgment_access 'product_verify_types/del' %>
+              <a url="#" class="del" id='/product_verify_types/destroy/<%=product_verify_type.id %>'> 停用 </a>
+          <% end %>
         </td>
       </tr>
     <% end %>

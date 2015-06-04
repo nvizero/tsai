@@ -4,7 +4,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">角色名稱列表</h3>
+                <h3 class="box-title">角色列表</h3>
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
 
@@ -19,7 +19,9 @@
       <th>角色名稱</th>
 
       <th>
-        <%= link_to '新增角色', new_role_path %>
+        <% if judgment_access 'roles/new' %>
+          <%= link_to '新增角色', new_role_path %>
+        <% end %>
       </th>
     </tr>
   </thead>
@@ -30,8 +32,14 @@
         <td><%= role.title %></td>
         <td>
 
-            <%= link_to '編輯', edit_role_path(role) %>
-            <a url="#" class="del" id='/roles/destroy/<%=role.id %>'> 停用 </a>
+            <% if judgment_access 'roles/edit' %>
+                <%= link_to '編輯', edit_role_path(role) %>
+            <% end %>
+
+            <% if judgment_access 'roles/del' %>
+                <a url="#" class="del" id='/roles/destroy/<%=role.id %>'> 停用 </a>
+            <% end %>
+            
         </td>
       </tr>
     <% end %>

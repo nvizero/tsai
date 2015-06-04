@@ -16,7 +16,11 @@
     <tr>
       <th>名稱</th>
       <th>代碼</th>
-      <th><%= link_to '新增權限', new_access_path %></th>
+      <th>
+        <% if judgment_access 'accesses/new' %>
+            <%= link_to '新增權限', new_access_path %>
+        <% end %>
+      </th>
     </tr>
   </thead>
 
@@ -26,9 +30,13 @@
         <td><%= access.title %></td>
         <td><%= access.code %></td>
         <td>
+            <% if judgment_access 'accesses/edit' %>
+                <%= link_to '編輯', edit_access_path(access) %>
+            <% end %>
 
-            <%= link_to '編輯', edit_access_path(access) %>
-            <a url="#" class="del" id='/accesses/destroy/<%=access.id %>'> 停用 </a>
+            <% if judgment_access 'accesses/del' %>
+                <a url="#" class="del" id='/accesses/destroy/<%=access.id %>'> 停用 </a>
+            <% end %>
         </td>
       </tr>
     <% end %>

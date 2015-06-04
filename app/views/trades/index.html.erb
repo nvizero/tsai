@@ -15,7 +15,11 @@
                     <tr>
                       <th>交易代碼</th>
                       <th>說明</th>
-                      <th><%= link_to '新增交易碼', new_trade_path %></th>
+                      <th>
+                        <% if judgment_access 'trades/new' %>
+                          <%= link_to '新增交易碼', new_trade_path %>
+                        <% end %>
+                      </th>
                     </tr>
                   </thead>
 
@@ -26,8 +30,13 @@
                         <td><%= trade.description %></td>
 
                         <td>
-                            <%= link_to '編輯', edit_trade_path(trade.id) %>|
-                            <a url="#" class="del" id='/trades/destroy/<%=trade.id %>'> 停用 </a>
+                            <% if judgment_access 'trades/edit' %>
+                                <%= link_to '編輯', edit_trade_path(trade.id) %>|
+                            <% end %>
+
+                            <% if judgment_access 'trades/del' %>
+                                <a url="#" class="del" id='/trades/destroy/<%=trade.id %>'> 停用 </a>
+                            <% end %>
                         </td>
 
                       </tr>

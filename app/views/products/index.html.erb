@@ -20,7 +20,9 @@
                       <th>分類</th>
                       <th>屬於</th>
                       <th>
+                        <% if judgment_access 'products/new' %>
                           <%= link_to '新增產品', new_product_path %>
+                        <% end %>
                       </th>
                     </tr>
                   </thead>
@@ -43,9 +45,17 @@
             <%= product.user.name %>
           <% end %>
         </td>
+        
         <td>
-            <%= link_to '編輯', edit_product_path(product) %>
-            <a url="#" class="del" id='/products/destroy/<%=product.id %>'> 停用 </a>
+
+            <% if judgment_access 'products/edit' %>
+              <%= link_to '編輯', edit_product_path(product) %>
+            <% end %>
+
+            <% if judgment_access 'products/del' %>
+              <a url="#" class="del" id='/products/destroy/<%=product.id %>'> 停用 </a>
+            <% end %>
+
 
             <% if product.product_verifies.count > 0 %>
               <%= link_to '三證進度', :controller=>'product_verifies' , :action=>'index' ,:id=>product.id %>

@@ -33,7 +33,7 @@ module ApplicationHelper
     else
 
       judge_flag = false
-      
+
       session[:user["access"]].split(',').each do |ja|
           if ja.to_s.start_with? _str
             judge_flag = true
@@ -49,6 +49,24 @@ module ApplicationHelper
   #只是顯示
   def show_session
     session[:user["access"]]
+  end
+
+  def role_checkbox text , num
+
+    check_flag = false
+    text.to_s.split(',').each do |str|
+      if str.to_i == num.to_i
+        check_flag = true
+      end
+    end
+
+    if check_flag
+      return 'CHECKED'
+    else
+      return ''
+    end
+
+
   end
 
 

@@ -15,7 +15,11 @@
                     <tr>
                       <th>區域代碼</th>
                       <th>說明</th>
-                      <th><%= link_to '新增庫位', new_store_area_path %></th>
+                      <th>
+                        <% if judgment_access 'store_areas/new' %>
+                            <%= link_to '新增庫位', new_store_area_path %>
+                        <% end %>
+                      </th>
                     </tr>
                   </thead>
 
@@ -25,9 +29,13 @@
                         <td><%= store_area.area_id %></td>
                         <td><%= store_area.area_name %></td>
                         <td>
+                            <% if judgment_access 'store_areas/edit' %>
+                                <%= link_to '編輯', edit_store_area_path(store_area) %>
+                            <% end %>
 
-                            <%= link_to '編輯', edit_store_area_path(store_area) %>
-                            <a url="#" class="del" id='/store_areas/destroy/<%=store_area.id %>'> 停用 </a>
+                            <% if judgment_access 'store_areas/del' %>
+                                <a url="#" class="del" id='/store_areas/destroy/<%=store_area.id %>'> 停用 </a>
+                            <% end %>
                       </tr>
                     <% end %>
                   </tbody>

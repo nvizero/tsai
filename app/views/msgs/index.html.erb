@@ -5,7 +5,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">使用者列表</h3>
+                <h3 class="box-title">訊息列表</h3>
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
 
@@ -18,7 +18,11 @@
       <th>標題</th>
       <th>內容</th>
       <th>裝態/位置</th>
-      <th><%= link_to '新增訊息', new_msg_path %></th>
+      <th>
+        <% if judgment_access 'msgs/new' %>
+            <%= link_to '新增訊息', new_msg_path %>
+        <% end %>
+      </th>
 
     </tr>
   </thead>
@@ -27,20 +31,20 @@
     <% @msgs.each do |msg| %>
       <tr>
         <td><%= msg.title %></td>
-        <td><%= msg.content %></td>
+        <td><%= msg.content.to_s[0..60] %></td>
         <td>
-
             <%= (msg.state=='Y')?'顯示':'不顯示' %>
             <%= (msg.place=='top')?'上':'中' %>
-
         </td>
 
         <td>
-
+        <% if judgment_access 'msgs/edit' %>
             <%= link_to '編輯', edit_msg_path(msg) %>
+        <% end %>
 
-
+        <% if judgment_access 'msgs/del' %>
             <a url="#" class="del" id='/msgs/destroy/<%=msg.id %>'> 停用 </a>
+        <% end %>
 
 
         </td>

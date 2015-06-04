@@ -21,12 +21,12 @@ class RolesController < ApplicationController
   # GET /roles/new
   def new
     @role   = Role.new
-    @aces   = Access.all
+    @aces   = Access.live
   end
 
   # GET /roles/1/edit
   def edit
-    @aces   = Access.all
+    @aces   = Access.live
   end
 
   # POST /roles
