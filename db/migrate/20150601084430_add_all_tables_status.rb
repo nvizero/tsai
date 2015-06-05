@@ -24,16 +24,16 @@ class AddAllTablesStatus < ActiveRecord::Migration
   end
 
   def down
-    remove_column :accesses ,:state
-    remove_column :products ,:state
-    remove_column :product_verify_types ,:state
+    remove_column :accesses , :state
+    remove_column :products , :state
+    remove_column :product_verify_types , :state
 
-    remove_column :roles ,:state
+    remove_column :roles , :state
     remove_column :store_areas ,:state
     remove_column :trades ,:state
 
     remove_column :verify_type_mains ,:state
-    rename_column :product_verifies ,:state ,:status , :string
+    rename_column :product_verifies ,:state ,:status
   end
 
 end
