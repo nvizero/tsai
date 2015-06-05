@@ -1,14 +1,16 @@
 <%= form_for(@product) do |f| %>
-    <% if @product.errors.any? %>
 
-        <div id="error_explanation"  style="display:none;">
-          <% @product.errors.full_messages.each do |msg| %>
-            <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
-          <% end %>
-        </div>
-     <% end %>
+  <% if @product.errors.any? %>
+      <div id="error_explanation"  style="display:none;">
+        <% @product.errors.full_messages.each do |msg| %>
+          <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
+        <% end %>
+      </div>
+   <% end %>
 
-  <%= render 'comm/ckbox' , :mss => @mss%>
+<%= render 'comm/ckbox' , :mss => @mss%>
+
+
 <style media="screen">
   .box-body .row{
     margin-top:10px;
@@ -80,31 +82,410 @@
                           </div>
                         </div>
                     </div>
-                
+
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <label>品名</label>
+                            <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                        </div>
+
+                        <div class="col-xs-4">
+                            <label for="">規格</label>
+                            <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                        </div>
+
+                        <div class="col-xs-4" style="margin-top:20px;">
+
+                          <div class="col-xs-4">
+                              <label for="">換算比率</label>
+                          </div>
+
+                          <div class="col-xs-4">
+                              <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                          </div>
+
+                          <div class="col-xs-4">
+                              <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                          </div>
+
+                        </div>
+                    </div>
+
+                    <!--hr-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <!--hr-->
+
+                    <div class="row" style="">
+                        <div class="col-xs-8">
+
+                            <div class="col-xs-12">
+                                <label>單箱基數</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+
+                            <div class="col-xs-6" style="margin:0px;">
+                                <label>單箱淨重</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+                            <div class="col-xs-6" style="margin:0px;">
+                                <label>單箱淨重－單位</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+
+                            <div class="col-xs-6" style="margin:0px;">
+                                <label>單箱毛重</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+                            <div class="col-xs-6" style="margin:0px;">
+                                <label>單箱毛重－單位</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+
+
+                            <div class="col-xs-3" style="margin:0px;">
+                                <label>材積</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+                            <div class="col-xs-3" style="margin:0px;">
+                                <label>材積－長</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+                            <div class="col-xs-3" style="margin:0px;">
+                                <label>材積－寛</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+                            <div class="col-xs-3" style="margin:0px;">
+                                <label>材積－高</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+
+
+                            <div class="col-xs-3" style="margin:0px;">
+                                <label>尺寸</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+                            <div class="col-xs-3" style="margin:0px;">
+                                <label>尺寸－長</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+                            <div class="col-xs-3" style="margin:0px;">
+                                <label>尺寸－寛</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+
+                            <div class="col-xs-3" style="margin:0px;">
+                                <label>尺寸－高</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+
+                            <div class="col-xs-5" style="margin:0px;">
+                                <label>料品科目</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+                            <div class="col-xs-5" style="margin:0px;">
+                                <label>費用代號</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+                            <div class="col-xs-2" style="margin:0px;">
+                                <label>批號控制</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3">
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-xs-4">
+                            <div class="col-xs-12">
+                                <label for="">建檔日期</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3" value="<%=session[:user_name]%>">
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">輸入者</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3" value="<%=session[:user_name]%>">
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">建檔日期</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3" value="<%=session[:user_name]%>">
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">修改者</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3" value="<%=session[:user_name]%>">
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">異動日期</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3" value="<%=session[:user_name]%>">
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">部位材質</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3" value="<%=session[:user_name]%>">
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">是否主料</label>
+                                <input type="text" name="" class="form-control" placeholder=".col-xs-3" value="<%=session[:user_name]%>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--hr-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <!--hr-->
+
+                    <div class="row">
+
+                        <div class="col-xs-4">
+
+                            <div class="col-xs-12">
+                                <label for="">產品分類</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">保稅</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">盤差率</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">需先認樣</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">料品來源</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">指定廠商</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">採購批量</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">損耗率</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+
+                            <div class="col-xs-12">
+                                <label for="">ABCD分類</label>
+                                <%= f.text_field :abcd_category , :class=>'form-control' %>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4">
+                          <div class="col-xs-12">
+                              <label for="">有效天數</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">保稅日期</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">前置時間</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">請購方式</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">品管類別</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">檢驗水準</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">案全存量</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">標準庫位</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">虛擬件</label>
+                              <%= f.text_field :abcd_category , :class=>'form-control' %>
+                          </div>
+
+                        </div>
 
 
 
+                        <div class="col-xs-4">
+                          <div class="col-xs-12">
+                              <label for="">生管代號</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
 
-  <div class="form-group <% if !@product.errors[:title].blank? %> has-error <% end %> ">
-    <%= f.label :title ,'產品名稱'%><font color="red" >*</font>
-    <%= f.text_field :title , :class=>'form-control' %>
-  </div>
+                          <div class="col-xs-12">
+                              <label for="">保稅帳冊</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
 
-  <div class="form-group <% if !@product.errors[:content].blank? %> has-error <% end %> ">
-    <%= f.label :content , '產品內容' %><font color="red" >*</font>
-    <%= f.text_area :content, :class=>'form-control' %>
-  </div>
+                          <div class="col-xs-12">
+                              <label for="">倉管代號</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
 
-  <div class="form-group">
-    <%= f.label :num ,'主檔分類' %>
-    <%= f.select(:verify_type_main_id, @verify_type_mains.map {|m| [m.title , m.id] }) %>
-  </div>
+                          <div class="col-xs-12">
+                              <label for="">物管代號</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">採購代號</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                            <div class="col-xs-4">
+                                <label for="">進價單位</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+                            <div class="col-xs-8">
+                                <label for="">最近進價</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">最近進貨</label>
+                              <%= f.text_field :title , :class=>'form-control' %>
+                          </div>
+
+                          <div class="col-xs-12">
+                            <div class="col-xs-6">
+                                <label for="">盤點週期－年</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+                            <div class="col-xs-3">
+                                <label for="">月</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+                            <div class="col-xs-3">
+                                <label for="">日</label>
+                                <%= f.text_field :title , :class=>'form-control' %>
+                            </div>
+                          </div>
+
+                          <div class="col-xs-12">
+                              <label for="">備用數量</label>
+                              <%= f.text_field :abcd_category , :class=>'form-control' %>
+                          </div>
+
+                        </div>
+                    </div>
+
+                    <!--hr-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <hr>
+                        </div>
+                    </div>
+                    <!--hr-->
 
 
-  <div class="form-group">
-    <%= f.label :num ,'數量' %>
-    <%= f.number_field :num %>
-  </div>
+
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <label for="">排程批量</label>
+                            <%= f.text_field :abcd_category , :class=>'form-control' %>
+                        </div>
+                        <div class="col-xs-3">
+                            <label for="">生產批量</label>
+                            <%= f.text_field :abcd_category , :class=>'form-control' %>
+                        </div>
+                        <div class="col-xs-3">
+                            <label for="">領用掍量</label>
+                            <%= f.text_field :abcd_category , :class=>'form-control' %>
+                        </div>
+                        <div class="col-xs-3">
+                            <label for="">yield Rate</label>
+                            <%= f.text_field :yield_rate , :class=>'form-control' %>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <label for="">營業單位</label>
+                            <%= f.text_field :abcd_category , :class=>'form-control' %>
+                        </div>
+                        <div class="col-xs-3">
+                            <label for="">採購單位</label>
+                            <%= f.text_field :abcd_category , :class=>'form-control' %>
+                        </div>
+                        <div class="col-xs-2">
+                            <label for="">關稅</label>
+                            <%= f.text_field :abcd_category , :class=>'form-control' %>
+                        </div>
+                        <div class="col-xs-4">
+                            <label for="">領料方式</label>
+                            <%= f.text_field :abcd_category , :class=>'form-control' %>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <%= f.label :title ,'產品名稱'%><font color="red" >*</font>
+                            <%= f.text_field :title , :class=>'form-control' %>
+                        </div>
+
+                        <div class="col-xs-4">
+                            <%= f.label :num ,'主檔分類' %><br>
+                            <%= f.select(:verify_type_main_id, @verify_type_mains.map {|m| [m.title , m.id] }) %>
+                        </div>
+
+                        <div class="col-xs-4">
+                            <%= f.label :num ,'數量' %>
+                            <%= f.number_field :num %>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                          <div class="form-group <% if !@product.errors[:content].blank? %> has-error <% end %> ">
+                            <%= f.label :content , '產品內容' %><font color="red" >*</font>
+                            <%= f.text_area :content, :class=>'form-control' %>
+                          </div>
+                        </div>
+
+                    </div>
+
+
 
 
     <%= f.hidden_field :user_id , :value=>session[:user_id] %>
