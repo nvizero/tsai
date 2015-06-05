@@ -6,7 +6,7 @@ class AddProductColumns < ActiveRecord::Migration
     add_column :products , :model_no        , :string   , :limit => 20
     add_column :products , :specification   , :string   , :limit => 20  #規格
 
-    add_column :products , :one_base        , :integer
+    add_column :products , :one_base        , :integer  #單箱基數
     add_column :products , :one_heavy1      , :integer
     add_column :products , :one_heavy1_unit , :string   , :limit => 20  #單位
     add_column :products , :one_heavy2      , :integer

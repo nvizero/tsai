@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    
+
     @user = User.new
     @roles = Role.live
     @trades = Trade.sorted
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
 
-    @roles = Role.live
+    @roles = Role.all
     @trades = Trade.sorted
     @sotre_area = StoreArea.all
   end
@@ -74,73 +74,73 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+
     @user = User.new(user_params)
 
-    # respond_to do |format|
+
+
+
+
+    
 
       if params[:password] == params[:re_password]
 
           if @user.save
+             #流水號
+             self.insert_id_seq  params["user"]["username"]
 
-             #密碼
-            #  @user.password = Digest::MD5.hexdigest( params[:password].to_s )
-            #  @user.password = ''
-             #壯態
              @user.state = 'Y'
-
-
              @user.password = Digest::SHA256.hexdigest @user.password
-
-
-
-            # format.html { redirect_to @user, notice: '新增成功！' }
-            # format.json { render action: 'index', status: :created, location: @user }
-
              uu = @user
+
              UserMailer.new_user(uu).deliver
-            #  notify_comment
+
              @user.save
              flash[:notice] = "會員-新增成功!"
              redirect_to :action=> :index
 
           else
+
+            @roles = Role.all
+            @trades = Trade.sorted
+            @sotre_area = StoreArea.all
             render action: 'new'
+
           end
 
-      # else
-      #
-      #   format.html { render action: 'new' }
-      #   format.json { render json: @user.errors, status: :unprocessable_entity }
-      #
-      # end
+
     end
   end
 
+
+  def insert_id_seq username
+
+    namelen=7-username.length.to_i
+    fname = ''
+    namelen.times{
+     fname += '0'
+    }
+
+    fname +=username
+    IdSeq.create(:pre_id => fname )
+
+  end
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
 
-    if @user.update(user_params_update)
+    # render :text =>params
 
+    if @user.update(user_params_update)
       flash[:notice] = "會員更新成功!"
       redirect_to action: "index"
     else
+      @roles = Role.all
+      @trades = Trade.sorted
+      @sotre_area = StoreArea.all
       render action: 'edit'
     end
-    # respond_to do |format|
-    #   if @user.update(user_params_update)
-    #
-    #     format.html { render action: 'index' }
-    #
-    #     format.html { redirect_to @user , :action =>'index' , notice: '更新成功' }
-    #     # format.json { head :no_content }
-    #
-    #   else
-    #
-    #     format.html { render action: 'edit' }
-    #     format.json { render json: @user.errors, status: :unprocessable_entity }
-    #   end
-    # end
+
   end
 
   # DEadminE /users/1
@@ -193,7 +193,7 @@ class UsersController < ApplicationController
                                     :name,  :boss, :serial_code , :tel,
                                     :send_address,  :check_date,
                                     :forget_password, :text,
-                                    :trade_id, :store_area_id, :username )
+                                    :trade_id, :store_area_id )
 
     end
 

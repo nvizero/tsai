@@ -15,7 +15,7 @@ class UserMailer < ActionMailer::Base
 
   def new_user(uu)
     @u = uu
-    @msg1 = 'welcome to my web site'
+    @msg1 = '感謝您的註冊！歡迎來到智富國際！'
     mail(:to =>@u.email, :subject => @u.name+"您好!註冊成功!")
   end
 
@@ -23,7 +23,7 @@ class UserMailer < ActionMailer::Base
 
     @stri = str
     @u = user
-    @msg1 = 'welcome to my web site'
+    @msg1 = '您的密碼己變更'
     mail(:to =>@u.email, :subject => @u.name+"您好!您的密碼己變更!")
   end
 

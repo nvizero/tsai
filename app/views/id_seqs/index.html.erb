@@ -1,4 +1,4 @@
- 
+
 <!-- Main content -->
 <section class="content">
   <div class="row">
@@ -13,7 +13,6 @@
               <table id="example2" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>區域</th>
                       <th>名稱</th>
                       <th><% link_to '新增id_seqs', new_id_seq_path %></th>
                     </tr>
@@ -23,11 +22,10 @@
                     <% @id_seqs.each do |id_seq| %>
                       <tr>
                         <td><%= id_seq.pre_id %></td>
-                        <td><%= id_seq.seq %></td>
                         <td>
                           <% link_to 'Show', id_seq %>
                           <% link_to 'Edit', edit_id_seq_path(id_seq) %>
-                          <%= link_to '删除', id_seq, method: :deadmine, data: { confirm: 'Are you sure?' } %></td>
+                          <% link_to '删除', id_seq, method: :deadmine, data: { confirm: 'Are you sure?' } %></td>
                       </tr>
                     <% end %>
                   </tbody>

@@ -29,12 +29,20 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
 
-          <% if judgment_access 'users/index' %>
+
           <li class="active" style="background-color: #3c8dbc;">
-              <a href="/users" style="background: #3c8dbc;">
+              <a href="#" style="background: #3c8dbc;">
                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span> <span>會員專區</span>
               </a>
           </li>
+
+
+          <% if judgment_access 'users/index' %>
+              <li >
+                  <a href="/users">
+                      <span>會員管理</span>
+                  </a>
+              </li>
           <% end %>
 
           <li >
