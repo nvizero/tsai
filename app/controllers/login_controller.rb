@@ -14,17 +14,17 @@ class LoginController < ApplicationController
     @pas= Digest::SHA256.hexdigest user_data["password"].to_s.rstrip.lstrip
 
     @is_login = User.where(:username => user_data["username"] , :password  => @pas ).first
-    #
+
     # @login_name = User.where(:username => params[:username].to_s.rstrip.lstrip ).first
     #
     # @login_pas = User.where(password:  @password ).first
     # if @is_login
-
+    #
     # end
 
 
     if @is_login
-        self.set_user_sesssion
+        self.set_user_sesssion 
         flash[:notice]  = "#{@is_login.name}您好!登入成功"
         redirect_to(:controller=> 'dashboard' , :action => "main")
     else
@@ -107,7 +107,7 @@ class LoginController < ApplicationController
         # user = User.find_by(username: params[:username])
         @ou  =  User.where(:username => params[:username],:email=>params[:email] ).first
 
-        
+
         if @ou
 
             @pas = Digest::SHA256.hexdigest str

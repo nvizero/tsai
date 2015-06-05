@@ -67,3 +67,7 @@ Access.create!(:title => '辦證進度查詢－首頁', :code=>'product_verifies
 Access.create!(:title => '辦證進度查詢－新增', :code=>'product_verifies/new'   , :state =>'Y')
 Access.create!(:title => '辦證進度查詢－編輯', :code=>'product_verifies/edit'  , :state =>'Y')
 Access.create!(:title => '辦證進度查詢－删除', :code=>'product_verifies/del'   , :state =>'Y')
+
+Access.create!(:title => 'all', :code=>'all'   , :state =>'Y')
+
+Role.create!(:title => 'admin' , :text =>'all' , :code=>'all' , :state => 'Y')
