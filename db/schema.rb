@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605003253) do
+ActiveRecord::Schema.define(version: 20150607035904) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 20150605003253) do
     t.string   "check_date",      limit: 45
     t.string   "password"
     t.string   "re_password"
-    t.string   "forget_pas",      limit: 100
+    t.string   "prompt",          limit: 100
     t.text     "text"
     t.string   "trade_id",        limit: 2
     t.string   "store_area_id",   limit: 8

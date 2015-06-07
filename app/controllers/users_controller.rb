@@ -74,55 +74,64 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    if false
+      render :text => params
+    else
 
-    @user = User.new(user_params)
+        @user = User.new(user_params)
+          if params["user"][:password] == params["user"][:re_password]
 
+              if @user.save
+                 #流水號
+                 self.insert_id_seq  params["user"]["username"]
 
+                 @user.state = 'Y'
+                 @user.password = Digest::SHA256.hexdigest @user.password
+                 uu = @user
 
+                 UserMailer.new_user(uu).deliver
 
+                 @user.save
+                 flash[:notice] = "會員-新增成功!"
+                 redirect_to :action=> :index
 
-    
+              else
 
-      if params[:password] == params[:re_password]
+                @roles = Role.all
+                @trades = Trade.sorted
+                @sotre_area = StoreArea.all
+                render action: 'new'
 
-          if @user.save
-             #流水號
-             self.insert_id_seq  params["user"]["username"]
+              end
+        else
 
-             @user.state = 'Y'
-             @user.password = Digest::SHA256.hexdigest @user.password
-             uu = @user
-
-             UserMailer.new_user(uu).deliver
-
-             @user.save
-             flash[:notice] = "會員-新增成功!"
-             redirect_to :action=> :index
-
-          else
+            flash[:notice] = "密碼與確認密碼必需一致"
+            flash[:pas] = "密碼與確認密碼必需一致"
 
             @roles = Role.all
             @trades = Trade.sorted
             @sotre_area = StoreArea.all
             render action: 'new'
 
-          end
-
+        end
 
     end
+
+
   end
 
 
   def insert_id_seq username
 
-    namelen=7-username.length.to_i
-    fname = ''
-    namelen.times{
-     fname += '0'
-    }
-
-    fname +=username
-    IdSeq.create(:pre_id => fname )
+    if username.length.to_i < 8
+      namelen=7-username.length.to_i
+      fname = ''
+      namelen.times{
+       fname += '0'
+      }
+      fname +=username
+      IdSeq.create(:pre_id => fname )
+    end
 
   end
   # PATCH/PUT /users/1
@@ -183,7 +192,7 @@ class UsersController < ApplicationController
       params.require(:user).permit( :email, :company_address,:role_id,
                                     :name,  :boss, :serial_code , :tel,
                                     :send_address,  :check_date, :password,
-                                    :re_password, :forget_password, :text,
+                                    :re_password, :prompt, :text,
                                     :trade_id, :store_area_id , :username)
 
     end
@@ -192,7 +201,7 @@ class UsersController < ApplicationController
       params.require(:user).permit( :email, :company_address, :role_id,
                                     :name,  :boss, :serial_code , :tel,
                                     :send_address,  :check_date,
-                                    :forget_password, :text,
+                                    :prompt, :text,
                                     :trade_id, :store_area_id )
 
     end

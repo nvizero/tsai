@@ -1,6 +1,7 @@
 
 
 <%= form_for(@user) do |f| %>
+
   <% if @user.errors.any? %>
       <div id="error_explanation"  style="display:none;">
         <% @user.errors.full_messages.each do |msg| %>
@@ -26,19 +27,31 @@
 
                     <div class="box-body">
 
-                        <div class="form-group">
-                          <%= label_tag :username ,'紅色',:for =>'exampleInputEmail1' %><font color="red" >*</font>號必填
-                        </div>
+
 
                         <div class="form-group <% if !@user.errors[:username].blank? %> has-error <% end %> ">
-                          <%= f.label :username ,'帳號',:for =>'exampleInputEmail1' %><font color="red" >*</font>
-                          <%= f.text_field :username, :class=>'form-control', :id=>"username", :placeholder=>"輸入帳號" %>
+
+                          <font color="red" ><%= f.label :username ,'帳號',:for =>'exampleInputEmail1' %></font>
+
+                          <% if @user.id %>
+                              <%= f.text_field :username, :class=>'form-control', :id=>"email", :disabled=>""  %>
+                          <% else %>
+                              <%= f.text_field :username, :class=>'form-control', :id=>"username" %>
+                          <% end %>
+
                         </div>
 
 
                         <div class="form-group <% if !@user.errors[:email].blank? %> has-error <% end %> ">
-                          <%= f.label :email ,'電子信箱',:for =>'exampleInputEmail1' %><font color="red" >*</font>
-                          <%= f.text_field :email, :class=>'form-control', :id=>"email", :placeholder=>"輸入email" %>
+
+                          <font color="red" ><%= f.label :email ,'電子信箱',:for =>'exampleInputEmail1' %></font>
+
+                          <% if @user.id %>
+                              <%= f.text_field :email, :class=>'form-control', :id=>"email", :disabled=>""  %>
+                          <% else %>
+                              <%= f.text_field :email, :class=>'form-control', :id=>"email", :placeholder=>"輸入email" %>
+                          <% end %>
+
                         </div>
 
                         <div class="form-group <% if !@user.errors[:role_id].blank? %> has-error <% end %> ">
@@ -82,20 +95,38 @@
                           <%= f.text_field :check_date, :class=>'form-control', :id=>"check_date", :placeholder=>"簽約日期" %>
                         </div>
 
-                        <div class="form-group  <% if !@user.errors[:password].blank? %> has-error <% end %> ">
-                          <%= f.label :password ,'密碼' ,:for =>'exampleInputEmail1' %><font color="red" >*</font><br>
-                          <%= f.password_field :password , :class=>'form-control', :id=>"password", :placeholder=>"密碼" %>
+                        <div class="form-group  <% if !@user.errors[:prompt].blank? %> has-error <% end %> ">
+                          <font color="red" > <%= f.label  :prompt,'忘記密碼提示' , :for =>'exampleInputEmail1' %> </font>
+                          <%= f.text_field :prompt, :class=>'form-control', :id=>"prompt", :placeholder=>"忘記密碼提示" %>
+
                         </div>
 
-                        <div class="form-group <% if !@user.errors[:re_password].blank? %> has-error <% end %> ">
-                          <%= f.label :re_password,'認確密碼'  ,:for =>'exampleInputEmail1' %><font color="red" >*</font><br>
-                          <%= f.password_field :re_password, :class=>'form-control', :id=>"re_password", :placeholder=>"認確密碼" %>
-                        </div>
 
-                        <div class="form-group  <% if !@user.errors[:forget_pas].blank? %> has-error <% end %> ">
-                          <%= f.label  :forget_pas,'忘記密碼提示' ,:for =>'exampleInputEmail1' %><font color="red" >*</font>
-                          <%= f.text_field :forget_pas , :class=>'form-control', :id=>"forget_pas", :placeholder=>"忘記密碼" %>
-                        </div>
+                        <% if check_user_is_new @user %>
+                          <div class="form-group  <% if !flash[:pas].blank? %> has-error <% end %> ">
+                            <font color="red" >
+                              <%= f.label :password ,'密碼' ,:for =>'exampleInputEmail1' %>
+                              <% if !flash[:pas].blank? %>
+                                  <%=flash[:pas] %>
+                              <% end %>
+                            </font>
+                            <%= f.password_field :password , :class=>'form-control', :id=>"password", :placeholder=>"密碼" %>
+                          </div>
+
+                          <div class="form-group  <% if !flash[:pas].blank? %> has-error <% end %> ">
+                            <font color="red" >
+                              <%= f.label :re_password,'認確密碼'  ,:for =>'exampleInputEmail1' %>
+                              <% if !flash[:pas].blank? %>
+                                  <%=flash[:pas] %>
+                              <% end %>
+                            </font>
+                            <%= f.password_field :re_password, :class=>'form-control', :id=>"re_password", :placeholder=>"認確密碼" %>
+                          </div>
+                        <% end %>
+
+
+
+
 
                         <div class="form-group">
                           <%= f.label  :text,'備註' ,:for =>'exampleInputEmail1' %><br>

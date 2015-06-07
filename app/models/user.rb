@@ -9,9 +9,10 @@ class User < ActiveRecord::Base
 
   scope :live, lambda { where("users.state = 'y' ") }
 
+  validates :prompt,     :presence => { :message => "密碼提示不能空白" }
   validates :username,  :presence => { :message => "帳號－不能空白" } ,
                         :uniqueness => { :message => "帳號－有重複,請重新輸入" },
-                        :length => {:minimum => 5, :maximum => 254,:message => "帳號-要6到8個字元"}
+                        :length => {:minimum => 5, :maximum => 8,:message => "帳號-要6到8個字元"}
 
   validates :name,  :presence => { :message => "姓名－不能空白" }
 
@@ -22,13 +23,21 @@ class User < ActiveRecord::Base
   validates :email,     :presence => { :message => "不能空白" } ,
                         :uniqueness => { :message => "有重複,請重新輸入" }
 
+
+
   validates :password,        :presence => { :message => "密碼－不能空白" }
   validates :re_password,     :presence => { :message => "重複密碼－不能空白" }
 
 
+
   validates_format_of :email, :with => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i ,:message => "email－格式有誤！請重新輸入！"
   validates_format_of :username, :with => /\A([a-z0-9]+)/i ,:message => "帳號－格式有誤請重新輸入！"
-  validates_confirmation_of :password, :re_password ,message: 'should match confirmation'
+  
+
+  # attr_reader :password
+  # validates_confirmation_of :password
+  # validates_presence_of     :re_password
+  attr_accessor :re_password
 
   before_create do
     self.state = "Y"

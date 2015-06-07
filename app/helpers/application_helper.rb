@@ -60,8 +60,9 @@ module ApplicationHelper
     !session.nil?
   end
 
-  def role_checkbox text , num
 
+
+  def role_checkbox text , num
     check_flag = false
     text.to_s.split(',').each do |str|
       if str.to_i == num.to_i
@@ -74,7 +75,22 @@ module ApplicationHelper
     else
       return ''
     end
+  end
 
+
+  def check_user_is_new user
+    if user.id
+      false
+    else
+      true
+    end
+  end
+
+
+  def field_display flag
+    if flag
+      'disabled=""'
+    end
   end
 
 

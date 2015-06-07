@@ -8,7 +8,7 @@ class PactController < ApplicationController
     if user
         render :text => user.forget_pas
     else
-        render :text => false
+        render :text => '找不到帳號!請重輸入!'
     end
   end
 
