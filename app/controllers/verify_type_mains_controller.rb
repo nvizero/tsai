@@ -15,17 +15,9 @@ class VerifyTypeMainsController < ApplicationController
   # GET /verify_type_mains.json
   def index
 
-    # mains = VerifyTypeMain.all
-    # mains.each do |min|
-    #   min.state = "Y"
-    #   min.save
-    # end
-
-    # render :text => self.get_self_url[3]
-
     self.jadge_access 'verify_type_mains/index'
 
-    @verify_type_mains = VerifyTypeMain.live.page params[:page]
+    @verify_type_mains = VerifyTypeMain.page params[:page]
 
 
   end
@@ -50,7 +42,7 @@ class VerifyTypeMainsController < ApplicationController
   def create
     @verify_type_main = VerifyTypeMain.new(verify_type_main_params)
     @verify_type_main.create_user_id = session[:user_id]
-    # respond_to do |format|
+
       if @verify_type_main.save
         # format.html {
           redirect_to :action=>'index'
@@ -67,17 +59,16 @@ class VerifyTypeMainsController < ApplicationController
 
   # PATCH/PUT /verify_type_mains/1
   # PATCH/PUT /verify_type_mains/1.json
+
   def update
 
     @verify_type_main.modify_user_id = session[:user_id]
-    respond_to do |format|
-      if @verify_type_main.update(verify_type_main_params)
-        format.html { redirect_to @verify_type_main, notice: 'Verify type main was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @verify_type_main.errors, status: :unprocessable_entity }
-      end
+
+    if @verify_type_main.update(verify_type_main_params)
+        flash[:notice] = "更新成功"
+        redirect_to :controller=>'verify_type_mains' ,:action => 'index'
+    else
+        render action: 'edit'
     end
   end
 

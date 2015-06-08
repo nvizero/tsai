@@ -34,14 +34,9 @@
                                 <form role="form">
                                     <div class="box-body">
 
-                                        <div class="form-group">
-                                          <%= label_tag :username ,'紅色',:for =>'exampleInputEmail1' %><font color="red" >*</font>號必填
-                                        </div>
-
                                         <div class="form-group <% if !@store_area.errors[:area_id].blank? %> has-error <% end %> ">
-                                            <%= f.label :area_id , '區域代碼' %>
+                                            <font color="red"><%= f.label :area_id , '區域代碼' %></font>
                                             <%= f.text_field :area_id , :id=>"exampleInputFile",:class=>"form-control" %>
-
                                         </div>
 
                                         <div class="form-group <% if !@store_area.errors[:area_name].blank? %> has-error <% end %> " >

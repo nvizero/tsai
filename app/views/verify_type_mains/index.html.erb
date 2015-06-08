@@ -27,19 +27,27 @@
 
   <tbody>
     <% @verify_type_mains.each do |verify_type_main| %>
+
       <tr>
-        <td><%= verify_type_main.title %></td>
-        <td><%= verify_type_main.content %></td>
         <td>
+          <%= state_n_show verify_type_main,verify_type_main.title  %>
+        </td>
+        <td>
+          <%= state_n_show verify_type_main,verify_type_main.content  %>
+        </td>
+        <td>
+          <% if verify_type_main.state == 'Y'  %>
+              <% if judgment_access 'verify_type_mains/edit' %>
+                <%= link_to '編輯', edit_verify_type_main_path(verify_type_main) %>
+              <% end %>
 
-          <% if judgment_access 'verify_type_mains/edit' %>
-            <%= link_to '編輯', edit_verify_type_main_path(verify_type_main) %>
+              <% if judgment_access 'verify_type_mains/del' %>
+                <a url="#" class="del" id='/verify_type_mains/destroy/<%=verify_type_main.id %>'> 停用 </a>
+              <% end %>
+          <% else %>
+              己停用
           <% end %>
 
-          <% if judgment_access 'verify_type_mains/del' %>
-            <a url="#" class="del" id='/verify_type_mains/destroy/<%=verify_type_main.id %>'> 停用 </a>
-          <% end %>
-          
         </td>
       </tr>
     <% end %>

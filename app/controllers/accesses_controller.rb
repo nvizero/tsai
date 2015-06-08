@@ -80,9 +80,9 @@ class AccessesController < ApplicationController
     # @access.destroy
     @access.stop_user_id = session[:user_id]
     @access.stoped_at = DateTime.now
-
     @access.state = "N"
     @access.save
+    redirect_to :controller =>'accesses' ,:action=>'index'
     # respond_to do |format|
     #   format.html { redirect_to accesses_url }
     #   format.json { head :no_content }

@@ -32,15 +32,28 @@
   <tbody>
     <% @product_verify_types.each do |product_verify_type| %>
       <tr>
-        <td><%= product_verify_type.name %></td>
-        <td><%= product_verify_type.verify_type_main.title %></td>
         <td>
-          <% if judgment_access 'product_verify_types/edit' %>
-              <%= link_to '編輯', edit_product_verify_type_path(product_verify_type) %>
-          <% end %>
+          <%= state_n_show product_verify_type,product_verify_type.name  %>
+        </td>
 
-          <% if judgment_access 'product_verify_types/del' %>
-              <a url="#" class="del" id='/product_verify_types/destroy/<%=product_verify_type.id %>'> 停用 </a>
+        <td>
+          <%= state_n_show product_verify_type,product_verify_type.content  %>
+        </td>
+
+        <td>
+
+          <% if product_verify_type.state == 'Y'  %>
+
+              <% if judgment_access 'product_verify_types/edit' %>
+                  <%= link_to '編輯', edit_product_verify_type_path(product_verify_type) %>
+              <% end %>
+
+              <% if judgment_access 'product_verify_types/del' %>
+                  <a url="#" class="del" id='/product_verify_types/destroy/<%=product_verify_type.id %>'> 停用 </a>
+              <% end %>
+
+          <% else %>
+               己停用
           <% end %>
         </td>
       </tr>

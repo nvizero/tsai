@@ -93,6 +93,26 @@ module ApplicationHelper
     end
   end
 
+  def font_del_start obj
+    if obj.state == 'N'
+      simple_format "<del>"
+    end
+  end
+
+  def font_del_end obj
+    if obj.state == 'N'
+      simple_format "</del>"
+    end
+  end
+
+  def state_n_show obj , content
+    if obj.state == 'N'
+      simple_format "<del>#{content}</del>"
+    else
+      simple_format "#{content}"
+    end
+  end
+
 
 
 

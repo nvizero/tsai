@@ -32,7 +32,7 @@
       <tr>
         <td>
           <% if product_verify.product %>
-          <%= product_verify.product.title %>
+              <%= state_n_show(product_verify , product_verify.product.title)  %>              
           <% end %>
         </td>
         <td><%= product_verify.state %></td>

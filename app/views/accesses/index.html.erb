@@ -27,9 +27,18 @@
   <tbody>
     <% @accesses.each do |access| %>
       <tr>
-        <td><%= access.title %></td>
-        <td><%= access.code %></td>
         <td>
+          <%= state_n_show access,access.title  %>
+        </td>
+
+        <td>
+          <%= state_n_show access,access.code  %>
+        </td>
+        
+        <td>
+
+          <% if access.state == 'Y'  %>
+
             <% if judgment_access 'accesses/edit' %>
                 <%= link_to '編輯', edit_access_path(access) %>
             <% end %>
@@ -37,6 +46,10 @@
             <% if judgment_access 'accesses/del' %>
                 <a url="#" class="del" id='/accesses/destroy/<%=access.id %>'> 停用 </a>
             <% end %>
+
+          <% else %>
+              己停用
+          <% end %>
         </td>
       </tr>
     <% end %>

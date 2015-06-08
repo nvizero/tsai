@@ -21,7 +21,7 @@ class RolesController < ApplicationController
   # GET /roles/new
   def new
     @role   = Role.new
-    @aces   = Access.live
+    @aces   = Access.all
   end
 
   # GET /roles/1/edit
@@ -36,16 +36,22 @@ class RolesController < ApplicationController
     @role.create_user_id = session[:user_id]
     #權限
     @atext = ''
-    params['point'].each do |po|
-      @atext += po[0].to_s + ','
-    end
-    @role.text = @atext
+
+
+
 
     if @role.save
+
+      params['point'].each do |po|
+        @atext += po[0].to_s + ','
+      end
+      @role.text = @atext
+      @role.save
 
       flash[:notice] = "角色-新增成功!"
       redirect_to action: "index"
     else
+      @aces   = Access.all
       render action: 'new'
     end
 
