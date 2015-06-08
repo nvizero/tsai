@@ -27,7 +27,7 @@ class ProductVerifyTypesController < ApplicationController
     # end
 
 
-    @product_verify_types = ProductVerifyType.live
+    @product_verify_types = ProductVerifyType.all
 
 
   end
@@ -53,7 +53,7 @@ class ProductVerifyTypesController < ApplicationController
   # POST /product_verify_types.json
   def create
     @product_verify_type = ProductVerifyType.new(product_verify_type_params)
-
+    @product_verify_type.create_user_id = session[:user_id]
     # respond_to do |format|
       if @product_verify_type.save
         flash[:notice] = "三證類型－新增成功"
@@ -70,6 +70,7 @@ class ProductVerifyTypesController < ApplicationController
   # PATCH/PUT /product_verify_types/1.json
   def update
     # respond_to do |format|
+    @product_verify_type.modify_user_id = session[:user_id]
       if @product_verify_type.update(product_verify_type_params)
         flash[:notice] =  '三證類型修改成功'
         redirect_to :action => 'index'
@@ -85,6 +86,8 @@ class ProductVerifyTypesController < ApplicationController
   # DELETE /product_verify_types/1.json
   def destroy
     # @product_verify_type.destroy
+    @product_verify_type.stop_user_id = session[:user_id]
+    @product_verify_type.stoped_at = DateTime.now
     @product_verify_type.state = "N"
     @product_verify_type.save
     respond_to do |format|

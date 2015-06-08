@@ -61,8 +61,9 @@ class ProductVerifiesController < ApplicationController
   # POST /product_verifies
   # POST /product_verifies.json
   def create
-    @product_verify = ProductVerify.new(product_verify_params)
 
+    @product_verify = ProductVerify.new(product_verify_params)
+    @product_verify.create_user_id = session[:user_id]
     respond_to do |format|
       if @product_verify.save
         format.html { redirect_to @product_verify, notice: 'Product verify was successfully created.' }
@@ -78,6 +79,7 @@ class ProductVerifiesController < ApplicationController
   # PATCH/PUT /product_verifies/1.json
   def update
     respond_to do |format|
+      @product_verify.modify_user_id = session[:user_id]
       if @product_verify.update(product_verify_params)
         format.html { redirect_to @product_verify, notice: 'Product verify was successfully updated.' }
         format.json { head :no_content }
@@ -91,6 +93,9 @@ class ProductVerifiesController < ApplicationController
   # DELETE /product_verifies/1
   # DELETE /product_verifies/1.json
   def destroy
+
+    @product_verify.stop_user_id = session[:user_id]
+    @product_verify.stoped_at = DateTime.now
     @product_verify.state = "N"
     @product_verify.save
 

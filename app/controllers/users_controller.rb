@@ -79,6 +79,7 @@ class UsersController < ApplicationController
     else
 
         @user = User.new(user_params)
+        @user.create_user_id = session[:user_id]
           if params["user"][:password] == params["user"][:re_password]
 
               if @user.save
@@ -139,7 +140,7 @@ class UsersController < ApplicationController
   def update
 
     # render :text =>params
-
+    @user.modify_user_id = session[:user_id]
     if @user.update(user_params_update)
       flash[:notice] = "會員更新成功!"
       redirect_to action: "index"
@@ -156,6 +157,8 @@ class UsersController < ApplicationController
   # DEadminE /users/1.json
   def destroy
 
+    @user.stop_user_id = session[:user_id]
+    @user.stoped_at = DateTime.now
     @user.state = 'N'
     @user.save
     respond_to do |format|

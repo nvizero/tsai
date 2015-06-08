@@ -18,7 +18,11 @@ ActiveRecord::Schema.define(version: 20150608050626) do
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",      limit: 1
+    t.string   "state",          limit: 1
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
   end
 
   create_table "ckeditor_assets", force: true do |t|
@@ -41,15 +45,23 @@ ActiveRecord::Schema.define(version: 20150608050626) do
     t.string   "seq"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
   end
 
   create_table "msgs", force: true do |t|
-    t.string   "title",      limit: 100
+    t.string   "title",          limit: 100
     t.text     "content"
-    t.string   "state",      limit: 2
+    t.string   "state",          limit: 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "place",      limit: 50
+    t.string   "place",          limit: 50
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
   end
 
   create_table "product_verifies", force: true do |t|
@@ -60,6 +72,10 @@ ActiveRecord::Schema.define(version: 20150608050626) do
     t.datetime "updated_at"
     t.integer  "type",                   limit: 2
     t.string   "type_name",              limit: 30
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
   end
 
   create_table "product_verify_types", force: true do |t|
@@ -71,6 +87,10 @@ ActiveRecord::Schema.define(version: 20150608050626) do
     t.string   "type_name",           limit: 30
     t.integer  "verify_type_main_id", limit: 2
     t.string   "state",               limit: 1
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
   end
 
   create_table "products", force: true do |t|
@@ -128,20 +148,29 @@ ActiveRecord::Schema.define(version: 20150608050626) do
     t.integer  "create_user_id"
     t.integer  "modify_user_id"
     t.integer  "stop_user_id"
+    t.datetime "stoped_at"
   end
 
   create_table "store_areas", primary_key: "area_id", force: true do |t|
-    t.string   "area_name",  limit: 10
+    t.string   "area_name",      limit: 10
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",      limit: 1
+    t.string   "state",          limit: 1
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
   end
 
   create_table "trades", force: true do |t|
-    t.string   "description", limit: 60
+    t.string   "description",    limit: 60
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",       limit: 1
+    t.string   "state",          limit: 1
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
   end
 
   create_table "users", force: true do |t|
@@ -171,7 +200,11 @@ ActiveRecord::Schema.define(version: 20150608050626) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",      limit: 1
+    t.string   "state",          limit: 1
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
   end
 
 end

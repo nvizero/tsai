@@ -49,7 +49,7 @@ class VerifyTypeMainsController < ApplicationController
   # POST /verify_type_mains.json
   def create
     @verify_type_main = VerifyTypeMain.new(verify_type_main_params)
-
+    @verify_type_main.create_user_id = session[:user_id]
     # respond_to do |format|
       if @verify_type_main.save
         # format.html {
@@ -68,6 +68,8 @@ class VerifyTypeMainsController < ApplicationController
   # PATCH/PUT /verify_type_mains/1
   # PATCH/PUT /verify_type_mains/1.json
   def update
+
+    @verify_type_main.modify_user_id = session[:user_id]
     respond_to do |format|
       if @verify_type_main.update(verify_type_main_params)
         format.html { redirect_to @verify_type_main, notice: 'Verify type main was successfully updated.' }
@@ -83,6 +85,8 @@ class VerifyTypeMainsController < ApplicationController
   # DELETE /verify_type_mains/1.json
   def destroy
     # @verify_type_main.destroy
+    @verify_type_main.stop_user_id = session[:user_id]
+    @verify_type_main.stoped_at = DateTime.now
     @verify_type_main.state = 'N'
     @verify_type_main.save
 

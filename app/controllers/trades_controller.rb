@@ -43,6 +43,7 @@ class TradesController < ApplicationController
   def create
 
     @trade = Trade.new(trade_params)
+    @trade.create_user_id = session[:user_id]
     if @trade.save
       flash[:notice] = "交易碼新增成功!"
       # render :text => @trade.id
@@ -69,7 +70,7 @@ class TradesController < ApplicationController
   # PATCH/PUT /trades/1
   # PATCH/PUT /trades/1.json
   def update
-
+    @trade.modify_user_id = session[:user_id]
     if @trade.update(trade_params)
       flash[:notice] = "交易碼更新成功!"
       redirect_to action: "index"
@@ -91,10 +92,11 @@ class TradesController < ApplicationController
   # DEadminE /trades/1
   # DEadminE /trades/1.json
   def destroy
-    # @trade.delete
+    @trade.stop_user_id = session[:user_id]
+    @trade.stoped_at = DateTime.now
     @trade.state = 'N'
     @trade.save
-    
+
     respond_to do |format|
       format.html { redirect_to trades_url }
       format.json { head :no_content }

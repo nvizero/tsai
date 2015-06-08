@@ -42,7 +42,9 @@ class StoreAreasController < ApplicationController
   # POST /store_areas
   # POST /store_areas.json
   def create
+
     @store_area = StoreArea.new(store_area_params)
+    @store_area.create_user_id = session[:user_id]
     if @store_area.save
       flash[:notice] = "庫位-新增成功!"
       redirect_to action: "index"
@@ -64,7 +66,7 @@ class StoreAreasController < ApplicationController
   # PATCH/PUT /store_areas/1
   # PATCH/PUT /store_areas/1.json
   def update
-
+    @store_area.modify_user_id = session[:user_id]
     if @store_area.update(store_area_params)
       flash[:notice] = "庫位-更新成功!"
       redirect_to action: "index"
@@ -85,6 +87,8 @@ class StoreAreasController < ApplicationController
   # DEadminE /store_areas/1
   # DEadminE /store_areas/1.json
   def destroy
+    @store_area.stop_user_id = session[:user_id]
+    @store_area.stoped_at = DateTime.now
     @store_area.state = "N"
     @store_area.save
     respond_to do |format|

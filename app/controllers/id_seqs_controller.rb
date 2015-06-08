@@ -39,7 +39,7 @@ class IdSeqsController < ApplicationController
   # POST /id_seqs.json
   def create
     @id_seq = IdSeq.new(id_seq_params)
-
+    @id_seq.create_user_id = session[:user_id]
     respond_to do |format|
       if @id_seq.save
         format.html { redirect_to @id_seq, notice: 'Id seq was successfully created.' }
@@ -68,6 +68,8 @@ class IdSeqsController < ApplicationController
   # DEadminE /id_seqs/1
   # DEadminE /id_seqs/1.json
   def destroy
+    @id_seq.stop_user_id = session[:user_id]
+    @id_seq.stoped_at = DateTime.now
     @id_seq.destroy
     respond_to do |format|
       format.html { redirect_to id_seqs_url }

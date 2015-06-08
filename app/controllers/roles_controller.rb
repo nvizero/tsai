@@ -33,7 +33,7 @@ class RolesController < ApplicationController
   # POST /roles.json
   def create
     @role = Role.new(role_params)
-
+    @role.create_user_id = session[:user_id]
     #權限
     @atext = ''
     params['point'].each do |po|
@@ -71,6 +71,7 @@ class RolesController < ApplicationController
     end
 
     @role.text = @atext
+    @role.modify_user_id = session[:user_id]
 
     if @role.update(role_params)
       flash[:notice] = "角色-更新成功!"
@@ -96,6 +97,9 @@ class RolesController < ApplicationController
   # DELETE /roles/1
   # DELETE /roles/1.json
   def destroy
+
+    @role.stop_user_id = session[:user_id]
+    @role.stoped_at = DateTime.now
     @role.state = "N"
     @role.save
     respond_to do |format|

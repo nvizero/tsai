@@ -7,9 +7,11 @@ class AccessesController < ApplicationController
   before_action :set_title
   #要登入
   before_action :confirm_logged_in
-
   #取得一些基本資訊
   before_action :get_base_data
+
+
+
 
 
   # GET /accesses
@@ -37,6 +39,7 @@ class AccessesController < ApplicationController
   # POST /accesses.json
   def create
     @access = Access.new(access_params)
+    @access.create_user_id = session[:user_id]
 
 
       if @access.save
@@ -51,6 +54,8 @@ class AccessesController < ApplicationController
   # PATCH/PUT /accesses/1
   # PATCH/PUT /accesses/1.json
   def update
+
+    @access.modify_user_id = session[:user_id]
     if @access.update(access_params)
       flash[:notice] = "權限更新成功!"
       redirect_to action: "index"
@@ -73,6 +78,9 @@ class AccessesController < ApplicationController
   # DELETE /accesses/1.json
   def destroy
     # @access.destroy
+    @access.stop_user_id = session[:user_id]
+    @access.stoped_at = DateTime.now
+
     @access.state = "N"
     @access.save
     # respond_to do |format|

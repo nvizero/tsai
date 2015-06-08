@@ -61,43 +61,28 @@ class MsgsController < ApplicationController
   # POST /msgs.json
   def create
     @msg = Msg.new(msg_params)
-
+    @msg.create_user_id = session[:user_id]
     if @msg.save
       flash[:notice] = "最新消息-新增成功!"
       redirect_to action: "index"
     else
       render action: 'new'
     end
-    # respond_to do |format|
-    #   if @msg.save
-    #     format.html { redirect_to @msg, notice: 'Msg was successfully created.' }
-    #     format.json { render action: 'show', status: :created, location: @msg }
-    #   else
-    #     format.html { render action: 'new' }
-    #     format.json { render json: @msg.errors, status: :unprocessable_entity }
-    #   end
-    # end
+
   end
 
   # PATCH/PUT /msgs/1
   # PATCH/PUT /msgs/1.json
   def update
 
+    @msg.modify_user_id = session[:user_id]
     if @msg.update(msg_params)
       flash[:notice] = "最新消息-更新成功!"
       redirect_to action: "index"
     else
       render action: 'edit'
     end
-    # respond_to do |format|
-    #   if @msg.update(msg_params)
-    #     format.html { redirect_to @msg, notice: 'Msg was successfully updated.' }
-    #     format.json { head :no_content }
-    #   else
-    #     format.html { render action: 'edit' }
-    #     format.json { render json: @msg.errors, status: :unprocessable_entity }
-    #   end
-    # end
+
   end
 
   # DELETE /msgs/1
@@ -105,6 +90,8 @@ class MsgsController < ApplicationController
   def destroy
 
     # @msg.destroy
+    @msg.stop_user_id = session[:user_id]
+    @msg.stoped_at = DateTime.now
     @msg.state = 'N'
     @msg.save
     redirect_to :action => :index

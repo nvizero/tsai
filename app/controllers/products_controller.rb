@@ -71,7 +71,7 @@ class ProductsController < ApplicationController
     # @product.destroy
     @product.state = 'N'
     @product.stop_user_id = session[:user_id]
-    @product.stoped_at = DateTime.now.to_date
+    @product.stoped_at = DateTime.now
     @product.save
     respond_to do |format|
       format.html { redirect_to products_url }
