@@ -5,15 +5,16 @@ $(document).ready(function(){
     $('a#advance_pas').click(function(){
 
         var username = $('#username').val() ;
-        
+        // alert(username);
           if(username!='' &&  username.length > 0){
 
-                //alert(username);
+                // alert(username+'/');
 
                 $.post( 'post_username', { 'username': username },
                   function( data ) {
-                      $("#forget_pas").html(
-                        "您的密碼提示是 ：  <font color=red>"+data +'</font>');
+
+                      
+                      $("#forget_pas").html(data );
                   }
                 );
 

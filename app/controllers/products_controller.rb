@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-  before_action :get_verify_type_main, only: [:new, :edit]
+  before_action :get_verify_type_main, only: [:new, :edit ,:create ,:update]
 
   before_action :set_title
 
@@ -36,45 +36,33 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
+
     @product = Product.new(product_params)
 
+    @product.create_user_id = session[:user_id]
 
     if @product.save
       flash[:notice] = "產品-新增成功!"
       redirect_to action: "index"
     else
+      @title[0]['main1'] = "新增產品"
       render action: 'new'
     end
-    # respond_to do |format|
-    #   if @product.save
-    #     format.html { redirect_to @product, notice: 'Product was successfully created.' }
-    #     format.json { render action: 'show', status: :created, location: @product }
-    #   else
-    #     format.html { render action: 'new' }
-    #     format.json { render json: @product.errors, status: :unprocessable_entity }
-    #   end
-    # end
+
   end
 
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
 
+    @product.modify_user_id = session[:user_id]
     if @product.update(product_params)
       flash[:notice] = "產品-更新成功!"
       redirect_to action: "index"
     else
       render action: 'edit'
     end
-    # respond_to do |format|
-    #   if @product.update(product_params)
-    #     format.html { redirect_to @product, notice: 'Product was successfully updated.' }
-    #     format.json { head :no_content }
-    #   else
-    #     format.html { render action: 'edit' }
-    #     format.json { render json: @product.errors, status: :unprocessable_entity }
-    #   end
-    # end
+
   end
 
   # DELETE /products/1
@@ -82,6 +70,8 @@ class ProductsController < ApplicationController
   def destroy
     # @product.destroy
     @product.state = 'N'
+    @product.stop_user_id = session[:user_id]
+    @product.stoped_at = DateTime.now.to_date
     @product.save
     respond_to do |format|
       format.html { redirect_to products_url }
@@ -105,6 +95,11 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:title, :content, :num, :user_id, :verify_type_main_id)
+      params.require(:product).permit(:title, :content, :num, :user_id, :verify_type_main_id ,:code,:specification  ,:create_users_id ,
+                                      :one_base , :one_heavy1, :one_heavy1_unit, :one_heavy2, :one_heavy2_unit,:modify_users_id,
+                                      :size, :size1, :size2, :size3 ,:item_size, :item_size1, :item_size2, :item_size3, :unit_save,
+                                      :unit_support, :ratio1, :ratio2 ,:create_users_id, :modify_users_id, :category, :form, :buy_batch,
+                                      :affect_day, :head_date, :safe_save, :standard_store_area, :income_unit , :income_number, :stop_user_id , :stoped_at )
+
     end
 end

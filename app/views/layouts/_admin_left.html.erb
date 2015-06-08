@@ -45,11 +45,7 @@
               </li>
           <% end %>
 
-          <li >
-              <a href="/product_verifies">
-                  <span>辨證進度查詢</span>
-              </a>
-          </li>
+
 
           <% if judgment_access 'products/index' %>
               <li class="active">
@@ -64,6 +60,16 @@
                   <span>商品庫存查詢</span>
               </a>
           </li>
+
+          <% if judgment_access 'product_verifies/index' %>
+              <li >
+                  <a href="/product_verifies">
+                      <span>辨證進度查詢</span>
+                  </a>
+              </li>
+          <% end %>
+
+          
           <li class="active">
               <a href="/">
                   <span>訂單查詢</span>
