@@ -14,6 +14,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
+    @users_a = User.all.to_a
     @products = Product.page params[:page]
   end
 

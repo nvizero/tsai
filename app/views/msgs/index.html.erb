@@ -29,6 +29,7 @@
 
   <tbody>
     <% @msgs.each do |msg| %>
+    <%= render 'comm/info' , :info => msg , :users => @users_a , :title => "#{msg.title} 訊息"  %>
       <tr>
         <td>
           <%= state_n_show msg,msg.title  %>
@@ -39,7 +40,7 @@
 
         </td>
         <td>
-            <%= (msg.state=='Y')?'顯示':'不顯示' %>
+            <%= (msg.state=='Y' )?'顯示':'不顯示' %>
             <%= (msg.place=='top')?'上':'中' %>
         </td>
 
@@ -47,16 +48,22 @@
         <% if (msg.state=='Y') %>
 
             <% if judgment_access 'msgs/edit' %>
-                <%= link_to '編輯', edit_msg_path(msg) %>
+                <%= link_to '編輯', edit_msg_path(msg) , :class => 'btn btn-info btn-sm'  %>
             <% end %>
 
             <% if judgment_access 'msgs/del' %>
-                <a url="#" class="del" id='/msgs/destroy/<%=msg.id %>'> 停用 </a>
+                <a url="#" class="del btn btn-danger btn-sm" id='/msgs/destroy/<%=msg.id %>'> 停用 </a>
             <% end %>
 
         <% else %>
-            己停用
+            <button class="btn btn-danger disabled">己停用</button>
         <% end %>
+
+
+
+            <a class="btn btn-warning info" id="<%=msg.id %>">
+                訊息
+            </a>
 
 
         </td>
@@ -80,6 +87,11 @@
                 document.location.href=url;
               }
 
+          });
+
+          $('.info').click(function(){
+              var t_id = $(this).attr('id');
+              $('#info-modal'+t_id).modal('show');
           });
 
       })

@@ -32,6 +32,9 @@
 
   <tbody>
     <% @products.each do |product| %>
+
+    <%= render 'comm/info' , :info => product , :users => @users_a , :title => "產品:#{product.title} 訊息"  %>
+
       <tr>
         <td><%= product.code %></td>
         <td><%= product.title %></td>
@@ -100,6 +103,11 @@
             document.location.href=url;
           }
 
+      });
+
+      $('.info').click(function(){
+          var t_id = $(this).attr('id');
+          $('#info-modal'+t_id).modal('show');
       });
 
   })

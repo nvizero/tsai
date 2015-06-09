@@ -30,8 +30,8 @@
                 更新時間：<%= (!info.modify_user_id.nil?) ? info.updated_at : '' %><br>
               </p>
 
-              <p class="text-red">
-                停用人員：<%= (!info.stop_user_id.nil?) ? users[info.stop_user_id].name : '' %><br>
+              <p class="text-red">                
+                停用人員：<%= (!info.stop_user_id.nil?) ? users[info.stop_user_id.to_i-1].name : '' %><br>
                 停用時間：<%=info.stoped_at %><br>
               </p>
             </div>

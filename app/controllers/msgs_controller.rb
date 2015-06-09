@@ -19,12 +19,13 @@ class MsgsController < ApplicationController
   # GET /msgs
   # GET /msgs.json
   def index
+    @users_a = User.all.to_a
 
-    msgg = Msg.all
-    msgg.each do |ms|
-      # ms.state = 'Y'
-      # ms.save
-    end
+    # msgg = Msg.all
+    # msgg.each do |ms|
+    #   ms.state = 'Y'
+    #   ms.save
+    # end
 
     self.confirm_logged_in
     @title = self.comm

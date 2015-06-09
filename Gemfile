@@ -45,11 +45,11 @@ end
 # gem 'capistrano', group: :development
 gem 'paperclip'
 # Use debugger
-gem 'debugger', group: [:development, :test]
+#gem 'debugger', group: [:development, :test]
 gem "ckeditor"
 
 gem 'to_xls-rails'# Last officially released gem
-gem 'bootstrap-wysihtml5-rails'
+#gem 'bootstrap-wysihtml5-rails'
 
-gem "binding_of_caller"
+#gem "binding_of_caller"
 gem "rails-i18n"
