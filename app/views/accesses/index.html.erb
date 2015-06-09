@@ -26,6 +26,9 @@
 
   <tbody>
     <% @accesses.each do |access| %>
+
+    <%= render 'comm/info' , :info => access , :users => @users_a , :title => "權限:#{access.title} 訊息"  %>
+
       <tr>
         <td>
           <%= state_n_show access,access.title  %>
@@ -34,22 +37,27 @@
         <td>
           <%= state_n_show access,access.code  %>
         </td>
-        
+
         <td>
 
           <% if access.state == 'Y'  %>
 
-            <% if judgment_access 'accesses/edit' %>
-                <%= link_to '編輯', edit_access_path(access) %>
-            <% end %>
+              <% if judgment_access 'accesses/edit' %>
+                  <%= link_to '編輯', edit_access_path(access), :class => 'btn btn-info btn-sm' %>
+              <% end %>
 
-            <% if judgment_access 'accesses/del' %>
-                <a url="#" class="del" id='/accesses/destroy/<%=access.id %>'> 停用 </a>
-            <% end %>
+              <% if judgment_access 'accesses/del' %>
+                  <a url="#" class="del btn btn-danger btn-sm" id='/accesses/destroy/<%=access.id %>'> 停用 </a>
+              <% end %>
 
           <% else %>
-              己停用
+              <button class="btn btn-danger disabled">己停用</button>
           <% end %>
+
+          <a class="btn btn-warning info" id="<%=access.id %>">
+              訊息
+          </a>
+
         </td>
       </tr>
     <% end %>
@@ -70,6 +78,11 @@
             document.location.href=url;
           }
 
+      });
+
+      $('.info').click(function(){
+          var t_id = $(this).attr('id');
+          $('#info-modal'+t_id).modal('show');
       });
 
   })

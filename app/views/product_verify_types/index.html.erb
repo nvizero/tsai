@@ -31,6 +31,9 @@
 
   <tbody>
     <% @product_verify_types.each do |product_verify_type| %>
+
+    <%= render 'comm/info' , :info => product_verify_type , :users => @users_a , :title => "使用者:#{product_verify_type.name} 訊息"  %>
+
       <tr>
         <td>
           <%= state_n_show product_verify_type,product_verify_type.name  %>
@@ -38,6 +41,9 @@
 
         <td>
           <%= state_n_show product_verify_type,product_verify_type.content  %>
+          <p class="text-muted">
+            分類:<%=product_verify_type.verify_type_main.title%>
+          </p>
         </td>
 
         <td>
@@ -45,16 +51,20 @@
           <% if product_verify_type.state == 'Y'  %>
 
               <% if judgment_access 'product_verify_types/edit' %>
-                  <%= link_to '編輯', edit_product_verify_type_path(product_verify_type) %>
+                  <%= link_to '編輯', edit_product_verify_type_path(product_verify_type), :class => 'btn btn-info btn-sm'  %>
               <% end %>
 
               <% if judgment_access 'product_verify_types/del' %>
-                  <a url="#" class="del" id='/product_verify_types/destroy/<%=product_verify_type.id %>'> 停用 </a>
+                  <a url="#" class="del btn btn-danger btn-sm" id='/product_verify_types/destroy/<%=product_verify_type.id %>'> 停用 </a>
               <% end %>
 
           <% else %>
-               己停用
+              <button class="btn btn-danger disabled">己停用</button>
           <% end %>
+
+              <a class="btn btn-warning info" id="<%=product_verify_type.id %>">
+                  訊息
+              </a>
         </td>
       </tr>
     <% end %>
@@ -71,7 +81,11 @@
           if(n){
             document.location.href=url;
           }
+      });
 
+      $('.info').click(function(){
+          var t_id = $(this).attr('id');
+          $('#info-modal'+t_id).modal('show');
       });
 
   })

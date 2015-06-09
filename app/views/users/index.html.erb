@@ -6,7 +6,7 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">使用者列表</h3>
-                
+
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
 
@@ -17,7 +17,7 @@
                       <th>E-mail</th>
                       <th>姓名</th>
                       <th>負責人</th>
-                      <th>公司</th>
+                      <th>推有產品數</th>
 
                       <th>
                         <% if judgment_access 'users/new' %>
@@ -31,25 +31,37 @@
 
                   <tbody>
                     <% @users.each do |user| %>
+
+                    <%= render 'comm/info' , :info => user , :users => @users_a , :title => "使用者:#{user.name} 訊息"  %>
+
                       <tr>
                         <td><%= user.email %></td>
                         <td><%= user.name %></td>
                         <td><%= user.boss %></td>
                         <td>
-                            <%= user.store_area_id %>
-                            |
+
+
                             <%= user.products.count %>
                         </td>
 
                         <td>
+                          <% if user.state == 'Y'  %>
+                              <% if judgment_access 'users/edit' %>
+                                  <%= link_to '編輯', edit_user_path(user), :class => 'btn btn-info btn-sm' %>
+                              <% end %>
 
-                            <% if judgment_access 'users/edit' %>
-                                <%= link_to '編輯', edit_user_path(user) %>|
-                            <% end %>
+                              <% if judgment_access 'users/del' %>
+                                  <a url="#" class="del btn btn-danger btn-sm" id='/users/destroy/<%=user.id %>'> 停用 </a>
+                              <% end %>
 
-                            <% if judgment_access 'users/del' %>
-                                <a url="#" class="del" id='/users/destroy/<%=user.id %>'> 停用 </a>
-                            <% end %>
+                          <% else %>
+                              <button class="btn btn-danger disabled">己停用</button>
+                          <% end %>
+
+                          <a class="btn btn-warning info" id="<%=user.id %>">
+                              訊息
+                          </a>
+
                         </td>
                       </tr>
                     <% end %>
@@ -69,8 +81,14 @@
                         if(n){
                           document.location.href=url;
                         }
-
                     });
+
+
+                    $('.info').click(function(){
+                        var t_id = $(this).attr('id');
+                        $('#info-modal'+t_id).modal('show');
+                    });
+
 
                 })
               </script>

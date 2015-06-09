@@ -1,10 +1,13 @@
 
+
+
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">角色列表</h3>
+
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
 
@@ -28,18 +31,35 @@
 
   <tbody>
     <% @roles.each do |role| %>
+    <!---->
+    <%= render 'comm/info' , :info => role , :users => @users , :title => "角色:#{role.title} 訊息"  %>
+
       <tr>
-        <td><%= role.title %></td>
         <td>
+          <%= state_n_show role,role.title  %>
+        </td>
+        <td>
+          <% if role.state=='Y'  %>
 
-            <% if judgment_access 'roles/edit' %>
-                <%= link_to '編輯', edit_role_path(role) %>
-            <% end %>
+              <% if judgment_access 'roles/edit' %>
+                  <%= link_to '編輯', edit_role_path(role) , :class=>'btn btn-info btn-sm' %>
+              <% end %>
 
-            <% if judgment_access 'roles/del' %>
-                <a url="#" class="del" id='/roles/destroy/<%=role.id %>'> 停用 </a>
-            <% end %>
-            
+              <% if judgment_access 'roles/del' %>
+                  <a url="#" class="del btn btn-danger btn-sm" id='/roles/destroy/<%=role.id %>'> 停用 </a>
+              <% end %>
+
+          <% else %>
+
+            <button class="btn btn-danger disabled">己停用</button>
+
+          <% end %>
+
+
+          <a class="btn btn-warning info" id="<%=role.id %>">
+              訊息
+          </a>
+
         </td>
       </tr>
     <% end %>
@@ -52,6 +72,11 @@
 </table>
 <%= paginate @roles  %>
 </div>
+
+
+
+
+
 
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
@@ -66,6 +91,13 @@
           }
 
       });
+
+
+      $('.info').click(function(){
+          var t_id = $(this).attr('id');
+          $('#info-modal'+t_id).modal('show');
+      });
+
 
   })
 </script>

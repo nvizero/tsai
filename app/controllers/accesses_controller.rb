@@ -17,8 +17,15 @@ class AccessesController < ApplicationController
   # GET /accesses
   # GET /accesses.json
   def index
-    # @users = User.order(:name).page params[:page]
+    @users_a = User.all.to_a
+
+    # Access.all.each do |fd|
+    #   fd.state = 'Y'
+    #   fd.save
+    # end
+
     @accesses = Access.order(:id).page params[:page]
+
   end
 
   # GET /accesses/1

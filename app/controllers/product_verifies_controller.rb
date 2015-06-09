@@ -16,6 +16,14 @@ class ProductVerifiesController < ApplicationController
   # GET /product_verifies.json
   def index
 
+    # ProductVerify.all.each do |asd|
+    #   asd.state = 'Y'
+    #   asd.save
+    # end
+
+
+    @users_a = User.all.to_a
+
     if params[:id]
       @product_verifies = ProductVerify.where(:product_id=>params[:id])
     else
@@ -37,15 +45,19 @@ class ProductVerifiesController < ApplicationController
 
   def make
 
-    p_v_types = ProductVerifyType.all
-    product_id = params[:id]
-    Product.find(product_id)
-    p_v_types.each do |type|
 
+    product_id = params[:id]
+
+    prot = Product.find(product_id)
+
+    p_v_types = ProductVerifyType.where(:verify_type_main_id=>prot.verify_type_main_id)
+
+    p_v_types.each do |type|
       ProductVerify.create( :product_id => product_id ,
-                            :state => "Y",
+                            :state => "N",
                             :product_verify_type_id=>type.id)
     end
+
 
     flash[:notice] = '申請三證成功!!'
     redirect_to :controller=>'products'

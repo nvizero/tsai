@@ -26,7 +26,13 @@ class ProductVerifyTypesController < ApplicationController
     #
     # end
 
+    # ProductVerifyType.all.each do |ee|
+    #   ee.state = 'Y'
+    #   ee.save
+    # end
 
+
+    @users_a = User.all.to_a
     @product_verify_types = ProductVerifyType.all
 
 

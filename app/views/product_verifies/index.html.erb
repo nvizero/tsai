@@ -16,12 +16,10 @@
   <thead>
     <tr>
       <th>產品名稱</th>
-      <th>裝態</th>
+      <th>狀態</th>
       <th>申請類別</th>
       <th>
-
           <%  link_to '申請三證', new_product_verify_path %>
-
       </th>
     </tr>
   </thead>
@@ -29,27 +27,46 @@
   <tbody>
 
     <% @product_verifies.each do |product_verify| %>
+
+
+
       <tr>
         <td>
           <% if product_verify.product %>
-              <%= state_n_show(product_verify , product_verify.product.title)  %>              
+              <%= state_n_show(product_verify , product_verify.product.title)  %>
+              <%= render 'comm/info' , :info => product_verify , :users => @users_a , :title => "申請三證-產品名稱:#{product_verify.product.title} 訊息"  %>
           <% end %>
+
+
         </td>
-        <td><%= product_verify.state %></td>
+        <td><%= (product_verify.state==Y) ?('') :'' %></td>
         <td>
-            <%= appli_helper_access(product_verify) %>
+            <% appli_helper_access(product_verify) %>
 
             <%= product_verify.product_verify_type.name %>
         </td>
 
         <td>
-          <% if judgment_access 'product_verifies/edit' %>
-            <%= link_to '編輯', edit_product_verify_path(product_verify) %>
+          <% if product_verify.state == 'Y' %>
+
+              <% if judgment_access 'product_verifies/edit' %>
+                <%= link_to '編輯', edit_product_verify_path(product_verify) , :class => 'btn btn-info btn-sm' %>
+              <% end %>
+
+              <% if judgment_access 'product_verifies/del' %>
+                <a url="#" class="del btn btn-danger btn-sm"  id='/product_verifies/destroy/<%=product_verify.id %>'> 停用 </a>
+              <% end %>
+
+          <% else %>
+              <button class="btn btn-danger disabled">己停用</button>
           <% end %>
 
-          <% if judgment_access 'product_verifies/del' %>
-            <a url="#" class="del" id='/product_verifies/destroy/<%=product_verify.id %>'> 停用 </a>
-          <% end %>
+
+          <a class="btn btn-warning info" id="<%=product_verify.id %>">
+              訊息
+          </a>
+
+
         </td>
 
       </tr>
@@ -75,6 +92,11 @@ $('document').ready(function(){
           document.location.href=url;
         }
 
+    });
+
+    $('.info').click(function(){
+        var t_id = $(this).attr('id');
+        $('#info-modal'+t_id).modal('show');
     });
 
 })

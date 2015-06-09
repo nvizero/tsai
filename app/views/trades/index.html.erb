@@ -25,18 +25,37 @@
 
                   <tbody>
                     <% @trades.each do |trade| %>
+
+                    <%= render 'comm/info' , :info => trade , :users => @users_a , :title => "交易碼:#{trade.id} 訊息"  %>
+
                       <tr>
-                        <td><%= trade.id %></td>
-                        <td><%= trade.description %></td>
+                        <td>
+                          <%= state_n_show trade,trade.id  %>
+                        </td>
 
                         <td>
-                            <% if judgment_access 'trades/edit' %>
-                                <%= link_to '編輯', edit_trade_path(trade.id) %>|
-                            <% end %>
+                          <%= state_n_show trade,trade.description  %>
+                        </td>
 
-                            <% if judgment_access 'trades/del' %>
-                                <a url="#" class="del" id='/trades/destroy/<%=trade.id %>'> 停用 </a>
-                            <% end %>
+                        <td>
+                          <% if trade.state == 'Y'  %>
+
+                              <% if judgment_access 'trades/edit' %>
+                                  <%= link_to '編輯', edit_trade_path(trade.id) , :class => 'btn btn-info btn-sm' %>
+                              <% end %>
+
+                              <% if judgment_access 'trades/del' %>
+                                  <a url="#" class="del btn btn-danger btn-sm" id='/trades/destroy/<%=trade.id %>'> 停用 </a>
+                              <% end %>
+
+                          <% else %>
+                              <button class="btn btn-danger disabled">己停用</button>
+                          <% end %>
+
+                              <a class="btn btn-warning info" id="<%=trade.id %>">
+                                  訊息
+                              </a>
+
                         </td>
 
                       </tr>
@@ -62,6 +81,13 @@
                       }
 
                   });
+
+
+                  $('.info').click(function(){
+                      var t_id = $(this).attr('id');
+                      $('#info-modal'+t_id).modal('show');
+                  });
+
 
               })
             </script>

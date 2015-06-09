@@ -30,20 +30,32 @@
   <tbody>
     <% @msgs.each do |msg| %>
       <tr>
-        <td><%= msg.title %></td>
-        <td><%= msg.content.to_s[0..60] %></td>
+        <td>
+          <%= state_n_show msg,msg.title  %>
+        </td>
+
+        <td>
+          <%= state_n_show msg,msg.content.to_s[0..60] %>
+
+        </td>
         <td>
             <%= (msg.state=='Y')?'顯示':'不顯示' %>
             <%= (msg.place=='top')?'上':'中' %>
         </td>
 
         <td>
-        <% if judgment_access 'msgs/edit' %>
-            <%= link_to '編輯', edit_msg_path(msg) %>
-        <% end %>
+        <% if (msg.state=='Y') %>
 
-        <% if judgment_access 'msgs/del' %>
-            <a url="#" class="del" id='/msgs/destroy/<%=msg.id %>'> 停用 </a>
+            <% if judgment_access 'msgs/edit' %>
+                <%= link_to '編輯', edit_msg_path(msg) %>
+            <% end %>
+
+            <% if judgment_access 'msgs/del' %>
+                <a url="#" class="del" id='/msgs/destroy/<%=msg.id %>'> 停用 </a>
+            <% end %>
+
+        <% else %>
+            己停用
         <% end %>
 
 

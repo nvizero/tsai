@@ -193,6 +193,10 @@ ActiveRecord::Schema.define(version: 20150608050626) do
     t.string   "store_area_id",   limit: 8
     t.string   "state",           limit: 1
     t.string   "username",        limit: 100
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
   end
 
   create_table "verify_type_mains", force: true do |t|

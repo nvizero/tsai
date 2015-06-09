@@ -15,6 +15,13 @@ class VerifyTypeMainsController < ApplicationController
   # GET /verify_type_mains.json
   def index
 
+    @users_a = User.all.to_a
+
+    # VerifyTypeMain.all.each do |ad|
+    #   ad.state = 'Y'
+    #   ad.save
+    # end
+
     self.jadge_access 'verify_type_mains/index'
 
     @verify_type_mains = VerifyTypeMain.page params[:page]

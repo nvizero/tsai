@@ -11,19 +11,11 @@ class AddAllTablesStatus < ActiveRecord::Migration
 
     add_column :verify_type_mains ,:state , :string ,:limit => 1
     rename_column :product_verifies ,:status ,:state
-    # accesses
-    # products
-    # product_verify_types
 
-    # roles
-    # store_areas
-    # trades
-
-    # verify_type_mains
-    # product_verifies change to status
   end
 
   def down
+    rename_column :product_verifies ,:state ,:status
     remove_column :accesses , :state
     remove_column :products , :state
     remove_column :product_verify_types , :state
@@ -33,7 +25,7 @@ class AddAllTablesStatus < ActiveRecord::Migration
     remove_column :trades ,:state
 
     remove_column :verify_type_mains ,:state
-    rename_column :product_verifies ,:state ,:status
+
   end
 
 end

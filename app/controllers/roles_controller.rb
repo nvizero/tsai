@@ -9,7 +9,13 @@ class RolesController < ApplicationController
   # GET /roles
   # GET /roles.json
   def index
-    # @users = User.order(:name).page params[:page]
+
+    @users = User.all.to_a
+    # Role.all.each do |re|
+    #     re.state = 'Y'
+    #     re.save
+    # end
+
     @roles = Role.page params[:page]
   end
 

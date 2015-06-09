@@ -20,6 +20,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    @users_a = User.all.to_a
+
     @title = self.comm
     # @users = User.order("id desc")
     #分頁

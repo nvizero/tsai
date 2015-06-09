@@ -50,6 +50,11 @@ class AddAllTablesCrudUserId < ActiveRecord::Migration
     add_column :accesses , :stop_user_id , :integer
     add_column :accesses , :stoped_at , :datetime
 
+    add_column :users , :create_user_id , :integer
+    add_column :users , :modify_user_id , :integer
+    add_column :users , :stop_user_id , :integer
+    add_column :users , :stoped_at , :datetime
+
   end
 
   def down
@@ -102,5 +107,9 @@ class AddAllTablesCrudUserId < ActiveRecord::Migration
     remove_column :accesses , :stop_user_id , :integer
     remove_column :accesses , :stoped_at , :datetime
 
+    remove_column :users , :create_user_id
+    remove_column :users , :modify_user_id
+    remove_column :users , :stop_user_id
+    remove_column :users , :stoped_at 
   end
 end

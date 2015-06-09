@@ -25,17 +25,36 @@
 
                   <tbody>
                     <% @store_areas.each do |store_area| %>
-                      <tr>
-                        <td><%= store_area.area_id %></td>
-                        <td><%= store_area.area_name %></td>
-                        <td>
-                            <% if judgment_access 'store_areas/edit' %>
-                                <%= link_to '編輯', edit_store_area_path(store_area) %>
-                            <% end %>
 
-                            <% if judgment_access 'store_areas/del' %>
-                                <a url="#" class="del" id='/store_areas/destroy/<%=store_area.id %>'> 停用 </a>
-                            <% end %>
+                    <%= render 'comm/info' , :info => store_area , :users => @users_a , :title => "庫位:#{store_area.area_id} 訊息"  %>
+
+                      <tr>
+                        <td>
+                          <%= state_n_show store_area,store_area.area_id  %>
+                        </td>
+                        <td>
+                          <%= state_n_show store_area,store_area.area_name  %>
+                        </td>
+                        <td>
+                          <% if store_area.state == 'Y'  %>
+
+                                <% if judgment_access 'store_areas/edit' %>
+                                    <%= link_to '編輯', edit_store_area_path(store_area)  , :class=>'btn btn-info btn-sm'%>
+                                    
+                                <% end %>
+
+                                <% if judgment_access 'store_areas/del' %>
+                                    <a url="#" class="del btn btn-danger btn-sm" id='/store_areas/destroy/<%=store_area.id %>'> 停用 </a>
+                                <% end %>
+
+                          <% else %>
+                            <button class="btn btn-danger disabled">己停用</button>
+                          <% end %>
+
+                            <a class="btn btn-warning info" id="<%=store_area.id %>">
+                                訊息
+                            </a>
+                        </td>
                       </tr>
                     <% end %>
                   </tbody>
@@ -56,6 +75,13 @@
                       if(n){
                         document.location.href=url;
                       }
+
+                  });
+
+                  $('.info').click(function(){
+
+                      var t_id = $(this).attr('id');
+                      $('#info-modal'+t_id).modal('show');
 
                   });
 

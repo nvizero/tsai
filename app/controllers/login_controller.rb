@@ -24,12 +24,20 @@ class LoginController < ApplicationController
 
 
     if @is_login
-        self.set_user_sesssion 
-        flash[:notice]  = "#{@is_login.name}您好!登入成功"
-        redirect_to(:controller=> 'dashboard' , :action => "main")
+
+        if @is_login.state=='Y'
+            self.set_user_sesssion
+            flash[:notice]  = "#{@is_login.name}您好!登入成功"
+            redirect_to(:controller=> 'dashboard' , :action => "main")
+        else
+          flash[:notice]  = "你的帳號己被停用"
+          redirect_to(:controller=> 'login' , :action => "login_form")
+        end
     else
+
         flash[:notice]  = "輸入的帳號密碼有誤！請重新輸入！"
         redirect_to(:controller=> 'login' , :action => "login_form")
+
     end
 
   end

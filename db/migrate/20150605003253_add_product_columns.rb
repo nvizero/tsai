@@ -81,9 +81,6 @@ class AddProductColumns < ActiveRecord::Migration
     remove_column :products , :item_size2
     remove_column :products , :item_size3
 
-
-
-    remove_column :products , :item_style
     remove_column :products , :unit_save
     remove_column :products , :unit_support
 
@@ -91,8 +88,13 @@ class AddProductColumns < ActiveRecord::Migration
     remove_column :products , :ratio2
 
 
-    remove_column :products , :create_users_id
-    remove_column :products , :modify_users_id
+    remove_column :products , :create_user_id
+    remove_column :products , :modify_user_id
+
+
+
+
+
 
     remove_column :products , :category
 
@@ -104,8 +106,16 @@ class AddProductColumns < ActiveRecord::Migration
     remove_column :products , :safe_save
     remove_column :products , :standard_store_area
 
+
+
+
     remove_column :products , :income_unit
     remove_column :products , :income_number
 
+
+
   end
+
+
+  
 end

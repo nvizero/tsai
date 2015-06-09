@@ -17,6 +17,13 @@ class TradesController < ApplicationController
   # GET /trades
   # GET /trades.json
   def index
+
+    # Trade.all.each do |zxc|
+    #   zxc.state = 'Y'
+    #   zxc.save
+    # end
+
+    @users_a = User.all.to_a
     @table_title  = "交易代碼列表"
     @trades = Trade.page params[:page]
 

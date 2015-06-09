@@ -28,6 +28,8 @@
   <tbody>
     <% @verify_type_mains.each do |verify_type_main| %>
 
+    <%= render 'comm/info' , :info => verify_type_main , :users => @users_a , :title => "使用者:#{verify_type_main.title} 訊息"  %>
+    
       <tr>
         <td>
           <%= state_n_show verify_type_main,verify_type_main.title  %>
@@ -38,15 +40,19 @@
         <td>
           <% if verify_type_main.state == 'Y'  %>
               <% if judgment_access 'verify_type_mains/edit' %>
-                <%= link_to '編輯', edit_verify_type_main_path(verify_type_main) %>
+                <%= link_to '編輯', edit_verify_type_main_path(verify_type_main), :class => 'btn btn-info btn-sm'  %>
               <% end %>
 
               <% if judgment_access 'verify_type_mains/del' %>
-                <a url="#" class="del" id='/verify_type_mains/destroy/<%=verify_type_main.id %>'> 停用 </a>
+                <a url="#" class="del btn btn-danger btn-sm" id='/verify_type_mains/destroy/<%=verify_type_main.id %>'> 停用 </a>
               <% end %>
           <% else %>
-              己停用
+              <button class="btn btn-danger disabled">己停用</button>
           <% end %>
+
+              <a class="btn btn-warning info" id="<%=verify_type_main.id %>">
+                  訊息
+              </a>
 
         </td>
       </tr>
@@ -68,6 +74,11 @@ $('document').ready(function(){
           document.location.href=url;
         }
 
+    });
+
+    $('.info').click(function(){
+        var t_id = $(this).attr('id');
+        $('#info-modal'+t_id).modal('show');
     });
 
 })

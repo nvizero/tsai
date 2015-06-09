@@ -1,0 +1,45 @@
+
+<div class="modal fade" id="info-modal<%=info.id%>" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-envelope-o"></i> Information</h4>
+            </div>
+
+            <div class="callout callout-warning">
+                <h4><%=title%></h4>
+            </div>
+
+
+
+            <div class="modal-body">
+
+
+
+              <p class="text-green">
+                建立人員 ：<%= (!info.create_user_id.nil?) ? users[info.create_user_id].name : '' %><br>
+                建立時間：<%=info.created_at %><br>
+              </p>
+
+              <p class="text-light-blue">
+                更新人員：<%= (!info.modify_user_id.nil?) ? users[info.modify_user_id].name : '' %><br>
+                更新時間：<%= (!info.modify_user_id.nil?) ? info.updated_at : '' %><br>
+              </p>
+
+              <p class="text-red">
+                停用人員：<%= (!info.stop_user_id.nil?) ? users[info.stop_user_id].name : '' %><br>
+                停用時間：<%=info.stoped_at %><br>
+              </p>
+            </div>
+
+            <div class="modal-footer clearfix">
+                <button type="submit" class="btn btn-primary" data-dismiss="modal"> 確定</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
