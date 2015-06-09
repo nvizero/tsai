@@ -7,7 +7,7 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">產品列表</h3>
-                
+
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
 
@@ -48,21 +48,33 @@
         </td>
 
         <td>
+          <% if product.state == 'Y'  %>
 
-            <% if judgment_access 'products/edit' %>
-              <%= link_to '編輯', edit_product_path(product) %>
-            <% end %>
+              <% if judgment_access 'products/edit' %>
+                <%= link_to '編輯', edit_product_path(product) , :class => 'btn btn-info btn-sm' %>
+              <% end %>
 
-            <% if judgment_access 'products/del' %>
-              <a url="#" class="del" id='/products/destroy/<%=product.id %>'> 停用 </a>
-            <% end %>
+              <% if judgment_access 'products/del' %>
+                <a url="#" class="del btn btn-danger btn-sm" id='/products/destroy/<%=product.id %>'> 停用 </a>
+              <% end %>
 
 
-            <% if product.product_verifies.count > 0 %>
-              <%= link_to '三證進度', :controller=>'product_verifies' , :action=>'index' ,:id=>product.id %>
-            <% else %>
-              <%= link_to '辨理三證', :controller=>'product_verifies' , :action=>'make' ,:id=>product.id %>
-            <% end %>
+              <% if product.product_verifies.count > 0 %>
+
+                <%= link_to '三證進度', {:controller=>'product_verifies' , :action=>'index',:id=>product.id } ,:class=>"btn btn-primary btn-sm" %>
+
+              <% else %>
+
+                <%= link_to '辨理三證', {:controller=>'product_verifies' , :action=>'make' ,:id=>product.id } ,:class=>"btn btn-primary btn-sm"  %>
+
+              <% end %>
+          <% else %>
+              <button class="btn btn-danger disabled">己停用</button>
+          <% end %>
+
+          <a class="btn btn-warning info" id="<%=product.id %>">
+              訊息
+          </a>
 
         </td>
       </tr>
