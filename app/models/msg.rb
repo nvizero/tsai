@@ -2,6 +2,7 @@ class Msg < ActiveRecord::Base
   paginates_per 10
 
   scope :live, lambda { where("msgs.state = 'Y' ") }
+  scope :stoped  , lambda { where("msgs.state = 'N' ") }
   scope :top, lambda { where("msgs.place = 'top' ") }
   scope :mid, lambda { where("msgs.place = 'mid' ") }
 

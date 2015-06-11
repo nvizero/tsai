@@ -25,7 +25,16 @@ class TradesController < ApplicationController
 
     @users_a = User.all.to_a
     @table_title  = "交易代碼列表"
-    @trades = Trade.page params[:page]
+    # @trades = Trade.page params[:page]
+
+    @flag = params[:state]
+    if @flag=='N'
+        @trades = Trade.stoped.page params[:page]
+
+    else
+        @trades = Trade.live.page params[:page]
+        @flag='Y'
+    end
 
   end
 

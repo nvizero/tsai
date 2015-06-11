@@ -16,7 +16,15 @@ class RolesController < ApplicationController
     #     re.save
     # end
 
-    @roles = Role.page params[:page]
+    # @roles = Role.page params[:page]
+    @flag = params[:state]
+    if @flag=='N'
+        @roles = Role.stoped.page params[:page]
+
+    else
+        @roles = Role.live.page params[:page]
+        @flag='Y'
+    end
   end
 
   # GET /roles/1

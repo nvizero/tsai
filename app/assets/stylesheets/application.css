@@ -9,5 +9,14 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require public
+ *= require admin
+ *= require kakiii
  *= require_tree .
  */
+
+ #head_btn{
+   float:right;
+   margin:10px;
+   color:#fff;
+ }

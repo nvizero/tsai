@@ -22,7 +22,14 @@ class StoreAreasController < ApplicationController
     @users_a = User.all.to_a
     @title  = self.comm
     @table_title = "庫位列表"
-    @store_areas = StoreArea.page params[:page]
+    # @store_areas = StoreArea.page params[:page]
+    @flag = params[:state]
+    if @flag=='N'
+        @store_areas = StoreArea.stoped.page params[:page]
+    else
+        @store_areas = StoreArea.live.page params[:page]
+        @flag='Y'
+    end
   end
 
   # GET /store_areas/1

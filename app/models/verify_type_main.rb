@@ -7,6 +7,7 @@ class VerifyTypeMain < ActiveRecord::Base
 
 
   scope :live, lambda { where(" verify_type_mains.state = 'Y' ") }
+  scope :stoped  , lambda { where("verify_type_mains.state = 'N' ") }
 
   validates :title,  :presence => { :message => "名稱 不能空白" }
 

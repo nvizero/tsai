@@ -6,7 +6,8 @@ class Product < ActiveRecord::Base
 
   has_many   :product_verifies
 
-  scope :live, lambda { where("products.state = 'Y' ") }
+  scope :live , lambda { where("products.state = 'Y' ") }
+  scope :stoped  , lambda { where("products.state = 'N' ") }
 
   validates :title,        :presence => { :message => "產品名稱－不能空白" }
   validates :code,        :presence => { :message => "料品編號－不能空白" }

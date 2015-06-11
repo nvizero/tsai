@@ -15,7 +15,7 @@ class Trade < ActiveRecord::Base
 
   scope :sorted, lambda { order("trades.id ASC") }
   scope :live, lambda { where("trades.state = 'Y' ") }
-
+  scope :stoped  , lambda { where("trades.state = 'N' ") }
 
   validates :id,  :presence => { :message => "交易代碼－不能空白" } ,
                   :length => {:minimum => 1, :maximum => 2, :message => "交易代碼－只能輸入2碼" } ,

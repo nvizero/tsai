@@ -6,6 +6,35 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">產品－三證進度列表</h3>
+
+
+
+                
+                <div class="btn-group" id='head_btn'>
+                    <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+
+                        <li>
+                            <% if @iid %>
+                              <%= link_to '未停用', {:controller =>'product_verifies' , :action =>'index' , :state =>'Y' , :id=>@iid}  %>
+                            <% else %>
+                              <%= link_to '未停用', {:controller =>'product_verifies' , :action =>'index' , :state =>'Y'}  %>
+                            <% end %>
+                        </li>
+                        <li>
+                            <% if @iid %>
+                              <%= link_to '停用', {:controller =>'product_verifies' , :action =>'index' , :state =>'N' , :id=>@iid}  %>
+                            <% else %>
+                              <%= link_to '停用', {:controller =>'product_verifies' , :action =>'index' , :state =>'N'}  %>
+                            <% end %>
+                        </li>
+
+                    </ul>
+                </div>
             </div><!-- /.box-header -->
 
             <div class="box-body table-responsive">
@@ -75,9 +104,9 @@
   </tbody>
 
 </table>
-<% if @product_verifies.count > 5 %>
-  <%= paginate @product_verifies  %>
-<% end %>
+
+  <%= paginate @product_verifies %>
+
 
 </div>
 
@@ -106,3 +135,14 @@ $('document').ready(function(){
 </div>
 </div>
 </section><!-- /.content -->
+
+
+
+
+
+<div class="" style="display:none;">
+
+
+<div class="dataTables_paginate paging_bootstrap"><ul class="pagination"><li class="prev disabled"><a href="#">← Previous</a></li><li class="active"><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">5</a></li><li class="next"><a href="#">Next → </a></li></ul></div>
+
+</div>

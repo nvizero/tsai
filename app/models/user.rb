@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
 
   scope :live, lambda { where("users.state = 'y' ") }
-
+  scope :stoped  , lambda { where("users.state = 'N' ") }
   validates :prompt,     :presence => { :message => "密碼提示不能空白" }
   validates :username,  :presence => { :message => "帳號－不能空白" } ,
                         :uniqueness => { :message => "帳號－有重複,請重新輸入" },

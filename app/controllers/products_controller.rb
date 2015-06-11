@@ -14,8 +14,25 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
+
+    if !params['state'].nil?
+
+        @flag    = params['state']
+        if @flag=='Y'
+            @products = Product.live.page params[:page]
+        else
+            @products = Product.stoped.page params[:page]
+        end
+
+    else
+
+      @products = Product.live.page params[:page]
+      @flag = 'Y'
+    end
+
     @users_a = User.all.to_a
-    @products = Product.page params[:page]
+
+
   end
 
   # GET /products/1

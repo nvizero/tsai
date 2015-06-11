@@ -6,6 +6,28 @@
         <div class="box">
             <div class="box-header">
               <h3 class="box-title"><%=@table_title%></h3>
+
+              <div class="btn-group" id='head_btn'>
+                  <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                      <span class="caret"></span>
+                      <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                      <li>
+                          <%= link_to '未停用', {:controller =>'store_areas' , :action =>'index' , :state =>'Y'}  %>
+                      </li>
+
+                      <li>
+                          <%= link_to '停用', {:controller =>'store_areas' , :action =>'index' , :state =>'N'}  %>
+                      </li>
+                  </ul>
+              </div>
+
+              <% if judgment_access 'store_areas/new' %>
+                  <%= link_to '新增庫位',  new_store_area_path , :class=>"btn btn-primary head_btn"  , :id=>'head_btn'%>
+              <% end %>
+
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
 
@@ -16,9 +38,7 @@
                       <th>區域代碼</th>
                       <th>說明</th>
                       <th>
-                        <% if judgment_access 'store_areas/new' %>
-                            <%= link_to '新增庫位', new_store_area_path %>
-                        <% end %>
+
                       </th>
                     </tr>
                   </thead>
@@ -40,7 +60,7 @@
 
                                 <% if judgment_access 'store_areas/edit' %>
                                     <%= link_to '編輯', edit_store_area_path(store_area)  , :class=>'btn btn-info btn-sm'%>
-                                    
+
                                 <% end %>
 
                                 <% if judgment_access 'store_areas/del' %>

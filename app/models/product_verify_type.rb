@@ -6,6 +6,7 @@ class ProductVerifyType < ActiveRecord::Base
 
   # has_many :product_verify
   scope :live, lambda { where("product_verify_types.state = 'Y' ") }
+  scope :stoped  , lambda { where("product_verify_types.state = 'N' ") }
   before_create do
     self.state = "Y"
   end

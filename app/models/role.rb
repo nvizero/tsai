@@ -8,9 +8,9 @@ class Role < ActiveRecord::Base
   #                   :uniqueness => { :message => "角色名稱－有重複,請重新輸入" }
 
   # belongs_to :user
-  
-  scope :live, lambda { where("roles.state = 'Y' ") }
 
+  scope :live, lambda { where("roles.state = 'Y' ") }
+  scope :stoped  , lambda { where("roles.state = 'N' ") }
   before_create do
     self.state = "Y"
   end

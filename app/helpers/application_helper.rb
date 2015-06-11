@@ -107,7 +107,7 @@ module ApplicationHelper
 
   def state_n_show obj , content
     if obj.state == 'N'
-      simple_format "<del>#{content}</del>"
+      simple_format "#{content}"
     else
       simple_format "#{content}"
     end

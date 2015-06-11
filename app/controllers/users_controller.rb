@@ -25,7 +25,15 @@ class UsersController < ApplicationController
     @title = self.comm
     # @users = User.order("id desc")
     #分頁
-    @users = User.order(:name).page params[:page]
+    @flag = params[:state]
+    if @flag=='N'
+        @users = User.stoped.order(:name).page params[:page]
+    else
+        @users = User.live.order(:name).page params[:page]
+        @flag='Y'
+    end
+
+
     #User.order(:name).page params[:page]
     @trades = Trade.sorted
 

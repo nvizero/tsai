@@ -3,7 +3,7 @@ class StoreArea < ActiveRecord::Base
   paginates_per 10
 
   scope :live, lambda { where("store_areas.state = 'Y' ") }
-
+  scope :stoped  , lambda { where("store_areas.state = 'N' ") }
   validates :area_id,  :presence => { :message => "庫位代碼－不能空白" } ,
                   :length => {:minimum => 1, :maximum => 8, :message => "庫位代碼－最多輸入8碼" } ,
                   :uniqueness => { :message => "庫位代碼－是唯一值－有重複,請重新輸入" }

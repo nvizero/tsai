@@ -16,18 +16,30 @@ class ProductVerifiesController < ApplicationController
   # GET /product_verifies.json
   def index
 
-    # ProductVerify.all.each do |asd|
-    #   asd.state = 'Y'
-    #   asd.save
-    # end
-
-
     @users_a = User.all.to_a
+    @flag = params[:state]
+    @iid  = params[:id]
 
-    if params[:id]
-      @product_verifies = ProductVerify.where(:product_id=>params[:id])
+    
+    if @iid
+
+
+      if @flag=='N'
+          @product_verifies = ProductVerify.stoped.where(:product_id=>params[:id]).page params[:page]
+      else
+          @flag='Y'
+          @product_verifies = ProductVerify.live.where(:product_id=>params[:id]).page params[:page]
+      end
+
     else
-      @product_verifies = ProductVerify.page params[:page]
+
+      if @flag=='N'
+          @product_verifies = ProductVerify.stoped.page params[:page]
+      else
+          @flag='Y'
+          @product_verifies = ProductVerify.live.page params[:page]
+      end
+
     end
   end
 
