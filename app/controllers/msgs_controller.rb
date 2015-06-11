@@ -29,7 +29,15 @@ class MsgsController < ApplicationController
 
     self.confirm_logged_in
     @title = self.comm
-    @msgs  = Msg.page params[:page]
+    # @msgs  = Msg.page params[:page]
+    @flag = params[:state]
+    if @flag=='N'
+        @msgs = Msg.stoped.page params[:page]
+
+    else
+        @msgs = Msg.live.page params[:page]
+        @flag='Y'
+    end
 
 
 

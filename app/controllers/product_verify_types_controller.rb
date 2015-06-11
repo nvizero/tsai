@@ -33,7 +33,15 @@ class ProductVerifyTypesController < ApplicationController
 
 
     @users_a = User.all.to_a
-    @product_verify_types = ProductVerifyType.all
+    # @product_verify_types = ProductVerifyType.all
+    @flag = params[:state]
+    if @flag=='N'
+        @product_verify_types = ProductVerifyType.stoped.page params[:page]
+
+    else
+        @product_verify_types = ProductVerifyType.live.page params[:page]
+        @flag='Y'
+    end
 
 
   end

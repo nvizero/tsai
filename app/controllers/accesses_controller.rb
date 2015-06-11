@@ -24,7 +24,14 @@ class AccessesController < ApplicationController
     #   fd.save
     # end
 
-    @accesses = Access.order(:id).page params[:page]
+    # @accesses = Access.order(:id).page params[:page]
+    @flag = params[:state]
+    if @flag=='N'
+        @accesses = Access.stoped.page params[:page]
+    else
+        @accesses = Access.live.page params[:page]
+        @flag='Y'
+    end
 
   end
 

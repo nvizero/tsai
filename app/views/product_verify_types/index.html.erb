@@ -5,6 +5,29 @@
        <div class="box">
            <div class="box-header">
                <h3 class="box-title">三證類型列表</h3>
+
+
+               <div class="btn-group" id='head_btn'>
+                   <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
+                   <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                       <span class="caret"></span>
+                       <span class="sr-only">Toggle Dropdown</span>
+                   </button>
+                   <ul class="dropdown-menu" role="menu">
+                       <li>
+                           <%= link_to '未停用', {:controller =>'product_verify_types' , :action =>'index' , :state =>'Y'}  %>
+                       </li>
+
+                       <li>
+                           <%= link_to '停用', {:controller =>'product_verify_types' , :action =>'index' , :state =>'N'}  %>
+                       </li>
+                   </ul>
+               </div>
+
+
+               <% if judgment_access 'product_verify_types/new' %>
+                   <%= link_to '新增三證類型', new_product_verify_type_path , :class=>"btn btn-primary head_btn"  , :id=>'head_btn' %>
+               <% end %>
            </div><!-- /.box-header -->
            <div class="box-body table-responsive">
 
@@ -20,9 +43,7 @@
       <th>說明</th>
       <th>
 
-        <% if judgment_access 'product_verify_types/new' %>
-            <%= link_to '新增三證類型', new_product_verify_type_path %>
-        <% end %>
+
 
       </th>
 
