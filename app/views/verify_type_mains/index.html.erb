@@ -29,7 +29,7 @@
     <% @verify_type_mains.each do |verify_type_main| %>
 
     <%= render 'comm/info' , :info => verify_type_main , :users => @users_a , :title => "使用者:#{verify_type_main.title} 訊息"  %>
-    
+
       <tr>
         <td>
           <%= state_n_show verify_type_main,verify_type_main.title  %>
@@ -50,7 +50,7 @@
               <button class="btn btn-danger disabled">己停用</button>
           <% end %>
 
-              <a class="btn btn-warning info" id="<%=verify_type_main.id %>">
+              <a class="btn btn-warning info btn-sm" id="<%=verify_type_main.id %>">
                   訊息
               </a>
 

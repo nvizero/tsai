@@ -15,7 +15,7 @@ class VerifyTypeMainsController < ApplicationController
   # GET /verify_type_mains.json
   def index
 
-    @users_a = User.all.to_a
+    @users_a = self.user_to_ar
 
     # VerifyTypeMain.all.each do |ad|
     #   ad.state = 'Y'

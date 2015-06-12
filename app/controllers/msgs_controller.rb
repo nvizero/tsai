@@ -19,7 +19,7 @@ class MsgsController < ApplicationController
   # GET /msgs
   # GET /msgs.json
   def index
-    @users_a = User.all.to_a
+    @users_a = self.user_to_ar
 
     # msgg = Msg.all
     # msgg.each do |ms|

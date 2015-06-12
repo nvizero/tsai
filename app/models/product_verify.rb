@@ -1,6 +1,6 @@
 class ProductVerify < ActiveRecord::Base
 
-  paginates_per 2
+  paginates_per 12
   belongs_to   :product
   belongs_to   :product_verify_type
   # has_many   :product_verify_type

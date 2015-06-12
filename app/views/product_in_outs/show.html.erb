@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @product_in_out.product_id %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @product_in_out.code %>
+</p>
+
+<p>
+  <strong>Num:</strong>
+  <%= @product_in_out.num %>
+</p>
+
+<p>
+  <strong>In or out:</strong>
+  <%= @product_in_out.in_or_out %>
+</p>
+
+<p>
+  <strong>Create user:</strong>
+  <%= @product_in_out.create_user_id %>
+</p>
+
+<p>
+  <strong>Modify user:</strong>
+  <%= @product_in_out.modify_user_id %>
+</p>
+
+<p>
+  <strong>Stop user:</strong>
+  <%= @product_in_out.stop_user_id %>
+</p>
+
+<p>
+  <strong>Stoped at:</strong>
+  <%= @product_in_out.stoped_at %>
+</p>
+
+<%= link_to 'Edit', edit_product_in_out_path(@product_in_out) %> |
+<%= link_to 'Back', product_in_outs_path %>

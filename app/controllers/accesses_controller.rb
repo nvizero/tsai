@@ -17,7 +17,7 @@ class AccessesController < ApplicationController
   # GET /accesses
   # GET /accesses.json
   def index
-    @users_a = User.all.to_a
+    @users_a = self.user_to_ar
 
     # Access.all.each do |fd|
     #   fd.state = 'Y'

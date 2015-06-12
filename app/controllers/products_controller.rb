@@ -15,22 +15,46 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
 
-    if !params['state'].nil?
 
+    # if session[:user["access"]]
+    #   render :text => session[:user["access"]]
+    # end
+
+
+
+
+    if !params['state'].nil?
         @flag    = params['state']
-        if @flag=='Y'
-            @products = Product.live.page params[:page]
+        if session[:user["access"]] =='all'
+
+
+            if @flag=='Y'
+                @products = Product.live.page params[:page]
+            else
+                @products = Product.stoped.page params[:page]
+            end
+
         else
-            @products = Product.stoped.page params[:page]
+
+            if @flag=='Y'
+                @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+            else
+                @products = Product.stoped.where(:create_user_id =>session[:user_id] ).page params[:page]
+            end
+
         end
 
     else
 
-      @products = Product.live.page params[:page]
-      @flag = 'Y'
+        @flag = 'Y'
+        if session[:user["access"]] =='all'
+          @products = Product.live.page params[:page]
+        else
+          @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+        end
     end
 
-    @users_a = User.all.to_a
+    @users_a = self.user_to_ar
 
 
   end

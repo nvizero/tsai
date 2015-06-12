@@ -87,23 +87,9 @@ module ApplicationHelper
   end
 
 
-  def field_display flag
-    if flag
-      'disabled=""'
-    end
-  end
 
-  def font_del_start obj
-    if obj.state == 'N'
-      simple_format "<del>"
-    end
-  end
 
-  def font_del_end obj
-    if obj.state == 'N'
-      simple_format "</del>"
-    end
-  end
+
 
   def state_n_show obj , content
     if obj.state == 'N'
@@ -111,6 +97,12 @@ module ApplicationHelper
     else
       simple_format "#{content}"
     end
+  end
+
+
+  def show_se_user
+    
+    session[:user_id]
   end
 
 

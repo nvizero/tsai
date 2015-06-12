@@ -23,7 +23,7 @@ class TradesController < ApplicationController
     #   zxc.save
     # end
 
-    @users_a = User.all.to_a
+    @users_a = self.user_to_ar
     @table_title  = "交易代碼列表"
     # @trades = Trade.page params[:page]
 

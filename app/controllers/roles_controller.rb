@@ -10,7 +10,7 @@ class RolesController < ApplicationController
   # GET /roles.json
   def index
 
-    @users = User.all.to_a
+    @users_a = self.user_to_ar
     # Role.all.each do |re|
     #     re.state = 'Y'
     #     re.save

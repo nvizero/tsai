@@ -16,13 +16,22 @@ class ProductVerifiesController < ApplicationController
   # GET /product_verifies.json
   def index
 
-    @users_a = User.all.to_a
+    @users_a = self.user_to_ar
     @flag = params[:state]
+
     @iid  = params[:id]
 
-    
-    if @iid
+    @vtm_a = []
+    VerifyTypeMain.all.each do |vtm|
+      @vtm_a[vtm.id] = vtm.title
+    end
 
+    # ProductVerify.all.each do |pc|
+    #   pc.state = 'Y'
+    #   pc.save
+    # end
+
+    if @iid
 
       if @flag=='N'
           @product_verifies = ProductVerify.stoped.where(:product_id=>params[:id]).page params[:page]
@@ -32,13 +41,26 @@ class ProductVerifiesController < ApplicationController
       end
 
     else
+        #管理員
+        if  session[:user["access"]]
 
-      if @flag=='N'
-          @product_verifies = ProductVerify.stoped.page params[:page]
-      else
-          @flag='Y'
-          @product_verifies = ProductVerify.live.page params[:page]
-      end
+            if @flag=='N'
+                @product_verifies = ProductVerify.stoped.page params[:page]
+            else
+                @flag='Y'
+                @product_verifies = ProductVerify.live.page params[:page]
+            end
+
+        else
+          #不是管理員
+          if @flag=='N'
+              @product_verifies = ProductVerify.stoped.where(:product_id=>params[:id]).page params[:page]
+          else
+              @flag='Y'
+              @product_verifies = ProductVerify.live.where(:product_id=>params[:id]).page params[:page]
+          end
+
+        end
 
     end
   end
@@ -67,6 +89,7 @@ class ProductVerifiesController < ApplicationController
     p_v_types.each do |type|
       ProductVerify.create( :product_id => product_id ,
                             :state => "N",
+                            :create_user_id => session[:user_id].to_i,
                             :product_verify_type_id=>type.id)
     end
 

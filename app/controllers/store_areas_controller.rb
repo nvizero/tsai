@@ -19,7 +19,7 @@ class StoreAreasController < ApplicationController
   # GET /trades.json
   def index
 
-    @users_a = User.all.to_a
+    @users_a = self.user_to_ar
     @title  = self.comm
     @table_title = "庫位列表"
     # @store_areas = StoreArea.page params[:page]

@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users_a = User.all.to_a
+    @users_a = self.user_to_ar
 
     @title = self.comm
     # @users = User.order("id desc")
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
 
-    @roles = Role.all
+    @roles = Role.live
     @trades = Trade.sorted
     @sotre_area = StoreArea.all
   end

@@ -48,11 +48,7 @@ class LoginController < ApplicationController
     session[:user_role_id] = @is_login.role_id
     session[:user_id]   = @is_login.id
     session[:user_name] = @is_login.name
-
-    session[:user["role_id"]] = @is_login.role_id
-    session[:user["id"]]   = @is_login.id
-    session[:user["name"]] = @is_login.name
-
+    
     role = Role.find(@is_login.role_id)
     if role.text.to_s == 'all'
         session[:user["access"]] = role.text.to_s

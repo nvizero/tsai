@@ -8,6 +8,19 @@ class ApplicationController < ActionController::Base
      request.original_url.split('/')
   end
 
+
+  def user_to_ar
+     users = User.all
+
+     urs = []
+     users.each do |ur|
+       urs[ur.id] = ur.name
+     end
+     
+     return urs
+
+  end
+
   #權限判斷
   def jadge_access jadge_str
 

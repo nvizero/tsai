@@ -1,0 +1,45 @@
+<%= form_for(@product_in_out) do |f| %>
+  <% if @product_in_out.errors.any? %>
+    <div id="error_explanation" style="display:none;">
+      <% @product_in_out.errors.full_messages.each do |msg| %>
+          <%= msg %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :product_id %><br>
+    <%= f.number_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :num %><br>
+    <%= f.number_field :num %>
+  </div>
+  <div class="field">
+    <%= f.label :in_or_out %><br>
+    <%= f.text_field :in_or_out %>
+  </div>
+  <div class="field">
+    <%= f.label :create_user_id %><br>
+    <%= f.number_field :create_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :modify_user_id %><br>
+    <%= f.number_field :modify_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :stop_user_id %><br>
+    <%= f.number_field :stop_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :stoped_at %><br>
+    <%= f.datetime_select :stoped_at %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

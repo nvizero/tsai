@@ -72,6 +72,8 @@
         <td>
           <% if product.state == 'Y'  %>
 
+              <%= link_to '入庫', {:controller=>'product_in_outs' , :action=>'new' , :product_id => product.id} , :class => 'btn btn-info btn-sm' %>
+
               <% if judgment_access 'products/edit' %>
                 <%= link_to '編輯', edit_product_path(product) , :class => 'btn btn-info btn-sm' %>
               <% end %>
@@ -94,9 +96,7 @@
               <button class="btn btn-danger disabled">己停用</button>
           <% end %>
 
-          <a class="btn btn-warning info" id="<%=product.id %>">
-              訊息
-          </a>
+          <a class="btn btn-warning info btn-sm" id="<%=product.id %>">訊息</a>
 
         </td>
       </tr>

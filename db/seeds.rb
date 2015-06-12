@@ -1,12 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
-
 User.create!( :username => "admin123", :role_id=> 1 ,:re_password => 'admin123',
               :name =>'admin', :state=>'Y' ,:password=>'8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918' ,
               :email =>"nvizero@yahoo.com.tw" , :prompt=>'admin123')
@@ -68,6 +59,19 @@ Access.create!(:title => '辦證進度查詢－新增', :code=>'product_verifies
 Access.create!(:title => '辦證進度查詢－編輯', :code=>'product_verifies/edit'  , :state =>'Y')
 Access.create!(:title => '辦證進度查詢－删除', :code=>'product_verifies/del'   , :state =>'Y')
 
+Access.create!(:title => '入庫－首頁', :code=>'product_in_outs/index' , :state =>'Y')
+Access.create!(:title => '入庫－新增', :code=>'product_in_outs/new'   , :state =>'Y')
+Access.create!(:title => '入庫－編輯', :code=>'product_in_outs/edit'  , :state =>'Y')
+Access.create!(:title => '入庫－删除', :code=>'product_in_outs/del'   , :state =>'Y')
+
 Access.create!(:title => 'all', :code=>'all'   , :state =>'Y')
+
+ProductVerifyType.create!(:name=>'食品-台灣官方',:verify_type_main_id=>1 , state=>'Y')
+ProductVerifyType.create!(:name=>'食品-大陸官方',:verify_type_main_id=>1 , state=>'Y')
+ProductVerifyType.create!(:name=>'食品-國際',:verify_type_main_id=>1 , state=>'Y')
+
+ProductVerifyType.create!(:name=>'化裝品-台灣官方',:verify_type_main_id=>2 , state=>'Y')
+ProductVerifyType.create!(:name=>'化裝品-大陸官方',:verify_type_main_id=>2 , state=>'Y')
+
 
 Role.create!(:title => 'admin' , :text =>'all' , :code=>'all' , :state => 'Y')

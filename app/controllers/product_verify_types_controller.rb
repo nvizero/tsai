@@ -32,7 +32,7 @@ class ProductVerifyTypesController < ApplicationController
     # end
 
 
-    @users_a = User.all.to_a
+    @users_a = self.user_to_ar
     # @product_verify_types = ProductVerifyType.all
     @flag = params[:state]
     if @flag=='N'
