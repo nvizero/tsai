@@ -1,0 +1,2 @@
+module ProductVerifyStatesHelper
+end

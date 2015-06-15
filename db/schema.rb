@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150612055821) do
+ActiveRecord::Schema.define(version: 20150615084107) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -84,12 +84,24 @@ ActiveRecord::Schema.define(version: 20150612055821) do
     t.integer  "product_verify_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "type",                   limit: 2
-    t.string   "type_name",              limit: 30
+    t.integer  "type",                    limit: 2
+    t.string   "type_name",               limit: 30
     t.integer  "create_user_id"
     t.integer  "modify_user_id"
     t.integer  "stop_user_id"
     t.datetime "stoped_at"
+    t.integer  "product_verify_state_id"
+  end
+
+  create_table "product_verify_states", force: true do |t|
+    t.string   "title"
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.string   "state",          limit: 2
+    t.datetime "stoped_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "product_verify_types", force: true do |t|

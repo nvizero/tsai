@@ -45,6 +45,8 @@ class ProductInOutsController < ApplicationController
 
     if @product_id
       @product_data = Product.find(:id=>@product_id.to_i)
+    else
+      @product_data = Product.all
     end
 
     if @flag=='N'
@@ -72,6 +74,8 @@ class ProductInOutsController < ApplicationController
 
     if @product_id
       @product_data = Product.find(:id=>@product_id.to_i)
+    else
+      @product_data = Product.all
     end
 
     if @flag=='N'
@@ -102,6 +106,15 @@ class ProductInOutsController < ApplicationController
 
   # GET /product_in_outs/1/edit
   def edit
+
+      @product_id = params[:product_id]
+
+      if @product_id
+        
+        @product_data = Product.find(:id=>@product_id.to_i)
+      else
+        @product_data = Product.all
+      end
   end
 
   # POST /product_in_outs
@@ -154,6 +167,7 @@ class ProductInOutsController < ApplicationController
 
 
   def in_come_destroy
+
     @product_in_out.stop_user_id = session[:user_id]
     @product_in_out.stoped_at = DateTime.now
     @product_in_out.state = "N"
@@ -164,6 +178,7 @@ class ProductInOutsController < ApplicationController
   end
 
   def out_come_destroy
+
     @product_in_out.stop_user_id = session[:user_id]
     @product_in_out.stoped_at = DateTime.now
     @product_in_out.state = "N"

@@ -192,6 +192,10 @@
                         <li><a href="/verify_type_mains"><i class="fa fa-angle-double-right"></i>三證類型主檔</a></li>
                     <% end %>
 
+                    <% if judgment_access 'product_verify_states/index' %>
+                        <li><a href="/product_verify_states"><i class="fa fa-angle-double-right"></i>三證狀態</a></li>
+                    <% end %>
+
 
                 </ul>
             </li>

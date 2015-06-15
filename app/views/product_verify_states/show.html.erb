@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @product_verify_state.title %>
+</p>
+
+<p>
+  <strong>Create user:</strong>
+  <%= @product_verify_state.create_user_id %>
+</p>
+
+<p>
+  <strong>Modify user:</strong>
+  <%= @product_verify_state.modify_user_id %>
+</p>
+
+<p>
+  <strong>Stoped user:</strong>
+  <%= @product_verify_state.stoped_user_id %>
+</p>
+
+<p>
+  <strong>Stoped at:</strong>
+  <%= @product_verify_state.stoped_at %>
+</p>
+
+<%= link_to 'Edit', edit_product_verify_state_path(@product_verify_state) %> |
+<%= link_to 'Back', product_verify_states_path %>

@@ -1,0 +1,23 @@
+<%= form_for(@product_verify_state) do |f| %>
+  <% if @product_verify_state.errors.any? %>
+
+    <div id="error_explanation" style="display:none;">
+      <% @product_verify_state.errors.full_messages.each do |msg| %>
+          <%= msg %>
+      <% end %>
+    </div>
+
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title ,'狀態名稱' %><br>
+    <%= f.text_field :title %>
+  </div>
+
+
+
+  <div class="box-footer">
+      <button type="submit" class="btn btn-primary">確定</button>
+      <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
+  </div>
+<% end %>

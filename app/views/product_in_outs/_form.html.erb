@@ -7,31 +7,37 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :product_id , '產品名稱' %><br>
+    <%
+      if @product_in_out
+        @product_id = @product_in_out.product_id
+      end
+    %>
 
-    <%= f.select(:product_id, @product_data.collect {|p| ["#{p.code}-#{p.title}", p.id]} , { :selected =>(@product_id.to_i>0)?(@product_id):(0)   }) %>
+    <%= f.select(:product_id, @product_data.collect {|p| ["#{p.code}-#{p.title}", p.id]} , { :selected =>(@product_id.to_i>0)?(@product_id):(0)   } , :class=>'form-control' ) %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%
     o = [('a'..'z'), ('1'..'9'),('A'..'Z') ].map { |i| i.to_a }.flatten
     string = (0...9).map { o[rand(o.length)] }.join
     %>
-    <%= f.label :code %><br>
+    <%= f.label :code , '單號' %><br>
 
     <%=string%>
-    <%= f.hidden_field :code , :value =>string %>
+    <%= f.hidden_field :code , :value =>string , :class=>'form-control'  %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :num , '數量' %><br>
-    <%= f.number_field :num  %>
+    <%= f.number_field :num , :class=>'form-control' %>
   </div>
 
   <div class="field">
     <%= f.label :in_or_out , '入庫/出貨' %><br>
-    <%= f.select(:in_or_out, @in_out_types.collect {|p| [ p]} ) %>
+    <%= f.select(:in_or_out, @in_out_types.collect { |p| [p] }   ) %>
+
   </div>
 
 

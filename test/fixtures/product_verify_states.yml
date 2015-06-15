@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  create_user_id: 1
+  modify_user_id: 1
+  stoped_user_id: 1
+  stoped_at: 2015-06-15 16:41:07
+
+two:
+  title: MyString
+  create_user_id: 1
+  modify_user_id: 1
+  stoped_user_id: 1
+  stoped_at: 2015-06-15 16:41:07

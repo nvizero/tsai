@@ -8,18 +8,12 @@
     </div>
   <% end %>
 
+  <%= f.hidden_field :product_id , :value=>@product_id%>
 
-
-    <%= f.hidden_field :product_id , :value=>@product_id%>
-
-  <div class="field">
-    <font color="red" ><%= f.label :state ,'狀態' %></font><br>
-    <%= f.text_field :state %>
-  </div>
-
-  <div class="field">
+  <div class="form-group">
     <font color="red" ><%= f.label :product_verify_type_id, '產品名稱' %></font><br>
-    <%= f.text_field :product_verify_type_id %>
+    <%=@product_verify.product.title%>
+    <% f.text_field :product_verify_type_id %>
   </div>
 
   <div class="box-footer">
