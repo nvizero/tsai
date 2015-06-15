@@ -26,12 +26,20 @@ Tsai::Application.routes.draw do
 
   get 'box', :to => "pact#box"
 
+
   get 'excel', :to => "users#excel"
 
   get 'login', :to => "login#login_form"
   get 'logout', :to => "login#logout"
   get 'forget_pas', :to => "login#forget_pas"
+
+  get 'in_list', :to => "product_in_outs#in_list"
+  get 'out_list', :to => "product_in_outs#out_list"
+
   get 'advance_pas', :to => "login#advance_pas"
+
+  get '/product_in_outs/in_come/destroy(/:id)', :to => "product_in_outs#in_come_destroy"
+  get '/product_in_outs/out_come/destroy(/:id)', :to => "product_in_outs#out_come_destroy"
 
   post 'do_forget_pas' , :to => "login#do_forget_pas"
   post 'do_login' , :to => "login#do_login"

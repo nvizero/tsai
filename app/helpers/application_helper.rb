@@ -101,10 +101,33 @@ module ApplicationHelper
 
 
   def show_se_user
-    
+
     session[:user_id]
   end
 
+
+
+  #商品入庫出貨計算 且 狀態要為Y
+  def in_out_cal obj
+
+    @in_num = 0
+    @out_num = 0
+
+
+    obj.each do |pio|
+        #入庫
+        if pio.in_or_out == 'in' && pio.state == 'Y'
+            @in_num += pio.num.to_i
+        end
+
+        #出貨
+        if pio.in_or_out == 'out' && pio.state == 'Y'
+            @out_num += pio.num.to_i
+        end
+
+    end
+
+  end
 
 
 

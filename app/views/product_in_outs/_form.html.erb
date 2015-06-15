@@ -8,38 +8,41 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :product_id %><br>
-    <%= f.number_field :product_id %>
+    <%= f.label :product_id , '產品名稱' %><br>
+
+    <%= f.select(:product_id, @product_data.collect {|p| ["#{p.code}-#{p.title}", p.id]} , { :selected =>(@product_id.to_i>0)?(@product_id):(0)   }) %>
   </div>
+
   <div class="field">
+    <%
+    o = [('a'..'z'), ('1'..'9'),('A'..'Z') ].map { |i| i.to_a }.flatten
+    string = (0...9).map { o[rand(o.length)] }.join
+    %>
     <%= f.label :code %><br>
-    <%= f.text_field :code %>
+
+    <%=string%>
+    <%= f.hidden_field :code , :value =>string %>
   </div>
+
   <div class="field">
-    <%= f.label :num %><br>
-    <%= f.number_field :num %>
+    <%= f.label :num , '數量' %><br>
+    <%= f.number_field :num  %>
   </div>
+
   <div class="field">
-    <%= f.label :in_or_out %><br>
-    <%= f.text_field :in_or_out %>
+    <%= f.label :in_or_out , '入庫/出貨' %><br>
+    <%= f.select(:in_or_out, @in_out_types.collect {|p| [ p]} ) %>
   </div>
-  <div class="field">
-    <%= f.label :create_user_id %><br>
-    <%= f.number_field :create_user_id %>
+
+
+  <%= f.hidden_field :create_user_id  ,:value=>session[:user_id] %>
+  <%= f.hidden_field :state  ,:value=>'Y' %>
+
+
+
+  <div class="box-footer">
+      <button type="submit" class="btn btn-primary">確定</button>
+      <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
   </div>
-  <div class="field">
-    <%= f.label :modify_user_id %><br>
-    <%= f.number_field :modify_user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :stop_user_id %><br>
-    <%= f.number_field :stop_user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :stoped_at %><br>
-    <%= f.datetime_select :stoped_at %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
 <% end %>

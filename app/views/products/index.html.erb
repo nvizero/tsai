@@ -8,6 +8,8 @@
             <div class="box-header">
                 <h3 class="box-title">產品列表</h3>
 
+                <!-- <img src="et.gif"> -->
+
                 <% if judgment_access 'products/new' %>
                   <%= link_to '新增產品', {:controller =>'products' , :action =>'new'} ,:class=>"btn btn-primary head_btn"  , :id=>'head_btn' %>
                 <% end %>
@@ -40,6 +42,7 @@
                       <th>名稱</th>
 
                       <th>分類</th>
+                      <th>出入庫</th>
                       <th>屬於</th>
                       <th>
 
@@ -64,6 +67,34 @@
           <% end %>
         </td>
         <td>
+          <% if product.product_in_outs %>
+
+
+                <%
+                in_out_cal(product.product_in_outs)
+                %>
+          <% end %>
+
+          <a class="btn btn-success btn-xs">入庫</a>
+          <span class="text-success">
+            <%=@in_num%>
+          </span>
+
+
+
+          <a class="btn btn-danger btn-xs">出庫</a>
+          <span class="text-red">
+            <%=@out_num%>
+          </span>
+
+          <a class="btn btn-primary btn-xs">現有</a>
+          <span class="text-primary">
+            <%=@in_num-@out_num%>
+          </span>
+
+        </td>
+
+        <td>
           <% if product.user %>
             <%= product.user.name %>
           <% end %>
@@ -72,7 +103,7 @@
         <td>
           <% if product.state == 'Y'  %>
 
-              <%= link_to '入庫', {:controller=>'product_in_outs' , :action=>'new' , :product_id => product.id} , :class => 'btn btn-info btn-sm' %>
+              <%= link_to '入庫', {:controller=>'product_in_outs' , :action=>'new' , :product_id => product.id} , :class => 'btn btn-success btn-sm' %>
 
               <% if judgment_access 'products/edit' %>
                 <%= link_to '編輯', edit_product_path(product) , :class => 'btn btn-info btn-sm' %>

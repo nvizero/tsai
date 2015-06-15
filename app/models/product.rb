@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
   paginates_per 10
   belongs_to :user
   belongs_to :verify_type_main
+  has_many :product_in_outs
 
   has_many   :product_verifies
 

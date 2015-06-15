@@ -2,9 +2,10 @@ class ProductInOutsController < ApplicationController
 
   layout 'admin'
 
-  before_action :set_product_in_out, only: [:show, :edit, :update, :destroy]
+  before_action :set_product_in_out, only: [:show, :edit, :update, :destroy , :out_come_destroy , :in_come_destroy]
 
   before_action :set_title
+  before_action :set_in_out_type
   #要登入
   before_action :confirm_logged_in
   #取得一些基本資訊
@@ -13,12 +14,80 @@ class ProductInOutsController < ApplicationController
   # GET /product_in_outs
   # GET /product_in_outs.json
   def index
+
+    # ProductInOut.all.each do |pio|
+    #   pio.state = 'Y'
+    #   pio.save
+    # end
+
+
     @users_a = self.user_to_ar
     @flag = params[:steta]
-
+    @product_id = params[:product_id]
+    if @product_id
+      @product_data = Product.find(:id=>@product_id.to_i)
+    end
     @product_in_outs = ProductInOut.page params[:page]
+
   end
 
+  def in_list
+
+    # ProductInOut.all.each do |pio|
+    #   pio.state = 'Y'
+    #   pio.save
+    # end
+
+    @title[0]['main1'] = '入庫列表'
+    @users_a = self.user_to_ar
+    @flag = params[:state]
+    @product_id = params[:product_id]
+
+    if @product_id
+      @product_data = Product.find(:id=>@product_id.to_i)
+    end
+
+    if @flag=='N'
+        @product_in_outs = ProductInOut.in_come.stoped.page params[:page]
+
+    elsif @flag=='Y'
+
+        @product_in_outs = ProductInOut.in_come.live.page params[:page]
+
+    else
+
+        @product_in_outs = ProductInOut.in_come.live.page params[:page]
+        @flag='Y'
+    end
+
+
+  end
+
+  def out_list
+
+    @title[0]['main1'] = '出貨列表'
+    @users_a = self.user_to_ar
+    @flag = params[:state]
+    @product_id = params[:product_id]
+
+    if @product_id
+      @product_data = Product.find(:id=>@product_id.to_i)
+    end
+
+    if @flag=='N'
+        @product_in_outs = ProductInOut.out_come.stoped.page params[:page]
+
+    elsif @flag=='Y'
+
+        @product_in_outs = ProductInOut.out_come.live.page params[:page]
+
+    else
+
+        @product_in_outs = ProductInOut.out_come.live.page params[:page]
+        @flag='Y'
+    end
+
+  end
   # GET /product_in_outs/1
   # GET /product_in_outs/1.json
   def show
@@ -26,6 +95,8 @@ class ProductInOutsController < ApplicationController
 
   # GET /product_in_outs/new
   def new
+    @product_id = params[:product_id]
+    @product_data = Product.live
     @product_in_out = ProductInOut.new
   end
 
@@ -36,17 +107,20 @@ class ProductInOutsController < ApplicationController
   # POST /product_in_outs
   # POST /product_in_outs.json
   def create
+
     @product_in_out = ProductInOut.new(product_in_out_params)
 
-    respond_to do |format|
+    # respond_to do |format|
       if @product_in_out.save
-        format.html { redirect_to @product_in_out, notice: 'Product in out was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @product_in_out }
+          flash[:notice] = "input success"
+          redirect_to :controller=>'product_in_outs' , :action=>'index'
+
+
       else
-        format.html { render action: 'new' }
-        format.json { render json: @product_in_out.errors, status: :unprocessable_entity }
+        render action: 'new'
+
       end
-    end
+    # end
   end
 
   # PATCH/PUT /product_in_outs/1
@@ -65,14 +139,37 @@ class ProductInOutsController < ApplicationController
 
   # DELETE /product_in_outs/1
   # DELETE /product_in_outs/1.json
-  def destroy
+  # def destroy
+  #
+  #   @product_in_out.stop_user_id = session[:user_id]
+  #   @product_in_out.stoped_at = DateTime.now
+  #   @product_in_out.state = "N"
+  #   @product_in_out.save
+  #   # @product_in_out.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to product_in_outs_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
+
+
+  def in_come_destroy
+    @product_in_out.stop_user_id = session[:user_id]
+    @product_in_out.stoped_at = DateTime.now
     @product_in_out.state = "N"
     @product_in_out.save
-    # @product_in_out.destroy
-    respond_to do |format|
-      format.html { redirect_to product_in_outs_url }
-      format.json { head :no_content }
-    end
+
+    redirect_to :action=>'in_list'
+
+  end
+
+  def out_come_destroy
+    @product_in_out.stop_user_id = session[:user_id]
+    @product_in_out.stoped_at = DateTime.now
+    @product_in_out.state = "N"
+    @product_in_out.save
+    redirect_to :action=>'out_list'
+
   end
 
   private
@@ -86,6 +183,12 @@ class ProductInOutsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_in_out_params
-      params.require(:product_in_out).permit(:product_id, :code, :num, :in_or_out, :create_user_id, :modify_user_id, :stop_user_id, :stoped_at)
+      params.require(:product_in_out).permit( :product_id, :code, :num, :in_or_out,
+                                              :create_user_id, :modify_user_id, :stop_user_id,
+                                              :stoped_at , :state)
+    end
+
+    def set_in_out_type
+      @in_out_types = ['in','out']
     end
 end
