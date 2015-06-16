@@ -30,6 +30,7 @@ class ProductVerifyContentsController < ApplicationController
 
   # GET /product_verify_contents/1/edit
   def edit
+    @product_verify_id = params[:id]
   end
 
   # POST /product_verify_contents
@@ -55,17 +56,13 @@ class ProductVerifyContentsController < ApplicationController
   # PATCH/PUT /product_verify_contents/1
   # PATCH/PUT /product_verify_contents/1.json
   def update
-
-      # if @product_verify_content.update(product_verify_content_params)
-      #
-      #   # redirect_to @product_verify_content
-      #
-      #   redirect_to :controller=>'product_verifies' =>:action=>'edit' , :id => @product_verify_content.product_verify_id
-      #
-      # else
-      #   render action: 'edit'
-      #   # format.json { render json: @product_verify_content.errors, status: :unprocessable_entity }
-      # end
+      # render :text=>params
+      if @product_verify_content.update(product_verify_content_params)
+        flash[:notice] = '回復成功'
+        redirect_to :controller=>'product_verifies'  ,:action=>'edit' ,:id =>@product_verify_content.product_verify_id
+      else
+        render action: 'edit'
+      end
 
   end
 
@@ -91,7 +88,7 @@ class ProductVerifyContentsController < ApplicationController
 
 
     def product_verify_content_params
-      params.require(:product_verify_content).permit(:content,:product_verify_id ,:file,:title ,:create_user_id, :modify_user_id, :stoped_user_id, :stoped_at , :state)
+      params.require(:product_verify_content).permit(:content, :product_verify_id ,:file,:title ,:create_user_id, :modify_user_id, :stoped_user_id, :stoped_at , :state)
 
     end
 end

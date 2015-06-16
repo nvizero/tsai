@@ -13,22 +13,33 @@
   <%= f.hidden_field :product_id , :value=>@product_id%>
 
   <div class="form-group">
-      <font color="red" size="4" ><%= f.label :product_verify_type_id, '產品名稱' %></font>
-      <font size="4">:<%=@product_verify.product.title%></font>
+    <table aria-describedby="example2_info" id="example2" class="table table-bordered table-hover dataTable">
+        <thead>
+            <tr role="row">
+              <th >
+                  <font color="red" size="4" ><%= f.label :product_verify_type_id, '產品名稱' %></font>
+                  <font size="4">:<%=@product_verify.product.title%></font>
+              </th>
+
+              <th >
+                  <font color="red" size="4" ><%= f.label :product_verify_type_id, '申請類別' %></font>
+                  <font size="4">:<%=@product_verify.product_verify_type.name%></font>
+                  <% f.text_field :product_verify_type_id %>
+              </th>
+
+              <th >
+                  <font color="red" size="4" ><%= f.label :product_verify_type_id, '狀態' %></font>
+                  <font size="4"><%=@product_verify.product_verify_state.title %></font>
+              </th>
+            </tr>
+        </thead>
+    </table>
+
+
   </div>
 
 
-  <div class="form-group">
-    <font color="red" size="4" ><%= f.label :product_verify_type_id, '申請類別' %></font>
-    <font size="4">:<%=@product_verify.product_verify_type.name%></font>
-    <% f.text_field :product_verify_type_id %>
-  </div>
 
-  <div class="form-group">
-    <font color="red" size="4" ><%= f.label :product_verify_type_id, '狀態' %></font>
-    <%=@product_verify.product_verify_state.title %>
-
-  </div>
 
 
 
@@ -37,7 +48,9 @@
 
   <div class="box-body table-responsive">
     <h3><%= f.label :product_verify_type_id, '回復資訊' %></h3>
-      <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid"><div class="row"><div class="col-xs-6"></div><div class="col-xs-6"></div></div><table aria-describedby="example2_info" id="example2" class="table table-bordered table-hover dataTable">
+      <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid"><div class="row"><div class="col-xs-6"></div><div class="col-xs-6"></div></div>
+
+      <table aria-describedby="example2_info" id="example2" class="table table-bordered table-hover dataTable">
           <thead>
               <tr role="row">
                 <th aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" colspan="1" rowspan="1" aria-controls="example2" tabindex="0" role="columnheader" class="sorting_asc">名稱</th>
@@ -54,21 +67,32 @@
               </tr>
           </tfoot>
       <tbody aria-relevant="all" aria-live="polite" role="alert">
-        <% @product_verify.product_verify_contents.each do |pv_cont| %>
 
+        <%
+          ct_num = 1
+          @product_verify.product_verify_contents.each do |pv_cont|
+        %>
 
-
-              <tr class="odd">
-                  <td class="  sorting_1"><%=pv_cont.title%></td>
-                  <td class=" ">
-                    <%= state_n_show pv_cont,pv_cont.content.to_s[0..60] %>
+        <%= render 'comm/verify_box' , :obj => pv_cont  , :pid => pv_cont.id  %>
+              <tr <%= (ct_num.to_i % 2 == 1 ) ? 'class="odd" ' : 'class="even" ' %> >
+                  <td class="sorting_1"><%=pv_cont.title%></td>
+                  <td class="">
+                    <%= state_n_show pv_cont , pv_cont.content.to_s[0..30] %>
                   </td>
-                  <td class=" ">
+                  <td class="">
+
                       <%= link_to '編輯', edit_product_verify_content_path(pv_cont) , :class => 'btn btn-info btn-sm'  %>
+
+                      <a class="btn btn-warning info btn-sm" id="<%=pv_cont.id %>">
+                          訊息
+                      </a>
                   </td>
 
               </tr>
-        <% end %>
+        <%
+        ct_num+=1
+        end
+        %>
 
 
 
@@ -81,12 +105,28 @@
 
 
 
-  <div class="form-group">
-    <a class="btn btn-info" href="/product_verify_contents/new?id=<%=@product_verify.id%>" id='head_btn' style="margin-top:25px;">回復</a>
-  </div>
+
   <div class="box-footer">
       <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
       <button type="submit" class="btn btn-primary">確定</button>
+      <a class="btn btn-info" href="/product_verify_contents/new?id=<%=@product_verify.id%>" id='head_btn' style="margin-top:0px;">回復</a>
   </div>
 
 <% end %>
+
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+
+
+
+
+      $('.info').click(function(){
+          var t_id = $(this).attr('id');
+          $('#info-modal'+t_id).modal('show');
+      });
+
+
+  })
+</script>
