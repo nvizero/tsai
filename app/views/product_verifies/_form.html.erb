@@ -1,6 +1,7 @@
+
+
 <%= form_for(@product_verify) do |f| %>
   <% if @product_verify.errors.any? %>
-
     <div id="error_explanation" style="display:none;">
       <% @product_verify.errors.full_messages.each do |msg| %>
         <%= msg %>
@@ -8,14 +9,81 @@
     </div>
   <% end %>
 
+
   <%= f.hidden_field :product_id , :value=>@product_id%>
 
   <div class="form-group">
-    <font color="red" ><%= f.label :product_verify_type_id, '產品名稱' %></font><br>
-    <%=@product_verify.product.title%>
+      <font color="red" size="4" ><%= f.label :product_verify_type_id, '產品名稱' %></font>
+      <font size="4">:<%=@product_verify.product.title%></font>
+  </div>
+
+
+  <div class="form-group">
+    <font color="red" size="4" ><%= f.label :product_verify_type_id, '申請類別' %></font>
+    <font size="4">:<%=@product_verify.product_verify_type.name%></font>
     <% f.text_field :product_verify_type_id %>
   </div>
 
+  <div class="form-group">
+    <font color="red" size="4" ><%= f.label :product_verify_type_id, '狀態' %></font>
+    <%=@product_verify.product_verify_state.title %>
+
+  </div>
+
+
+
+
+
+
+  <div class="box-body table-responsive">
+    <h3><%= f.label :product_verify_type_id, '回復資訊' %></h3>
+      <div id="example2_wrapper" class="dataTables_wrapper form-inline" role="grid"><div class="row"><div class="col-xs-6"></div><div class="col-xs-6"></div></div><table aria-describedby="example2_info" id="example2" class="table table-bordered table-hover dataTable">
+          <thead>
+              <tr role="row">
+                <th aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" colspan="1" rowspan="1" aria-controls="example2" tabindex="0" role="columnheader" class="sorting_asc">名稱</th>
+                <th aria-label="Browser: activate to sort column ascending" colspan="1" rowspan="1" aria-controls="example2" tabindex="0" role="columnheader" class="sorting">內容</th>
+                <th aria-label="Platform(s): activate to sort column ascending" colspan="1" rowspan="1" aria-controls="example2" tabindex="0" role="columnheader" class="sorting"></th>
+              </tr>
+          </thead>
+
+          <tfoot>
+              <tr>
+                  <th colspan="1" rowspan="1">名稱</th>
+                  <th colspan="1" rowspan="1">內容</th>
+                  <th colspan="1" rowspan="1"></th>
+              </tr>
+          </tfoot>
+      <tbody aria-relevant="all" aria-live="polite" role="alert">
+        <% @product_verify.product_verify_contents.each do |pv_cont| %>
+
+
+
+              <tr class="odd">
+                  <td class="  sorting_1"><%=pv_cont.title%></td>
+                  <td class=" ">
+                    <%= state_n_show pv_cont,pv_cont.content.to_s[0..60] %>
+                  </td>
+                  <td class=" ">
+                      <%= link_to '編輯', edit_product_verify_content_path(pv_cont) , :class => 'btn btn-info btn-sm'  %>
+                  </td>
+
+              </tr>
+        <% end %>
+
+
+
+
+  </div><!-- /.box-body -->
+
+
+
+  </div>
+
+
+
+  <div class="form-group">
+    <a class="btn btn-info" href="/product_verify_contents/new?id=<%=@product_verify.id%>" id='head_btn' style="margin-top:25px;">回復</a>
+  </div>
   <div class="box-footer">
       <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
       <button type="submit" class="btn btn-primary">確定</button>

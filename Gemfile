@@ -36,20 +36,20 @@ group :doc do
 end
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+ gem 'unicorn'
 
 # Use Capistrano for deployment
-# gem 'capistrano', group: :development
+gem 'capistrano', group: :development
 gem 'paperclip'
 # Use debugger
 #gem 'debugger', group: [:development, :test]
 gem "ckeditor"
 
 gem 'to_xls-rails'# Last officially released gem
-#gem 'bootstrap-wysihtml5-rails'
+gem 'bootstrap-wysihtml5-rails'
 
-#gem "binding_of_caller"
+gem "binding_of_caller"
 gem "rails-i18n"

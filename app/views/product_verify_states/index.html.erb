@@ -49,12 +49,12 @@
         <td><%= product_verify_state.title %></td>
         <td>
 
-
-
-
-            <%= link_to '編輯', edit_product_verify_state_path(product_verify_state) , :class => 'btn btn-info btn-sm' %>
-
-            <a url="#" class="del btn btn-danger btn-sm" id='/product_verify_states/destroy/<%=product_verify_state.id %>'> 停用 </a>
+          <% if product_verify_state.state == 'Y'  %>
+              <%= link_to '編輯', edit_product_verify_state_path(product_verify_state) , :class => 'btn btn-info btn-sm' %>
+              <a url="#" class="del btn btn-danger btn-sm" id='/product_verify_states/destroy/<%=product_verify_state.id %>'> 停用 </a>
+          <% else %>
+              <button class="btn btn-danger disabled">己停用</button>
+          <% end %>
 
             <a class="btn btn-warning info" id="<%=product_verify_state.id %>">
                 訊息

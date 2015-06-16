@@ -7,7 +7,7 @@ class ProductVerifyState < ActiveRecord::Migration
   end
 
   def down
-    remove_column :product_verifies ,:product_verify_state_id 
+    remove_column :product_verifies ,:product_verify_state_id
   end
 
 end

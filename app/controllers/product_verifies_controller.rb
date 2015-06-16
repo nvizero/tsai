@@ -90,6 +90,7 @@ class ProductVerifiesController < ApplicationController
       ProductVerify.create( :product_id => product_id ,
                             :state => "N",
                             :create_user_id => session[:user_id].to_i,
+                            :product_verify_state_id =>1,
                             :product_verify_type_id=>type.id)
     end
 

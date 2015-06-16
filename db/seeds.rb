@@ -66,12 +66,17 @@ Access.create!(:title => '入庫－删除', :code=>'product_in_outs/del'   , :st
 
 Access.create!(:title => 'all', :code=>'all'   , :state =>'Y')
 
-ProductVerifyType.create!(:name=>'食品-台灣官方',:verify_type_main_id=>1 , state=>'Y')
-ProductVerifyType.create!(:name=>'食品-大陸官方',:verify_type_main_id=>1 , state=>'Y')
-ProductVerifyType.create!(:name=>'食品-國際',:verify_type_main_id=>1 , state=>'Y')
+ProductVerifyType.create!(:name=>'食品-台灣官方',:verify_type_main_id=>1 , :state=>'Y')
+ProductVerifyType.create!(:name=>'食品-大陸官方',:verify_type_main_id=>1 , :state=>'Y')
+ProductVerifyType.create!(:name=>'食品-國際',:verify_type_main_id=>1 , :state=>'Y')
 
-ProductVerifyType.create!(:name=>'化裝品-台灣官方',:verify_type_main_id=>2 , state=>'Y')
-ProductVerifyType.create!(:name=>'化裝品-大陸官方',:verify_type_main_id=>2 , state=>'Y')
+ProductVerifyType.create!(:name=>'化裝品-台灣官方',:verify_type_main_id=>2 , :state=>'Y')
+ProductVerifyType.create!(:name=>'化裝品-大陸官方',:verify_type_main_id=>2 , :state=>'Y')
 
 
 Role.create!(:title => 'admin' , :text =>'all' , :code=>'all' , :state => 'Y')
+
+Product.create!(:title=>'關節師傅',:user_id=>1 , :state=>'Y' , :verify_type_main_id =>1 , :code=>'qArSlJNay4')
+
+ProductVerifyState.create!(:id=>1 ,:title=>'申請中', :state=>'Y')
+ProductVerifyState.create!(:id=>2 ,:title=>'申請成功', :state=>'Y')

@@ -3,7 +3,9 @@ class ProductVerify < ActiveRecord::Base
   paginates_per 12
   belongs_to   :product
   belongs_to   :product_verify_type
-  # has_many   :product_verify_type
+  belongs_to   :product_verify_state
+
+  has_many   :product_verify_contents
   # def products
   #
   # end

@@ -13,15 +13,28 @@ class ProductVerifyStatesController < ApplicationController
   # GET /product_verify_states.json
   def index
 
+    # ProductVerifyState.all.each do | pp |
+    #   pp.state = 'Y'
+    #   pp.save
+    # end
+
     @users_a = self.user_to_ar
-    @flag = params[:steta]
+    @flag = params[:state]
     @product_id = params[:product_id]
 
-    if @flag=='Y'
-        @product_verify_states = ProductVerifyState.live.page params[:page]
-    else
+    if @flag =='N'
+
         @product_verify_states = ProductVerifyState.stoped.page params[:page]
         @flag = 'N'
+
+    elsif @flag =='Y'
+
+        @product_verify_states = ProductVerifyState.live.page params[:page]
+        @flag = 'Y'
+    else
+        @product_verify_states = ProductVerifyState.live.page params[:page]
+        @flag = 'Y'
+
     end
 
   end
@@ -98,6 +111,6 @@ class ProductVerifyStatesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_verify_state_params
-      params.require(:product_verify_state).permit(:title, :create_user_id, :modify_user_id, :stoped_user_id, :stoped_at)
+      params.require(:product_verify_state).permit(:title, :create_user_id, :modify_user_id, :stoped_user_id, :stoped_at , :state)
     end
 end

@@ -95,7 +95,7 @@
           <% if product_verify.state == 'Y' %>
 
               <% if judgment_access 'product_verifies/edit' %>
-                <%= link_to '編輯', edit_product_verify_path(product_verify) , :class => 'btn btn-info btn-sm' %>
+                <%= link_to '查詢', edit_product_verify_path(product_verify) , :class => 'btn btn-info btn-sm' %>
               <% end %>
 
               <% if judgment_access 'product_verifies/del' %>

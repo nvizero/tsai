@@ -1,5 +1,7 @@
 Tsai::Application.routes.draw do
 
+  resources :product_verify_contents
+
   resources :product_verify_states
 
   resources :product_in_outs

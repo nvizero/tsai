@@ -130,5 +130,13 @@ module ApplicationHelper
   end
 
 
+  def get_random_str num
+
+      o = [('a'..'z'), ('1'..'9'),('A'..'Z') ].map { |i| i.to_a }.flatten
+      string = (0...num).map { o[rand(o.length)] }.join
+
+  end
+
+
 
 end
