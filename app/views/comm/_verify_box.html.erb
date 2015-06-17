@@ -11,8 +11,12 @@
 
             <div class="modal-body" style="color:red;">
                 <%=simple_format(obj.content) %>
-                <% if !obj.file.nil? %>
-                <%= image_tag obj.file %>
+                <%
+                  if !obj.file.nil?
+                    if File.exist?(obj.file)
+                  %>
+                    <%= image_tag obj.file %>
+                  <% end %>
                 <% end %>
             </div>
 
