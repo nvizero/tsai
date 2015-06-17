@@ -25,12 +25,29 @@
       </div>
 
       <div class="form-group">
-        <%= f.text_field :file %>
+
+        <%= f.file_field :file %>
       </div>
 
 
-      <%= f.hidden_field :product_verify_id ,:value=>@product_verify_id %>
-      <input type="hidden" name="id" value="<%=@product_verify_content.product_verify_id%>">
+
+
+
+      <% if !@product_verify_content.id.nil? %>          
+
+
+          <%= f.hidden_field :product_verify_id ,:value=>@product_verify_content.product_verify_id %>
+          <input type="hidden" name="pv_id" value="<%=@product_verify_content.product_verify_id%>">
+
+      <% else %>
+
+
+          <%= f.hidden_field :product_verify_id ,:value=>@product_verify_id.to_i %>
+          <input type="hidden" name="pv_id" value="<%=@product_verify_id %>">
+
+      <% end  %>
+
+
       <%= f.hidden_field :state ,:value=>'Y' %>
 
 

@@ -99,6 +99,7 @@ class ProductInOutsController < ApplicationController
 
   # GET /product_in_outs/new
   def new
+    @i_or_o = params[:type]
     @product_id = params[:product_id]
     @product_data = Product.live
     @product_in_out = ProductInOut.new
@@ -110,7 +111,7 @@ class ProductInOutsController < ApplicationController
       @product_id = params[:product_id]
 
       if @product_id
-        
+
         @product_data = Product.find(:id=>@product_id.to_i)
       else
         @product_data = Product.all
@@ -125,8 +126,18 @@ class ProductInOutsController < ApplicationController
 
     # respond_to do |format|
       if @product_in_out.save
-          flash[:notice] = "input success"
-          redirect_to :controller=>'product_in_outs' , :action=>'index'
+
+          # render :text => "#{params}  +  #{@product_in_out.in_or_out}"
+
+          flash[:notice] = "新增成功"
+
+          if @product_in_out.in_or_out == 'in'
+              redirect_to :controller=>'product_in_outs' , :action=>'in_list'
+          elsif @product_in_out.in_or_out == 'out'
+              redirect_to :controller=>'product_in_outs' , :action=>'out_list'
+          elsif
+              redirect_to :controller=>'product_in_outs' , :action=>'in_list'
+          end
 
 
       else
@@ -139,15 +150,23 @@ class ProductInOutsController < ApplicationController
   # PATCH/PUT /product_in_outs/1
   # PATCH/PUT /product_in_outs/1.json
   def update
-    respond_to do |format|
+    # respond_to do |format|
+
       if @product_in_out.update(product_in_out_params)
-        format.html { redirect_to @product_in_out, notice: 'Product in out was successfully updated.' }
-        format.json { head :no_content }
+
+        # format.html {
+          redirect_to @product_in_out
+          # , notice: 'Product in out was successfully updated.' }
+        # format.json { head :no_content }
+
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @product_in_out.errors, status: :unprocessable_entity }
+        # format.html {
+          render action: 'edit'
+        # }
+        # format.json { render json: @product_in_out.errors, status: :unprocessable_entity }
       end
-    end
+
+    # end
   end
 
   # DELETE /product_in_outs/1
@@ -204,6 +223,7 @@ class ProductInOutsController < ApplicationController
     end
 
     def set_in_out_type
-      @in_out_types = ['in','out']
+      @in_out_types = [ 'value'=>['in'=>'入庫','out'=>'出貨'] ]
+
     end
 end

@@ -41,14 +41,38 @@ class ProductVerifyContentsController < ApplicationController
 
       if @product_verify_content.save
 
-        flash[:notice] = '回復成功'
-        redirect_to :controller=>'product_verifies' ,:action=>'edit' , :id =>@product_verify_content.product_verify_id
 
-        # format.html { redirect_to @product_verify_content, notice: 'Product verify content was successfully created.' }
-        # format.json { render action: 'show', status: :created, location: @product_verify_content }
+        uploaded_io = params[:product_verify_content][:file]
+
+        # File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+        #   file.write(uploaded_io.read)
+        # end
+
+        if uploaded_io
+            img_name = Time.now.strftime("%Y%d%m%H%M%S").to_s
+
+            File.open(Rails.root.join('public', 'uploads', img_name ), 'wb') do |file|
+              file.write(uploaded_io.read)
+            end
+
+
+
+            @product_verify_content.file ='/uploads/' + img_name.to_s
+            @product_verify_content.save
+
+        end
+        pvi = params[:pv_id]
+
+
+        flash[:notice] = '回復成功'
+        redirect_to  :controller=>'product_verifies' ,:action=>'edit' , :id =>pvi.to_i
+
+
       else
+
         format.html { render action: 'new' }
         format.json { render json: @product_verify_content.errors, status: :unprocessable_entity }
+
       end
     # end
   end
@@ -58,8 +82,38 @@ class ProductVerifyContentsController < ApplicationController
   def update
       # render :text=>params
       if @product_verify_content.update(product_verify_content_params)
+
+        uploaded_io = params[:product_verify_content][:file]
+
+        # File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+        #   file.write(uploaded_io.read)
+        # end
+
+        if uploaded_io
+          
+            img_name = Time.now.strftime("%Y%d%m%H%M%S").to_s
+            File.open(Rails.root.join('public', 'uploads', img_name ), 'wb') do |file|
+              file.write(uploaded_io.read)
+            end
+
+
+
+            @product_verify_content.file ='/uploads/' + img_name.to_s
+            @product_verify_content.save
+
+        end
+
+        @product_verify_content.state = 'Y'
+        @product_verify_content.save
+        pvi = params[:pv_id]
+
+
         flash[:notice] = '回復成功'
-        redirect_to :controller=>'product_verifies'  ,:action=>'edit' ,:id =>@product_verify_content.product_verify_id
+        redirect_to  :controller=>'product_verifies' ,:action=>'edit' , :id =>pvi.to_i
+
+
+        # flash[:notice] = '回復成功'
+        # redirect_to :controller=>'product_verifies'  ,:action=>'edit' ,:id =>@product_verify_content.product_verify_id
       else
         render action: 'edit'
       end
@@ -88,7 +142,7 @@ class ProductVerifyContentsController < ApplicationController
 
 
     def product_verify_content_params
-      params.require(:product_verify_content).permit(:content, :product_verify_id ,:file,:title ,:create_user_id, :modify_user_id, :stoped_user_id, :stoped_at , :state)
+      params.require(:product_verify_content).permit(:content, :product_verify_id   , :title ,:create_user_id, :modify_user_id, :stoped_user_id, :stoped_at , :state)
 
     end
 end

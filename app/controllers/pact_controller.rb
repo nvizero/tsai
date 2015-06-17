@@ -6,7 +6,7 @@ class PactController < ApplicationController
   def post_username
     user = User.where(:username=>params['username']).first
     if user
-        if user.prompt.length > 1          
+        if user.prompt.length > 1
           render :text => "您的密碼提示是:<font color=red>#{user.prompt}</font>"
         else
           render :text => "您的密碼提示是:<font color=red>沒有輸入</font>"
@@ -38,9 +38,29 @@ class PactController < ApplicationController
     end
   end
 
-  def box
 
+
+  def box
     render 'comm/_box'
+  end
+
+
+  def change_product_verify_state
+
+    id =  params[:id]
+    val =  params[:val]
+    prv = ProductVerify.find(id)
+    prv.product_verify_state_id = val.to_i
+    prv.save
+
+    pvs=ProductVerifyState.find(val.to_i)
+    
+    render :text => pvs.title
+    # render :text => "#{params} + #{id} - #{prv}"
+    # prv = ProductVerify.find(id)
+    # prv.product_verify_state_id  = val.to_i
+    # prv.save
+
   end
 
 

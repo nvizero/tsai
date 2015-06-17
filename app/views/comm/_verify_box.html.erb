@@ -11,6 +11,9 @@
 
             <div class="modal-body" style="color:red;">
                 <%=simple_format(obj.content) %>
+                <% if !obj.file.nil? %>
+                <%= image_tag obj.file %>
+                <% end %>
             </div>
 
             <div class="modal-footer clearfix">

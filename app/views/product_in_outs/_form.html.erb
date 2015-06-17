@@ -36,7 +36,7 @@
 
   <div class="field">
     <%= f.label :in_or_out , '入庫/出貨' %><br>
-    <%= f.select(:in_or_out, @in_out_types.collect { |p| [p] }   ) %>
+    <%= f.select(:in_or_out, @in_out_types[0]['value'][0].collect { |p| [p[1],p[0] ] }, { :selected =>@i_or_o  }    ) %>
 
   </div>
 

@@ -104,6 +104,7 @@ class ProductVerifiesController < ApplicationController
 
   # GET /product_verifies/1/edit
   def edit
+    @product_verify_states = ProductVerifyState.live
   end
 
   # POST /product_verifies

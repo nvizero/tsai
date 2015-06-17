@@ -29,7 +29,8 @@
 
               <th >
                   <font color="red" size="4" ><%= f.label :product_verify_type_id, '狀態' %></font>
-                  <font size="4"><%=@product_verify.product_verify_state.title %></font>
+                  <font size="4" id="v_state"><%=@product_verify.product_verify_state.title %></font>
+                  <%=select_tag 'verify_states', options_for_select(@product_verify_states.collect{ |u| [u.title, u.id] }) %>
               </th>
             </tr>
         </thead>
@@ -44,6 +45,7 @@
 
 
 
+<input type="hidden" id="vid" value="<%=@product_verify.id%>">
 
 
   <div class="box-body table-responsive">
@@ -108,7 +110,7 @@
 
   <div class="box-footer">
       <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
-      <button type="submit" class="btn btn-primary">確定</button>
+      <!-- <button type="submit" class="btn btn-primary">確定</button> -->
       <a class="btn btn-info" href="/product_verify_contents/new?id=<%=@product_verify.id%>" id='head_btn' style="margin-top:0px;">回復</a>
   </div>
 
@@ -120,7 +122,17 @@
   $('document').ready(function(){
 
 
+      $('#verify_states').change(function(){
 
+
+          $.post('/change_product_verify_state' , {"id":$('#vid').val() , 'val':$(this).val()},function(data){
+
+              // alert('變更成功！');
+              // location.reload();
+              $("#v_state").html(data);
+
+          })
+      });
 
       $('.info').click(function(){
           var t_id = $(this).attr('id');

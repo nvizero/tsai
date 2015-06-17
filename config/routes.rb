@@ -49,6 +49,9 @@ Tsai::Application.routes.draw do
   post 'do_login' , :to => "login#do_login"
   post 'do_advance_pas' , :to => "login#do_advance_pas"
 
+
+  post 'change_product_verify_state' , :to => "pact#change_product_verify_state"
+
   post 'post_username' , :to => "pact#post_username"
   #ajax/post_username
 
