@@ -1,5 +1,7 @@
 Tsai::Application.routes.draw do
 
+  resources :in_out_types
+
   resources :product_verify_contents
 
   resources :product_verify_states
@@ -39,6 +41,7 @@ Tsai::Application.routes.draw do
 
   get 'in_list', :to => "product_in_outs#in_list"
   get 'out_list', :to => "product_in_outs#out_list"
+  get 'store_list', :to => "products#store_list"
 
   get 'advance_pas', :to => "login#advance_pas"
 

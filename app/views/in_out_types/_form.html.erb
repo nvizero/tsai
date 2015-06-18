@@ -1,0 +1,36 @@
+<%= form_for(@in_out_type) do |f| %>
+  <% if @in_out_type.errors.any? %>
+    <div id="error_explanation" style="display:none;">
+        <ul>
+        <% @in_out_type.errors.full_messages.each do |msg| %>
+            <%= msg %>
+        <% end %>
+        </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+
+    <%= f.label :title ,'名稱' %><br>
+    <%= f.text_field :title %>
+
+  </div>
+
+  <div class="field">
+
+    <%= f.label :cate ,'加或減'%><br>
+    <%= f.select(:cate , @in_out_types[0]['value'][0].collect  { |p| [p[1],p[0] ]} ) %>
+
+  </div>
+    <%= f.hidden_field :create_user_id ,:value=>session[:user_id]%>
+    <%= f.hidden_field :state ,:value=> 'Y'%>
+
+
+
+
+  <div class="box-footer">
+      <button type="submit" class="btn btn-primary">確定</button>
+      <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
+  </div>
+
+<% end %>

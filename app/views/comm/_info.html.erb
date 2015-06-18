@@ -24,7 +24,7 @@
 
 
               <p class="text-green">
-                建立人員 ：<%= (!info.create_user_id.nil?) ? @users_a[info.modify_user_id.to_i]  : '' %>
+                建立人員 ：<%= (!info.create_user_id.nil?) ? @users_a[info.create_user_id.to_i]  : '' %>
                 <br>
                 建立時間：<%=info.created_at %><br>
               </p>

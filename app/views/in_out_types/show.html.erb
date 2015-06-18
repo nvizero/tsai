@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @in_out_type.title %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @in_out_type.type %>
+</p>
+
+<p>
+  <strong>Create user:</strong>
+  <%= @in_out_type.create_user_id %>
+</p>
+
+<p>
+  <strong>Modify user:</strong>
+  <%= @in_out_type.modify_user_id %>
+</p>
+
+<p>
+  <strong>Stop user:</strong>
+  <%= @in_out_type.stop_user_id %>
+</p>
+
+<p>
+  <strong>Stoped at:</strong>
+  <%= @in_out_type.stoped_at %>
+</p>
+
+<%= link_to 'Edit', edit_in_out_type_path(@in_out_type) %> |
+<%= link_to 'Back', in_out_types_path %>

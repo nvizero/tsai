@@ -1,11 +1,16 @@
 <%= form_for(@product_in_out) do |f| %>
+
   <% if @product_in_out.errors.any? %>
     <div id="error_explanation" style="display:none;">
       <% @product_in_out.errors.full_messages.each do |msg| %>
-          <%= msg %>
+          <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
       <% end %>
     </div>
   <% end %>
+
+
+  <%= render 'comm/ckbox' , :mss => @mss%>
+
 
   <div class="form-group">
     <%= f.label :product_id , '產品名稱' %><br>
@@ -25,19 +30,19 @@
     %>
     <%= f.label :code , '單號' %><br>
 
-    <%=string%>
+    <%= string%>
     <%= f.hidden_field :code , :value =>string , :class=>'form-control'  %>
   </div>
 
   <div class="form-group">
-    <%= f.label :num , '數量' %><br>
+    <font color="red" ><%= f.label :num , '數量' %></font><br>
     <%= f.number_field :num , :class=>'form-control' %>
   </div>
 
   <div class="field">
-    <%= f.label :in_or_out , '入庫/出貨' %><br>
-    <%= f.select(:in_or_out, @in_out_types[0]['value'][0].collect { |p| [p[1],p[0] ] }, { :selected =>@i_or_o  }    ) %>
-
+    <%= f.label :in_or_out , '入庫/出貨分類' %><br>
+    <%= f.select(:in_or_out, @in_out_types[0]['value'][0].collect { |pp| [ pp[1] , pp[0] ] }, { :selected =>@i_or_o  }  ) %>
+    <%= f.select(:in_out_type_id, @in_out_cates.collect { |io| [ io.title , io.id ] }, { :selected =>@i_or_o  }  ) %>
   </div>
 
 
@@ -52,3 +57,20 @@
   </div>
 
 <% end %>
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+    var errors_msg =$('#error_explanation').html();
+
+    if( errors_msg.length > 3 ){
+      // alert( errors_msg );
+      $('#ckbox-modal').modal('show');
+    }
+
+
+  })
+</script>
+
+</div>
+</section>

@@ -65,23 +65,28 @@
               </li>
           <% end %>
 
-          <li class="active">
-
-              <a href="/in_list">
+          <li>
+              <a href="/store_list">
                   <span>商品庫存查詢</span>
               </a>
           </li>
 
 
           <li>
-              <a href="/">
+              <a href="/msgs">
                   <span>訂單查詢</span>
               </a>
           </li>
 
           <li class="/">
+              <a href="/in_list">
+                  <span>入庫查詢</span>
+              </a>
+          </li>
+
+          <li class="/">
               <a href="/out_list">
-                  <span>出貨查詢</span>
+                  <span>出庫/出貨查詢</span>
               </a>
           </li>
 
@@ -89,13 +94,13 @@
 
 
             <li class="active">
-                <a href="/">
+                <a href="/msgs">
                     <span>銷售額查詢</span>
                 </a>
             </li>
 
             <li class="active">
-                <a href="/">
+                <a href="/msgs">
                     <span>對帳單查詢</span>
                 </a>
             </li>
@@ -149,6 +154,7 @@
                     <i class="fa fa-edit"></i> <span>Forms</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
+
                 <ul class="treeview-menu">
                     <li><a href="pages/forms/general.html"><i class="fa fa-angle-double-right"></i> General Elements</a></li>
                     <li><a href="pages/forms/advanced.html"><i class="fa fa-angle-double-right"></i> Advanced Elements</a></li>
@@ -156,12 +162,13 @@
                 </ul>
             </li>
 
-
+            <% if !session[:user_id].nil? %>
             <li class="treeview" >
                 <a href="#">
                     <i class="fa fa-table"></i> <span>基礎資料</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
+
                 <ul class="treeview-menu">
 
                     <% if judgment_access 'trades/index' %>
@@ -196,10 +203,22 @@
                         <li><a href="/product_verify_states"><i class="fa fa-angle-double-right"></i>三證狀態</a></li>
                     <% end %>
 
+                    <% if judgment_access 'in_out_types/index' %>
+                        <li><a href="/in_out_types"><i class="fa fa-angle-double-right"></i>出入庫類別</a></li>
+                    <% end %>
+
 
                 </ul>
-            </li>
 
+            </li>
+            <% else %>
+            <li class="active">
+                <a href="/msgs">
+                  <i class="fa fa-table"></i> <span>基礎資料</span>
+
+                </a>
+            </li>
+            <% end %>
 
 
             <li id="hiden">

@@ -141,6 +141,11 @@ class ProductInOutsController < ApplicationController
 
 
       else
+        
+        @i_or_o = params[:type]
+        @product_id = params[:product_id]
+        @product_data = Product.live
+        @product_in_out = ProductInOut.new
         render action: 'new'
 
       end
@@ -219,11 +224,12 @@ class ProductInOutsController < ApplicationController
     def product_in_out_params
       params.require(:product_in_out).permit( :product_id, :code, :num, :in_or_out,
                                               :create_user_id, :modify_user_id, :stop_user_id,
-                                              :stoped_at , :state)
+                                              :stoped_at , :state , :in_out_type_id)
     end
 
     def set_in_out_type
-      @in_out_types = [ 'value'=>['in'=>'入庫','out'=>'出貨'] ]
+      @in_out_cates = InOutType.live
+      @in_out_types = [ 'value'=>['in'=>'加','out'=>'減'] ]
 
     end
 end

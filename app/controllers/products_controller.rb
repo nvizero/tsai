@@ -16,13 +16,6 @@ class ProductsController < ApplicationController
   def index
 
 
-    # if session[:user["access"]]
-    #   render :text => session[:user["access"]]
-    # end
-
-
-
-
     if !params['state'].nil?
         @flag    = params['state']
         if session[:user["access"]] =='all'
@@ -62,6 +55,47 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+  end
+
+  def store_list
+
+    @title[0]['main1']='商品庫存'
+
+    if !params['state'].nil?
+      
+        @flag    = params['state']
+        if session[:user["access"]] =='all'
+
+
+            if @flag=='Y'
+                @products = Product.live.page params[:page]
+            else
+                @products = Product.stoped.page params[:page]
+            end
+
+        else
+
+            if @flag=='Y'
+                @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+            else
+                @products = Product.stoped.where(:create_user_id =>session[:user_id] ).page params[:page]
+            end
+
+        end
+
+    else
+
+        @flag = 'Y'
+        if session[:user["access"]] =='all'
+          @products = Product.live.page params[:page]
+        else
+          @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+        end
+
+    end
+
+    @users_a = self.user_to_ar
+
   end
 
   # GET /products/new

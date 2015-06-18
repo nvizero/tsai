@@ -40,8 +40,8 @@
               <table id="example2" class="table table-bordered table-striped">
   <thead>
     <tr>
-      <th>產品</th>
       <th>單號</th>
+      <th>產品</th>
       <th>數量</th>
       <th>入庫</th>
       <th></th>
@@ -52,8 +52,9 @@
     <% @product_in_outs.each do |product_in_out| %>
     <%= render 'comm/info' , :info => product_in_out , :users => @users_a , :title => "#{product_in_out.code} 訊息"  %>
       <tr>
-        <td><%= product_in_out.product.title %></td>
         <td><%= product_in_out.code %></td>
+        <td><%= product_in_out.product.title %></td>
+
         <td><%= product_in_out.num %></td>
         <td>入庫</td>
 
@@ -66,7 +67,7 @@
 
           <% else %>
 
-              <button class="btn btn-danger disabled">己停用</button>
+              
 
           <% end %>
 

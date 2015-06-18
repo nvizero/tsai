@@ -8,4 +8,5 @@ class ProductInOut < ActiveRecord::Base
   scope :live  , lambda { where("product_in_outs.state = 'Y' ") }
   scope :stoped  , lambda { where("product_in_outs.state = 'N' ") }
 
+  validates :num,        :presence => { :message => "產品數量－不能空白" }
 end
