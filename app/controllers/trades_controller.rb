@@ -120,9 +120,12 @@ class TradesController < ApplicationController
   end
 
   def del
-    @trade = Trade.find(params[:id])
-    @trade.state = 'N'
+    @trade.stoped_at = DateTime.now
+    @trade.stop_user_id = session[:user_id]
+    @trade.state='N'
     @trade.save
+
+   
     redirect_to '/trades'
 
   end

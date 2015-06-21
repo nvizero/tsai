@@ -1,17 +1,15 @@
 
 <%= form_for(@msg) do |f| %>
   <% if @msg.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@msg.errors.count, "error") %> prohibited this msg from being saved:</h2>
+    <div id="error_explanation" style="display:none;">
 
-      <ul>
       <% @msg.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
       <% end %>
-      </ul>
+
     </div>
   <% end %>
-
+<%= render 'comm/ckbox' , :mss => @mss%>
 
   <div class="form-group">
       <font color="red" ><label>名稱</label></font>
@@ -55,5 +53,24 @@ $(document).ready(function() {
             CKEDITOR.replace(data[i].id);
         });
     }
+
+
+
+
+
+
+        var errors_msg =$('#error_explanation').html();
+
+        if( errors_msg.length > 3 ){
+          $('#ckbox-modal').modal('show');
+        }
+
+
+
+
+
+
+
+
 });
 </script>

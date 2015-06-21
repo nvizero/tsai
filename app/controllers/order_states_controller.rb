@@ -14,7 +14,22 @@ class OrderStatesController < ApplicationController
   # GET /order_states
   # GET /order_states.json
   def index
-    @order_states = OrderState.all
+
+    # OrderState.all.each do |ost|
+    #   ost.state = 'Y'
+    #   ost.save
+    # end
+
+    @users_a = self.user_to_ar
+    @flag = params[:state]
+    if @flag=="Y"
+      @order_states = OrderState.live.page params[:page]
+    elsif @flag=="N"
+      @order_states = OrderState.stoped.page params[:page]
+    else
+      @flag="Y"
+      @order_states = OrderState.live.page params[:page]
+    end
   end
 
   # GET /order_states/1
@@ -38,8 +53,12 @@ class OrderStatesController < ApplicationController
 
     respond_to do |format|
       if @order_state.save
+
+        @order_state.create_user_id = session[:user_id]
+        @order_state.save
+
         format.html {
-          redirect_to :controller =>'order_states' ,:action=>'index' 
+          redirect_to :controller =>'order_states' ,:action=>'index'
           flash[:notice] ='訂單狀態新增成功!'
         }
         format.json { render action: 'show', status: :created, location: @order_state }
@@ -55,7 +74,15 @@ class OrderStatesController < ApplicationController
   def update
     respond_to do |format|
       if @order_state.update(order_state_params)
-        format.html { redirect_to @order_state, notice: 'Order state was successfully updated.' }
+
+        @order_state.modify_user_id = session[:user_id]
+        @order_state.save
+
+        format.html {
+          redirect_to :controller =>"order_states" , :action =>'index'
+          flash[:notice] =  '訂單狀態修改成功'
+
+        }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -67,7 +94,12 @@ class OrderStatesController < ApplicationController
   # DELETE /order_states/1
   # DELETE /order_states/1.json
   def destroy
-    @order_state.destroy
+
+    @order_state.stoped_at = DateTime.now
+    @order_state.stop_user_id = session[:user_id]
+    @order_state.state='N'
+    @order_state.save
+
     respond_to do |format|
       format.html { redirect_to order_states_url }
       format.json { head :no_content }

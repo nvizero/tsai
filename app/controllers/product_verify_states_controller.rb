@@ -89,8 +89,11 @@ class ProductVerifyStatesController < ApplicationController
   # DELETE /product_verify_states/1.json
   def destroy
     # @product_verify_state.destroy
-    @product_verify_state.state = 'N'
+    @product_verify_state.stoped_at = DateTime.now
+    @product_verify_state.stop_user_id = session[:user_id]
+    @product_verify_state.state='N'
     @product_verify_state.save
+   
 
     respond_to do |format|
       format.html { redirect_to product_verify_states_url }

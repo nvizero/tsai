@@ -8,4 +8,5 @@ class Access < ActiveRecord::Base
   before_create do
     self.state = "Y"
   end
+  
 end

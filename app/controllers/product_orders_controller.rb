@@ -16,7 +16,29 @@ class ProductOrdersController < ApplicationController
   # GET /product_orders
   # GET /product_orders.json
   def index
-    @product_orders = ProductOrder.all
+
+    @uc = Member.all.count
+    @os = OrderState.all.count
+    ProductOrder.all.each do |po|
+      po.state = 'Y'
+      po.member_id = rand(1...@uc)
+      po.order_state_id = [1 , rand(4...8)].sample
+      po.save
+    end
+
+    @users_a = self.user_to_ar
+    @flag = params[:state]
+
+    if @flag=='Y'
+      @product_orders = ProductOrder.live.page params[:page]
+    elsif @flag=='N'
+      @product_orders = ProductOrder.stoped.page params[:page]
+    else
+      @flag='N'
+      @product_orders = ProductOrder.live.page params[:page]
+    end
+
+
   end
 
   # GET /product_orders/1
@@ -37,10 +59,13 @@ class ProductOrdersController < ApplicationController
   # POST /product_orders.json
   def create
     @product_order = ProductOrder.new(product_order_params)
-
+    @product_order.create_user_id = session[:user_id]
     respond_to do |format|
       if @product_order.save
-        format.html { redirect_to @product_order, notice: 'Product order was successfully created.' }
+        format.html {
+          flash[:notice]  = '新增訂單成功'
+          redirect_to :controller => 'product_orders' , :action =>'index'
+        }
         format.json { render action: 'show', status: :created, location: @product_order }
       else
         format.html { render action: 'new' }
@@ -53,8 +78,12 @@ class ProductOrdersController < ApplicationController
   # PATCH/PUT /product_orders/1.json
   def update
     respond_to do |format|
+      @product_order.modify_user_id = session[:user_id]
       if @product_order.update(product_order_params)
-        format.html { redirect_to @product_order, notice: 'Product order was successfully updated.' }
+        format.html {
+          flash[:notice]  = '修改訂單成功'
+          redirect_to :controller => 'product_orders' , :action =>'index'
+        }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -66,7 +95,14 @@ class ProductOrdersController < ApplicationController
   # DELETE /product_orders/1
   # DELETE /product_orders/1.json
   def destroy
-    @product_order.destroy
+
+
+
+    @product_order.stoped_at = DateTime.now
+    @product_order.stop_user_id = session[:user_id]
+    @product_order.state='N'
+    @product_order.save
+
     respond_to do |format|
       format.html { redirect_to product_orders_url }
       format.json { head :no_content }

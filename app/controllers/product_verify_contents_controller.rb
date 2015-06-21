@@ -90,7 +90,7 @@ class ProductVerifyContentsController < ApplicationController
         # end
 
         if uploaded_io
-          
+
             img_name = Time.now.strftime("%Y%d%m%H%M%S").to_s
             File.open(Rails.root.join('public', 'uploads', img_name ), 'wb') do |file|
               file.write(uploaded_io.read)
@@ -123,7 +123,12 @@ class ProductVerifyContentsController < ApplicationController
   # DELETE /product_verify_contents/1
   # DELETE /product_verify_contents/1.json
   def destroy
-    @product_verify_content.destroy
+    # @product_verify_content.destroy
+
+    @product_verify_content.stoped_at = DateTime.now
+    @product_verify_content.stop_user_id = session[:user_id]
+    @product_verify_content.state='N'
+    @product_verify_content.save
     respond_to do |format|
       format.html { redirect_to product_verify_contents_url }
       format.json { head :no_content }

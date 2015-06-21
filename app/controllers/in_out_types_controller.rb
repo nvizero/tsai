@@ -58,8 +58,12 @@ class InOutTypesController < ApplicationController
 
 
       if @in_out_type.save
+          @in_out_type.create_user_id = session[:user_id]
           @in_out_type.save
+
+          flash[:notice] = '出入庫分類新增成功'
           redirect_to :controller =>'in_out_types' ,:action=>'index'
+
       else
           render action: 'new'
       end
@@ -72,6 +76,8 @@ class InOutTypesController < ApplicationController
 
     respond_to do |format|
       if @in_out_type.update(in_out_type_params)
+         @in_out_type.modify_user_id = session[:user_id]
+         @in_out_type.save
         format.html {
             flash[:notice] = '出入庫類別.更新成功!'
             redirect_to :controller =>'in_out_types' ,:action=>'index'
@@ -88,8 +94,12 @@ class InOutTypesController < ApplicationController
   # DELETE /in_out_types/1.json
   def destroy
     # @in_out_type.destroy
-    @in_out_type.state = 'N'
+    @in_out_type.stop_user_id = session[:user_id]
+    @in_out_type.stoped_at = DateTime.now
+    @in_out_type.state = "N"
     @in_out_type.save
+
+
 
     respond_to do |format|
       format.html {

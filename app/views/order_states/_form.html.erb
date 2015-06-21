@@ -1,25 +1,47 @@
 <%= form_for(@order_state) do |f| %>
   <% if @order_state.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order_state.errors.count, "error") %> prohibited this order_state from being saved:</h2>
+    <div id="error_explanation"  style="display:none;">
 
-      <ul>
       <% @order_state.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
       <% end %>
-      </ul>
+
     </div>
   <% end %>
+<%= render 'comm/ckbox' , :mss => @mss%>
 
-  <div class="field">
-    <%= f.label :title %><br>
+  <div class="form-group">
+    <font color="red" ><label>狀態名稱</label></font>
+
     <%= f.text_field :title %>
   </div>
-  <div class="field">
-    <%= f.label :state %><br>
-    <%= f.text_field :state %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="box-footer">
+      <button type="submit" class="btn btn-primary">確定</button>
+      <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
   </div>
 <% end %>
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+
+
+
+
+
+        var errors_msg =$('#error_explanation').html();
+
+        if( errors_msg.length > 3 ){
+          $('#ckbox-modal').modal('show');
+        }
+
+
+
+
+
+
+
+
+});
+</script>

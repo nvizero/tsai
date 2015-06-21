@@ -14,7 +14,23 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    @members = Member.all
+    @users_a = self.user_to_ar
+    @flag=params[:state]
+
+    # Member.all.each do |mm|
+    #   mm.state='Y'
+    #   mm.save
+    # end
+
+
+    if @flag=='Y'
+      @members = Member.live.page params[:page]
+    elsif @flag=='N'
+      @members = Member.stoped.page params[:page]
+    else
+      @flag='Y'
+      @members = Member.live.page params[:page]
+    end
   end
 
   # GET /members/1
@@ -38,7 +54,13 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @member.save
-        format.html { redirect_to @member, notice: 'Member was successfully created.' }
+         @member.create_user_id = session[:user_id]
+         @member.save
+        format.html {
+          redirect_to :controller =>'members' , :action=>'index'
+          flash[:notice]  ='新增顧客成功！！'
+
+          }
         format.json { render action: 'show', status: :created, location: @member }
       else
         format.html { render action: 'new' }
@@ -52,7 +74,14 @@ class MembersController < ApplicationController
   def update
     respond_to do |format|
       if @member.update(member_params)
-        format.html { redirect_to @member, notice: 'Member was successfully updated.' }
+        format.html {
+          @member.modify_user_id = session[:user_id]
+          @member.save
+
+          redirect_to :controller =>'members' , :action=>'index'
+          flash[:notice]  ='修改顧客資訊成功！！'
+
+          }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -64,7 +93,12 @@ class MembersController < ApplicationController
   # DELETE /members/1
   # DELETE /members/1.json
   def destroy
-    @member.destroy
+    @member.stop_user_id = session[:user_id]
+    @member.stoped_at = DateTime.now
+    @member.state = "N"
+    @member.save
+
+
     respond_to do |format|
       format.html { redirect_to members_url }
       format.json { head :no_content }

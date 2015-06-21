@@ -1,33 +1,48 @@
 <%= form_for(@product_order) do |f| %>
   <% if @product_order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@product_order.errors.count, "error") %> prohibited this product_order from being saved:</h2>
-
-      <ul>
+    <div id="error_explanation" style="display:none;">
       <% @product_order.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+            <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
       <% end %>
-      </ul>
+
     </div>
   <% end %>
+<%= render 'comm/ckbox' , :mss => @mss%>
+<div class="form-group">
+  <font color="red" >
+    <%= f.label :code , '訂單編號' %></font>
 
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
+    <h4><%= hide_code = get_random_date%></h4>
+    <%=f.hidden_field :code ,:value => hide_code%>
   </div>
-  <div class="field">
-    <%= f.label :order_state_id %><br>
-    <%= f.text_field :order_state_id %>
+
+  <div class="form-group">
+    <font color="red" >
+    <%= f.label :order_state_id ,'訂單狀態' %></font>
+    <%= f.text_field :order_state_id ,:class=>"form-control"%>
   </div>
-  <div class="field">
-    <%= f.label :member_id %><br>
-    <%= f.number_field :member_id %>
+  <div class="form-group">
+    <font color="red" >
+    <%= f.label :member_id, '訂購者' %></font>
+    <%= f.number_field :member_id ,:class=>"form-control"%>
   </div>
-  <div class="field">
-    <%= f.label :state %><br>
-    <%= f.text_field :state %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="box-footer">
+      <button type="submit" class="btn btn-primary">確定</button>
+      <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
   </div>
 <% end %>
+
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    var errors_msg =$('#error_explanation').html();
+
+    if( errors_msg.length > 3 ){
+      $('#ckbox-modal').modal('show');
+    }
+
+});
+</script>
