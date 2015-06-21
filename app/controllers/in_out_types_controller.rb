@@ -114,6 +114,7 @@ class InOutTypesController < ApplicationController
     end
 
     def base_data
-      @in_out_types = [ 'value'=>['aadd'=>'加','ddesc'=>'減'] ]
+      # reduce
+      @in_out_types = [ 'value'=>['add'=>'加','reduce'=>'減'] ]
     end
 end

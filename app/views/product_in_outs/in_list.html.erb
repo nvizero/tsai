@@ -43,7 +43,7 @@
       <th>單號</th>
       <th>產品</th>
       <th>數量</th>
-      <th>入庫</th>
+      <th>分類</th>
       <th></th>
     </tr>
   </thead>
@@ -56,7 +56,9 @@
         <td><%= product_in_out.product.title %></td>
 
         <td><%= product_in_out.num %></td>
-        <td>入庫</td>
+        <td>
+          <%= product_in_out.in_out_type.title %>
+        </td>
 
         <td>
 
@@ -67,7 +69,7 @@
 
           <% else %>
 
-              
+
 
           <% end %>
 

@@ -67,11 +67,10 @@
 
         <td>
           <% if product.product_in_outs %>
-
-
                 <%
-                in_out_cal product.product_in_outs
+                in_out_cal(product.product_in_outs)
                 %>
+                
           <% end %>
 
           <a class="btn btn-success btn-xs">入庫</a>

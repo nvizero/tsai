@@ -1,0 +1,31 @@
+<h1>Listing order_by_products</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Product order</th>
+      <th>Num</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @order_by_products.each do |order_by_product| %>
+      <tr>
+        <td><%= order_by_product.product_id %></td>
+        <td><%= order_by_product.product_order_id %></td>
+        <td><%= order_by_product.num %></td>
+        <td><%= link_to 'Show', order_by_product %></td>
+        <td><%= link_to 'Edit', edit_order_by_product_path(order_by_product) %></td>
+        <td><%= link_to 'Destroy', order_by_product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Order by product', new_order_by_product_path %>

@@ -1,5 +1,13 @@
 Tsai::Application.routes.draw do
 
+  resources :order_by_products
+
+  resources :product_orders
+
+  resources :members
+
+  resources :order_states
+
   resources :in_out_types
 
   resources :product_verify_contents
@@ -51,6 +59,9 @@ Tsai::Application.routes.draw do
   post 'do_forget_pas' , :to => "login#do_forget_pas"
   post 'do_login' , :to => "login#do_login"
   post 'do_advance_pas' , :to => "login#do_advance_pas"
+
+  post 'do_in_or_out'  , :to=> "pact#do_in_or_out"
+
 
 
   post 'change_product_verify_state' , :to => "pact#change_product_verify_state"

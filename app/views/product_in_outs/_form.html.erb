@@ -8,7 +8,6 @@
     </div>
   <% end %>
 
-
   <%= render 'comm/ckbox' , :mss => @mss%>
 
 
@@ -20,17 +19,14 @@
       end
     %>
 
-    <%= f.select(:product_id, @product_data.collect {|p| ["#{p.code}-#{p.title}", p.id]} , { :selected =>(@product_id.to_i>0)?(@product_id):(0)   } , :class=>'form-control' ) %>
+    <%= f.select(:product_id, @product_data.collect {|p| ["#{p.code}-#{p.title}", p.id]} , { :selected =>@product_in_out.product_id } , :class=>'form-control' ) %>
   </div>
 
   <div class="form-group">
-    <%
-    o = [('a'..'z'), ('1'..'9'),('A'..'Z') ].map { |i| i.to_a }.flatten
-    string = (0...9).map { o[rand(o.length)] }.join
-    %>
-    <%= f.label :code , '單號' %><br>
 
-    <%= string%>
+    <%= f.label :code , '單號' %><br>
+    <%=string=get_random_date%>
+
     <%= f.hidden_field :code , :value =>string , :class=>'form-control'  %>
   </div>
 
@@ -41,8 +37,11 @@
 
   <div class="field">
     <%= f.label :in_or_out , '入庫/出貨分類' %><br>
-    <%= f.select(:in_or_out, @in_out_types[0]['value'][0].collect { |pp| [ pp[1] , pp[0] ] }, { :selected =>@i_or_o  }  ) %>
-    <%= f.select(:in_out_type_id, @in_out_cates.collect { |io| [ io.title , io.id ] }, { :selected =>@i_or_o  }  ) %>
+    <% f.select(:in_or_out, @in_out_types[0]['value'][0].collect { |pp| [ pp[1] , pp[0] ] }, { :selected =>@i_or_o  }  ) %>
+
+    <%=f.hidden_field :in_or_out , :value=>'' , :id=>'in_or_out' %>
+
+    <%= f.select(:in_out_type_id, @in_out_cates.collect { |io| [ io.title , io.id ] }, { :include_blank =>'-------',  :selected =>@product_in_out.in_out_type_id  }   , :id=>'in_out_type_id') %>
   </div>
 
 
@@ -61,12 +60,24 @@
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
   $('document').ready(function(){
+
+    $('#in_out_type_id').change(function(){
+
+        $.post('/do_in_or_out' , { 'id':$(this).val()},
+          function(data){
+            $("#in_or_out").val(data);
+            //alert(data);
+        });
+
+    });
+
+
     var errors_msg =$('#error_explanation').html();
 
     if( errors_msg.length > 3 ){
-      // alert( errors_msg );
       $('#ckbox-modal').modal('show');
     }
+
 
 
   })

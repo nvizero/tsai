@@ -141,7 +141,7 @@ class ProductInOutsController < ApplicationController
 
 
       else
-        
+
         @i_or_o = params[:type]
         @product_id = params[:product_id]
         @product_data = Product.live
@@ -159,13 +159,25 @@ class ProductInOutsController < ApplicationController
 
       if @product_in_out.update(product_in_out_params)
 
-        # format.html {
-          redirect_to @product_in_out
-          # , notice: 'Product in out was successfully updated.' }
-        # format.json { head :no_content }
+        flash[:notice] = "編輯成功"
+
+        if @product_in_out.in_or_out == 'in'
+            redirect_to :controller=>'product_in_outs' , :action=>'in_list'
+        elsif @product_in_out.in_or_out == 'out'
+            redirect_to :controller=>'product_in_outs' , :action=>'out_list'
+        elsif
+            redirect_to :controller=>'product_in_outs' , :action=>'in_list'
+        end
+
+        # redirect_to @product_in_out
+
 
       else
-        # format.html {
+          @i_or_o = params[:type]
+          @product_id = params[:product_id]
+          @product_data = Product.live
+          @product_in_out = ProductInOut.new
+
           render action: 'edit'
         # }
         # format.json { render json: @product_in_out.errors, status: :unprocessable_entity }

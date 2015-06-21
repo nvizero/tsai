@@ -54,7 +54,7 @@ class PactController < ApplicationController
     prv.save
 
     pvs=ProductVerifyState.find(val.to_i)
-    
+
     render :text => pvs.title
     # render :text => "#{params} + #{id} - #{prv}"
     # prv = ProductVerify.find(id)
@@ -62,6 +62,14 @@ class PactController < ApplicationController
     # prv.save
 
   end
+
+  def do_in_or_out
+      iot = InOutType.find(params[:id])
+      render :text => "#{iot.cate}"
+  end
+
+
+
 
 
 end

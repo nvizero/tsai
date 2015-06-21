@@ -19,7 +19,7 @@
                             <li><a href="/out_list?state=N">停用</a></li>
                         </ul>
                     </div>
-                    
+
                     <%= link_to '出貨', {:controller=>'product_in_outs', :action=>'new' ,:type=>'out'},:class=>'btn btn-success',:id=>'head_btn' %>
 
 
@@ -35,7 +35,7 @@
       <th>產品</th>
 
       <th>數量</th>
-      <th>出貨</th>
+      <th>分類</th>
       <th></th>
     </tr>
   </thead>
@@ -48,7 +48,9 @@
         <td><%= product_in_out.product.title %></td>
 
         <td><%= product_in_out.num %></td>
-        <td>出貨</td>
+        <td>
+          <%= product_in_out.in_out_type.title %>
+        </td>
 
         <td>
 

@@ -45,6 +45,12 @@
               </li>
           <% end %>
 
+          <li >
+              <a href="/members">
+                  <span>顧客列表</span>
+              </a>
+          </li>
+
 
 
           <% if judgment_access 'products/index' %>
@@ -73,7 +79,7 @@
 
 
           <li>
-              <a href="/msgs">
+              <a href="/product_orders">
                   <span>訂單查詢</span>
               </a>
           </li>
@@ -90,20 +96,17 @@
               </a>
           </li>
 
+          <li class="active">
+              <a href="/msgs">
+                  <span>銷售額查詢</span>
+              </a>
+          </li>
 
-
-
-            <li class="active">
-                <a href="/msgs">
-                    <span>銷售額查詢</span>
-                </a>
-            </li>
-
-            <li class="active">
-                <a href="/msgs">
-                    <span>對帳單查詢</span>
-                </a>
-            </li>
+          <li class="active">
+              <a href="/msgs">
+                  <span>對帳單查詢</span>
+              </a>
+          </li>
 
             <% if judgment_access 'msgs/index' %>
                 <li class="active">
@@ -206,6 +209,12 @@
                     <% if judgment_access 'in_out_types/index' %>
                         <li><a href="/in_out_types"><i class="fa fa-angle-double-right"></i>出入庫類別</a></li>
                     <% end %>
+
+                    <% if judgment_access 'order_states/index' %>
+                        <li><a href="/order_states"><i class="fa fa-angle-double-right"></i>訂單狀態</a></li>
+                    <% end %>
+
+
 
 
                 </ul>

@@ -116,12 +116,12 @@ module ApplicationHelper
 
     obj.each do |pio|
         #入庫
-        if pio.in_or_out == 'in' && pio.state == 'Y'
+        if pio.in_or_out == 'add' && pio.state == 'Y'
             @in_num += pio.num.to_i
         end
 
         #出貨
-        if pio.in_or_out == 'out' && pio.state == 'Y'
+        if pio.in_or_out == 'reduce' && pio.state == 'Y'
             @out_num += pio.num.to_i
         end
 
@@ -131,10 +131,15 @@ module ApplicationHelper
 
 
   def get_random_str num
-
       o = [('a'..'z'), ('1'..'9'),('A'..'Z') ].map { |i| i.to_a }.flatten
-      string = (0...num).map { o[rand(o.length)] }.join
+      cg = (0...num).map { o[rand(o.length)] }.join
+      return cg
+  end
 
+  def get_random_date
+      cstr=self.get_random_str(3)
+      cstring = Time.now.strftime("%Y%d%m")
+      return "#{cstring}#{cstr}"
   end
 
 

@@ -1,0 +1,92 @@
+class OrderStatesController < ApplicationController
+  before_action :set_order_state, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_title
+
+  layout "admin"
+  #取得一些基本資訊
+  before_action :get_base_data
+  #要登入
+  before_action :confirm_logged_in
+
+
+
+  # GET /order_states
+  # GET /order_states.json
+  def index
+    @order_states = OrderState.all
+  end
+
+  # GET /order_states/1
+  # GET /order_states/1.json
+  def show
+  end
+
+  # GET /order_states/new
+  def new
+    @order_state = OrderState.new
+  end
+
+  # GET /order_states/1/edit
+  def edit
+  end
+
+  # POST /order_states
+  # POST /order_states.json
+  def create
+    @order_state = OrderState.new(order_state_params)
+
+    respond_to do |format|
+      if @order_state.save
+        format.html {
+          redirect_to :controller =>'order_states' ,:action=>'index' 
+          flash[:notice] ='訂單狀態新增成功!'
+        }
+        format.json { render action: 'show', status: :created, location: @order_state }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @order_state.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /order_states/1
+  # PATCH/PUT /order_states/1.json
+  def update
+    respond_to do |format|
+      if @order_state.update(order_state_params)
+        format.html { redirect_to @order_state, notice: 'Order state was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @order_state.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /order_states/1
+  # DELETE /order_states/1.json
+  def destroy
+    @order_state.destroy
+    respond_to do |format|
+      format.html { redirect_to order_states_url }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+
+    def set_title
+      @title = ['main1'=>'訂單狀態', 'main2'=>'order_states','sub1'=>'訂單狀態' , 'sub2'=>'order_states']
+    end
+
+    def set_order_state
+      @order_state = OrderState.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def order_state_params
+      params.require(:order_state).permit(:title, :state)
+    end
+end
