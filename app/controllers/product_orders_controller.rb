@@ -2,6 +2,7 @@ class ProductOrdersController < ApplicationController
   before_action :set_product_order, only: [:show, :edit, :update, :destroy]
 
   before_action :set_title
+  before_action :set_product_date
 
   layout "admin"
   #取得一些基本資訊
@@ -13,18 +14,33 @@ class ProductOrdersController < ApplicationController
     @title = ['main1'=>'訂單', 'main2'=>'product_orders','sub1'=>'訂單' , 'sub2'=>'product_orders']
   end
 
+
+  def set_product_date
+    @members = Member.live
+    @products = Product.live
+
+    # @code_serial = Product.where(:created_at LIKE '%#{Time.now.strftime("%Y-%m-%d")}%'" )
+    # Comment.where(:created_at => @selected_date.beginning_of_day..@selected_date.end_of_day)
+    # @code_serial = Product.where(:created_at => DateTime.new(2015,6,21)..DateTime.new(2015,6,23) )
+    @code_serial = ProductOrder.where(
+    'created_at >= :start_days_ago or created_at >= :end_days_ago',
+          :start_days_ago  => Time.now.strftime("%Y-%m-%d 00:00:01"),
+          :end_days_ago => Time.now.strftime("%Y-%m-%d 23:23:59")
+      )
+    # :three_days_ago => Time.now - 1.days
+  end
   # GET /product_orders
   # GET /product_orders.json
   def index
 
     @uc = Member.all.count
     @os = OrderState.all.count
-    ProductOrder.all.each do |po|
-      po.state = 'Y'
-      po.member_id = rand(1...@uc)
-      po.order_state_id = [1 , rand(4...8)].sample
-      po.save
-    end
+    # ProductOrder.all.each do |po|
+    #   po.state = 'Y'
+    #   po.member_id = rand(1...@uc)
+    #   po.order_state_id = [1 , rand(4...8)].sample
+    #   po.save
+    # end
 
     @users_a = self.user_to_ar
     @flag = params[:state]
@@ -58,20 +74,21 @@ class ProductOrdersController < ApplicationController
   # POST /product_orders
   # POST /product_orders.json
   def create
-    @product_order = ProductOrder.new(product_order_params)
-    @product_order.create_user_id = session[:user_id]
-    respond_to do |format|
-      if @product_order.save
-        format.html {
-          flash[:notice]  = '新增訂單成功'
-          redirect_to :controller => 'product_orders' , :action =>'index'
-        }
-        format.json { render action: 'show', status: :created, location: @product_order }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @product_order.errors, status: :unprocessable_entity }
-      end
-    end
+    render :text =>params
+    # @product_order = ProductOrder.new(product_order_params)
+    # @product_order.create_user_id = session[:user_id]
+    # respond_to do |format|
+    #   if @product_order.save
+    #     format.html {
+    #       flash[:notice]  = '新增訂單成功'
+    #       redirect_to :controller => 'product_orders' , :action =>'index'
+    #     }
+    #     format.json { render action: 'show', status: :created, location: @product_order }
+    #   else
+    #     format.html { render action: 'new' }
+    #     format.json { render json: @product_order.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /product_orders/1

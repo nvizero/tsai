@@ -60,8 +60,11 @@ Tsai::Application.routes.draw do
   post 'do_login' , :to => "login#do_login"
   post 'do_advance_pas' , :to => "login#do_advance_pas"
 
-  post 'do_in_or_out'  , :to=> "pact#do_in_or_out"
 
+  post 'post_order_data'  , :to=> "pact#post_order_data"
+
+  post 'do_in_or_out'  , :to=> "pact#do_in_or_out"
+  post 'get_all_products' , :to => "pact#get_all_products"
 
 
   post 'change_product_verify_state' , :to => "pact#change_product_verify_state"

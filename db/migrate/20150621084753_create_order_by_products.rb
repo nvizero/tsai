@@ -1,7 +1,7 @@
 class CreateOrderByProducts < ActiveRecord::Migration
   def up
     create_table :order_by_products do |t|
-      
+
       t.integer :product_id
       t.integer :product_order_id
       t.integer :num

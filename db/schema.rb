@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150621084753) do
+ActiveRecord::Schema.define(version: 20150622152435) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20150621084753) do
 
   create_table "order_by_products", force: true do |t|
     t.integer  "product_id"
-    t.integer  "product_order_id"
+    t.string   "code"
     t.integer  "num"
     t.integer  "create_user_id"
     t.integer  "modify_user_id"

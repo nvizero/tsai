@@ -8,27 +8,57 @@
     </div>
   <% end %>
 <%= render 'comm/ckbox' , :mss => @mss%>
+
+<%
+#先算出長度
+len_s = order_serial_code @code_serial.count.to_s.length
+len_s="#{len_s}#{@code_serial.count.to_i+1}"
+%>
+
+
 <div class="form-group">
   <font color="red" >
     <%= f.label :code , '訂單編號' %></font>
 
-    <h4><%= hide_code = get_random_date%></h4>
-    <%=f.hidden_field :code ,:value => hide_code%>
+    <h4 style="color:blue;"><%= hide_code = "#{get_random_date}#{len_s}"%></h4>
+    <%=f.hidden_field :code ,:value => hide_code , :id=>'code' %>
+
+
+
+
+    <span id="products_list"></span>
+    <a class="btn btn-success" href="#" id="add_products" >新增產品</a>
+
+
+    <table class="table" id="products_select">
+
+      <thead>
+        </tr>
+            <td>產品名稱</td>
+            <td>訂購數量</td>
+        <tr>
+      </thead>
+
+      <tbody id="tbody">
+      </tbody>
+    </table>
+
+
+
+    <%= f.hidden_field :order_state_id ,:value=>'1'%>
+
   </div>
 
-  <div class="form-group">
-    <font color="red" >
-    <%= f.label :order_state_id ,'訂單狀態' %></font>
-    <%= f.text_field :order_state_id ,:class=>"form-control"%>
-  </div>
+
   <div class="form-group">
     <font color="red" >
     <%= f.label :member_id, '訂購者' %></font>
-    <%= f.number_field :member_id ,:class=>"form-control"%>
+    <%= f.select(:member_id , @members.collect{ |mem| [mem.name , mem.id  ] } , { :selected =>@product_order.member_id  },:id=>'member_id'  )%>
+
   </div>
 
   <div class="box-footer">
-      <button type="submit" class="btn btn-primary">確定</button>
+      <button type="button" class="btn btn-primary">確定</button>
       <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
   </div>
 <% end %>
@@ -37,6 +67,69 @@
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+
+
+
+
+    $('.btn-primary').click(function(){
+      //產品＆數量
+      var  p_str = '';
+
+      $('input').each(function(){
+
+          if( $(this).attr('class')=='pids' ){
+
+            p_str += $(this).attr('name') +',' + $(this).val() +'/';
+
+          }
+
+      });
+
+
+
+      var pros = $("form").serialize('product_order') ;
+
+
+      $.post( '/post_order_data',
+            { 'member_id' : $("#member_id").val() ,
+              'code' : $("#code").val() , 
+              'p_str':p_str},
+            function(d){
+              alert(d);
+            });
+
+
+
+    });
+
+
+
+    $.post('/get_all_products',function(data){
+
+        $('#products_list').html(data);
+
+        $("#add_products").click(function(){
+            var product_id = $(".product_data").val() ;
+
+            $(".product_data").find(":selected").remove();
+
+            // /products/1.json
+            $.get('/products/'+product_id+'.json',function(data){
+
+              var product_info = '<tr><td>'+data["title"];
+              product_info += '</td><td>'
+              product_info += '<input name=p_'+data["id"]+' class="pids"> ';
+              product_info += '</td></tr>';
+              $(product_info).appendTo('#tbody');
+              // product_info
+
+            });
+        });
+
+        // $(".products").val();
+
+    });
+
 
     var errors_msg =$('#error_explanation').html();
 

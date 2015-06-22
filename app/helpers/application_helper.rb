@@ -138,8 +138,23 @@ module ApplicationHelper
 
   def get_random_date
       cstr=self.get_random_str(3)
-      cstring = Time.now.strftime("%Y%d%m")
+      cstring = Time.now.strftime("%Y%m%d")
       return "#{cstring}#{cstr}"
+  end
+
+
+  def order_serial_code str_len
+
+    ct = 5-str_len.to_i
+
+    @cstr = ''
+
+    ct.times do |ee|
+      @cstr+='0'
+    end
+    
+    return @cstr
+
   end
 
 

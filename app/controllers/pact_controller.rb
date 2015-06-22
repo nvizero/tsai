@@ -68,7 +68,53 @@ class PactController < ApplicationController
       render :text => "#{iot.cate}"
   end
 
+  def get_all_products
 
+      pros_str='<select class="product_data" >'
+
+      Product.live.each do |pro|
+        pros_str+="<option value=#{pro.id}>#{pro.title}</option>"
+      end
+
+      pros_str+='</select>'
+      render :text => pros_str
+
+  end
+
+
+  def post_order_data
+
+    #p_str
+    #data - product_order
+    member_id = params[:member_id]
+    code = params[:code]
+    p_str = params[:p_str]
+
+    qq = ''
+    p_str.split('/').each do |pr|
+
+      product_num   = pr.split(',')
+      product_id    = product_num[0].split('p_')
+
+
+      # ProductOrder.create( :order_state_id => 1 ,
+      #                       :state => "Y",
+      #                       :create_user_id => session[:user_id].to_i,
+      #                       :member_id =>member_id,
+      #                       :code=>code,
+      #
+      #                       )
+
+      OrderByProduct.create(:product_id => product_id[1],
+                            :num => product_num[1],
+                            :code=>code)
+
+
+    end
+
+    # render :text => " #{cc} \n #{params[:p_str]}\n #{ui}"
+
+  end
 
 
 
