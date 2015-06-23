@@ -77,6 +77,7 @@ ProductVerifyType.create!(:name=>'化裝品-大陸官方',:verify_type_main_id=>
 Role.create!(:title => 'admin' , :text =>'all' , :code=>'all' , :state => 'Y')
 
 Product.create!(:title=>'關節師傅',:user_id=>1 , :state=>'Y' , :verify_type_main_id =>1 , :code=>'qArSlJNay4')
+Product.create!(:title=>'達利咖啡',:user_id=>1 , :state=>'Y' , :verify_type_main_id =>1 , :code=>'qArSl345wer')
 
 ProductVerifyState.create!(:id=>1 ,:title=>'申請中', :state=>'Y')
 ProductVerifyState.create!(:id=>2 ,:title=>'申請成功', :state=>'Y')

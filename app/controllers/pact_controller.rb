@@ -86,24 +86,20 @@ class PactController < ApplicationController
 
     #p_str
     #data - product_order
+
     member_id = params[:member_id]
     code = params[:code]
     p_str = params[:p_str]
 
+    order_flag = true
+
     qq = ''
+
     p_str.split('/').each do |pr|
 
       product_num   = pr.split(',')
       product_id    = product_num[0].split('p_')
 
-
-      # ProductOrder.create( :order_state_id => 1 ,
-      #                       :state => "Y",
-      #                       :create_user_id => session[:user_id].to_i,
-      #                       :member_id =>member_id,
-      #                       :code=>code,
-      #
-      #                       )
 
       OrderByProduct.create(:product_id => product_id[1],
                             :num => product_num[1],
@@ -112,8 +108,34 @@ class PactController < ApplicationController
 
     end
 
-    # render :text => " #{cc} \n #{params[:p_str]}\n #{ui}"
 
+
+    if order_flag
+      ProductOrder.create(  :order_state_id=>1,
+                            :state=>'Y',
+                            :member_id => member_id,
+                            :code=>code)
+    else
+      order_flag = false
+    end
+
+    render :text => order_flag
+
+  end
+
+
+  def get_select_products
+
+      pros_str='<select class="product_data" >'
+
+      # Product.where('id not in (?)',params[:pids].split('/') )
+
+      Product.where('id not in (?)',params[:pids].split('/') ).live.each do |pro|
+        pros_str+="<option value=#{pro.id}>#{pro.title}</option>"
+      end
+
+      pros_str+='</select>'
+      render :text => pros_str
   end
 
 

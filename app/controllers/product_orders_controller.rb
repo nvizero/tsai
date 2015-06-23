@@ -64,11 +64,20 @@ class ProductOrdersController < ApplicationController
 
   # GET /product_orders/new
   def new
-    @product_order = ProductOrder.new
+      @product_order = ProductOrder.new
   end
 
   # GET /product_orders/1/edit
   def edit
+      # order_by_products
+
+      @orderInfos = OrderByProduct.where(:code=>@product_order.code)
+
+      @pro_infos = []
+      Product.live.each do |pro|
+        @pro_infos[pro.id] = pro.title
+      end
+
   end
 
   # POST /product_orders

@@ -7,8 +7,10 @@
 
     </div>
   <% end %>
-<%= render 'comm/ckbox' , :mss => @mss%>
 
+<% @msg_suc = '訂購成功' %>
+<%= render 'comm/ckbox' , :mss => @mss%>
+<%= render 'comm/order_success' , :message => @msg_suc%>
 <%
 #先算出長度
 len_s = order_serial_code @code_serial.count.to_s.length
@@ -18,10 +20,19 @@ len_s="#{len_s}#{@code_serial.count.to_i+1}"
 
 <div class="form-group">
   <font color="red" >
+
     <%= f.label :code , '訂單編號' %></font>
 
-    <h4 style="color:blue;"><%= hide_code = "#{get_random_date}#{len_s}"%></h4>
-    <%=f.hidden_field :code ,:value => hide_code , :id=>'code' %>
+    <h4 style="color:blue;">
+      <% if !@product_order.id.nil? %>
+          <%= @product_order.code%>
+          <%=f.hidden_field :code , :id=>'code' %>
+      <% else %>
+          <%= hide_code = "#{get_random_date}#{len_s}"%>
+          <%=f.hidden_field :code ,:value => hide_code , :id=>'code' %>
+      <% end %>
+    </h4>
+
 
 
 
@@ -30,16 +41,37 @@ len_s="#{len_s}#{@code_serial.count.to_i+1}"
     <a class="btn btn-success" href="#" id="add_products" >新增產品</a>
 
 
-    <table class="table" id="products_select">
+<input type="hidden" id="old_id" value="<%=@product_order.id%>">
+
+
+    <table class="table table-bordered" id="products_select">
 
       <thead>
         </tr>
-            <td>產品名稱</td>
-            <td>訂購數量</td>
+            <th>產品名稱</th>
+            <th>訂購數量</th>
         <tr>
       </thead>
+        <tbody id="tbody">
 
-      <tbody id="tbody">
+        <%
+        if !@product_order.id.nil?
+              @orderInfos.each do |info|
+        %>
+
+        <input type="hidden" id="has_product_ids" value="<%=info.product_id%>">
+
+          <tr>
+            <th><%=@pro_infos[info.product_id]%></th>
+            <td>
+              <input  name="<%=info.product_id %>"
+                      value="<%=info.num %>" >
+            </td>
+          <tr>
+        <%
+          end
+        end
+        %>
       </tbody>
     </table>
 
@@ -58,7 +90,7 @@ len_s="#{len_s}#{@code_serial.count.to_i+1}"
   </div>
 
   <div class="box-footer">
-      <button type="button" class="btn btn-primary">確定</button>
+      <button type="button" class="btn btn-primary" id="finial">確定</button>
       <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
   </div>
 <% end %>
@@ -71,18 +103,13 @@ $(document).ready(function() {
 
 
 
-    $('.btn-primary').click(function(){
+    $('#finial').click(function(){
       //產品＆數量
       var  p_str = '';
-
       $('input').each(function(){
-
           if( $(this).attr('class')=='pids' ){
-
             p_str += $(this).attr('name') +',' + $(this).val() +'/';
-
           }
-
       });
 
 
@@ -92,10 +119,26 @@ $(document).ready(function() {
 
       $.post( '/post_order_data',
             { 'member_id' : $("#member_id").val() ,
-              'code' : $("#code").val() , 
+              'code' : $("#code").val() ,
               'p_str':p_str},
             function(d){
-              alert(d);
+
+              // alert(d);
+
+              if(d=='true'){
+
+                $('#order-success-modal').modal('show');
+
+                $("#a_submit").click(function(){
+                  $('#order-success-modal').modal("hide")
+                  var url ='/product_orders';
+                  document.location.href=url;
+                });
+
+              }else{
+                alert('false love');
+              }
+
             });
 
 
@@ -103,33 +146,75 @@ $(document).ready(function() {
     });
 
 
+    var old_id = $('#old_id').val();
 
-    $.post('/get_all_products',function(data){
 
-        $('#products_list').html(data);
 
-        $("#add_products").click(function(){
-            var product_id = $(".product_data").val() ;
+    if(old_id.length < 1 ){
 
-            $(".product_data").find(":selected").remove();
 
-            // /products/1.json
-            $.get('/products/'+product_id+'.json',function(data){
+        $.post('/get_all_products',function(data){
 
-              var product_info = '<tr><td>'+data["title"];
-              product_info += '</td><td>'
-              product_info += '<input name=p_'+data["id"]+' class="pids"> ';
-              product_info += '</td></tr>';
-              $(product_info).appendTo('#tbody');
-              // product_info
+            $('#products_list').html(data);
 
+            $("#add_products").click(function(){
+                var product_id = $(".product_data").val() ;
+
+                $(".product_data").find(":selected").remove();
+
+                // /products/1.json
+                $.get('/products/'+product_id+'.json',function(data){
+
+                  var product_info = '<tr><th>'+data["title"];
+                  product_info += '</th><td>'
+                  product_info += '<input name=p_'+data["id"]+' class="pids"> ';
+                  product_info += '</td></tr>';
+                  $(product_info).appendTo('#tbody');
+
+                });
             });
         });
 
-        // $(".products").val();
 
-    });
+    }else{
 
+
+
+      var pid_str = '';
+
+      $('input').each(function(){
+
+        if($(this).attr('id') == "has_product_ids"){
+          pid_str += $(this).val() + '/';
+        }
+
+      });
+
+      $.post('/get_select_products',{'pids':pid_str},function(data){
+
+          $('#products_list').html(data);
+
+          $("#add_products").click(function(){
+              var product_id = $(".product_data").val() ;
+
+              $(".product_data").find(":selected").remove();
+
+              // /products/1.json
+              $.get('/products/'+product_id+'.json',function(data){
+
+                var product_info = '<tr><th>'+data["title"];
+                product_info += '</th><td>'
+                product_info += '<input name=p_'+data["id"]+' class="pids"> ';
+                product_info += '</td></tr>';
+                $(product_info).appendTo('#tbody');
+
+              });
+          });
+      });
+
+      // alert(pid_str);
+
+    }
 
     var errors_msg =$('#error_explanation').html();
 

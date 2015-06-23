@@ -75,7 +75,7 @@ Tsai::Application.routes.draw do
   post 'check_username' , :to => "pact#check_username"
   post 'check_email' , :to => "pact#check_email"
 
-
+  post 'get_select_products' , :to => "pact#get_select_products"
   #get "demo/index"
   match ':controller(/:action(/:id))', :via => [:get, :post]
   # The priority is based upon order of creation: first created -> highest priority.
