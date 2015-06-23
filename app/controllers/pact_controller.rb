@@ -84,9 +84,6 @@ class PactController < ApplicationController
 
   def post_order_data
 
-    #p_str
-    #data - product_order
-
     member_id = params[:member_id]
     code = params[:code]
     p_str = params[:p_str]
@@ -127,9 +124,6 @@ class PactController < ApplicationController
   def get_select_products
 
       pros_str='<select class="product_data" >'
-
-      # Product.where('id not in (?)',params[:pids].split('/') )
-
       Product.where('id not in (?)',params[:pids].split('/') ).live.each do |pro|
         pros_str+="<option value=#{pro.id}>#{pro.title}</option>"
       end
@@ -139,5 +133,37 @@ class PactController < ApplicationController
   end
 
 
+  def update_order_data
+    #  new p_2,/",
+    #  update"=>"9,55/10,33/",
+    member_id = params[:member_id]
+    code = params[:code]
 
+    d_new     = params[:new]
+    d_update  = params[:update]
+    dduu = ''
+    #新增的
+    d_new.split('/').each do |new_one|
+      product_num   = new_one.split(',')
+      product_id    = product_num[0].split('p_')
+      OrderByProduct.create(:product_id => product_id[1],
+                            :num => product_num[1],
+                            :code=>code)
+    end
+
+    #更新
+    d_update.split('/').each do |up_date|
+
+      pInfo   = up_date.split(',')
+      dduu += "#{pInfo[0]}- #{pInfo[1]} "
+
+      # product_id    = product_num[0].split('p_')
+      obp = OrderByProduct.find(pInfo[0].to_i)
+      obp.num =pInfo[1].to_i
+      obp.save
+
+    end
+
+    render :text => 'true'
+  end
 end

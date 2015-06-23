@@ -74,7 +74,7 @@ Tsai::Application.routes.draw do
 
   post 'check_username' , :to => "pact#check_username"
   post 'check_email' , :to => "pact#check_email"
-
+  post 'update_order_data' , :to => "pact#update_order_data"
   post 'get_select_products' , :to => "pact#get_select_products"
   #get "demo/index"
   match ':controller(/:action(/:id))', :via => [:get, :post]

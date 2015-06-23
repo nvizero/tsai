@@ -64,12 +64,13 @@ len_s="#{len_s}#{@code_serial.count.to_i+1}"
           <tr>
             <th><%=@pro_infos[info.product_id]%></th>
             <td>
-              <input  name="<%=info.product_id %>"
+              <input  class="update"
+                      name="<%=info.id %>"
                       value="<%=info.num %>" >
             </td>
           <tr>
         <%
-          end
+              end
         end
         %>
       </tbody>
@@ -99,11 +100,14 @@ len_s="#{len_s}#{@code_serial.count.to_i+1}"
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+  //判斷是否 存在
+  var old_id = $('#old_id').val();
 
 
+  if(old_id.length < 1 ){
+    //這是新增的時候
 
-
-    $('#finial').click(function(){
+  $('#finial').click(function(){
       //產品＆數量
       var  p_str = '';
       $('input').each(function(){
@@ -112,18 +116,12 @@ $(document).ready(function() {
           }
       });
 
-
-
-      var pros = $("form").serialize('product_order') ;
-
-
       $.post( '/post_order_data',
             { 'member_id' : $("#member_id").val() ,
               'code' : $("#code").val() ,
               'p_str':p_str},
             function(d){
-
-              // alert(d);
+              //alert(d);
 
               if(d=='true'){
 
@@ -136,24 +134,69 @@ $(document).ready(function() {
                 });
 
               }else{
+
                 alert('false love');
+
               }
 
             });
-
-
-
     });
 
+  }else{
+    //update
+    $('#finial').click(function(){
+        //產品＆數量
+        var  new_str = '';
+        var  update_str = '';
 
-    var old_id = $('#old_id').val();
+        $('input').each(function(){
+            if( $(this).attr('class')=='pids' ){
+              new_str += $(this).attr('name') +',' + $(this).val() +'/';
+            }
+
+            if( $(this).attr('class')=='update' ){
+              update_str += $(this).attr('name') +',' + $(this).val() +'/';
+            }
+        });
+
+        $.post( '/update_order_data',
+              { 'member_id' : $("#member_id").val() ,
+                'code' : $("#code").val() ,
+                'new':new_str,
+                'update':update_str
+              },
+              function(d){
+                // alert(d);
+
+                if(d=='true'){
+
+                  $('#order-success-modal').modal('show');
+
+                  $("#a_submit").click(function(){
+
+                    $('#order-success-modal').modal("hide")
+                    var url ='/product_orders';
+                    document.location.href=url;
+                  });
+
+                }else{
+
+                  alert('false love');
+
+                }
+
+              });
+      });
+
+  }
+
+
 
 
 
     if(old_id.length < 1 ){
-
-
-        $.post('/get_all_products',function(data){
+      //這是新增的時候
+      $.post('/get_all_products',function(data){
 
             $('#products_list').html(data);
 
