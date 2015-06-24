@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
      users.each do |ur|
        urs[ur.id] = ur.name
      end
-     
+
      return urs
 
   end
@@ -65,5 +65,32 @@ class ApplicationController < ActionController::Base
     @mid_msgs = Msg.mid.live
   end
 
+
+  #vip or admin or normal
+  def user_vip_access
+
+      cdi = []
+      if session[:vip_access] =='VIP'
+        UserBelong.where(:belong_user_id =>session[:user_id] ).each do |ubi|
+            if !ubi.id.nil?
+                cdi[cdi.count] = ubi.user_id
+            end
+        end
+
+        cdi[cdi.count] = session[:user_id]
+
+      elsif session[:vip_access] =='admin'
+        
+        cdi = []
+
+      elsif session[:vip_access] =='normal'
+
+        cdi[cdi.count] = session[:user_id]
+      end
+
+
+
+      return cdi
+  end
 
 end

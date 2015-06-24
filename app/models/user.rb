@@ -9,6 +9,11 @@ class User < ActiveRecord::Base
 
   scope :live, lambda { where("users.state = 'y' ") }
   scope :stoped  , lambda { where("users.state = 'N' ") }
+  scope :gg345  , lambda { where("users.id != '1' and users.id != '2' and users.id != '3'") }
+
+  # scope :search, lambda {|query|
+  #   where(["`users`.`id` not in (?)", "%#{query}%"])
+  # }
   validates :prompt,     :presence => { :message => "密碼提示不能空白" }
   validates :username,  :presence => { :message => "帳號－不能空白" } ,
                         :uniqueness => { :message => "帳號－有重複,請重新輸入" },
@@ -30,26 +35,11 @@ class User < ActiveRecord::Base
 
 
 
-  # validates_format_of :email, :with => /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i ,:message => "email－格式有誤！請重新輸入！"
-  # validates_format_of :username, :with => /\A([a-z0-9]+)/i ,:message => "帳號－格式有誤請重新輸入！"
-  # attr_accessor :password
-  #
-  # validates :password, :confirmation => true #password_confirmation attr
-  # validates_length_of :password, :in => 6..20, :on => :create
 
-  # attr_reader :password
-  # validates_confirmation_of :password
-  # validates_presence_of     :re_password
   attr_accessor :re_password
 
   before_create do
     self.state = "Y"
   end
-  # column
-  # :email, :company_address,:role_id,
-  # :name,  :boss, :serial_code , :tel,
-  # :send_address,  :check_date, :password,
-  # :re_password, :forget_password, :text,
-  # :trade_id, :store_area_id , :username)
 
 end

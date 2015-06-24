@@ -8,10 +8,7 @@
             <div class="box-header">
                 <h3 class="box-title">產品列表</h3>
 
-                <!-- <img src="et.gif"> -->
-
-
-
+                
                 <div class="btn-group" id='head_btn'>
                     <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -33,7 +30,7 @@
                   <%= link_to '新增產品', {:controller =>'products' , :action =>'new'} ,:class=>"btn btn-primary head_btn"  , :id=>'head_btn' %>
                 <% end %>
 
-                
+
 
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">

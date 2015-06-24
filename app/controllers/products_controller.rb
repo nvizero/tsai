@@ -16,6 +16,19 @@ class ProductsController < ApplicationController
 
   def index
 
+    ci = 1
+    ['瑪雅咖啡','鬆餅三號' , '花花','草草','大苑子','CoCo' , '50嵐'].each do |key , val|
+        # chr
+
+        # Product.create!(:title=>"#{key}-#{ci}",
+        #                 :specification => "coffe2#{val}" ,
+        #                 :user_id=>ci ,
+        #                 :state=>'Y' ,
+        #                 :verify_type_main_id =>1 ,
+        #                 :code=>"#{key}#{ci}")
+        # ci+=1
+    end
+
     @flag    = params['state']
 
     if session[:vip_access]=='VIP'

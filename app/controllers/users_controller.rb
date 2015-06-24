@@ -32,12 +32,22 @@ class UsersController < ApplicationController
     #         ur.save
     #     end
     # end
-
     @flag = params[:state]
+
+
+
+    di = self.user_vip_access
+
+
+
     if @flag=='N'
-        @users = User.stoped.order(:name).page params[:page]
+
+        @users = User.where(:id=> di ).stoped.order(:name).page params[:page]
+
     else
-        @users = User.live.order(:name).page params[:page]
+
+        # @users = User.live.where.not(:id=> di ).order(:id).page params[:page]
+        @users = User.live.where(:id=> di ).order(:id).page params[:page]
         @flag='Y'
     end
 
@@ -45,13 +55,17 @@ class UsersController < ApplicationController
     #User.order(:name).page params[:page]
     @trades = Trade.sorted
     @normal_users = User.where(:vip_access =>'normal')
-    10.times do |uur|
-        # User.create!( :username => "user8#{uur}", :role_id=> 1 ,
-        #               :re_password => "user8#{uur}" ,
-        #               :vip_access => "normal" ,
-        #               :name =>"user8#{uur}" , :state=>'Y' ,:password=>'8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918' ,
-        #               :email =>"user8#{uur}@yahoo.com.tw" , :prompt=>'admin123' )
-    end
+
+    # 100.times do |uur|
+    #     User.create!( :username => "user#{uur}",
+    #                   :role_id=> 1 ,
+    #                   :re_password => "user#{uur}" ,
+    #                   :vip_access => "normal" ,
+    #                   :name =>"user#{uur}" ,
+    #                   :state=>'Y' ,
+    #                   :password=>'8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918' ,
+    #                   :email =>"user#{uur}@yahoo.com.tw" , :prompt=>'admin123' )
+    # end
 
 
   end
@@ -81,7 +95,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
 
-    @normal_users = User.where(:vip_access =>'normal')
+    @normal_users = User.where.not(:name =>session[:user_name])
     vip_access
     @user = User.new
     @roles = Role.live
@@ -95,7 +109,7 @@ class UsersController < ApplicationController
     vip_access
 
     @user_bs = UserBelong.where(:belong_user_id => @user.id )
-    @normal_users = User.where(:vip_access =>'normal')
+    @normal_users = User.where.not(:name =>session[:user_name])
 
     @roles = Role.live
     @trades = Trade.sorted
@@ -131,7 +145,7 @@ class UsersController < ApplicationController
 
                 @roles = Role.all
                 @trades = Trade.sorted
-                @normal_users = User.where(:vip_access =>'normal')
+                @normal_users = User.where.not(:name =>session[:user_name])
                 @sotre_area = StoreArea.all
                 render action: 'new'
 
@@ -140,7 +154,7 @@ class UsersController < ApplicationController
 
             flash[:notice] = "密碼與確認密碼必需一致"
             flash[:pas] = "密碼與確認密碼必需一致"
-            @normal_users = User.where(:vip_access =>'normal')
+            @normal_users = User.where.not(:name =>session[:user_name])
             @roles = Role.all
             @trades = Trade.sorted
             @sotre_area = StoreArea.all
