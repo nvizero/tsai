@@ -10,9 +10,7 @@
 
                 <!-- <img src="et.gif"> -->
 
-                <% if judgment_access 'products/new' %>
-                  <%= link_to '新增產品', {:controller =>'products' , :action =>'new'} ,:class=>"btn btn-primary head_btn"  , :id=>'head_btn' %>
-                <% end %>
+
 
                 <div class="btn-group" id='head_btn'>
                     <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
@@ -30,6 +28,12 @@
                         </li>
                     </ul>
                 </div>
+
+                <% if judgment_access 'products/new' %>
+                  <%= link_to '新增產品', {:controller =>'products' , :action =>'new'} ,:class=>"btn btn-primary head_btn"  , :id=>'head_btn' %>
+                <% end %>
+
+                
 
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">

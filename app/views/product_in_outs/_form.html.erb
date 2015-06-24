@@ -24,8 +24,9 @@
 
   <div class="form-group">
 
-    <%= f.label :code , '單號' %><br>
-    <%=string=get_random_date%>
+    <%= f.label :code , '單號' %>
+    <br>
+    <%= string = get_random_date+@io_s %>
 
     <%= f.hidden_field :code , :value =>string , :class=>'form-control'  %>
   </div>

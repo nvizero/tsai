@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="col-xs-4">
-                            <label for="">規格</label>
+                            <font color="red" ><label for="">規格</label></font>
                             <%= f.text_field :specification , :class=>'form-control' %>
                         </div>
 
@@ -244,7 +244,9 @@
 
                           <div class="col-xs-4">
                               <label for="">標準庫位</label>
-                              <%= f.text_field :standard_store_area , :class=>'form-control' %>
+
+                              <%= f.select :standard_store_area, @store_areas.map {|sa| [sa.area_name , sa.area_id ] } ,{:include_blank =>'-------' ,  :selected =>@product.standard_store_area} ,:class=>'form-control' %>
+
                           </div>
 
                           <!---->

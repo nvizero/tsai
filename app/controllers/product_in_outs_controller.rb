@@ -99,6 +99,7 @@ class ProductInOutsController < ApplicationController
 
   # GET /product_in_outs/new
   def new
+    today_in_out_count
     @i_or_o = params[:type]
     @product_id = params[:product_id]
     @product_data = Product.live
@@ -224,6 +225,27 @@ class ProductInOutsController < ApplicationController
   end
 
   private
+
+    def today_in_out_count
+      in_out_cs = ProductInOut.where(
+            'created_at >= :start_days_ago or created_at >= :end_days_ago',
+                :start_days_ago   => Time.now.strftime("%Y-%m-%d 00:00:01"),
+                :end_days_ago     => Time.now.strftime("%Y-%m-%d 23:23:59")
+      )
+
+      @io_s = ''
+      @io_s.to_s
+
+      (5 - in_out_cs.count.to_s.length.to_i).times do |aa|
+        @io_s += "0"
+      end
+
+      @io_s += (in_out_cs.count.to_i + 1).to_s
+
+      return @io_s
+
+    end
+
     def set_title
       @title  = ['main1'=>'庫存首頁', 'main2'=>'product_in_outs','sub1'=>'庫存' , 'sub2'=>'product_in_outs' ]
     end

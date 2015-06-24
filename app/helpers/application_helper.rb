@@ -144,17 +144,12 @@ module ApplicationHelper
 
 
   def order_serial_code str_len
-
     ct = 5-str_len.to_i
-
     @cstr = ''
-
     ct.times do |ee|
       @cstr+='0'
     end
-    
     return @cstr
-
   end
 
 

@@ -62,7 +62,7 @@ class ProductsController < ApplicationController
     @title[0]['main1']='商品庫存'
 
     if !params['state'].nil?
-      
+
         @flag    = params['state']
         if session[:user["access"]] =='all'
 
@@ -100,13 +100,17 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
+
     @title[0]['main1'] = "新增產品"
     @product = Product.new
+    @store_areas = StoreArea.live
+
+
   end
 
   # GET /products/1/edit
   def edit
-
+    @store_areas = StoreArea.live
   end
 
   # POST /products
