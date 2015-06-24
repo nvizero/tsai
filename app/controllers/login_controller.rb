@@ -9,10 +9,7 @@ class LoginController < ApplicationController
     #eeee
     # @username = params[:username].rstrip.lstrip
     user_data = params[:user]
-
-
     @pas= Digest::SHA256.hexdigest user_data["password"].to_s.rstrip.lstrip
-
     @is_login = User.where(:username => user_data["username"] , :password  => @pas ).first
 
     # @login_name = User.where(:username => params[:username].to_s.rstrip.lstrip ).first
@@ -30,14 +27,13 @@ class LoginController < ApplicationController
             flash[:notice]  = "#{@is_login.name}您好!登入成功"
             redirect_to(:controller=> 'dashboard' , :action => "main")
         else
-          flash[:notice]  = "你的帳號己被停用"
-          redirect_to(:controller=> 'login' , :action => "login_form")
+            flash[:notice]  = "你的帳號己被停用"
+            redirect_to(:controller=> 'login' , :action => "login_form")
         end
-    else
 
+    else
         flash[:notice]  = "輸入的帳號密碼有誤！請重新輸入！"
         redirect_to(:controller=> 'login' , :action => "login_form")
-
     end
 
   end
@@ -47,8 +43,9 @@ class LoginController < ApplicationController
 
     session[:user_role_id] = @is_login.role_id
     session[:user_id]   = @is_login.id
+    session[:vip_access]   = @is_login.vip_access
     session[:user_name] = @is_login.name
-    
+
     role = Role.find(@is_login.role_id)
     if role.text.to_s == 'all'
         session[:user["access"]] = role.text.to_s

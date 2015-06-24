@@ -13,39 +13,70 @@ class ProductsController < ApplicationController
 
   # GET /products
   # GET /products.json
+
   def index
 
+    @flag    = params['state']
 
-    if !params['state'].nil?
-        @flag    = params['state']
-        if session[:user["access"]] =='all'
+    if session[:vip_access]=='VIP'
 
+        # render :text => session[:vip_access]
+        if !params['state'].nil?
 
-            if @flag=='Y'
-                @products = Product.live.page params[:page]
+            if session[:user["access"]] =='all'
+                if @flag=='Y'
+                    @products = Product.live.page params[:page]
+                else
+                    @products = Product.stoped.page params[:page]
+                end
             else
-                @products = Product.stoped.page params[:page]
+                if @flag=='Y'
+                    @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+                else
+                    @products = Product.stoped.where(:create_user_id =>session[:user_id] ).page params[:page]
+                end
             end
 
         else
 
-            if @flag=='Y'
-                @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+            @flag = 'Y'
+            if session[:user["access"]] =='all'
+              @products = Product.live.page params[:page]
             else
-                @products = Product.stoped.where(:create_user_id =>session[:user_id] ).page params[:page]
+              @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
             end
-
         end
 
     else
 
-        @flag = 'Y'
-        if session[:user["access"]] =='all'
-          @products = Product.live.page params[:page]
+        if !params['state'].nil?
+
+            if session[:user["access"]] =='all'
+                if @flag=='Y'
+                    @products = Product.live.page params[:page]
+                else
+                    @products = Product.stoped.page params[:page]
+                end
+            else
+                if @flag=='Y'
+                    @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+                else
+                    @products = Product.stoped.where(:create_user_id =>session[:user_id] ).page params[:page]
+                end
+            end
+
         else
-          @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+
+            @flag = 'Y'
+            if session[:user["access"]] =='all'
+              @products = Product.live.page params[:page]
+            else
+              @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+            end
         end
+
     end
+
 
     @users_a = self.user_to_ar
 

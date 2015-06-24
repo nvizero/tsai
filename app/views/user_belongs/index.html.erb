@@ -1,0 +1,29 @@
+<h1>Listing user_belongs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Belong user</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_belongs.each do |user_belong| %>
+      <tr>
+        <td><%= user_belong.user_id %></td>
+        <td><%= user_belong.belong_user_id %></td>
+        <td><%= link_to 'Show', user_belong %></td>
+        <td><%= link_to 'Edit', edit_user_belong_path(user_belong) %></td>
+        <td><%= link_to 'Destroy', user_belong, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User belong', new_user_belong_path %>

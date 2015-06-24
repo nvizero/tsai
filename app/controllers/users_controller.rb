@@ -25,6 +25,14 @@ class UsersController < ApplicationController
     @title = self.comm
     # @users = User.order("id desc")
     #分頁
+    # User.all.each do |ur|
+    #     if ur.vip_access.nil?
+    #
+    #         ur.vip_access = 'normal'
+    #         ur.save
+    #     end
+    # end
+
     @flag = params[:state]
     if @flag=='N'
         @users = User.stoped.order(:name).page params[:page]
@@ -36,8 +44,14 @@ class UsersController < ApplicationController
 
     #User.order(:name).page params[:page]
     @trades = Trade.sorted
-
-
+    @normal_users = User.where(:vip_access =>'normal')
+    10.times do |uur|
+        # User.create!( :username => "user8#{uur}", :role_id=> 1 ,
+        #               :re_password => "user8#{uur}" ,
+        #               :vip_access => "normal" ,
+        #               :name =>"user8#{uur}" , :state=>'Y' ,:password=>'8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918' ,
+        #               :email =>"user8#{uur}@yahoo.com.tw" , :prompt=>'admin123' )
+    end
 
 
   end
@@ -67,6 +81,8 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
 
+    @normal_users = User.where(:vip_access =>'normal')
+    vip_access
     @user = User.new
     @roles = Role.live
     @trades = Trade.sorted
@@ -75,6 +91,11 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+
+    vip_access
+
+    @user_bs = UserBelong.where(:belong_user_id => @user.id )
+    @normal_users = User.where(:vip_access =>'normal')
 
     @roles = Role.live
     @trades = Trade.sorted
@@ -110,6 +131,7 @@ class UsersController < ApplicationController
 
                 @roles = Role.all
                 @trades = Trade.sorted
+                @normal_users = User.where(:vip_access =>'normal')
                 @sotre_area = StoreArea.all
                 render action: 'new'
 
@@ -118,7 +140,7 @@ class UsersController < ApplicationController
 
             flash[:notice] = "密碼與確認密碼必需一致"
             flash[:pas] = "密碼與確認密碼必需一致"
-
+            @normal_users = User.where(:vip_access =>'normal')
             @roles = Role.all
             @trades = Trade.sorted
             @sotre_area = StoreArea.all
@@ -149,17 +171,41 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
 
-    # render :text =>params
+
+    xx = ''
+
+
+    # ／render :text =>"#{xx} <br>#{params} "
     @user.modify_user_id = session[:user_id]
     if @user.update(user_params_update)
+
+      if params[:user][:vip_access]=='VIP'
+
+          if !params[:normal_users].nil?
+
+              UserBelong.where(:belong_user_id =>@user.id ).each do |uubg|
+                  uubg.destroy
+              end
+
+              params[:normal_users].each do |dd|
+                  UserBelong.create(:user_id => dd[1] , :belong_user_id =>@user.id )
+              end
+
+          end
+      end
+
       flash[:notice] = "會員更新成功!"
       redirect_to action: "index"
     else
+      @normal_users = User.where(:vip_access =>'normal')
       @roles = Role.all
       @trades = Trade.sorted
       @sotre_area = StoreArea.all
       render action: 'edit'
     end
+
+
+
 
   end
 
@@ -205,16 +251,20 @@ class UsersController < ApplicationController
       params.require(:user).permit( :email, :company_address,:role_id,
                                     :name,  :boss, :serial_code , :tel,
                                     :send_address,  :check_date, :password,
-                                    :re_password, :prompt, :text,
+                                    :re_password, :prompt, :text, :vip_access,
                                     :trade_id, :store_area_id , :username)
 
+    end
+
+    def vip_access
+      @access_sel = ['admin'=>'管理者', 'VIP'=>'VIP' , 'normal'=>'一般']
     end
 
     def user_params_update
       params.require(:user).permit( :email, :company_address, :role_id,
                                     :name,  :boss, :serial_code , :tel,
                                     :send_address,  :check_date,
-                                    :prompt, :text,
+                                    :prompt, :text, :vip_access,
                                     :trade_id, :store_area_id )
 
     end
