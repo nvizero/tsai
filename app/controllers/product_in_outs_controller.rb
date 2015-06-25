@@ -24,10 +24,13 @@ class ProductInOutsController < ApplicationController
     @users_a = self.user_to_ar
     @flag = params[:steta]
     @product_id = params[:product_id]
+
     if @product_id
       @product_data = Product.find(:id=>@product_id.to_i)
     end
-    @product_in_outs = ProductInOut.page params[:page]
+
+    @product_in_outs = ProductInOut.vip_access(user_vip_access , session).page params[:page]
+
 
   end
 
@@ -50,15 +53,15 @@ class ProductInOutsController < ApplicationController
     end
 
     if @flag=='N'
-        @product_in_outs = ProductInOut.in_come.stoped.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.stoped.page params[:page]
 
     elsif @flag=='Y'
 
-        @product_in_outs = ProductInOut.in_come.live.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.page params[:page]
 
     else
 
-        @product_in_outs = ProductInOut.in_come.live.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.page params[:page]
         @flag='Y'
     end
 
@@ -79,15 +82,15 @@ class ProductInOutsController < ApplicationController
     end
 
     if @flag=='N'
-        @product_in_outs = ProductInOut.out_come.stoped.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).out_come.stoped.page params[:page]
 
     elsif @flag=='Y'
 
-        @product_in_outs = ProductInOut.out_come.live.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).out_come.live.page params[:page]
 
     else
 
-        @product_in_outs = ProductInOut.out_come.live.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).out_come.live.page params[:page]
         @flag='Y'
     end
 

@@ -14,22 +14,30 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
+    # create_user_id = ''
+    # Member.all.each do |mem|
+    #   create_user_id = Random.rand(55)+2
+    #   mem.create_user_id =create_user_id
+    #   mem.save
+    # end
+
+    # Member.create(:name=>i ,
+    #               :address=>i ,
+    #               :tel=> i ,
+    #               :create_user_id =>create_user_id )
+
+
     @users_a = self.user_to_ar
     @flag=params[:state]
 
-    # Member.all.each do |mm|
-    #   mm.state='Y'
-    #   mm.save
-    # end
-
 
     if @flag=='Y'
-      @members = Member.live.page params[:page]
+      @members = Member.vip_access(user_vip_access , session).live.page params[:page]
     elsif @flag=='N'
-      @members = Member.stoped.page params[:page]
+      @members = Member.vip_access(user_vip_access , session).stoped.page params[:page]
     else
       @flag='Y'
-      @members = Member.live.page params[:page]
+      @members = Member.vip_access(user_vip_access , session).live.page params[:page]
     end
   end
 

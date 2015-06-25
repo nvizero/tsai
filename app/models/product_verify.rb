@@ -9,6 +9,17 @@ class ProductVerify < ActiveRecord::Base
   # def products
   #
   # end
+
+  scope :vip_access, lambda {|query , session |
+      if session[:vip_access]=='VIP'
+          where(:create_user_id => query )
+      elsif  session[:vip_access]=='admin'
+          false
+      elsif  session[:vip_access]=='normal'
+          where(:create_user_id => session[:user_id] )
+      end
+  }
+
   scope :stoped  , lambda { where("product_verifies.state = 'N' ") }
   scope :live, lambda { where("product_verifies.state = 'Y' ") }
   before_create do

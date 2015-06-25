@@ -1,13 +1,10 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :get_verify_type_main, only: [:new, :edit ,:create ,:update]
-
   before_action :set_title
-
   layout "admin"
   #取得一些基本資訊
   before_action :get_base_data
-
   #要登入
   before_action :confirm_logged_in
 
@@ -17,17 +14,20 @@ class ProductsController < ApplicationController
   def index
 
     ci = 1
-    ['瑪雅咖啡','鬆餅三號' , '花花','草草','大苑子','CoCo' , '50嵐'].each do |key , val|
-        # chr
-
+    ['瑪雅咖啡','鬆餅三號','花花','草草','大苑子','CoCo','50嵐'].each do |key , val|
         # Product.create!(:title=>"#{key}-#{ci}",
         #                 :specification => "coffe2#{val}" ,
         #                 :user_id=>ci ,
         #                 :state=>'Y' ,
         #                 :verify_type_main_id =>1 ,
+        #                 :create_user_id => ci.to_i,
         #                 :code=>"#{key}#{ci}")
         # ci+=1
     end
+
+
+
+    @vip_access = user_vip_access
 
     @flag    = params['state']
 
@@ -38,15 +38,16 @@ class ProductsController < ApplicationController
 
             if session[:user["access"]] =='all'
                 if @flag=='Y'
-                    @products = Product.live.page params[:page]
+                    @products = Product.vip_access(@vip_access , session).live.page params[:page]
                 else
-                    @products = Product.stoped.page params[:page]
+
+                    @products = Product.vip_access(@vip_access , session).stoped.page params[:page]
                 end
             else
                 if @flag=='Y'
-                    @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+                    @products = Product.vip_access(@vip_access , session).live.page params[:page]
                 else
-                    @products = Product.stoped.where(:create_user_id =>session[:user_id] ).page params[:page]
+                    @products = Product.vip_access(@vip_access , session).stoped.page params[:page]
                 end
             end
 
@@ -54,9 +55,11 @@ class ProductsController < ApplicationController
 
             @flag = 'Y'
             if session[:user["access"]] =='all'
-              @products = Product.live.page params[:page]
+              # render :text => session[:vip_access]
+              # //
+              @products = Product.vip_access(@vip_access , session).live.page params[:page]
             else
-              @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+              @products = Product.vip_access(@vip_access , session).live.page params[:page]
             end
         end
 
@@ -66,15 +69,15 @@ class ProductsController < ApplicationController
 
             if session[:user["access"]] =='all'
                 if @flag=='Y'
-                    @products = Product.live.page params[:page]
+                    @products = Product.vip_access(@vip_access , session).live.page params[:page]
                 else
-                    @products = Product.stoped.page params[:page]
+                    @products = Product.vip_access(@vip_access , session).stoped.page params[:page]
                 end
             else
                 if @flag=='Y'
-                    @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+                    @products = Product.vip_access(@vip_access , session).live.where(:user_id => @vip_access).page params[:page]
                 else
-                    @products = Product.stoped.where(:create_user_id =>session[:user_id] ).page params[:page]
+                    @products = Product.vip_access(@vip_access , session).stoped.where(:user_id => @vip_access).page params[:page]
                 end
             end
 
@@ -82,9 +85,12 @@ class ProductsController < ApplicationController
 
             @flag = 'Y'
             if session[:user["access"]] =='all'
-              @products = Product.live.page params[:page]
+
+                #render :text => 'GG1'
+                @products = Product.vip_access(@vip_access , session).live.page params[:page]
             else
-              @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+
+                @products = Product.vip_access(@vip_access , session).where(:user_id => @vip_access).live.page params[:page]
             end
         end
 
@@ -112,17 +118,17 @@ class ProductsController < ApplicationController
 
 
             if @flag=='Y'
-                @products = Product.live.page params[:page]
+                @products = Product.vip_access(user_vip_access , session).live.page params[:page]
             else
-                @products = Product.stoped.page params[:page]
+                @products = Product.vip_access(user_vip_access , session).stoped.page params[:page]
             end
 
         else
 
             if @flag=='Y'
-                @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+                @products = Product.vip_access(user_vip_access , session).live.page params[:page]
             else
-                @products = Product.stoped.where(:create_user_id =>session[:user_id] ).page params[:page]
+                @products = Product.vip_access(user_vip_access , session).stoped.page params[:page]
             end
 
         end
@@ -131,9 +137,9 @@ class ProductsController < ApplicationController
 
         @flag = 'Y'
         if session[:user["access"]] =='all'
-          @products = Product.live.page params[:page]
+          @products = Product.vip_access(user_vip_access , session).live.page params[:page]
         else
-          @products = Product.live.where(:create_user_id =>session[:user_id] ).page params[:page]
+          @products = Product.vip_access(user_vip_access , session).live.page params[:page]
         end
 
     end

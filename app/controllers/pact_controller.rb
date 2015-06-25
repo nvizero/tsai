@@ -11,7 +11,6 @@ class PactController < ApplicationController
         else
           render :text => "您的密碼提示是:<font color=red>沒有輸入</font>"
         end
-
     else
         render :text => '<font color="red">找不到帳號!請重輸入!</font>'
     end
@@ -111,7 +110,8 @@ class PactController < ApplicationController
       ProductOrder.create(  :order_state_id=>1,
                             :state=>'Y',
                             :member_id => member_id,
-                            :code=>code)
+                            :code => code,
+                            :create_user_id => session[:user_id])
     else
       order_flag = false
     end

@@ -34,10 +34,10 @@ class ProductVerifiesController < ApplicationController
     if @iid
 
       if @flag=='N'
-          @product_verifies = ProductVerify.stoped.where(:product_id=>params[:id]).page params[:page]
+          @product_verifies = ProductVerify.vip_access(user_vip_access , session).stoped.page params[:page]
       else
           @flag='Y'
-          @product_verifies = ProductVerify.live.where(:product_id=>params[:id]).page params[:page]
+          @product_verifies = ProductVerify.vip_access(user_vip_access , session).live.page params[:page]
       end
 
     else
@@ -45,19 +45,19 @@ class ProductVerifiesController < ApplicationController
         if  session[:user["access"]]
 
             if @flag=='N'
-                @product_verifies = ProductVerify.stoped.page params[:page]
+                @product_verifies = ProductVerify.vip_access(user_vip_access , session).stoped.page params[:page]
             else
                 @flag='Y'
-                @product_verifies = ProductVerify.live.page params[:page]
+                @product_verifies = ProductVerify.vip_access(user_vip_access , session).live.page params[:page]
             end
 
         else
           #不是管理員
           if @flag=='N'
-              @product_verifies = ProductVerify.stoped.where(:product_id=>params[:id]).page params[:page]
+              @product_verifies = ProductVerify.vip_access(user_vip_access , session).stoped.page params[:page]
           else
               @flag='Y'
-              @product_verifies = ProductVerify.live.where(:product_id=>params[:id]).page params[:page]
+              @product_verifies = ProductVerify.vip_access(user_vip_access , session).live.page params[:page]
           end
 
         end
@@ -88,8 +88,8 @@ class ProductVerifiesController < ApplicationController
 
     p_v_types.each do |type|
       ProductVerify.create( :product_id => product_id ,
-                            :state => "N",
-                            :create_user_id => session[:user_id].to_i,
+                            :state => "N" ,
+                            :create_user_id => prot.user_id,
                             :product_verify_state_id =>1,
                             :product_verify_type_id=>type.id)
     end

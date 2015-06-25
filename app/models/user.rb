@@ -9,7 +9,16 @@ class User < ActiveRecord::Base
 
   scope :live, lambda { where("users.state = 'y' ") }
   scope :stoped  , lambda { where("users.state = 'N' ") }
-  scope :gg345  , lambda { where("users.id != '1' and users.id != '2' and users.id != '3'") }
+  # scope :gg345  , lambda { where("users.id != '1' and users.id != '2' and users.id != '3'") }
+  scope :vip_access, lambda {|query , session |
+      if session[:vip_access]=='VIP'
+          where(:id => query )
+      elsif  session[:vip_access]=='admin'
+          false
+      elsif  session[:vip_access]=='normal'
+          where(:id => session[:user_id] )
+      end
+  }
 
   # scope :search, lambda {|query|
   #   where(["`users`.`id` not in (?)", "%#{query}%"])

@@ -21,7 +21,6 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users_a = self.user_to_ar
-
     @title = self.comm
     # @users = User.order("id desc")
     #分頁
@@ -33,21 +32,15 @@ class UsersController < ApplicationController
     #     end
     # end
     @flag = params[:state]
-
-
-
     di = self.user_vip_access
-
-
-
     if @flag=='N'
 
-        @users = User.where(:id=> di ).stoped.order(:name).page params[:page]
+        @users = User.vip_access(user_vip_access , session).stoped.order(:name).page params[:page]
 
     else
 
         # @users = User.live.where.not(:id=> di ).order(:id).page params[:page]
-        @users = User.live.where(:id=> di ).order(:id).page params[:page]
+        @users = User.vip_access(user_vip_access , session).live.order(:id).page params[:page]
         @flag='Y'
     end
 
@@ -206,6 +199,25 @@ class UsersController < ApplicationController
               end
 
           end
+
+      elsif params[:user][:vip_access]=='admin'
+        #管理員
+        UserBelong.where(:belong_user_id =>@user.id ).each do |uubg|
+            uubg.destroy
+        end
+
+        UserBelong.where(:belong_user_id =>@user.id ).each do |uubg|
+            uubg.destroy
+        end
+
+      elsif params[:user][:vip_access]=='normal'
+        #管理員
+        UserBelong.where(:belong_user_id =>@user.id ).each do |uubg|
+            uubg.destroy
+        end
+
+        UserBelong.create(:user_id => @user.id , :belong_user_id =>@user.id )
+
       end
 
       flash[:notice] = "會員更新成功!"

@@ -33,25 +33,27 @@ class ProductOrdersController < ApplicationController
   # GET /product_orders.json
   def index
 
-    @uc = Member.all.count
+    @mems = Member.all.count
     @os = OrderState.all.count
-    # ProductOrder.all.each do |po|
-    #   po.state = 'Y'
-    #   po.member_id = rand(1...@uc)
-    #   po.order_state_id = [1 , rand(4...8)].sample
-    #   po.save
-    # end
 
+    ProductOrder.all.each do |po|
+      po.state = 'Y'
+      po.member_id = rand(1...@mems)
+      po.create_user_id = rand(1...4)
+      po.order_state_id = rand(1...@os)
+      po.save
+    end
+    @vip_access = user_vip_access
     @users_a = self.user_to_ar
     @flag = params[:state]
 
     if @flag=='Y'
-      @product_orders = ProductOrder.live.page params[:page]
+      @product_orders = ProductOrder.vip_access(@vip_access , session).live.page params[:page]
     elsif @flag=='N'
-      @product_orders = ProductOrder.stoped.page params[:page]
+      @product_orders = ProductOrder.vip_access(@vip_access , session).stoped.page params[:page]
     else
       @flag='N'
-      @product_orders = ProductOrder.live.page params[:page]
+      @product_orders = ProductOrder.vip_access(@vip_access , session).live.page params[:page]
     end
 
 
