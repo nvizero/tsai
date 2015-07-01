@@ -22,9 +22,6 @@ class ProductInOut < ActiveRecord::Base
   validates :num,       :presence => { :message => "產品數量－不能空白" }
 
 
-
-
-
   scope :vip_access, lambda {|query , session |
       if session[:vip_access]=='VIP'
           where(:create_user_id => query )
@@ -34,5 +31,8 @@ class ProductInOut < ActiveRecord::Base
           where(:create_user_id => session[:user_id] )
       end
   }
+
+
+
 
 end

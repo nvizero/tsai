@@ -161,67 +161,57 @@ class ProductInOutsController < ApplicationController
 
     if params[:type] == 'reduce'
 
-      p_i_o   = ProductInOut.where(:serial=> params[:product_in_out][:serial].to_s)
-      _add    = 0
-      _reduce = 0
-      nn      = 0
+            @product_in_out = ProductInOut.new(product_in_out_params)
 
-      p_i_o.each do |ppoi|
+            p_i_o   = ProductInOut.where(:serial=> params[:product_in_out][:serial].to_s)
+            _add    = 0
+            _reduce = 0
+            nn      = 0
 
-          if ppoi.in_or_out == 'add'
-            _add += ppoi.num
-          end
+            p_i_o.each do |ppoi|
+                 if ppoi.in_or_out == 'add'
+                   _add += ppoi.num
+                 end
 
-          if ppoi.in_or_out == 'reduce'
-            _reduce += ppoi.num
-          end
+                 if ppoi.in_or_out == 'reduce'
+                   _reduce += ppoi.num
+                 end
+            end
 
-      end
+            nn = _add - _reduce
 
-      nn = _add - _reduce
+              # if (nn.to_i - params[:product_in_out][:num].to_i) <= -1
+              #       flash[:notice] = '數量不足!'
+              #       redirect_to :action => 'new' , :type=>"out"
+              # else
 
-
-
-    if (nn.to_i - params[:product_in_out][:num].to_i) <= -1
-          flash[:notice] = '數量不足!'
-          redirect_to :action => 'new' , :type=>"out"
-    else
-           @product_in_out = ProductInOut.new(product_in_out_params)
-
-          if @product_in_out.save
-              flash[:notice] = "新增成功"
-              if @product_in_out.in_or_out == 'in'
-                  redirect_to :controller=>'product_in_outs' , :action=>'in_list'
-              elsif @product_in_out.in_or_out == 'reduce'
-                  redirect_to :controller=>'product_in_outs' , :action=>'out_list'
-              end
-          end
-    end
+                if @product_in_out.save
+                      flash[:notice] = "新增成功"
+                      redirect_to :controller=>'product_in_outs' , :action=>'out_list'
+                else
+                      today_in_out_count
+                      @i_or_o         = params[:type]
+                      @product_id     = params[:product_id]
+                      @product_data   = Product.live
+                      @product_in_out = ProductInOut.new
+                      redirect_to :controller =>'product_in_outs' , :action=>'new' , :type=>'out'
+                end
+          # end
 
 
     elsif params[:type] == 'add'
 
           @product_in_out = ProductInOut.new(product_in_out_params)
           if @product_in_out.save
-              flash[:notice] = "新增成功"
-              if @product_in_out.in_or_out == 'in'
-                  redirect_to :controller=>'product_in_outs' , :action=>'in_list'
-              elsif @product_in_out.in_or_out == 'out'
-                  redirect_to :controller=>'product_in_outs' , :action=>'out_list'
-              elsif
-                  redirect_to :controller=>'product_in_outs' , :action=>'in_list'
-              end
-
+                flash[:notice] = "新增成功"
+                redirect_to :controller=>'product_in_outs' , :action=>'in_list'
           else
-
-            today_in_out_count
-            @i_or_o         = params[:type]
-            @product_id     = params[:product_id]
-            @product_data   = Product.live
-            @product_in_out = ProductInOut.new
-
-            redirect_to :controller =>'product_in_outs' , :action=>'new' , :type=>params[:type]
-
+                today_in_out_count
+                @i_or_o         = params[:type]
+                @product_id     = params[:product_id]
+                @product_data   = Product.live
+                @product_in_out = ProductInOut.new
+                redirect_to :controller =>'product_in_outs' , :action=>'new' , :type=>'in'
           end
     end
 

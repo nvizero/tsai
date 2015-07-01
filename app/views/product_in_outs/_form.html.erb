@@ -3,7 +3,7 @@
   <% if @product_in_out.errors.any? %>
     <div id="error_explanation" >
       <% @product_in_out.errors.full_messages.each do |msg| %>
-          <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
+          <%= @mss = "#{@mss}"+"#{msg}<br>\n" %>
       <% end %>
     </div>
   <% end %>
