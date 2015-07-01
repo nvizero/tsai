@@ -1,59 +1,154 @@
 <%= form_for(@product_in_out) do |f| %>
 
   <% if @product_in_out.errors.any? %>
-    <div id="error_explanation" style="display:none;">
+    <div id="error_explanation" >
       <% @product_in_out.errors.full_messages.each do |msg| %>
           <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
       <% end %>
     </div>
   <% end %>
 
-  <%= render 'comm/ckbox' , :mss => @mss%>
+<%= render 'comm/ckbox' , :mss => @mss%>
+<div class="col-xs-12">
+      <h3>
+        <%= f.label :code , '單號' %>
 
-
-  <div class="form-group">
-    <%= f.label :product_id , '產品名稱' %><br>
-    <%
-      if @product_in_out
-        @product_id = @product_in_out.product_id
-      end
-    %>
-
-    <%= f.select(:product_id, @product_data.collect {|p| ["#{p.code}-#{p.title}", p.id]} , { :selected =>@product_in_out.product_id } , :class=>'form-control' ) %>
-  </div>
-
-  <div class="form-group">
-
-    <%= f.label :code , '單號' %>
-    <br>
-    <%= string = get_random_date+@io_s %>
+        <font style="color:#0C95B7"><%= string = get_random_date+@io_s %></font>
+      <h3>
 
     <%= f.hidden_field :code , :value =>string , :class=>'form-control'  %>
+
+</div>
+
+
+
+
+<div class="col-xs-6">
+  <h3>
+    <font color="red" >
+        <%= f.label :product_id , '產品名稱' %>
+    </font >
+  <br>
+  <%
+    if @product_in_out
+      @product_id = @product_in_out.product_id
+    end
+  %>
+  <%= f.select(:product_id, @product_data.collect {|p| ["#{p.code}-#{p.title}", p.id]} , { :include_blank =>'-------' ,:selected =>@product_in_out.product_id } , :class=>'form-control', :id => 'product_id' ) %>
+</h3>
+</div>
+
+
+<div class="col-xs-6">
+
+  <h3>
+    <font color="red" >
+      <label for="">批號</label>
+    </font >
+    <br>
+
+    <% if 'reduce'==@whered %>
+            <% f.select(:serial, @p_in_out_list.collect {|p| ["#{p.serial}", p.serial]} , {:include_blank =>'-------' , :selected =>@product_in_out.serial } , :class=>'form-control' ,:id =>"serial"  ) %>
+
+            <select id="serial" name="product_in_out[serial]" class='form-control' ></select>
+
+    <% else  %>
+
+        <% if !@product_in_out.id.nil? %>
+            <% f.select(:serial, @p_in_out_list.collect {|p| ["#{p.serial}", p.serial]} , {:include_blank =>'-------' , :selected =>@product_in_out.serial } , :class=>'form-control' ,:id =>"serial") %>
+
+            <select id="serial" name="product_in_out[serial]" class='form-control' ></select>
+        <% else %>
+            <%= f.text_field :serial ,:id => "exampleInputFile" , :class => "form-control"  %>
+        <% end %>
+
+    <% end  %>
+  </h3>
+
+</div>
+
+
+  <div class="col-xs-6">
+    <h3>
+      <font color="red" >
+          <label for="">
+
+                入庫/出貨分類
+
+          </label>
+      </font>
+
+
+        <%=f.hidden_field :in_or_out , :value=>@whered , :id=>'in_or_out' %>
+
+        <input type="hidden" name="type" value="<%=@whered %>">
+
+        <%= f.select(:in_out_type_id, @in_out_cates.collect { |io| [ io.title , io.id ] }, {   :selected =>@product_in_out.in_out_type_id  }   , :id=>'in_out_type_id' ,:class=>'form-control' ) %>
+    </h3>
   </div>
 
-  <div class="form-group">
-    <font color="red" ><%= f.label :num , '數量' %></font><br>
-    <%= f.number_field :num , :class=>'form-control' %>
+
+
+  <div class="col-xs-6">
+
+          <h3>
+            <font color="red" ><%= f.label :num , '庫位' %></font><br>
+            <%= f.select(:store_area_id, @store_areas.collect {|p| [ p.area_name , p.area_id ] } , { :selected =>@product_in_out.store_area_id } , :class=>'form-control' ,:id=>'store_area_id' ) %>
+          </h3>
+
   </div>
 
-  <div class="field">
-    <%= f.label :in_or_out , '入庫/出貨分類' %><br>
-    <% f.select(:in_or_out, @in_out_types[0]['value'][0].collect { |pp| [ pp[1] , pp[0] ] }, { :selected =>@i_or_o  }  ) %>
+  <div class="col-xs-6">
 
-    <%=f.hidden_field :in_or_out , :value=>'' , :id=>'in_or_out' %>
+          <h3>
+            <font color="red" ><%= f.label :num , '等級' %></font><br>
 
-    <%= f.select(:in_out_type_id, @in_out_cates.collect { |io| [ io.title , io.id ] }, { :include_blank =>'-------',  :selected =>@product_in_out.in_out_type_id  }   , :id=>'in_out_type_id') %>
+            <%= f.select(:level , @levels[0].collect {|lp| ["#{lp[1]}", lp[0] ]} , {:include_blank =>'-------' , :selected =>@product_in_out.level } , :class=>'form-control' ,:id =>'level' ) %>
+          </h3>
+
   </div>
+
+
+  <div class="col-xs-6">
+
+          <h3>
+            <font color="red" ><%= f.label :num , '有效期限' %></font><br>
+            <%= f.date_field :save_date , :class=>'form-control' ,:id=>"save_date" %>
+
+          </h3>
+
+  </div>
+
+  <div class="col-xs-6">
+
+          <h3>
+            <font color="red" ><%= f.label :num , '數量' %></font>
+            <span class="num"></span>
+            <br>
+            <%= f.number_field :num , :class=>'form-control' , :id =>'num' %>
+          </h3>
+
+  </div>
+
+
+
+
+
+
+
+
+
 
 
   <%= f.hidden_field :create_user_id  ,:value=>session[:user_id] %>
   <%= f.hidden_field :state  ,:value=>'Y' %>
 
 
-
-  <div class="box-footer">
-      <button type="submit" class="btn btn-primary">確定</button>
-      <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
+  <div class="col-xs-12">
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">確定</button>
+            <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
+        </div>
   </div>
 
 <% end %>
@@ -62,22 +157,77 @@
 <script type="text/javascript">
   $('document').ready(function(){
 
-    $('#in_out_type_id').change(function(){
+    // $('#product_id').click(function(){
+    //     alert( $('#save_date').val()   );
+    // });
 
-        $.post('/do_in_or_out' , { 'id':$(this).val()},
-          function(data){
-            $("#in_or_out").val(data);
-            //alert(data);
-        });
+    $('#product_id').change(function(){
+        var _id = $(this).val();
+        if(_id==''){
 
+        }else{
+            $.post('/get_p_in_out_serial' ,
+                  {'id':$(this).val()},
+                  function(data){
+
+                      $('#serial').html('');
+                      $('#serial').html(data);
+
+                      $('#serial').change(function(){
+                        $.post('/p_good_or_not' ,
+                              { 'id' : $(this).val() },
+                              function(data){
+                                $('#level').html(data);
+                              });
+
+                        $.post('/p_store_area' ,
+                              { 'id' : $(this).val() },
+                              function(data){
+                                $('#store_area_id').html(data);
+                        });
+
+                        $.post('/inp_save_date' ,
+                              { 'id' : $(this).val() },
+                              function(data){
+                                $('#save_date').val(data);
+                        });
+
+                        // alert( $(this).val()   );
+                        $.post('/inp_save_num' ,
+                              { 'serial' : $(this).val() },
+                              function(data){
+
+                                $('.num').html(data);
+                        });
+
+                        // inp_save_date
+
+                      });
+
+                  });
+        }
     });
 
 
     var errors_msg =$('#error_explanation').html();
-
     if( errors_msg.length > 3 ){
+      // alert( errors_msg );
       $('#ckbox-modal').modal('show');
     }
+
+
+
+    // $('#in_out_type_id').change(function(){
+    //
+    //     $.post('/do_in_or_out' , { 'id':$(this).val()},
+    //       function(data){
+    //         $("#in_or_out").val(data);
+    //         alert(data);
+    //     });
+    //
+    // });
+
+
 
 
 

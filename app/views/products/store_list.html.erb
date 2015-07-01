@@ -66,29 +66,34 @@
         <td><%= product.specification %></td>
 
         <td>
-          <% if product.product_in_outs %>
-                <%
-                in_out_cal(product.product_in_outs)
-                %>
-                
-          <% end %>
+          <div style="width:100%;float:left;">
+            <span  style="width:25%;float:left;">
+                  <% if product.product_in_outs %>
+                        <%in_out_cal(product.product_in_outs)%>
+                  <% end %>
 
-          <a class="btn btn-success btn-xs">入庫</a>
-          <span class="text-success">
-            <%=@in_num%>
+                  <a class="btn btn-success btn-xs">入庫</a>
+                  <span class="text-success">
+                    <%=@in_num%>
+                  </span>
+
           </span>
 
-
-
-          <a class="btn btn-danger btn-xs">出庫</a>
-          <span class="text-red">
-            <%=@out_num%>
+          <span  style="width:25%;float:left;">
+              <a class="btn btn-danger btn-xs">出庫</a>
+              <span class="text-red">
+                <%=@out_num%>
+              </span>
           </span>
 
-          <a class="btn btn-primary btn-xs">現有</a>
-          <span class="text-primary">
-            <%=@in_num-@out_num%>
+          <span  style="width:25%;float:left;">
+              <a class="btn btn-primary btn-xs">現有</a>
+              <span class="text-primary">
+                <%=@in_num-@out_num%>
+              </span>
           </span>
+
+          </div>
 
         </td>
 

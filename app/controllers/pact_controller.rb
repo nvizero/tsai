@@ -166,4 +166,97 @@ class PactController < ApplicationController
 
     render :text => 'true'
   end
+
+
+
+
+  def get_p_in_out_serial
+
+    # pio_adds=ProductInOut.where(:product_id => params[:id] , :in_or_out=>'add' )
+    _id = params[:id]
+    pio_adds = ProductInOut.where(:product_id => _id , :in_or_out=>'add' )
+    pio_str     = '<option></option>'
+    pio_add_ary    = []
+    pio_reduce_ary    = []
+
+    pio_add     = 0 # 加
+    pio_reduce  = 0 # 減
+
+
+    pio_adds.each do |pp|
+
+
+
+      other_pio = ProductInOut.where(:serial => pp.serial)
+
+      other_pio.each do |o_p|
+
+            if o_p.in_or_out == 'reduce'
+                pio_reduce += o_p.num.to_i
+            end
+
+            if o_p.in_or_out == 'add'
+                pio_add += o_p.num.to_i
+            end
+      end
+      if (pio_add - pio_reduce) > 0
+        pio_str+="<option value=#{pp.serial} >#{pp.serial}</option>"
+        pio_add_ary[pp.id]        =  "#{(pio_add - pio_reduce)}"
+      end
+      # pio_reduce_ary[pp.id]     =   pp.id
+
+
+      # pio_ary[pp.id['num']]    =   pio_add
+      # pio_ary[[pp.id]['reduce']] =   pio_reduce
+
+    end
+    render :text => pio_str
+    # render :text => "#{pio_add_ary}"
+  end
+
+
+  def p_good_or_not
+    paola   = ProductInOut.find_by_serial(params[:id])
+    render :text => "<option value=#{paola.level}> #{paola.level}</option>"
+    # render :text => paola.level
+  end
+
+  def p_store_area
+    paola   = ProductInOut.find_by_serial(params[:id])
+    render :text => "<option value=#{paola.store_area_id}> #{paola.store_area.area_name}</option>"
+  end
+
+
+  def inp_save_date
+    paola   = ProductInOut.find_by_serial(params[:id])
+    d = paola.save_date
+
+    render :text => d.strftime("%Y-%m-%d")
+    # render :text => paola.save_date.to_time
+  end
+
+  def inp_save_num
+    paola   = ProductInOut.where(:serial => params[:serial] )
+    padd = 0
+    preduce = 0
+
+    paola.each do |pa|
+
+      if pa.in_or_out == 'add'
+        padd += pa.num
+      end
+
+      if pa.in_or_out == 'reduce'
+        preduce += pa.num
+      end
+
+    end
+
+
+    render :text => "剩餘的數量<font color=blue>#{padd-preduce}</font>"
+
+  end
+
+
+
 end

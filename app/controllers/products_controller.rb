@@ -25,7 +25,10 @@ class ProductsController < ApplicationController
         # ci+=1
     end
 
-
+    # Product.all.each do |pp|
+    #     pp.state = 'Y'
+    #     pp.save
+    # end
 
     @vip_access = user_vip_access
 
@@ -168,7 +171,6 @@ class ProductsController < ApplicationController
   def create
 
     @product = Product.new(product_params)
-
     @product.create_user_id = session[:user_id]
 
     if @product.save

@@ -1,10 +1,16 @@
 
 <section class="content">
  <div class="row">
-   <div class="col-xs-6">
+   <div class="col-xs-12">
        <div class="box">
            <div class="box-header">
-               <h3 class="box-title">入庫修改</h3>
+               <h3>
+                   <% if @i_or_o =='in' %>
+                       入庫
+                   <% elsif @i_or_o =='out' %>
+                       出貨
+                   <% end %>
+               </h3>
            </div><!-- /.box-header -->
            <div class="box-body table-responsive">
                <table id="example2" class="table table-bordered table-striped">

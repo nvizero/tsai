@@ -63,7 +63,12 @@ Tsai::Application.routes.draw do
   post 'do_advance_pas' , :to => "login#do_advance_pas"
 
 
+  post 'p_good_or_not'  , :to=> "pact#p_good_or_not"
   post 'post_order_data'  , :to=> "pact#post_order_data"
+  post 'get_p_in_out_serial'  , :to=> "pact#get_p_in_out_serial"  ##
+  post 'p_store_area'  , :to=> "pact#p_store_area"
+  post 'inp_save_date' , :to=> "pact#inp_save_date"
+  post 'inp_save_num' , :to=> "pact#inp_save_num"
 
   post 'do_in_or_out'  , :to=> "pact#do_in_or_out"
   post 'get_all_products' , :to => "pact#get_all_products"

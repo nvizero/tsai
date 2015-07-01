@@ -41,7 +41,8 @@
   <thead>
     <tr>
       <th>單號</th>
-      <th>產品</th>
+      <th style="width:200px;">產品</th>
+      <th>批號</th>
       <th>數量</th>
       <th>分類</th>
       <th></th>
@@ -54,6 +55,7 @@
       <tr>
         <td><%= product_in_out.code %></td>
         <td><%= product_in_out.product.title %></td>
+        <td><%= product_in_out.serial %></td>
 
         <td><%= product_in_out.num %></td>
         <td>
