@@ -11,15 +11,16 @@ class ProductInOut < ActiveRecord::Base
 
 
 
-  # validates :num,       :presence => { :message => "產品數量－不能空白" ,
-  # :only_integer => true,
-  # :length => :minimum => 1 }
+  # validates :num,       :presence => {  :message => "產品數量－不能空白" ,
+  #                                       :only_integer => true,
+  #                                       :length => :minimum => 1 }
 
 
 
   validates :in_out_type_id,       :presence => { :message => "入庫/出庫分類不能空白" }
   validates_inclusion_of :num, :in => 1..9999999 ,:message => "產品數量－不能空白"
   validates :num,       :presence => { :message => "產品數量－不能空白" }
+  validates :serial, :presence => { :message => "批號不能空白" }
 
 
   scope :vip_access, lambda {|query , session |
