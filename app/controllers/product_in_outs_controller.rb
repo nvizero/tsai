@@ -153,12 +153,18 @@ class ProductInOutsController < ApplicationController
 
     # p_i_o = ProductInOut.find( params[:product_in_out][:serial].to_i )
     # render :text => params
+
+    # if true
+    #       render :text => params
+    # end
+
+
     if params[:type] == 'reduce'
 
-      p_i_o = ProductInOut.where(:serial=> params[:product_in_out][:serial].to_s)
+      p_i_o   = ProductInOut.where(:serial=> params[:product_in_out][:serial].to_s)
       _add    = 0
       _reduce = 0
-      nn =0
+      nn      = 0
 
       p_i_o.each do |ppoi|
 
@@ -174,34 +180,28 @@ class ProductInOutsController < ApplicationController
 
       nn = _add - _reduce
 
-      if (nn.to_i - params[:product_in_out][:num].to_i) <= -1
 
-            flash[:notice] = '數量輸入錯誤'
-            redirect_to :action => 'new' , :type=>"out"
-      else
 
-        @product_in_out = ProductInOut.new(product_in_out_params)
+    if (nn.to_i - params[:product_in_out][:num].to_i) <= -1
+          flash[:notice] = '數量不足!'
+          redirect_to :action => 'new' , :type=>"out"
+    else
+           @product_in_out = ProductInOut.new(product_in_out_params)
 
           if @product_in_out.save
-
               flash[:notice] = "新增成功"
               if @product_in_out.in_or_out == 'in'
                   redirect_to :controller=>'product_in_outs' , :action=>'in_list'
-              elsif @product_in_out.in_or_out == 'out'
+              elsif @product_in_out.in_or_out == 'reduce'
                   redirect_to :controller=>'product_in_outs' , :action=>'out_list'
-              elsif
-                  redirect_to :controller=>'product_in_outs' , :action=>'in_list'
               end
           end
-      end
+    end
 
 
     elsif params[:type] == 'add'
 
-      #
-        @product_in_out = ProductInOut.new(product_in_out_params)
-
-
+          @product_in_out = ProductInOut.new(product_in_out_params)
           if @product_in_out.save
               flash[:notice] = "新增成功"
               if @product_in_out.in_or_out == 'in'
