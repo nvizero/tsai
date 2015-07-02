@@ -24,6 +24,7 @@ class UserBelongsController < ApplicationController
   # POST /user_belongs
   # POST /user_belongs.json
   def create
+    
     @user_belong = UserBelong.new(user_belong_params)
 
     respond_to do |format|

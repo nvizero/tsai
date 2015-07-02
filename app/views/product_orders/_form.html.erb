@@ -14,7 +14,7 @@
 <%
 #先算出長度
 len_s = order_serial_code @code_serial.count.to_s.length
-len_s="#{len_s}#{@code_serial.count.to_i+1}"
+len_s = "#{len_s}#{@code_serial.count.to_i+1}"
 %>
 
 
@@ -116,31 +116,41 @@ $(document).ready(function() {
           }
       });
 
-      $.post( '/post_order_data',
-            { 'member_id' : $("#member_id").val() ,
-              'code' : $("#code").val() ,
-              'p_str':p_str},
-            function(d){
-              //alert(d);
 
-              if(d=='true'){
 
-                $('#order-success-modal').modal('show');
 
-                $("#a_submit").click(function(){
-                  $('#order-success-modal').modal("hide")
-                  var url ='/product_orders';
-                  document.location.href=url;
+      var mem_id  =  $("#member_id").val();
+      if(mem_id=='' || mem_id==null){
+          alert("請輸入訂購者");
+      }else{
+          $.post( '/post_order_data',
+                { 'member_id' : $("#member_id").val() ,
+                  'code' : $("#code").val() ,
+                  'p_str':p_str},
+                function(d){
+
+                  if(d=='true'){
+
+                    $('#order-success-modal').modal('show');
+
+                    $("#a_submit").click(function(){
+                      $('#order-success-modal').modal("hide")
+                      var url ='/product_orders';
+                      document.location.href=url;
+                    });
+
+                  }else{
+
+                    alert('false love');
+
+                  }
+
                 });
 
-              }else{
+        }
 
-                alert('false love');
 
-              }
-
-            });
-    });
+  });
 
   }else{
     //update
@@ -150,6 +160,7 @@ $(document).ready(function() {
         var  update_str = '';
 
         $('input').each(function(){
+
             if( $(this).attr('class')=='pids' ){
               new_str += $(this).attr('name') +',' + $(this).val() +'/';
             }
@@ -157,6 +168,7 @@ $(document).ready(function() {
             if( $(this).attr('class')=='update' ){
               update_str += $(this).attr('name') +',' + $(this).val() +'/';
             }
+
         });
 
         $.post( '/update_order_data',

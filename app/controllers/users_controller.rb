@@ -88,9 +88,13 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
 
-    @normal_users = User.where.not(:name =>session[:user_name])
-    vip_access
+
     @user = User.new
+    vip_access
+
+    @user_bs = UserBelong.where(:belong_user_id => @user.id )
+    @normal_users = User.where.not(:name =>session[:user_name])
+
     @roles = Role.live
     @trades = Trade.sorted
     @sotre_area = StoreArea.all
@@ -136,9 +140,13 @@ class UsersController < ApplicationController
 
               else
 
-                @roles = Role.all
-                @trades = Trade.sorted
+                vip_access
+
+                @user_bs = UserBelong.where(:belong_user_id => @user.id )
                 @normal_users = User.where.not(:name =>session[:user_name])
+
+                @roles = Role.live
+                @trades = Trade.sorted
                 @sotre_area = StoreArea.all
                 render action: 'new'
 
@@ -147,10 +155,15 @@ class UsersController < ApplicationController
 
             flash[:notice] = "密碼與確認密碼必需一致"
             flash[:pas] = "密碼與確認密碼必需一致"
+            vip_access
+
+            @user_bs = UserBelong.where(:belong_user_id => @user.id )
             @normal_users = User.where.not(:name =>session[:user_name])
-            @roles = Role.all
+
+            @roles = Role.live
             @trades = Trade.sorted
             @sotre_area = StoreArea.all
+            
             render action: 'new'
 
         end

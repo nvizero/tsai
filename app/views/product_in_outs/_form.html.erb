@@ -49,14 +49,11 @@
 
     <% if 'reduce'==@whered %>
             <% f.select(:serial, @p_in_out_list.collect {|p| ["#{p.serial}", p.serial]} , {:include_blank =>'-------' , :selected =>@product_in_out.serial } , :class=>'form-control' ,:id =>"serial"  ) %>
-
             <select id="serial" name="product_in_out[serial]" class='form-control' ></select>
-
     <% else  %>
 
         <% if !@product_in_out.id.nil? %>
             <% f.select(:serial, @p_in_out_list.collect {|p| ["#{p.serial}", p.serial]} , {:include_blank =>'-------' , :selected =>@product_in_out.serial } , :class=>'form-control' ,:id =>"serial") %>
-
             <select id="serial" name="product_in_out[serial]" class='form-control' ></select>
         <% else %>
             <%= f.text_field :serial ,:id => "exampleInputFile" , :class => "form-control"  %>

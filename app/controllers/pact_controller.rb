@@ -199,15 +199,11 @@ class PactController < ApplicationController
                 pio_add += o_p.num.to_i
             end
       end
-      if (pio_add - pio_reduce) > 0
-        pio_str+="<option value=#{pp.serial} >#{pp.serial}</option>"
-        pio_add_ary[pp.id]        =  "#{(pio_add - pio_reduce)}"
+
+      if (pio_add - pio_reduce) < 0
+          pio_str+="<option value=#{pp.serial} >#{pp.serial}</option>"
+          # pio_add_ary[pp.id]        =  "#{(pio_add - pio_reduce)}"
       end
-      # pio_reduce_ary[pp.id]     =   pp.id
-
-
-      # pio_ary[pp.id['num']]    =   pio_add
-      # pio_ary[[pp.id]['reduce']] =   pio_reduce
 
     end
     render :text => pio_str
