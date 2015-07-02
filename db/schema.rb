@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 20150626073307) do
     t.string   "serial"
     t.string   "store_area_id"
     t.string   "level"
-    t.datetime "save_date"
+    t.date     "save_date"
   end
 
   create_table "product_orders", force: true do |t|

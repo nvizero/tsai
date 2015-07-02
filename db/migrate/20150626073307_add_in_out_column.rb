@@ -5,7 +5,7 @@ class AddInOutColumn < ActiveRecord::Migration
     add_column :product_in_outs , :serial , :string
     add_column :product_in_outs , :store_area_id , :string
     add_column :product_in_outs , :level , :string
-    add_column :product_in_outs , :save_date , :datetime
+    add_column :product_in_outs , :save_date , :date
 
   end
 

@@ -167,37 +167,37 @@
             $.post('/get_p_in_out_serial' ,
                   { 'id' : $(this).val() },
                   function(data){
-
+                    // alert( $(this).val() );
                       $('#serial').html('');
                       $('#serial').html(data);
 
                       $('#serial').change(function(){
                         //批號
-                        var _serial = $(this).val();
+                        var _serial = $(this).text();
+                        var _alt = $(this).find(":selected").attr('alt');
 
                         $.post('/p_good_or_not' ,
-                              { 'id' : $(this).val() },
+                              { 'id' : _alt },
                               function(data){
                                 $('#level').html(data);
                               });
 
                         $.post('/p_store_area' ,
-                              { 'id' : $(this).val() },
+                              { 'id' : _alt },
                               function(data){
                                   $('#store_area_id').html(data);
                               });
 
                         $.post('/inp_save_date' ,
-                              { 'id' : $(this).val() },
+                              { 'id' : _alt },
                               function(data){
                                 $('#save_date').val(data);
                         });
 
                         // alert( $(this).val()   );
                         $.post('/inp_save_num' ,
-                              { 'serial' : $(this).val() },
+                              { 'id' : _alt },
                               function(data){
-
                                 $('.num').html(data);
                         });
 

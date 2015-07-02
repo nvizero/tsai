@@ -44,7 +44,9 @@
       <th style="width:200px;">產品</th>
       <th>批號</th>
       <th>數量</th>
+      <th>庫位</th>
       <th>分類</th>
+      <th>有限期限</th>
       <th></th>
     </tr>
   </thead>
@@ -58,9 +60,10 @@
         <td><%= product_in_out.serial %></td>
 
         <td><%= product_in_out.num %></td>
-        <td>
-          <%= product_in_out.in_out_type.title %>
-        </td>
+        <td><%= product_in_out.store_area_id %></td>
+        <td><%= product_in_out.in_out_type.title %></td>
+        <td><%= product_in_out.save_date %></td>
+
 
         <td>
 

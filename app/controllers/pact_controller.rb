@@ -172,26 +172,25 @@ class PactController < ApplicationController
 
   def get_p_in_out_serial
 
-    # pio_adds=ProductInOut.where(:product_id => params[:id] , :in_or_out=>'add' )
-    _id = params[:id]
-    pio_adds = ProductInOut.where(:product_id => _id , :in_or_out=>'add' )
-    pio_str     = '<option></option>'
-    pio_add_ary    = []
-    pio_reduce_ary    = []
-
-
-
+    # pio_adds        = ProductInOut.where(:product_id => params[:id] , :in_or_out=>'add' )
+    _id               = params[:id]
+    pio_adds          = ProductInOut.where(:product_id => _id , :in_or_out => 'add' )
+                                    .group(:serial , :level , :store_area_id , :save_date)
+    pio_str           = '<option></option>'
     pio_adds.each do |pp|
+
+      # logger.info  "/-/-/-/-/-/-/-/-/ ProductInOut #{pp.id} serial  #{pp.serial} "
+
       pio_add     = 0 # 加
       pio_reduce  = 0 # 減
 
-
-
-      other_pio = ProductInOut.where(:serial => pp.serial)
+      other_pio = ProductInOut.where(:serial => pp.serial ,:store_area_id=> pp.store_area_id ,:level => pp.level )
+                              .where(:save_date => pp.save_date)
+                             #.where(:serial => pp.serial)
 
       other_pio.each do |o_p|
 
-            logger.info  "id = #{o_p.id}  serial = #{pp.serial}"
+            # logger.info  "====  other_pio  id = #{o_p.id}  serial = #{pp.serial}"
 
             if o_p.in_or_out == 'reduce'
                 pio_reduce += o_p.num.to_i
@@ -202,8 +201,12 @@ class PactController < ApplicationController
             end
       end
 
-      if (pio_add - pio_reduce) > 0
-          pio_str += "<option value=#{pp.serial} >#{pp.serial}-#{pp.id}</option>"
+      _gg = (pio_add - pio_reduce)
+      logger.info  "--------------  #{_gg}  serial = #{pio_add} - #{pio_reduce} "
+
+      if (1 <= _gg.to_i)
+
+          pio_str += "<option value=#{pp.serial} alt=#{pp.serial}/#{pp.store_area_id}/#{pp.level}/#{pp.save_date} > #{pp.serial} </option>"
           #pio_add_ary[pp.id]        =  "#{(pio_add - pio_reduce)}"
       end
 
@@ -214,32 +217,42 @@ class PactController < ApplicationController
 
 
   def p_good_or_not
-    paola   = ProductInOut.find_by_serial(params[:id])
+    para    = params[:id].split('/')
+    paola   = ProductInOut.where(:level=>para[2] ).first
+
     render :text => "<option value=#{paola.level}> #{paola.level}</option>"
-    # render :text => paola.level
+
   end
 
   def p_store_area
-    paola   = ProductInOut.find_by_serial(params[:id])
+    # paola   = ProductInOut.find_by_serial(params[:id])
+    para    = params[:id].split('/')
+    paola   = ProductInOut.where(:store_area_id=>para[1] ).first
+
     render :text => "<option value=#{paola.store_area_id}> #{paola.store_area.area_name}</option>"
   end
 
 
   def inp_save_date
-    paola   = ProductInOut.find_by_serial(params[:id])
+    para      =   params[:id].split('/')
+    paola     =   ProductInOut.where(:save_date => para[3]).first
+    # paola   =   ProductInOut.find_by_serial(params[:id])
     d = paola.save_date
-
     render :text => d.strftime("%Y-%m-%d")
-    # render :text => paola.save_date.to_time
   end
 
   def inp_save_num
-    paola   = ProductInOut.where(:serial => params[:serial] )
+    para    = params[:id].split('/')
+    paola   = ProductInOut.where(:serial=>para[0] ,:store_area_id=>para[1] ,:level=>para[2] )
+                          .where(:save_date => para[3])
+    # logger.info  "#{para}"
+    # logger.info  "--------#{para[0]}/#{para[1]}/#{para[2]}--#{para[3]}------"
+
     padd = 0
     preduce = 0
 
     paola.each do |pa|
-
+      logger.info  "#{pa.id}"
       if pa.in_or_out == 'add'
         padd += pa.num
       end
