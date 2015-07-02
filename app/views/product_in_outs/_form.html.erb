@@ -163,14 +163,18 @@
         if(_id==''){
 
         }else{
+
             $.post('/get_p_in_out_serial' ,
-                  {'id':$(this).val()},
+                  { 'id' : $(this).val() },
                   function(data){
 
                       $('#serial').html('');
                       $('#serial').html(data);
 
                       $('#serial').change(function(){
+                        //批號
+                        var _serial = $(this).val();
+
                         $.post('/p_good_or_not' ,
                               { 'id' : $(this).val() },
                               function(data){
@@ -180,8 +184,8 @@
                         $.post('/p_store_area' ,
                               { 'id' : $(this).val() },
                               function(data){
-                                $('#store_area_id').html(data);
-                        });
+                                  $('#store_area_id').html(data);
+                              });
 
                         $.post('/inp_save_date' ,
                               { 'id' : $(this).val() },
@@ -208,8 +212,8 @@
 
     var errors_msg =$('#error_explanation').html();
     if( errors_msg.length > 3 ){
-      // alert( errors_msg );
-      $('#ckbox-modal').modal('show');
+        // alert( errors_msg );
+        $('#ckbox-modal').modal('show');
     }
 
 

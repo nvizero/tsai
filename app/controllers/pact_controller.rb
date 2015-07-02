@@ -179,17 +179,19 @@ class PactController < ApplicationController
     pio_add_ary    = []
     pio_reduce_ary    = []
 
-    pio_add     = 0 # 加
-    pio_reduce  = 0 # 減
 
 
     pio_adds.each do |pp|
+      pio_add     = 0 # 加
+      pio_reduce  = 0 # 減
 
 
 
       other_pio = ProductInOut.where(:serial => pp.serial)
 
       other_pio.each do |o_p|
+
+            logger.info  "id = #{o_p.id}  serial = #{pp.serial}"
 
             if o_p.in_or_out == 'reduce'
                 pio_reduce += o_p.num.to_i
@@ -200,9 +202,9 @@ class PactController < ApplicationController
             end
       end
 
-      if (pio_add - pio_reduce) < 0
-          pio_str+="<option value=#{pp.serial} >#{pp.serial}</option>"
-          # pio_add_ary[pp.id]        =  "#{(pio_add - pio_reduce)}"
+      if (pio_add - pio_reduce) > 0
+          pio_str += "<option value=#{pp.serial} >#{pp.serial}-#{pp.id}</option>"
+          #pio_add_ary[pp.id]        =  "#{(pio_add - pio_reduce)}"
       end
 
     end
