@@ -108,11 +108,19 @@ $(document).ready(function() {
     //這是新增的時候
 
   $('#finial').click(function(){
+      var _flag = true;
       //產品＆數量
       var  p_str = '';
       $('input').each(function(){
           if( $(this).attr('class')=='pids' ){
-            p_str += $(this).attr('name') +',' + $(this).val() +'/';
+              p_str += $(this).attr('name') +',' + $(this).val() +'/';
+              if( $(this).val()=='' ){
+
+                  // alert($(this).val() );
+                  // alert( 'false' );
+                  _flag=false;
+
+              }
           }
       });
 
@@ -120,15 +128,15 @@ $(document).ready(function() {
 
 
       var mem_id  =  $("#member_id").val();
-      if(mem_id=='' || mem_id==null){
-          alert("請輸入訂購者");
+      if(mem_id=='' || mem_id==null || (_flag==false ) ){
+          alert('訂購失敗!');
       }else{
           $.post( '/post_order_data',
                 { 'member_id' : $("#member_id").val() ,
                   'code' : $("#code").val() ,
                   'p_str':p_str},
                 function(d){
-
+                  // alert(d);
                   if(d=='true'){
 
                     $('#order-success-modal').modal('show');
@@ -141,7 +149,7 @@ $(document).ready(function() {
 
                   }else{
 
-                    alert('false love');
+                    alert('訂購失敗!');
 
                   }
 

@@ -87,7 +87,7 @@ class PactController < ApplicationController
     code = params[:code]
     p_str = params[:p_str]
 
-    order_flag = true
+    order_flag = false
 
     qq = ''
 
@@ -96,10 +96,12 @@ class PactController < ApplicationController
       product_num   = pr.split(',')
       product_id    = product_num[0].split('p_')
 
-
-      OrderByProduct.create(:product_id => product_id[1],
-                            :num => product_num[1],
-                            :code=>code)
+      if !product_id[1].nil? && !product_num[1].nil?
+        order_flag = true
+        OrderByProduct.create(:product_id => product_id[1],
+                              :num => product_num[1],
+                              :code=>code)
+      end
 
 
     end
@@ -111,9 +113,7 @@ class PactController < ApplicationController
                             :state=>'Y',
                             :member_id => member_id,
                             :code => code,
-                            :create_user_id => session[:user_id])
-    else
-      order_flag = false
+                            :create_user_id => session[:user_id])    
     end
 
     render :text => order_flag
@@ -202,7 +202,7 @@ class PactController < ApplicationController
       end
 
       _gg = (pio_add - pio_reduce)
-      logger.info  "--------------  #{_gg}  serial = #{pio_add} - #{pio_reduce} "
+      # logger.info  "--------------  #{_gg}  serial = #{pio_add} - #{pio_reduce} "
 
       if (1 <= _gg.to_i)
 

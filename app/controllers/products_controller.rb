@@ -178,6 +178,8 @@ class ProductsController < ApplicationController
       redirect_to action: "index"
     else
       @title[0]['main1'] = "新增產品"
+      @product = Product.new
+      @store_areas = StoreArea.live
       render action: 'new'
     end
 
@@ -192,6 +194,8 @@ class ProductsController < ApplicationController
       flash[:notice] = "產品-更新成功!"
       redirect_to action: "index"
     else
+      @title[0]['main1'] = "產品編輯"      
+      @store_areas = StoreArea.live
       render action: 'edit'
     end
 
