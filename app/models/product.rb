@@ -12,21 +12,24 @@ class Product < ActiveRecord::Base
 
   scope :sandy  , lambda { where("products.user_id != '1' and products.user_id != '2' and products.user_id != '3'") }
 
-  scope :vip_access, lambda {|query , session |
-      if session[:vip_access]=='VIP'
+  scope :vip_access, lambda { | query , session |
+      if session[:vip_access] == 'VIP'
           where(:user_id => query )
-      elsif  session[:vip_access]=='admin'
+      elsif  session[:vip_access] == 'admin'
           false
-      elsif  session[:vip_access]=='normal'
+      elsif  session[:vip_access] == 'normal'
           where(:user_id => session[:user_id] )
       end
   }
-  validates :title,        :presence => { :message => "產品名稱－不能空白" }
-  validates :code,        :presence => { :message => "料品編號－不能空白" },
-                          :uniqueness => { :message => "料品編號－是唯一值,請重新輸入" }
 
-  validates :user_id,      :presence => { :message => "使用者－不能空白" }
-  validates :specification,      :presence => { :message => "規格－不能空白" }
+  validates :title,         :presence => { :message => "產品名稱－不能空白" }
+  validates :code,          :presence => { :message => "料品編號－不能空白" } ,
+                            :length => {:minimum => 1, :maximum => 8, :message => "庫位代碼－最多輸入8碼" } ,
+                            :uniqueness => { :message => "料品編號－是唯一值,請重新輸入" }
+
+  validates :user_id,       :presence => { :message => "使用者－不能空白" }
+  validates :specification,       :presence => { :message => "規格－不能空白" },
+                                  :length => {:minimum => 1, :maximum => 20, :message => "規格－最多輸入20碼" }
 
   before_create do
     self.state = "Y"

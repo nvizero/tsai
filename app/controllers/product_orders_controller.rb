@@ -35,14 +35,14 @@ class ProductOrdersController < ApplicationController
 
     @mems = Member.all.count
     @os = OrderState.all.count
-
-    ProductOrder.all.each do |po|
-      po.state = 'Y'
-      po.member_id = rand(1...@mems)
-      po.create_user_id = rand(1...4)
-      po.order_state_id = rand(1...@os)
-      po.save
-    end
+    #換
+    # ProductOrder.all.each do |po|
+    #   po.state = 'Y'
+    #   po.member_id = rand(1...@mems)
+    #   po.create_user_id = rand(1...4)
+    #   po.order_state_id = rand(1...@os)
+    #   po.save
+    # end
     @vip_access = user_vip_access
     @users_a = self.user_to_ar
     @flag = params[:state]
@@ -122,19 +122,19 @@ class ProductOrdersController < ApplicationController
 
   # DELETE /product_orders/1
   # DELETE /product_orders/1.json
+
   def destroy
-
-
-
-    @product_order.stoped_at = DateTime.now
+    logger.info  "--------------  #{_gg}  serial = #{pio_add} - #{pio_reduce} "
+    
+    @product_order.stoped_at    = DateTime.now
     @product_order.stop_user_id = session[:user_id]
-    @product_order.state='N'
+    @product_order.state = 'N'
     @product_order.save
 
-    respond_to do |format|
-      format.html { redirect_to product_orders_url }
-      format.json { head :no_content }
-    end
+    # respond_to do |format|
+    #   format.html { redirect_to product_orders_url }
+    #   format.json { head :no_content }
+    # end
   end
 
   private

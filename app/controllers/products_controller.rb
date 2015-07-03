@@ -1,7 +1,10 @@
 class ProductsController < ApplicationController
+
+
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :get_verify_type_main, only: [:new, :edit ,:create ,:update]
   before_action :set_title
+
   layout "admin"
   #取得一些基本資訊
   before_action :get_base_data
@@ -15,13 +18,15 @@ class ProductsController < ApplicationController
 
     ci = 1
     ['瑪雅咖啡','鬆餅三號','花花','草草','大苑子','CoCo','50嵐'].each do |key , val|
+
         # Product.create!(:title=>"#{key}-#{ci}",
         #                 :specification => "coffe2#{val}" ,
         #                 :user_id=>ci ,
         #                 :state=>'Y' ,
         #                 :verify_type_main_id =>1 ,
         #                 :create_user_id => ci.to_i,
-        #                 :code=>"#{key}#{ci}")
+        #                 :code=>"#{key}/#{ci}")
+
         # ci+=1
     end
 
@@ -174,13 +179,13 @@ class ProductsController < ApplicationController
     @product.create_user_id = session[:user_id]
 
     if @product.save
-      flash[:notice] = "產品-新增成功!"
-      redirect_to action: "index"
+        flash[:notice] = "產品-新增成功!"
+        redirect_to action: "index"
     else
-      @title[0]['main1'] = "新增產品"
-      @product = Product.new
-      @store_areas = StoreArea.live
-      render action: 'new'
+        @title[0]['main1'] = "新增產品"
+        #@product = Product.new
+        @store_areas = StoreArea.live
+        render action: 'new'
     end
 
   end
@@ -194,7 +199,7 @@ class ProductsController < ApplicationController
       flash[:notice] = "產品-更新成功!"
       redirect_to action: "index"
     else
-      @title[0]['main1'] = "產品編輯"      
+      @title[0]['main1'] = "產品編輯"
       @store_areas = StoreArea.live
       render action: 'edit'
     end

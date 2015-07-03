@@ -56,10 +56,13 @@
         <td><%= product_order.code %></td>
         <td>
           <% if product_order.order_state %>
-          <%= product_order.order_state.title %>
+              <%= product_order.order_state.title %>
           <% end %>
         </td>
-        <td><%= product_order.member.name %></td>
+        <td>
+            <%= product_order.member_id %>/
+            <%= product_order.member.name %>
+        </td>
         <td>
             <% link_to 'Show', product_order %>
             <% link_to 'Edit', edit_product_order_path(product_order) %>
@@ -67,9 +70,8 @@
 
 
             <% if product_order.state == 'Y' %>
-              <%= link_to '編輯', edit_product_order_path(product_order), :class => 'btn btn-info btn-sm' %>
-              <a url="#" class="del btn btn-danger btn-sm" id='/product_orders/destroy/<%=product_order.id %>'> 停用 </a>
-
+                <%= link_to '編輯', edit_product_order_path(product_order), :class => 'btn btn-info btn-sm' %>
+                <a url="#" class="del btn btn-danger btn-sm" id='/product_orders/destroy/<%=product_order.id %>'> 停用 </a>
             <% end %>
 
               <a class="btn btn-warning info" id="<%=product_order.id %>">
@@ -94,7 +96,8 @@ $('document').ready(function(){
         var url = $(this).attr('id');
         var n =confirm('確定停用！？');
         if(n){
-          document.location.href=url;
+          alert(n + '/' + url);
+          // document.location.href=url;
         }
     });
 

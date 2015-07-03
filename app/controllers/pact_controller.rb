@@ -113,10 +113,10 @@ class PactController < ApplicationController
                             :state=>'Y',
                             :member_id => member_id,
                             :code => code,
-                            :create_user_id => session[:user_id])    
+                            :create_user_id => session[:user_id])
     end
-
-    render :text => order_flag
+    # render :text => order_flag
+    render :text => params
 
   end
 

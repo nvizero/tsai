@@ -15,11 +15,6 @@ class ProductInOutsController < ApplicationController
   # GET /product_in_outs.json
   def index
 
-    # ProductInOut.all.each do |pio|
-    #   pio.state = 'Y'
-    #   pio.save
-    # end
-
 
     @users_a = self.user_to_ar
     @flag = params[:steta]
@@ -54,13 +49,9 @@ class ProductInOutsController < ApplicationController
 
     if @flag=='N'
         @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.stoped.page params[:page]
-
     elsif @flag=='Y'
-
         @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.page params[:page]
-
     else
-
         @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.page params[:page]
         @flag='Y'
     end
@@ -191,7 +182,7 @@ class ProductInOutsController < ApplicationController
                           @i_or_o         = params[:type]
                           @product_id     = params[:product_id]
                           @product_data   = Product.live
-                          @product_in_out = ProductInOut.new
+                          # @product_in_out = ProductInOut.new
                           redirect_to :controller =>'product_in_outs' , :action=>'new' , :type=>'out'
                     end
               end
@@ -208,7 +199,7 @@ class ProductInOutsController < ApplicationController
                 @i_or_o         = params[:type]
                 @product_id     = params[:product_id]
                 @product_data   = Product.live
-                @product_in_out = ProductInOut.new
+                # @product_in_out = ProductInOut.new
                 redirect_to :controller =>'product_in_outs' , :action=>'new' , :type=>'in'
           end
     end
@@ -236,18 +227,12 @@ class ProductInOutsController < ApplicationController
       else
 
           today_in_out_count
-
-
-
-
           @i_or_o = params[:type]
           @product_id = params[:product_id]
           @product_data = Product.live
-
-
           render action: 'edit'
-        # }
-        # format.json { render json: @product_in_out.errors, status: :unprocessable_entity }
+
+          #format.json { render json: @product_in_out.errors, status: :unprocessable_entity }
       end
 
     # end
