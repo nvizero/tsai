@@ -115,8 +115,8 @@ class PactController < ApplicationController
                             :code => code,
                             :create_user_id => session[:user_id])
     end
-    # render :text => order_flag
-    render :text => params
+    render :text => order_flag
+    # render :text => params
 
   end
 
@@ -134,18 +134,24 @@ class PactController < ApplicationController
 
 
   def update_order_data
-    #  new p_2,/",
-    #  update"=>"9,55/10,33/",
+
+
     member_id = params[:member_id]
     code = params[:code]
+
+    logger.info  " #{params} "
+    pr_od = ProductOrder.find_by_code(code)
+    pr_od.member_id = member_id
+    pr_od.save
 
     d_new     = params[:new]
     d_update  = params[:update]
     dduu = ''
     #新增的
     d_new.split('/').each do |new_one|
-      product_num   = new_one.split(',')
-      product_id    = product_num[0].split('p_')
+
+      product_num   =  new_one.split(',')
+      product_id    =  product_num[0].split('p_')
       OrderByProduct.create(:product_id => product_id[1],
                             :num => product_num[1],
                             :code=>code)

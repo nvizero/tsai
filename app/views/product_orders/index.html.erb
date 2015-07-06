@@ -60,7 +60,7 @@
           <% end %>
         </td>
         <td>
-            <%= product_order.member_id %>/
+            <% product_order.member_id %>
             <%= product_order.member.name %>
         </td>
         <td>
@@ -92,13 +92,13 @@
 $('document').ready(function(){
 
     $('.del').click(function(){
-
         var url = $(this).attr('id');
         var n =confirm('確定停用！？');
+
         if(n){
-          alert(n + '/' + url);
-          // document.location.href=url;
+            document.location.href=url;
         }
+
     });
 
 
