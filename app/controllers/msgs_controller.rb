@@ -9,11 +9,7 @@ class MsgsController < ApplicationController
   before_action :get_base_data
   #設定上面的TITLT
   before_action :set_title
-
   before_action :set_state
-
-
-
   #取得一些基本資訊
   before_action :get_base_data
   # GET /msgs
