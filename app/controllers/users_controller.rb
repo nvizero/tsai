@@ -20,8 +20,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users_a = self.user_to_ar
-    @title = self.comm
+    @users_a =  self.user_to_ar
+    @title   =  self.comm
     # @users = User.order("id desc")
     #分頁
     # User.all.each do |ur|
@@ -57,7 +57,8 @@ class UsersController < ApplicationController
     #                   :name =>"user#{uur}" ,
     #                   :state=>'Y' ,
     #                   :password=>'8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918' ,
-    #                   :email =>"user#{uur}@yahoo.com.tw" , :prompt=>'admin123' )
+    #                   :email =>"user#{uur}@yahoo.com.tw" ,
+    #                   :prompt=>'admin123' )
     # end
 
 
@@ -163,7 +164,7 @@ class UsersController < ApplicationController
             @roles = Role.live
             @trades = Trade.sorted
             @sotre_area = StoreArea.all
-            
+
             render action: 'new'
 
         end

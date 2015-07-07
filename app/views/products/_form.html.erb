@@ -227,26 +227,18 @@
 
                           <div class="col-xs-4">
                               <label for="">前置時間</label>
-                              <%= f.text_field :head_date , :class=>'form-control' %>
+                              <%= f.date_field :head_date , :class=>'form-control' %>
                           </div>
 
 
                           <div class="col-xs-4">
-                              <label for="">案全存量</label>
-                              <%= f.text_field :safe_save , :class=>'form-control' %>
+                              <label for="">安全存量</label>
+                              <%= f.text_field :safe_save , :class=>'form-control' ,:id => 'safe_save' %>
                           </div>
-
-
-
-
-
-
 
                           <div class="col-xs-4">
                               <label for="">標準庫位</label>
-
                               <%= f.select :standard_store_area, @store_areas.map {|sa| [sa.area_name , sa.area_id ] } ,{:include_blank =>'-------' ,  :selected =>@product.standard_store_area} ,:class=>'form-control' %>
-
                           </div>
 
                           <!---->
@@ -308,6 +300,19 @@
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
   $('document').ready(function(){
+
+    $('#safe_save').blur(function(){
+        var _tv1 = $(this).val(  ) ;
+
+        var _tv2 = isInteger(_tv1);
+        if( _tv2 ){
+        }else{
+          alert('請輸入數字');
+          $(this).val(0);
+        }
+
+    });
+
     var errors_msg =$('#error_explanation').html();
 
     if( errors_msg.length > 3 ){
@@ -316,7 +321,16 @@
     }
 
 
+
+
+
   })
+
+
+  function isInteger(s){
+    return Math.ceil(s) == Math.floor(s);
+}
+
 </script>
 
 </div>

@@ -1,12 +1,18 @@
- 
 <%= render 'form' %>
-
-
 
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-  $('document').ready(function(){
 
+
+function validateEmail(email) {
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(email);
+}
+
+
+
+  $('document').ready(function(){
+    // alert( $.now() );
           //帳號檢查
           $('#username').blur(function(){
             var username = $(this).val();
@@ -25,7 +31,7 @@
                 );
 
             }else{
-              $('#username').focus();
+              // $('#username').focus();
               alert('帳號要大於五個字元！');
             }
 
@@ -33,44 +39,56 @@
 
           //check email
           $('#email').blur(function(){
-
+            
+            var email_vali = validateEmail( $(this).val() );
             var email = $(this).val();
 
-            if(email.length >1 ){
-                $.post( '/check_email', { 'email': email },
-                  function( data ) {
+            if(email_vali){
 
-                      if( data == 'n' ){
-                        alert('email可以使用！');
-                      }else if(data == 'y'){
-                        alert('email己有人使用請重新輸入！');
-                        $('#email').val('').focus() ;
+                if(email.length >5 ){
+
+                    $.post( '/check_email', { 'email': email },
+                      function( data ) {
+                          if( data == 'n' ){
+                              alert('email可以使用！');
+                          }else if( data == 'y'){
+                              alert('email己有人使用請重新輸入！');
+                              $('#email').val('').focus();
+                          }
+
                       }
+                    );
 
-                  }
-                );
+                }else{
+                  alert('e-mail要大於五個字元！');
+                }
 
             }else{
-
-              $('#email').focus();
-              // alert('帳號要大於五個字元！');
+              alert('email格式錯誤!!!');
             }
-
           })
 
+          $('#name').blur(function(){
+                var _val = $(this).val();
+                $('#boss').val( $(this).val() );
+          });
 
+          $('#company_address').blur(function(){
+                var _val = $(this).val();
+                $('#send_address').val( $(this).val() );
+          });
 
           $('#forget_pas').blur(function(){
 
-            var forget_pas = $(this).val();
+              var forget_pas = $(this).val();
 
-            if(forget_pas.length >2 ){
+              if(forget_pas.length >2 ){
 
-            }else{
+              }else{
 
-              $('#forget_pas').focus();
-              // alert('帳號要大於五個字元！');
-            }
+                $('#forget_pas').focus();
+                // alert('帳號要大於五個字元！');
+              }
 
           })
 

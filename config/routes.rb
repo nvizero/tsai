@@ -1,5 +1,7 @@
 Tsai::Application.routes.draw do
 
+  resources :contactus
+
   resources :user_belongs
 
   resources :order_by_products

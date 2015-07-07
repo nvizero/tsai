@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   validates :prompt,     :presence => { :message => "密碼提示不能空白" }
   validates :username,  :presence => { :message => "帳號－不能空白" } ,
                         :uniqueness => { :message => "帳號－有重複,請重新輸入" },
-                        :length => {:minimum => 5, :maximum => 8,:message => "帳號-要6到8個字元"}
+                        :length => {:minimum => 5,:message => "帳號-要6到8個字元"}
 
   validates :name,  :presence => { :message => "姓名－不能空白" }
 

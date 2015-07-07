@@ -20,11 +20,20 @@ class UserMailer < ActionMailer::Base
   end
 
   def forget_pas(user , str)
-
     @stri = str
     @u = user
     @msg1 = '您的密碼己變更'
     mail(:to =>@u.email, :subject => @u.name+"您好!您的密碼己變更!")
+  end
+
+
+  def contact_us(_data)
+      @u = _data
+      mail(:to =>'withvictor@gmail.com', :subject => _data.title )
+  end
+
+  def system_repeat( _data )
+      mail(:to => _data.email , :subject => _data.title )
   end
 
 

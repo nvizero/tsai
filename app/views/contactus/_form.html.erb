@@ -1,0 +1,63 @@
+<%= form_for(@contactu) do |f| %>
+  <% if @contactu.errors.any? %>
+    <div id="error_explanation">
+      <% @contactu.errors.full_messages.each do |msg| %>
+        <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
+      <% end %>
+
+    </div>
+  <% end %>
+
+
+<%= render 'comm/ckbox' , :mss => @mss%>
+
+
+  <div class="field">
+    <%= f.label :title , '標題' %><br>
+    <%= f.text_field :title %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :email , 'E-Mail' %><br>
+    <%= f.text_field :email %>
+  </div>
+
+
+
+  <div class="field">
+    <%= f.label :content , '內容'%><br>
+    <%= f.text_area :content %>
+  </div>
+
+
+  <div class="box-footer">
+      <button type="submit" class="btn btn-primary">確定</button>
+      <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
+  </div>
+
+<% end %>
+
+
+
+
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    if ($('textarea').length > 0) {
+        var data = $('textarea');
+        $.each(data, function(i) {
+
+            CKEDITOR.replace(data[i].id);
+        });
+    }
+
+    var errors_msg =$('#error_explanation').html();
+
+    if( errors_msg.length > 3 ){
+      $('#ckbox-modal').modal('show');
+    }
+
+});
+</script>

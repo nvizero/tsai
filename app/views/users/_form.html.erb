@@ -12,6 +12,16 @@
 
 <%= render 'comm/ckbox' , :mss => @mss%>
 
+<!--
+<link rel="stylesheet" href="/datepicker/documents/css/reset.css"/>
+<link rel="stylesheet" href="/datepicker/css/BeatPicker.min.css"/>
+<link rel="stylesheet" href="/datepicker/documents/css/demos.css"/>
+<link rel="stylesheet" href="/datepicker/documents/css/prism.css"/>
+<script src="/datepicker/js/jquery-1.11.0.min.js"></script>
+<script src="/datepicker/js/BeatPicker.min.js"></script>
+<script src="/datepicker/documents/js/prism.js"></script>
+-->
+
 
 <section class="content">
       <div class="row">
@@ -26,8 +36,6 @@
 
 
                     <div class="box-body">
-
-
 
                         <div class="form-group <% if !@user.errors[:username].blank? %> has-error <% end %> ">
 
@@ -56,14 +64,13 @@
 
                         <div class="form-group <% if !@user.errors[:role_id].blank? %> has-error <% end %> ">
                           <font color="red" ><%= f.label :role_id ,'角色',:for =>'exampleInputEmail1' %></font><br>
-                          <%= f.select(:role_id, @roles.map {|m| [m.title , m.id] } , {:include_blank =>'-------' ,  :selected =>@user.role_id}) %>
-
+                          <%= f.select(:role_id, @roles.map {|m| [m.title , m.id] } , {:include_blank =>'-------' ,  :selected =>( !@user.role_id.nil? ) ? @user.role_id : 2      }) %>
                         </div>
 
                         <div class="form-group <% if !@user.errors[:role_id].blank? %> has-error <% end %> ">
 
                           <font color="red" ><%= f.label :vip_access , 'VIP 權限',:for =>'exampleInputEmail1' %></font><br>
-                          <%= f.select(:vip_access,  @access_sel[0].collect {|m| [m[1] , m[0] ] } , {:include_blank =>'-------' ,  :selected =>@user.vip_access} , :id => 'vip_access' )%>
+                          <%= f.select(:vip_access,  @access_sel[0].collect {|m| [m[1] , m[0] ] } , {:include_blank =>'-------' ,  :selected => (!@user.vip_access.nil?) ? @user.vip_access : 'normal' } , :id => 'vip_access' )%>
 
                           <br>
 
@@ -88,6 +95,7 @@
 
                         <div class="form-group <% if !@user.errors[:name].blank? %> has-error <% end %> ">
                           <font color="red" ><%= f.label :name ,'姓名',:for =>'exampleInputEmail1' %></font><br>
+
                           <%= f.text_field :name, :class=>'form-control', :id=>"name", :placeholder=>"輪入姓名" %>
                         </div>
 
@@ -112,21 +120,22 @@
                         </div>
 
                         <div class="form-group">
-                          <%= f.label  :send_address,'送貨住址' ,:for =>'exampleInputEmail1' %><br>
-                          <%= f.text_field :send_address , :class=>'form-control', :id=>"send_address", :placeholder=>"送貨住址" %>
+                            <%= f.label  :send_address , '送貨住址' ,:for =>'exampleInputEmail1' %><br>
+                            <%= f.text_field :send_address , :class=>'form-control', :id=>"send_address", :placeholder=>"送貨住址" %>
                         </div>
 
                         <div class="form-group">
-                          <%= f.label  :check_date,'簽約日期'  ,:for =>'exampleInputEmail1' %><br>
-                          <%= f.text_field :check_date, :class=>'form-control', :id=>"check_date", :placeholder=>"簽約日期" %>
+
+                            <%= f.label  :check_date , '簽約日期'  ,:for =>'exampleInputEmail1' %>
+                            <br>
+                            <%= f.date_field :check_date, :class=>'form-control', :id=>"check_date", :placeholder=>"簽約日期" , :value => ( Time.now.strftime("%Y-%m-%d") ) %>
+
                         </div>
 
                         <div class="form-group  <% if !@user.errors[:prompt].blank? %> has-error <% end %> ">
-                          <font color="red" > <%= f.label  :prompt,'忘記密碼提示' , :for =>'exampleInputEmail1' %> </font>
-                          <%= f.text_field :prompt, :class=>'form-control', :id=>"prompt", :placeholder=>"忘記密碼提示" %>
-
+                            <font color="red" > <%= f.label  :prompt,'忘記密碼提示' , :for =>'exampleInputEmail1' %> </font>
+                            <%= f.text_field :prompt, :class=>'form-control', :id=>"prompt", :placeholder=>"忘記密碼提示" %>
                         </div>
-
 
                         <% if check_user_is_new @user %>
                           <div class="form-group  <% if !flash[:pas].blank? %> has-error <% end %> ">
@@ -150,18 +159,10 @@
                           </div>
                         <% end %>
 
-
-
-
-
                         <div class="form-group">
                           <%= f.label  :text,'備註' ,:for =>'exampleInputEmail1' %><br>
                           <%= f.text_area :text , :class=>'form-control', :id=>"text", :placeholder=>"備註" %>
                         </div>
-
-
-
-
 
                     </div><!-- /.box-body -->
 
@@ -178,6 +179,10 @@
 
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
+
+
+
+
   $('document').ready(function(){
 
     $('#vip_access').change(function(){

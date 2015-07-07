@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150626073307) do
+ActiveRecord::Schema.define(version: 20150706052432) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -40,6 +40,18 @@ ActiveRecord::Schema.define(version: 20150626073307) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+
+  create_table "contactus", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "email"
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "id_seqs", primary_key: "pre_id", force: true do |t|
     t.string   "seq"

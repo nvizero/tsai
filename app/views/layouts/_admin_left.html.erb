@@ -109,14 +109,20 @@
           </li>
 
             <% if judgment_access 'msgs/index' %>
-                <li >
+                <li>
                     <a href="/msgs">
                         <span>最近消息</span>
                     </a>
                 </li>
             <% end %>
 
-
+            <% if judgment_access 'contactus/index' %>
+                <li >
+                    <a href="/contactus">
+                        <span>聯絡我們列表</span>
+                    </a>
+                </li>
+            <% end %>
 
             <li id="hiden">
                 <a href="pages/widgets.html">
