@@ -128,7 +128,7 @@
 
                             <%= f.label  :check_date , '簽約日期'  ,:for =>'exampleInputEmail1' %>
                             <br>
-                            <%= f.date_field :check_date, :class=>'form-control', :id=>"check_date", :placeholder=>"簽約日期" , :value => ( Time.now.strftime("%Y-%m-%d") ) %>
+                            <%= f.text_field :check_date, :class=>'form-control', :id=>"check_date", :placeholder=>"簽約日期" , :value => ( Time.now.strftime("%Y-%m-%d") ) %>
 
                         </div>
 
@@ -184,6 +184,8 @@
 
 
   $('document').ready(function(){
+    
+    $("#check_date").datepicker({ format: 'yyyy-mm-dd'});
 
     $('#vip_access').change(function(){
 

@@ -67,53 +67,36 @@
 
   <div class="col-xs-6">
     <h3>
-      <font color="red" >
-          <label for="">
 
-                入庫/出貨分類
-
-          </label>
-      </font>
-
+        <font color="red" ><label for="">入庫/出貨分類</label></font>
 
         <%=f.hidden_field :in_or_out , :value=>@whered , :id=>'in_or_out' %>
-
         <input type="hidden" name="type" value="<%=@whered %>">
-
         <%= f.select(:in_out_type_id, @in_out_cates.collect { |io| [ io.title , io.id ] }, {   :selected =>@product_in_out.in_out_type_id  }   , :id=>'in_out_type_id' ,:class=>'form-control' ) %>
     </h3>
   </div>
 
 
-
   <div class="col-xs-6">
-
-          <h3>
+        <h3>
             <font color="red" ><%= f.label :num , '庫位' %></font><br>
             <%= f.select(:store_area_id, @store_areas.collect {|p| [ p.area_name , p.area_id ] } , { :selected =>@product_in_out.store_area_id } , :class=>'form-control' ,:id=>'store_area_id' ) %>
-          </h3>
-
+        </h3>
   </div>
 
   <div class="col-xs-6">
-
-          <h3>
+        <h3>
             <font color="red" ><%= f.label :num , '等級' %></font><br>
-
             <%= f.select(:level , @levels[0].collect {|lp| ["#{lp[1]}", lp[0] ]} , {:include_blank =>'-------' , :selected =>@product_in_out.level } , :class=>'form-control' ,:id =>'level' ) %>
-          </h3>
-
+        </h3>
   </div>
 
 
   <div class="col-xs-6">
-
-          <h3>
+        <h3>
             <font color="red" ><%= f.label :num , '有效期限' %></font><br>
-            <%= f.date_field :save_date , :class=>'form-control' ,:id=>"save_date" %>
-
-          </h3>
-
+            <%= f.text_field :save_date , :class=>'form-control' ,:id=>"save_date" %>
+        </h3>
   </div>
 
   <div class="col-xs-6">
@@ -154,9 +137,9 @@
 <script type="text/javascript">
   $('document').ready(function(){
 
-    // $('#product_id').click(function(){
-    //     alert( $('#save_date').val()   );
-    // });
+
+    $("#save_date").datepicker( { format: 'yyyy-mm-dd'} );
+
 
     $('#product_id').change(function(){
         var _id = $(this).val();

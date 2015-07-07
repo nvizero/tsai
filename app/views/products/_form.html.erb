@@ -227,7 +227,7 @@
 
                           <div class="col-xs-4">
                               <label for="">前置時間</label>
-                              <%= f.date_field :head_date , :class=>'form-control' %>
+                              <%= f.text_field :head_date , :class=>'form-control'  , :id => 'head_date' %>
                           </div>
 
 
@@ -270,27 +270,26 @@
 
 
 
-                    <div class="row">
-                        <div class="col-xs-12">
-                          <div class="form-group <% if !@product.errors[:content].blank? %> has-error <% end %> ">
-                            <%= f.label :content , '備註' %>
-                            <%= f.text_area :content, :class=>'form-control' %>
-                          </div>
-                        </div>
-
-                    </div>
-
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group <% if !@product.errors[:content].blank? %> has-error <% end %> ">
+              <%= f.label :content , '備註' %>
+              <%= f.text_area :content, :class=>'form-control' %>
+            </div>
+        </div>
+    </div>
 
 
 
-    <%= f.hidden_field :user_id , :value=>session[:user_id] %>
+
+  <%= f.hidden_field :user_id , :value=>session[:user_id] %>
 
 
   <div class="box-footer">
-
       <button type="submit" class="btn btn-primary">確定</button>
       <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
   </div>
+
 <% end %>
 
 </div>
@@ -301,6 +300,9 @@
 <script type="text/javascript">
   $('document').ready(function(){
 
+    $( "#head_date" ).datepicker({ format: 'yyyy-mm-dd'});
+    // $( "#head_date" ).datepicker();
+
     $('#safe_save').blur(function(){
         var _tv1 = $(this).val(  ) ;
 
@@ -308,11 +310,22 @@
         if( _tv2 ){
         }else{
           alert('請輸入數字');
-          $(this).val(0);
+          $(this).val('');
         }
 
     });
 
+    $('#product_code').blur(function(){
+
+      var text = $(this).val();
+      if(text.match(/\d/) && text.match(/[a-z]/i) && !text.match(/[^a-z0-9]/)){
+        // alert('ok');
+      }else{
+        alert('只能輸入英文跟數字');
+        $(this).val('');
+      }
+
+    });
     var errors_msg =$('#error_explanation').html();
 
     if( errors_msg.length > 3 ){
@@ -320,6 +333,22 @@
       $('#ckbox-modal').modal('show');
     }
 
+
+    /**
+  * 驗證數字
+  * (只能輸入數字)
+  */
+  function checknum(str){
+    return str.match(/^[0-9]*$/);
+  }
+
+ /**
+  * 驗證26個英文字母
+  * (只能輸入英文字母)
+  */
+  function checkb(str){
+    return str.match(/^[a-zA-Z]*$/);
+  }
 
 
 
