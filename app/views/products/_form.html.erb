@@ -339,7 +339,9 @@
   * (只能輸入數字)
   */
   function checknum(str){
-    return str.match(/^[0-9]*$/);
+    // return str.match(/^[0-9]*$/);
+    var   r   =   /^[0-9]*[1-9][0-9]*$/　　//正整數
+    return r.test(str);
   }
 
  /**

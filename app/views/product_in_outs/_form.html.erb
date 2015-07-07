@@ -137,6 +137,16 @@
 <script type="text/javascript">
   $('document').ready(function(){
 
+    $('#num').blur(function(){
+        var _vl = $(this).val()  ;
+        var _vl2 = checknum(_vl);
+        
+        if(!_vl2){
+            alert('請輸入正整數');
+            $('#num').val('');
+        }
+    });
+
 
     $("#save_date").datepicker( { format: 'yyyy-mm-dd'} );
 
@@ -215,7 +225,16 @@
 
 
 
-  })
+  });
+
+
+  function checknum(str){
+    // return str.match(/^[0-9]*$/);
+    var   r   =   /^[0-9]*[1-9][0-9]*$/　　//正整數
+    return r.test(str);
+
+  }
+
 </script>
 
 </div>
