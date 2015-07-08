@@ -43,7 +43,7 @@
   <thead>
     <tr>
       <th>單號</th>
-      <th>狀態</th>
+      <th>付款方式</th>
       <th>訂購者</th>
       <th></th>
     </tr>
@@ -55,8 +55,8 @@
       <tr>
         <td><%= product_order.code %></td>
         <td>
-          <% if product_order.order_state %>
-              <%= product_order.order_state.title %>
+          <% if product_order.pay_type %>
+              <%= product_order.pay_type.content %>
           <% end %>
         </td>
         <td>

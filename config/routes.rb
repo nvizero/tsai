@@ -1,5 +1,7 @@
 Tsai::Application.routes.draw do
 
+  resources :pay_types
+
   resources :contactus
 
   resources :user_belongs

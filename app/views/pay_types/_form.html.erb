@@ -1,0 +1,30 @@
+<%= form_for(@pay_type) do |f| %>
+  <% if @pay_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pay_type.errors.count, "error") %> prohibited this pay_type from being saved:</h2>
+
+      <ul>
+      <% @pay_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="col-xs-12 form-group">
+    <%= f.label :code ,'代碼' %>     <br>
+    <%= f.text_field :code , :class=>'form-control' %>
+  </div>
+
+  <div class="col-xs-12 form-group">
+    <%= f.label :content ,'說明' %>  <br>
+    <%= f.text_field :content , :class=>'form-control' %>
+  </div>
+
+  <div class="col-xs-12">
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">確定</button>
+            <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
+        </div>
+  </div>
+<% end %>

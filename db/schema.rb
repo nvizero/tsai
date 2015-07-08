@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150706052432) do
+ActiveRecord::Schema.define(version: 20150707080005) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -111,10 +111,24 @@ ActiveRecord::Schema.define(version: 20150706052432) do
     t.datetime "stoped_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "price"
+    t.integer  "total"
   end
 
   create_table "order_states", force: true do |t|
     t.string   "title"
+    t.string   "state"
+    t.integer  "create_user_id"
+    t.integer  "modify_user_id"
+    t.integer  "stop_user_id"
+    t.datetime "stoped_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pay_types", force: true do |t|
+    t.string   "code"
+    t.string   "content"
     t.string   "state"
     t.integer  "create_user_id"
     t.integer  "modify_user_id"
@@ -154,6 +168,10 @@ ActiveRecord::Schema.define(version: 20150706052432) do
     t.datetime "stoped_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "order_day"
+    t.integer  "total"
+    t.integer  "pay_type_id"
+    t.date     "future_day"
   end
 
   create_table "product_verifies", force: true do |t|

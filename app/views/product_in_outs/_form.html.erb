@@ -140,8 +140,9 @@
     $('#num').blur(function(){
         var _vl = $(this).val()  ;
         var _vl2 = checknum(_vl);
-        
+
         if(!_vl2){
+          
             alert('請輸入正整數');
             $('#num').val('');
         }

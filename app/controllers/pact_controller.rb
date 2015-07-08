@@ -82,25 +82,38 @@ class PactController < ApplicationController
 
 
   def post_order_data
-
+    date_and_totalPrice = params[:date_and_totalPrice]
     member_id = params[:member_id]
     code = params[:code]
-    p_str = params[:p_str]
+    all_str = params[:all_str]
 
     order_flag = false
 
     qq = ''
+    total_price = 0
 
-    p_str.split('/').each do |pr|
 
-      product_num   = pr.split(',')
-      product_id    = product_num[0].split('p_')
+    all_str.split(',').each do |pr|
 
-      if !product_id[1].nil? && !product_num[1].nil?
+      product_data      =  pr.split('/')
+      product_id        =  product_data[0]
+      product_num       =  product_data[1]
+      product_price     =  product_data[2]
+      product_total     =  product_data[3]
+
+      # logger.info  "--------#{product_data}------"
+
+      if !product_id.nil? && !product_num.nil? && !product_price.nil? && !product_total.nil?
         order_flag = true
-        OrderByProduct.create(:product_id => product_id[1],
-                              :num => product_num[1],
-                              :code=>code)
+
+        total_price += product_total.to_i
+
+        OrderByProduct.create(:product_id => product_id,
+                              :num   => product_num,
+                              :price => product_price,
+                              :total => product_total,
+                              :code  => code,
+                              :create_user_id => session[:user_id] )
       end
 
 
@@ -109,12 +122,20 @@ class PactController < ApplicationController
 
 
     if order_flag
+
+      dataInfo = date_and_totalPrice.split('/')
+
       ProductOrder.create(  :order_state_id=>1,
                             :state=>'Y',
                             :member_id => member_id,
                             :code => code,
+                            :total => dataInfo[1],
+                            :future_day => dataInfo[0],
+                            :pay_type_id => dataInfo[2],
+                            :order_day => dataInfo[3],
                             :create_user_id => session[:user_id])
     end
+
     render :text => order_flag
     # render :text => params
 
@@ -139,7 +160,7 @@ class PactController < ApplicationController
     member_id = params[:member_id]
     code = params[:code]
 
-    logger.info  " #{params} "
+    # logger.info  " #{params} "
     pr_od = ProductOrder.find_by_code(code)
     pr_od.member_id = member_id
     pr_od.save

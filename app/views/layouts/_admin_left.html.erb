@@ -220,6 +220,9 @@
                         <li><a href="/order_states"><i class="fa fa-angle-double-right"></i>訂單狀態</a></li>
                     <% end %>
 
+                    <% if judgment_access 'pay_types/index' %>
+                        <li><a href="/pay_types"><i class="fa fa-angle-double-right"></i>付款方式</a></li>
+                    <% end %>
 
 
 

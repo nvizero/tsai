@@ -66,13 +66,14 @@ class ProductOrdersController < ApplicationController
 
   # GET /product_orders/new
   def new
+      @pay_types = PayType.live
       @product_order = ProductOrder.new
   end
 
   # GET /product_orders/1/edit
   def edit
       # order_by_products
-
+      @pay_types = PayType.live
       @orderInfos = OrderByProduct.where(:code=>@product_order.code)
 
       @pro_infos = []

@@ -1,7 +1,7 @@
 class ProductOrder < ActiveRecord::Base
 
   paginates_per 10
-
+  belongs_to :pay_type
   belongs_to :member
   belongs_to :order_state
 
