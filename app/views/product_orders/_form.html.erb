@@ -34,7 +34,7 @@
                       <%=f.hidden_field :code , :id=>'code' %>
                   <% else %>
                       <%= hide_code = "#{get_random_date}#{len_s}"%>
-                      <%=f.hidden_field :code ,:value => hide_code , :id=>'code' %>
+                      <%=f.hidden_field :code ,:value => hide_code , :id=>'code'  %>
                   <% end %>
                 </h4>
             </div>
@@ -44,9 +44,9 @@
                 <h4 style="color:blue;">
 
                   <% if !@product_order.order_day.nil? %>
-                      <input name="order_day" id="order_day" value="<%= @product_order.order_day %>" >
+                      <input name="order_day" id="order_day" value="<%= @product_order.order_day %>" class="form-control" >
                   <% else %>
-                      <input name="order_day" id="order_day" value="<%=Time.now.strftime("%Y-%m-%d")%>" >
+                      <input name="order_day" id="order_day" value="<%=Time.now.strftime("%Y-%m-%d")%>" class="form-control" >
                   <% end %>
                 </h4>
             </div>
@@ -54,7 +54,7 @@
             <div class="col-xs-12">
                 <font color="red" >付款方式</font>
                 <h4 style="color:blue;">
-                  <%= f.select(:pay_type_id , @pay_types.collect{ |pay| [pay.content , pay.id  ] } , { :selected =>@product_order.pay_type_id  } , :id=>'pay_type_id' ,:class=>'form-group'  )%>
+                  <%= f.select(:pay_type_id , @pay_types.collect{ |pay| [pay.content , pay.id  ] } , { :selected =>@product_order.pay_type_id  } , :id=>'pay_type_id' ,:class=>'form-control'  )%>
                   <!-- <input name="pay_type_id" id="pay_type_id" value="<%=Time.now.strftime("%Y-%m-%d")%>" > -->
                 </h4>
             </div>
@@ -70,7 +70,23 @@
                         <% @product_order.member_id %>
                         <%= f.label :member_id, '客戶' %>
                   </font>
-                  <%= f.select(:member_id , @members.collect{ |mem| [mem.name , mem.id  ] } , { :selected =>@product_order.member_id  },:id=>'member_id' ,:class=>'form-group'  )%>
+                  <%= f.select(:member_id , @members.collect{ |mem| [mem.name , mem.id  ] } , { :selected =>@product_order.member_id  },:id=>'member_id' ,:class=>'form-control'  )%>
+            </div>
+
+
+
+            <div class="col-xs-12">
+              <h4 >
+                <font color="red" >預定日期</font>
+                </h4>
+                <h4 style="color:blue;">
+                    <% if !@product_order.future_day.nil? %>
+                        <input name="future_day" id="future_day" value="<%= @product_order.future_day %>" class='form-control' >
+                    <% else %>
+                        <input name="future_day" id="future_day" value="<%=Time.now.strftime("%Y-%m-%d")%>" class='form-control' >
+                    <% end %>
+
+                </h4>
             </div>
 
             <div class="col-xs-12">
@@ -78,19 +94,6 @@
                 <input type="hidden" id="all_total" value="" >
 
                   <h4><span id="show_all_total"><%=@product_order.total%></span></h4>
-            </div>
-
-            <div class="col-xs-12">
-                <font color="red" >預定日期</font>
-                
-                <h4 style="color:blue;">
-                    <% if !@product_order.future_day.nil? %>
-                        <input name="future_day" id="future_day" value="<%= @product_order.future_day %>" >
-                    <% else %>
-                        <input name="future_day" id="future_day" value="<%=Time.now.strftime("%Y-%m-%d")%>" >
-                    <% end %>
-
-                </h4>
             </div>
 
         </div>
@@ -145,13 +148,10 @@
           <tr>
               <th><%=ci+=1 %></th>
               <th><%=@pro_infos[info.product_id]%></th>
-              <td><input name="pids_<%=info.product_id %>"  class="pids_<%=info.product_id %>" value="<%=info.num %>"     onblur="calNum(<%=info.product_id %>)"  alt="<%=info.product_id %>" ></td>
+              <td><input name="p_<%=info.product_id %>"  class="pids_<%=info.product_id %>" value="<%=info.num %>"     onblur="calNum(<%=info.product_id %>)"  alt="<%=info.product_id %>" ></td>
               <td><input name="price_<%=info.product_id %>" class="price_<%=info.product_id %>" value="<%=info.price %>"  onblur="calNum(<%=info.product_id %>)"  ></td>
               <td><span  class="total_<%=info.product_id %>" ><%=info.total%></span> </td>
           </tr>
-
-
-
 
         <%
               end
@@ -239,10 +239,10 @@ $(document).ready(function() {
       // pay_type_id
       // order_day
 
-      var date_and_totalPrice = $("#future_day").val() + '/' +
-                                $("#all_total").val() + '/' +
-                                $("#pay_type_id").val() + '/' +
-                                $("#order_day").val()  ;
+      // var date_and_totalPrice = $("#future_day").val() + '/' +
+      //                           $("#all_total").val() + '/' +
+      //                           $("#pay_type_id").val() + '/' +
+      //                           $("#order_day").val()  ;
       // alert(date_and_totalPrice);
 
 
@@ -257,7 +257,7 @@ $(document).ready(function() {
                 { 'member_id' : $("#member_id").val() ,
                   'code'      : $("#code").val() ,
                   'all_str'   : all_str,
-                  'date_and_totalPrice':date_and_totalPrice
+                  'date_and_totalPrice' : date_and_totalPrice
                   },
                 function(d){
 
@@ -290,51 +290,129 @@ $(document).ready(function() {
     //update
     $('#finial').click(function(){
         //產品＆數量
-        var  new_str = '';
-        var  update_str = '';
+
+        var _flag = true;
+
+        //產品＆數量
+
+        var  num_str    = '';
+        var  price_str  = '';
+        var  total_str  = '';
+        var  all_str    = '';
+        var  show_all_total    = 0;
 
 
+        $('input[name^="p_"]').each(function(){
 
-        $('input').each(function(){
+              num_str += $(this).attr('name') +',' + $(this).val() +'/';
 
-            if( $(this).attr('class')=='pids' ){
-              new_str += $(this).attr('name') +',' + $(this).val() +'/';
-            }
+              var ThisId    =  $(this).attr('alt') ;
+              var ThisNum   =  $('.pids_'+ThisId  ).val() ;
+              var ThisPrice =  $('.price_'+ThisId ).val() ;
+              var ThisTotal =  $('.total_'+ThisId ).text() ;
 
-            if( $(this).attr('class')=='update' ){
-              update_str += $(this).attr('name') +',' + $(this).val() +'/';
-            }
+              all_str += ThisId + '/' +ThisNum+ '/' +ThisPrice+ '/' +ThisTotal +',';
+
+              show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
+
+
+              if( $(this).val()=='' ){
+                  _flag=false;
+              }
 
         });
 
 
 
-        $.post( '/update_order_data',
-              { 'member_id' : $("#member_id").val() ,
-                'code' : $("#code").val() ,
-                'new':new_str,
-                'update':update_str
-              },
-              function(d){
-                //  alert(d);
 
-                if(d=='true'){
 
-                  $('#order-success-modal').modal('show');
+        var mem_id  =  $("#member_id").val();
 
-                  $("#a_submit").click(function(){
-                      $('#order-success-modal').modal("hide")
-                      var url ='/product_orders';
-                      document.location.href=url;
+        // 總金額
+        $("#all_total").val( show_all_total );
+        // 訂單日期
+        $("#future_day").val();
+
+        // pay_type_id
+        // order_day
+
+        var date_and_totalPrice = $("#future_day").val() + '/' +
+                                  $("#all_total").val() + '/' +
+                                  $("#pay_type_id").val() + '/' +
+                                  $("#order_day").val()  ;
+        // alert(date_and_totalPrice);
+
+
+
+        if( mem_id == '' || mem_id==null || (_flag==false ) ){
+
+            alert('訂購失敗!');
+
+        }else{
+
+          // $.post( '/update_order_data',
+
+          // alert(
+          //       'all_str\n'             +   all_str  +
+          //       'date_and_totalPrice\n' +   date_and_totalPrice
+          //       );
+
+            $.post( '/update_order_data',
+                  { 'member_id' : $("#member_id").val() ,
+                    'code'      : $("#code").val() ,
+                    'all_str'   : all_str,
+                    'date_and_totalPrice':date_and_totalPrice
+                    },
+                  function(d){
+
+                    if( d == 'true' ){
+
+                        $('#order-success-modal').modal('show');
+
+                        $("#a_submit").click(function(){
+                            //訂講成功
+                            $('#order-success-modal').modal("hide");
+                            var url ='/product_orders';
+                            document.location.href=url;
+
+                        });
+
+                    }else{
+                        alert('訂購失敗!');
+                    }
+
                   });
 
-                }else{
+          }
 
-                  alert('false love');
 
-                }
 
-              });
+        // $.post( '/update_order_data',
+        //       { 'member_id' : $("#member_id").val() ,
+        //         'code' : $("#code").val() ,
+        //         'new':new_str,
+        //         'update':update_str
+        //       },
+        //       function(d){
+        //         //  alert(d);
+        //
+        //         if(d=='true'){
+        //
+        //           $('#order-success-modal').modal('show');
+        //
+        //           $("#a_submit").click(function(){
+        //               $('#order-success-modal').modal("hide")
+        //               var url ='/product_orders';
+        //               document.location.href=url;
+        //           });
+        //
+        //         }else{
+        //
+        //           alert('false love');
+        //
+        //         }
+        //
+        //       });
       });
 
   }

@@ -156,42 +156,127 @@ class PactController < ApplicationController
 
   def update_order_data
 
-
+    date_and_totalPrice = params[:date_and_totalPrice]
     member_id = params[:member_id]
     code = params[:code]
+    all_str = params[:all_str]
 
-    # logger.info  " #{params} "
-    pr_od = ProductOrder.find_by_code(code)
-    pr_od.member_id = member_id
-    pr_od.save
+    logger.info "//#{params}//"
 
-    d_new     = params[:new]
-    d_update  = params[:update]
-    dduu = ''
-    #新增的
-    d_new.split('/').each do |new_one|
 
-      product_num   =  new_one.split(',')
-      product_id    =  product_num[0].split('p_')
-      OrderByProduct.create(:product_id => product_id[1],
-                            :num => product_num[1],
-                            :code=>code)
+    order_flag = false
+
+    qq = ''
+    total_price = 0
+
+
+    all_str.split(',').each do |pr|
+
+      product_data      =  pr.split('/')
+      product_id        =  product_data[0]
+      product_num       =  product_data[1]
+      product_price     =  product_data[2]
+      product_total     =  product_data[3]
+
+      logger.info  "--------#{product_data}------"
+
+      if !product_id.nil? && !product_num.nil? && !product_price.nil? && !product_total.nil?
+
+        order_flag = true
+
+        total_price += product_total.to_i
+
+        # "users.name = ? OR users.name = ?", request.requester, request.regional_sales_mgr)
+        # orderPro = OrderByProduct.where(:product_id => product_id,:code  => code)
+        # logger.info  "--------#{code} , #{product_id}------ "
+
+        orderPro = OrderByProduct.where(:code =>code ,  :product_id => product_id).first
+
+        if !orderPro.nil?
+
+            orderPro.num   =  product_num
+            orderPro.price =  product_price
+            orderPro.total =  product_total
+            orderPro.modify_user_id = session[:user_id]
+            orderPro.save
+        else
+            OrderByProduct.create(:product_id => product_id,
+                                  :num   => product_num,
+                                  :price => product_price,
+                                  :total => product_total,
+                                  :code  => code,
+                                  :create_user_id => session[:user_id] )
+        end
+
+        # OrderByProduct.create(:product_id => product_id,
+        #                       :num   => product_num,
+        #                       :price => product_price,
+        #                       :total => product_total,
+        #                       :code  => code,
+        #                       :create_user_id => session[:user_id] )
+      end
+
+
     end
 
-    #更新
-    d_update.split('/').each do |up_date|
 
-      pInfo   = up_date.split(',')
-      dduu += "#{pInfo[0]}- #{pInfo[1]} "
 
-      # product_id    = product_num[0].split('p_')
-      obp = OrderByProduct.find(pInfo[0].to_i)
-      obp.num =pInfo[1].to_i
-      obp.save
+    if order_flag
+
+      dataInfo = date_and_totalPrice.split('/')
+      proOrder = ProductOrder.find_by_code(code)
+
+
+
+      proOrder.order_state_id = 1
+      proOrder.member_id = member_id
+      proOrder.code = code
+      proOrder.total = dataInfo[1].to_i
+      proOrder.future_day = dataInfo[0]
+      proOrder.pay_type_id = dataInfo[2].to_i
+      proOrder.order_day = dataInfo[3]
+      proOrder.modify_user_id = session[:user_id]
+      proOrder.save
 
     end
 
-    render :text => 'true'
+    render :text => order_flag
+
+    # member_id = params[:member_id]
+    # code = params[:code]
+    #
+    # # logger.info  " #{params} "
+    # pr_od = ProductOrder.find_by_code(code)
+    # pr_od.member_id = member_id
+    # pr_od.save
+    #
+    # d_new     = params[:new]
+    # d_update  = params[:update]
+    # dduu = ''
+    # #新增的
+    # d_new.split('/').each do |new_one|
+    #
+    #   product_num   =  new_one.split(',')
+    #   product_id    =  product_num[0].split('p_')
+    #   OrderByProduct.create(:product_id => product_id[1],
+    #                         :num => product_num[1],
+    #                         :code=>code)
+    # end
+    #
+    # #更新
+    # d_update.split('/').each do |up_date|
+    #
+    #   pInfo   = up_date.split(',')
+    #   dduu += "#{pInfo[0]}- #{pInfo[1]} "
+    #
+    #   # product_id    = product_num[0].split('p_')
+    #   obp = OrderByProduct.find(pInfo[0].to_i)
+    #   obp.num =pInfo[1].to_i
+    #   obp.save
+    #
+    # end
+    #
+    # render :text => 'true'
   end
 
 

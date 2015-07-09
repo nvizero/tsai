@@ -44,6 +44,7 @@
     <tr>
       <th>單號</th>
       <th>付款方式</th>
+      <th>總金額</th>
       <th>訂購者</th>
       <th></th>
     </tr>
@@ -59,6 +60,8 @@
               <%= product_order.pay_type.content %>
           <% end %>
         </td>
+
+        <td><%= product_order.total %></td>
         <td>
             <% product_order.member_id %>
             <%= product_order.member.name %>
