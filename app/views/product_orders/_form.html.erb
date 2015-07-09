@@ -40,7 +40,9 @@
             </div>
 
             <div class="col-xs-12">
+                <h4>
                 <font color="red" ><%= f.label :code , '訂單日期' %></font>
+                </h4>
                 <h4 style="color:blue;">
 
                   <% if !@product_order.order_day.nil? %>
@@ -52,7 +54,7 @@
             </div>
 
             <div class="col-xs-12">
-                <font color="red" >付款方式</font>
+                <h4><font color="red" >付款方式</font></h4>
                 <h4 style="color:blue;">
                   <%= f.select(:pay_type_id , @pay_types.collect{ |pay| [pay.content , pay.id  ] } , { :selected =>@product_order.pay_type_id  } , :id=>'pay_type_id' ,:class=>'form-control'  )%>
                   <!-- <input name="pay_type_id" id="pay_type_id" value="<%=Time.now.strftime("%Y-%m-%d")%>" > -->
@@ -66,18 +68,20 @@
         <div class="col-xs-6">
 
             <div class="col-xs-12">
+                <h4>
                   <font color="red" >
                         <% @product_order.member_id %>
                         <%= f.label :member_id, '客戶' %>
                   </font>
+                </h4>
                   <%= f.select(:member_id , @members.collect{ |mem| [mem.name , mem.id  ] } , { :selected =>@product_order.member_id  },:id=>'member_id' ,:class=>'form-control'  )%>
             </div>
 
 
 
             <div class="col-xs-12">
-              <h4 >
-                <font color="red" >預定日期</font>
+                <h4 >
+                  <font color="red" >預定日期</font>
                 </h4>
                 <h4 style="color:blue;">
                     <% if !@product_order.future_day.nil? %>
