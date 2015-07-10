@@ -44,12 +44,11 @@
                 <font color="red" ><%= f.label :code , '訂單日期' %></font>
                 </h4>
                 <h4 style="color:blue;">
-
-                  <% if !@product_order.order_day.nil? %>
-                      <input name="order_day" id="order_day" value="<%= @product_order.order_day %>" class="form-control" >
-                  <% else %>
-                      <input name="order_day" id="order_day" value="<%=Time.now.strftime("%Y-%m-%d")%>" class="form-control" >
-                  <% end %>
+                    <% if !@product_order.order_day.nil? %>
+                        <input name="order_day" id="order_day" value="<%= @product_order.order_day %>" class="form-control" >
+                    <% else %>
+                        <input name="order_day" id="order_day" value="<%=Time.now.strftime("%Y-%m-%d")%>" class="form-control" >
+                    <% end %>
                 </h4>
             </div>
 
@@ -126,7 +125,35 @@
 
 
 <input type="hidden" id="old_id" value="<%=@product_order.id%>">
+<table class="table table-bordered" id="products_select">
 
+  <thead>
+    </tr>
+        <th>項次產品名稱</th>
+        <th>訂購數量</th>
+        <th>單價</th>
+        <th>合計</th>
+    <tr>
+  </thead>
+    <tbody id="tbody">
+
+
+
+
+
+      <tr >
+          <th></th>
+          <th></th>
+          <td>
+              <input id="pedfr"  >
+          </td>
+          <td></td>
+          <td></td>
+      </tr>
+
+
+  </tbody>
+</table>
 
     <table class="table table-bordered" id="products_select">
 
@@ -149,8 +176,12 @@
 
         <input type="hidden" id="has_product_ids" value="<%=info.product_id%>">
 
-          <tr>
-              <th><%=ci+=1 %></th>
+          <tr id="tr_<%=@pro_infos[info.id]%>">
+              <th>
+                  <%=ci+=1 %>
+                  <a class="btn btn-danger btn-sm gasd" id="<%=@pro_infos[info.id]%>" > del </a>
+              </th>
+
               <th><%=@pro_infos[info.product_id]%></th>
               <td><input name="p_<%=info.product_id %>"  class="pids_<%=info.product_id %>" value="<%=info.num %>"     onblur="calNum(<%=info.product_id %>)"  alt="<%=info.product_id %>" ></td>
               <td><input name="price_<%=info.product_id %>" class="price_<%=info.product_id %>" value="<%=info.price %>"  onblur="calNum(<%=info.product_id %>)"  ></td>
@@ -179,10 +210,85 @@
   </div>
 <% end %>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<!--
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+-->
 
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+
+  var availableTutorials = [
+               <% @products.each do |pro| %>
+               "<%=pro.title%>",
+               <% end %>
+            ];
+            $( "#pedfr" ).autocomplete({
+               source: availableTutorials
+            });
+
+  //物件型式
+	// $( "#pedfr" )
+	//   .bind( 'focus', function(){
+  //
+	//   	// $(this).autocomplete("search");
+  //
+	//   }).bind( 'click', function(){
+  //
+	//   	// $(this).autocomplete("search");
+  //
+	//   } )
+	//   .autocomplete({
+	// 	minLength: 0,
+	// 	source: function(request, response ) {
+  //
+	// 		           alert(request.term);
+  //
+	//                 $.ajax({
+	//                     url: "/products/1.json",
+	//                     dataType: "json",
+	//                     data:{
+	// 					                  query: request.term
+	//                     },
+	//                     success: function( data ) {
+  //                       alert(data.title);
+	//                         response( $.map( data, function( item ) {
+	//                         return {
+	// 							label: item.title,
+	// 							value: item.id
+	//                         }
+	//                         }));
+	//                     }
+	//                 });
+	//     },
+	// 	focus: function() {
+	// 	  return false;
+	// 	},
+	// 	select: function( event, ui ) {
+	// 		 var terms=new Array();
+	// 		 if(this.value!="")
+	// 		  //  terms = this.value.split("/");
+	// 		 terms.pop();
+	// 		 terms.push( ui.item.value );
+	// 		 terms.push( "" );
+	// 		 this.value = terms.join( "/ " );
+	// 		 return false;
+	// 	}
+	//   });
+
+
+  // $('a').each(function(){
+  //   // alert($(this).attr('class') );
+  //     if( $(this).attr('class') == 'btn btn-danger btn-sm gasd' ){
+  //
+  //         $(this).click(function(){
+  //             alert($(this).attr('id') );
+  //         });
+
+  //     }
+  // })
 
   $("#future_day").datepicker({format: 'yyyy-mm-dd'});
   $("#order_day").datepicker({format: 'yyyy-mm-dd'});
@@ -190,8 +296,7 @@ $(document).ready(function() {
   //判斷是否 存在
   var old_id = $('#old_id').val();
 
-
-  if(old_id.length < 1 ){
+  if( undefined != old_id && old_id.length <1 ){
     //這是新增的時候
 
   $('#finial').click(function(){
@@ -234,7 +339,6 @@ $(document).ready(function() {
 
       var mem_id  =  $("#member_id").val();
 
-      // alert( all_str);
       //總金額
       $("#all_total").val( show_all_total );
       //訂單日期
@@ -243,10 +347,10 @@ $(document).ready(function() {
       // pay_type_id
       // order_day
 
-      // var date_and_totalPrice = $("#future_day").val() + '/' +
-      //                           $("#all_total").val() + '/' +
-      //                           $("#pay_type_id").val() + '/' +
-      //                           $("#order_day").val()  ;
+      var date_and_totalPrice = $("#future_day").val() + '/' +
+                                $("#all_total").val() + '/' +
+                                $("#pay_type_id").val() + '/' +
+                                $("#order_day").val()  ;
       // alert(date_and_totalPrice);
 
 
@@ -267,7 +371,7 @@ $(document).ready(function() {
 
 
 
-                  if( d == 'true' ){
+                  if( true ){
 
                       $('#order-success-modal').modal('show');
 
@@ -424,8 +528,8 @@ $(document).ready(function() {
 
 
 
+    if( undefined != old_id && old_id.length <1 ){
 
-    if(old_id.length < 1 ){
       //這是新增的時候
       $.post('/get_all_products',function(data){
 
@@ -514,8 +618,8 @@ $(document).ready(function() {
     }
 
     var errors_msg =$('#error_explanation').html();
-
-    if( errors_msg.length > 3 ){
+    // alert(errors_msg);
+    if(    undefined!=errors_msg && errors_msg.length > 3){
       $('#ckbox-modal').modal('show');
     }
 
@@ -524,9 +628,9 @@ $(document).ready(function() {
 
 function calNum(num){
 
-  var _num    =   "pids_"+num;
-  var _price  =   "price_"+num;
-  var _total  =   "total_"+num;
+  var _num    =   "pids_"  + num ;
+  var _price  =   "price_" + num ;
+  var _total  =   "total_" + num ;
 
   // alert( _num + '/ val = ' + $('.'+_num).val()   );
   var num_flag    =   isInteger($('.'+_num).val());

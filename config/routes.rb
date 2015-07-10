@@ -61,6 +61,9 @@ Tsai::Application.routes.draw do
 
   get '/product_in_outs/in_come/destroy(/:id)', :to => "product_in_outs#in_come_destroy"
   get '/product_in_outs/out_come/destroy(/:id)', :to => "product_in_outs#out_come_destroy"
+  get 'json_product_id', :to => "pact#json_product_id"
+  ##########
+
 
   post 'do_forget_pas' , :to => "login#do_forget_pas"
   post 'do_login' , :to => "login#do_login"

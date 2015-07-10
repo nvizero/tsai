@@ -63,8 +63,8 @@
               <script type="text/javascript">
                 $('document').ready(function(){
 
-                  var notice_msg =$('.notice').html();
-                  if( notice_msg.length > 4 ){
+                  var notice_msg = $('.notice').html();
+                  if( undefined !== notice_msg && notice_msg.length >4 ){
                     // alert( notice_msg );
                     $('#compose-modal').modal('show');
                   }

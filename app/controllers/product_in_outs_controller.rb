@@ -94,6 +94,8 @@ class ProductInOutsController < ApplicationController
   # GET /product_in_outs/new
   def new
 
+    @products = Product.all
+
     today_in_out_count
     @whered = ''
     @i_or_o = params[:type]

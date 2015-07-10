@@ -382,4 +382,9 @@ class PactController < ApplicationController
 
 
 
+  def json_product_id
+    
+  end
+
+
 end
