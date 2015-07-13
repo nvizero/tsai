@@ -383,7 +383,27 @@ class PactController < ApplicationController
 
 
   def json_product_id
-    
+
+  end
+
+  def product_list_code
+      if params[:type] == 'code'
+
+          if !params[:old_data].nil?
+            @products = Product.where("code like ?", "%#{params[:code]}%").where.not(code: params[:old_data].split(',') )
+          else
+            @products = Product.where("code like ?", "%#{params[:code]}%")
+          end
+
+      elsif params[:type] == 'title'
+
+        if !params[:old_data].nil?
+          @products = Product.where("title like ?", "%#{params[:title]}%").where.not(title: params[:old_data].split(',') )
+        else
+          @products = Product.where("title like ?", "%#{params[:title]}%")
+        end
+
+      end
   end
 
 

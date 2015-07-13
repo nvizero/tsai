@@ -69,7 +69,7 @@ Tsai::Application.routes.draw do
   post 'do_login' , :to => "login#do_login"
   post 'do_advance_pas' , :to => "login#do_advance_pas"
 
-
+  post 'product_list_code'  , :to=> "pact#product_list_code"
   post 'p_good_or_not'  , :to=> "pact#p_good_or_not"
   post 'post_order_data'  , :to=> "pact#post_order_data"
   post 'get_p_in_out_serial'  , :to=> "pact#get_p_in_out_serial"  ##

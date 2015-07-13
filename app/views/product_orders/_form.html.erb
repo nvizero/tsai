@@ -119,54 +119,33 @@
 
 
 
+    <h4>
+        <span  id="products_list"></span>
 
-    <span id="products_list"></span>
-    <a class="btn btn-success" href="#" id="add_products" >新增產品</a>
+
+        <a class="btn btn-success" href="#" id="add_products" >新增產品</a>
+    </h4>
 
 
 <input type="hidden" id="old_id" value="<%=@product_order.id%>">
 <table class="table table-bordered" id="products_select">
 
+
+
   <thead>
     </tr>
-        <th>項次產品名稱</th>
+        <th>項次</th>
+        <th>產品料號</th>
+        <th>產品名稱</th>
         <th>訂購數量</th>
         <th>單價</th>
         <th>合計</th>
     <tr>
   </thead>
-    <tbody id="tbody">
 
 
 
-
-
-      <tr >
-          <th></th>
-          <th></th>
-          <td>
-              <input id="pedfr"  >
-          </td>
-          <td></td>
-          <td></td>
-      </tr>
-
-
-  </tbody>
-</table>
-
-    <table class="table table-bordered" id="products_select">
-
-      <thead>
-        </tr>
-            <th>項次</th>
-            <th>產品名稱</th>
-            <th>訂購數量</th>
-            <th>單價</th>
-            <th>合計</th>
-        <tr>
-      </thead>
-        <tbody id="tbody">
+      <tbody id="tbody">
 
         <%
         ci = 0;
@@ -193,6 +172,17 @@
         end
         %>
       </tbody>
+
+      <tfoot>
+        </tr>
+            <th>項次</th>
+            <th>產品料號</th>
+            <th>產品名稱</th>
+            <th>訂購數量</th>
+            <th>單價</th>
+            <th>合計</th>
+        <tr>
+      </tfoot>
     </table>
 
 
@@ -212,22 +202,35 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <!--
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 -->
 
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
-  var availableTutorials = [
-               <% @products.each do |pro| %>
-               "<%=pro.title%>",
-               <% end %>
-            ];
-            $( "#pedfr" ).autocomplete({
-               source: availableTutorials
-            });
+  var product_name_list = [
+       <% @products.each do |pro| %>
+       "<%=pro.title%>",
+       <% end %>
+  ];
+
+  $( "#product_name" ).autocomplete({
+     source: product_name_list
+  });
+
+
+  var product_code_list = [
+       <% @products.each do |pro| %>
+       "<%=pro.code%>",
+       <% end %>
+  ];
+  $( "#product_code" ).autocomplete({
+     source: product_code_list
+  });
 
   //物件型式
 	// $( "#pedfr" )
@@ -356,9 +359,7 @@ $(document).ready(function() {
 
 
       if( mem_id == '' || mem_id==null || (_flag==false ) ){
-
           alert('訂購失敗!');
-
       }else{
 
           $.post( '/post_order_data',
@@ -369,18 +370,13 @@ $(document).ready(function() {
                   },
                 function(d){
 
-
-
                   if( true ){
-
                       $('#order-success-modal').modal('show');
-
                       $("#a_submit").click(function(){
                           //訂講成功
                           $('#order-success-modal').modal("hide");
                           var url ='/product_orders';
                           document.location.href=url;
-
                       });
 
                   }else{
@@ -533,34 +529,163 @@ $(document).ready(function() {
       //這是新增的時候
       $.post('/get_all_products',function(data){
 
-            $('#products_list').html(data);
+            //一開始的時候做的產品列表
+
+            //$('#products_list').html(data);
 
             var ci = 1;
 
             $("#add_products").click(function(){
-                var product_id = $(".product_data").val() ;
 
-                $(".product_data").find(":selected").remove();
 
+                // var product_id = $(".product_data").val() ;
+                // $(".product_data").find(":selected").remove();
                 // /products/1.json
-                $.get('/products/'+product_id+'.json',function(data){
+                // $.get('/products/'+product_id+'.json',function(data){
+
+                  // var product_info =  '<tr>';
+                  //     product_info += '<th>'+ci+'</th>';
+                  //     product_info += '<td>'+'<input name=product_code_'+data["id"]+' class="pids_'+data["id"]+'" ></td>';
+                  //     product_info += '<th>'+data["title"]+'</th>';
+                  //     product_info += '<td>'+'<input name=p_'+data["id"]+' class="pids_'+data["id"]+'"        onblur="calNum('+data["id"]+')" alt="'+data["id"]+'" ></td>';
+                  //     product_info += '<td>'+'<input name=price_'+data["id"]+' class="price_'+data["id"]+'"   onblur="calNum('+data["id"]+')" ></td>';
+                  //     product_info += '<td>'+'<span  class="total_'+ data["id"]+'"  id="total_'+data["id"]+'" > </span>'+'</td>';
+                  //     product_info += '</tr>';
+
+
+                  var product_info2 =  '<tr>';
+                      product_info2 += '<th>'+ci+'</th>';
+                      product_info2 += '<td>'+'<input name="product_code_'+ci+'" id="product_code_'+ci+'" alt="'+ci+'" ></td>';
+                      product_info2 += '<td>'+'<input name="product_name_'+ci+'" id="product_name_'+ci+'" alt="'+ci+'"  onBlur="getProductName('+ci+')"  ></td>';
+                      product_info2 += '<td>'+'<input name="num_'+ci+'" id="num_'+ci+'"  ></td>';
+                      product_info2 += '<td>'+'<input name="price_'+ci+'"  id="price_'+ci+'"  ></td>';
+                      product_info2 += '<td>'+'<span  class="total_'+ ci+'"  id="total_'+ci+'"  alt="'+ci+'" ></span>'+'</td>';
+                      product_info2 += '</tr>';
+
+                  $(product_info2).appendTo('#tbody');
 
 
 
-                  var product_info =  '<tr>';
-                      product_info += '<th>'+ci+'</th>';
-                      product_info += '<th>'+data["title"]+'</th>';
-                      product_info += '<td>'+'<input name=p_'+data["id"]+' class="pids_'+data["id"]+'"        onblur="calNum('+data["id"]+')" alt="'+data["id"]+'" ></td>';
-                      product_info += '<td>'+'<input name=price_'+data["id"]+' class="price_'+data["id"]+'"   onblur="calNum('+data["id"]+')" ></td>';
-                      product_info += '<td>'+'<span  class="total_'+ data["id"]+'"  id="total_'+data["id"]+'" > </span>'+'</td>';
-                      product_info += '</tr>';
 
-                  $(product_info).appendTo('#tbody');
+
+
+
+
+
+
+                  var str_all_code_val  = '';
+                  var str_all_name_val  = '';
+                  //get code
+                  $('input[name^="product_code_"]').each(function(){
+                      str_all_code_val += $(this).val() +',';
+                  });
+
+                  //get code
+                  $('input[name^="product_name_"]').each(function(){
+                      str_all_name_val += $(this).val() +',';
+                  });
+
+
+
+                  //自動完成
+                  $( "#product_code_" +ci).autocomplete({
+                      source: function( request, response ) {
+
+                        $.post('/product_list_code.json',
+                              {
+                                'code' : request.term ,
+                                'type' : 'code',
+                                'old_data' : str_all_code_val
+                              },
+                              function(data){
+
+                                // alert(str_all_name_val);
+
+
+                                response( $.map( data, function( item ) {
+        	                             return {
+                      								    label: item.code ,
+                                          value: item.code ,
+                                          title: item.title ,
+        	                             }
+	                              }));
+                        });
+                      },
+                      //最小的長度
+                      minLength: 1,
+
+                      select: function( event, ui ) {
+
+                         var terms = new Array();
+                  			//  if(this.title!="")
+                  			//    terms = this.title.split("/ ");
+                  			 terms.pop();
+                  			 terms.push( ui.item.value );
+                  			 terms.push("" );
+                  			 this.value = terms.join( "" );
+
+                         var _alt = $(this).attr('alt');
+                         $("#product_name_"+_alt).val(ui.item.title).attr('disabled',true);
+                         $(this).attr('disabled',true);
+
+                  			 return false;
+                      }
+                    });
+
+
+
+
+                    $( "#product_name_" +ci).autocomplete({
+                        source: function( request, response ) {
+
+                          $.post('/product_list_code.json',
+                                {
+                                  'title':request.term ,
+                                  'type':'title',
+                                  'old_data' : str_all_name_val
+                                },
+                                function(data){
+                                  //alert(request.term);
+                                  response( $.map( data, function( item ) {
+          	                             return {
+                        								    label: item.title ,
+                                            value: item.title ,
+                                            title: item.title ,
+                                            code: item.code
+          	                             }
+  	                              }));
+                          });
+                        },
+                        //最小的長度
+                        minLength: 1,
+
+                        select: function( event, ui ) {
+
+                           var terms = new Array();
+                    			//  if(this.title!="")
+                    			//    terms = this.title.split("/ ");
+                    			 terms.pop();
+                    			 terms.push( ui.item.value);
+                    			 terms.push("" );
+                    			 this.value = terms.join( "" );
+
+                           var _alt = $(this).attr('alt');
+                          //  alert('alt '+_alt +'coedee' +ui.item.code);
+                           $("#product_code_"+_alt).val(ui.item.code).attr('disabled',true);
+                           $(this).attr('disabled',true);
+
+                    			 return false;
+                        }
+                      });
+
+
+
+
                   ci=ci+1;
 
 
 
-                });
+                // });
             });
         });
 
@@ -593,12 +718,9 @@ $(document).ready(function() {
               // /products/1.json
               $.get('/products/'+product_id+'.json',function(data){
 
-
-
-
-
                 var product_info =  '<tr>';
                     product_info += '<th>'+ci+'</th>';
+                    product_info += '<td>'+'<input name=product_code_'+data["id"]+'  ></td>';
                     product_info += '<th>'+data["title"]+'</th>';
                     product_info += '<td>'+'<input name=p_'+data["id"]+' class="pids_'+data["id"]+'"        onblur="calNum('+data["id"]+')" alt="'+data["id"]+'" ></td>';
                     product_info += '<td>'+'<input name=price_'+data["id"]+' class="price_'+data["id"]+'"   onblur="calNum('+data["id"]+')" ></td>';
@@ -624,6 +746,21 @@ $(document).ready(function() {
     }
 
 });
+
+
+
+
+//自動選單
+
+function getProductName(id){
+    // alert(id);
+    // $( "#product_name" ).autocomplete({
+    //    source: product_name_list
+    // });
+
+
+}
+
 
 
 function calNum(num){
