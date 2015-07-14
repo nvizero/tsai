@@ -234,7 +234,7 @@ $(document).ready(function() {
 
             var ThisId    =  $(this).attr('alt');
             var ThisProductId   =  $('#product_id_'+ThisId  ).val() ;
-            
+
             var ThisNum   =  $('#num_'+ThisId  ).val() ;
             var ThisPrice =  $('#price_'+ThisId ).val() ;
             var ThisTotal =  $('#total_'+ThisId ).text() ;
@@ -374,12 +374,12 @@ $(document).ready(function() {
 
           // $.post( '/update_order_data',
 
-          alert(
-                'member_id   ' + $("#member_id").val() +'\n'+
-                'code   '      + $("#code").val() +'\n'+
-                'all_str   '             +   all_str  +'\n'+
-                'date_and_totalPrice  ' +   date_and_totalPrice
-                );
+          // alert(
+          //       'member_id   ' + $("#member_id").val() +'\n'+
+          //       'code   '      + $("#code").val() +'\n'+
+          //       'all_str   '             +   all_str  +'\n'+
+          //       'date_and_totalPrice  ' +   date_and_totalPrice
+          //       );
 
             $.post( '/update_order_data',
                   { 'member_id' : $("#member_id").val() ,
@@ -601,7 +601,7 @@ $(document).ready(function() {
                 */
                 //update tr
                 var product_info2 =  '<tr>';
-                    product_info2 += '<th>'+ci+'[update]</th>';
+                    product_info2 += '<th>'+ci+'</th>';
                     product_info2 += '<td>'+'<input name="product_code_'+ci+'" id="product_code_'+ci+'" alt="'+ci+'" >';
                     product_info2 += '<input type="hidden" name="product_id_'+ci+'" id="product_id_'+ci+'" value="">';
                     product_info2 += '</td>';
