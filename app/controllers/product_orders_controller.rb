@@ -78,7 +78,7 @@ class ProductOrdersController < ApplicationController
 
       @pro_infos = []
       Product.live.each do |pro|
-        @pro_infos[pro.id] = pro.title
+          @pro_infos[pro.id] = pro.title
       end
 
   end
