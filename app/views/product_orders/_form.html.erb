@@ -231,9 +231,9 @@ $(document).ready(function() {
             all_str += ThisProductId + '/' +ThisNum+ '/' +ThisPrice+ '/' +ThisTotal +',';
             show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
 
-            if( $(this).val()=='' ){
-                _flag=false;
-            }
+            // if( $(this).val()=='' ){
+            //     _flag=false;
+            // }
 
       });
 
@@ -326,9 +326,9 @@ $(document).ready(function() {
               show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
 
 
-              if( $(this).val()=='' ){
-                  _flag=false;
-              }
+              // if( $(this).val()=='' ){
+              //     _flag=false;
+              // }
 
         });
 
@@ -890,10 +890,14 @@ function checkAllInput(){
 
           if(af && bf && cf && df ){
               one_come_true=true;
-              _flag=true;
+              // _flag=true;
           }
 
 
+    }
+
+    if(one_come_true){
+        _flag=true;
     }
 
     // alert(one_come_true + 'YA' );
