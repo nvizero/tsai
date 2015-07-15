@@ -13,7 +13,7 @@ class ProductOrder < ActiveRecord::Base
                         :uniqueness => { :message => "帳號－有重複,請重新輸入" }
 
 
-  scope :vip_access, lambda {|query , session |
+  scope :vip_access, lambda { |query , session |
       if session[:vip_access]=='VIP'
           where(:create_user_id => query )
       elsif  session[:vip_access]=='admin'

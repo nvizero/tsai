@@ -87,10 +87,9 @@
             </div>
 
             <div class="col-xs-12">
-                <h4 style="color:blue;"> <%= f.label :member_id, '總金額' %> </h4>
+                <h4 style="color:blue;"><%= f.label :member_id, '總金額' %></h4>
                 <input type="hidden" id="all_total" value="" >
-
-                  <h4><span id="show_all_total"><%=@product_order.total%></span></h4>
+                <h4><span id="show_all_total"><%=@product_order.total%></span></h4>
             </div>
 
         </div>
@@ -214,44 +213,41 @@ $(document).ready(function() {
   var old_id = $('#old_id').val();
 
   if( undefined != old_id && old_id.length <1 ){
-    //這是新增的時候
-
+  //這是新增的時候
+  //new
   $('#finial').click(function(){
 
 
       var _flag = true;
-
+      _flag = checkAllInput();
       //產品＆數量
+      // alert(_flag);
+      var  num_str            =  '';
+      var  price_str          =  '';
+      var  total_str          =  '';
+      var  all_str            =  '';
+      var  show_all_total     =  0;
 
-      var  num_str    = '';
-      var  price_str  = '';
-      var  total_str  = '';
-      var  all_str    = '';
-      var  show_all_total    = 0;
+
+
 
 
       $('input[name^="product_code_"]').each(function(){
 
             var ThisId    =  $(this).attr('alt');
             var ThisProductId   =  $('#product_id_'+ThisId  ).val() ;
-
             var ThisNum   =  $('#num_'+ThisId  ).val() ;
             var ThisPrice =  $('#price_'+ThisId ).val() ;
             var ThisTotal =  $('#total_'+ThisId ).text() ;
 
             all_str += ThisProductId + '/' +ThisNum+ '/' +ThisPrice+ '/' +ThisTotal +',';
-
             show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
-
 
             if( $(this).val()=='' ){
                 _flag=false;
             }
 
       });
-
-
-
 
 
       var mem_id  =  $("#member_id").val();
@@ -317,6 +313,10 @@ $(document).ready(function() {
         //產品＆數量
         var _flag = true;
         //產品＆數量
+
+        _flag = checkAllInput();
+        //產品＆數量
+        // alert(_flag);
         var  num_str          = '';
         var  price_str        = '';
         var  total_str        = '';
@@ -422,18 +422,11 @@ $(document).ready(function() {
 
       //這是新增的時候
       $.post('/get_all_products',function(data){
-
             //一開始的時候做的產品列表
-
             //$('#products_list').html(data);
-
             var ci = 1;
             //新增產品的！！！！！！！！！
-
             $("#add_products").click(function(){
-
-
-
                   //new
                   var product_info2 =  '<tr>';
                       product_info2 += '<th>'+ci+'</th>';
@@ -473,7 +466,6 @@ $(document).ready(function() {
                   //自動完成
                   $( "#product_code_" +ci).autocomplete({
                       source: function( request, response ) {
-
                         $.post('/product_list_code.json',
                               {
                                 'code' : request.term ,
@@ -760,7 +752,7 @@ function calTotal(alt){
 
   if(num_flag && price_flag){
           //計算總金額
-      if(  (parseInt(num_val) > 0 ) &&  ( parseInt(price_val) > 0 ) ){
+      if(  (parseInt(num_val) >= 0 ) &&  ( parseInt(price_val) >= 0 ) ){
 
           // alert(' ok can input~~!!!');
           $("#total_"+alt).html( num_val * price_val );
@@ -769,23 +761,23 @@ function calTotal(alt){
               show_total_price = parseInt($(this).text()) + parseInt(show_total_price);
           });
 
-
-          $("#all_total").val( show_total_price );
+          //
+          $("#all_total").val(show_total_price);
           $("#show_all_total").html(show_total_price);
 
       }else{
 
 
-          if(parseInt(num_val)<=0){
+          if(parseInt(num_val)<=-1){
               $("#num_"+alt).val('');
               $("#price_"+alt).val('');
-              alert('必需為正整數且大於零!!');
+              alert('必需為正整數!');
           }
 
-          if(parseInt(price_val)<=0){
+          if(parseInt(price_val)<=-1){
               $("#num_"+alt).val('');
               $("#price_"+alt).val('');
-              alert('必需為正整數且大於零!!');
+              alert('必需為正整數!');
           }
 
 
@@ -804,4 +796,54 @@ function isInteger(s){
   return Math.ceil(is_num) == Math.floor(is_num);
 }
 
+
+
+function checkAllInput(){
+
+    var _flag = true;
+    var alert_msg = '';
+
+    //查看產品料號是否為正確的值
+    $('input[name^="product_code_"]').each(function(){
+          var disb = $(this).attr('disabled');
+          if( disb == undefined ){
+              _flag=false;
+              alert_msg+='產品料號錯誤\n';
+          }
+    });
+
+
+    //查看產品料號是否為正確的值
+    $('input[name^="product_name_"]').each(function(){
+          var disb = $(this).attr('disabled');
+          if( disb == undefined ){
+              _flag=false;
+
+              alert_msg+='產品名稱錯誤\n';
+          }
+    });
+
+    //查看數量是否為正確的值
+    $('input[name^="num_"]').each(function(){
+          if( isInteger($(this).val()) == false ){
+              _flag=false;
+              alert_msg+='訂購數量錯誤\n';
+          }
+
+    });
+
+    //查看單價是否為正確的值
+    $('input[name^="price_"]').each(function(){
+          if( isInteger($(this).val()) == false ){
+              _flag=false;
+              alert_msg+='單價錯誤\n';
+          }
+    });
+
+    if(_flag==false){
+        alert(alert_msg);
+    }
+
+    return _flag;
+}
 </script>
