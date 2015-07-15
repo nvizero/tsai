@@ -129,7 +129,7 @@ class PactController < ApplicationController
                             :state=>'Y',
                             :member_id => member_id,
                             :code => code,
-                            :total => dataInfo[1],
+                            :total => total_price,
                             :future_day => dataInfo[0],
                             :pay_type_id => dataInfo[2],
                             :order_day => dataInfo[3],

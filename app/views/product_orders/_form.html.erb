@@ -746,7 +746,7 @@ function calTotal(alt){
           $("#total_"+alt).html( num_val * price_val );
 
           $('span[class^="total_"]').each(function(){
-              show_total_price = parseInt($(this).text()) + parseInt(show_total_price);
+              show_total_price =  parseInt( $(this).text() ) + parseInt( show_total_price );
           });
 
           //
@@ -777,48 +777,73 @@ function calTotal(alt){
 }
 
 function isInteger(s){
-  var is_num = parseInt(s);
-  return Math.ceil(is_num) == Math.floor(is_num);
+    var is_num = parseInt(s);
+    return Math.ceil(is_num) == Math.floor(is_num);
 }
 
 
 
 function checkAllInput(){
 
-    var _flag = true;
-    var alert_msg = '';
+    var count_check_code    =   Array();
+    var count_check_name    =   Array();
+    var count_check_num     =   Array();
+    var count_check_price   =   Array();
+
+    var one_count   = 0;
+
+    var _flag       = true;
+    var alert_msg   = '';
 
     //查看產品料號是否為正確的值
     $('input[name^="product_code_"]').each(function(){
+
+          one_count+=1;
+          count_check_code[one_count] = $(this).val();
+
           var disb = $(this).attr('disabled');
           if( disb == undefined ){
-              _flag=false;
+              _flag     = false;
               alert_msg+='產品料號錯誤\n';
           }
+
     });
 
-
+    one_count=0;
     //查看產品料號是否為正確的值
     $('input[name^="product_name_"]').each(function(){
+
+          one_count+=1;
+          count_check_name[one_count] = $(this).val();
+
           var disb = $(this).attr('disabled');
           if( disb == undefined ){
               _flag=false;
-
               alert_msg+='產品名稱錯誤\n';
           }
     });
-
+    one_count=0;
     //查看數量是否為正確的值
     $('input[name^="num_"]').each(function(){
+
+          one_count+=1;
+          count_check_num[one_count] = $(this).val();
+
           if( isInteger($(this).val()) == false ){
               _flag=false;
               alert_msg+='訂購數量錯誤\n';
           }
 
     });
-
+    one_count=0;
     //查看單價是否為正確的值
     $('input[name^="price_"]').each(function(){
+
+
+          one_count+=1;
+          count_check_price[one_count] = $(this).val();
+
+
           if( isInteger($(this).val()) == false ){
               _flag=false;
               alert_msg+='單價錯誤\n';
@@ -828,6 +853,52 @@ function checkAllInput(){
     if(_flag==false){
         alert(alert_msg);
     }
+    true_flag = 0;
+
+
+    // console.log( count_check_code  );
+    // console.log( count_check_name  );
+    // console.log( count_check_num   );
+    // console.log( count_check_price );
+
+
+    var one_come_true = false;
+
+
+    for(  var i = 1 ; i <=one_count ; i++){
+
+          var af = false;
+          var bf = false;
+          var cf = false;
+          var df = false;
+
+          if( count_check_code[i]){
+              af=true;
+          }
+
+          if( count_check_name[i]){
+              bf=true;
+          }
+
+          if( count_check_num[i]){
+              cf=true;
+          }
+
+          if( count_check_price[i]){
+              df=true;
+          }
+
+          if(af && bf && cf && df ){
+              one_come_true=true;
+              _flag=true;
+          }
+
+
+    }
+
+    // alert(one_come_true + 'YA' );
+
+    // return false;
     return _flag;
 }
 </script>
