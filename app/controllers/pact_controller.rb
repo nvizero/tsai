@@ -161,7 +161,7 @@ class PactController < ApplicationController
     code = params[:code]
     all_str = params[:all_str]
 
-    # logger.info "//#{params}//"
+    logger.info "//#{params}//"
 
 
     order_flag = false
@@ -178,7 +178,7 @@ class PactController < ApplicationController
       product_price     =  product_data[2]
       product_total     =  product_data[3]
 
-      # logger.info  "--------#{product_data}------"
+      logger.info  "--------#{product_data}------"
 
       if !product_id.nil? && !product_num.nil? && !product_price.nil? && !product_total.nil?
 
@@ -208,12 +208,12 @@ class PactController < ApplicationController
                                   :create_user_id => session[:user_id] )
         end
 
-        OrderByProduct.create(:product_id => product_id,
-                              :num   => product_num,
-                              :price => product_price,
-                              :total => total_price,
-                              :code  => code,
-                              :create_user_id => session[:user_id] )
+        # OrderByProduct.create(:product_id => product_id,
+        #                       :num   => product_num,
+        #                       :price => product_price,
+        #                       :total => total_price,
+        #                       :code  => code,
+        #                       :create_user_id => session[:user_id] )
       end
 
 
@@ -231,7 +231,7 @@ class PactController < ApplicationController
       proOrder.order_state_id = 1
       proOrder.member_id = member_id
       proOrder.code = code
-      proOrder.total = dataInfo[1].to_i
+      proOrder.total = total_price.to_i
       proOrder.future_day = dataInfo[0]
       proOrder.pay_type_id = dataInfo[2].to_i
       proOrder.order_day = dataInfo[3]
