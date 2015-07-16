@@ -125,7 +125,7 @@ class ProductOrdersController < ApplicationController
   # DELETE /product_orders/1.json
 
   def destroy
-    logger.info  "#{params}"
+    # logger.info  "#{params}"
 
     @product_order.stoped_at    = DateTime.now
     @product_order.stop_user_id = session[:user_id]

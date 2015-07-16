@@ -3,12 +3,11 @@
   <% @msg_suc = '訂購成功' %>
   <%= render 'comm/ckbox' , :mss => @mss %>
   <%= render 'comm/order_success' , :message => @msg_suc %>
-
-<%
-  #先算出長度
-  len_s = order_serial_code @code_serial.count.to_s.length
-  len_s = "#{len_s}#{@code_serial.count.to_i+1}"
-%>
+  <%
+    #先算出長度
+    len_s = order_serial_code @code_serial.count.to_s.length
+    len_s = "#{len_s}#{@code_serial.count.to_i+1}"
+  %>
 
 
 <div class="form-group">
@@ -55,9 +54,6 @@
                 </h4>
             </div>
         </div>
-
-
-
 
         <div class="col-xs-6">
             <div class="col-xs-12">
@@ -129,7 +125,7 @@
       <tbody id="tbody">
 
         <%
-        ci = 0;
+        ci = 0
         if !@product_order.id.nil?
               @orderInfos.each do |info|
         %>
@@ -139,13 +135,13 @@
           <tr id="tr_<%=@pro_infos[info.id]%>">
               <th> <%=ci+=1 %> </th>
               <th>
-                  <input name="product_code_<%=info.product_id%>" value="<%=info.product.code%>"   disabled="" alt="<%=info.product_id%>" >
-                  <input type="hidden" name="product_id_<%=info.product_id%>" id="product_id_<%=info.product_id%>" value="<%=info.product_id%>">
+                  <input name="product_code_<%=info.id%>" value="<%=info.product.code%>"   disabled="" alt="<%=info.id%>" >
+                  <input type="hidden" name="product_id_<%=info.id%>" id="product_id_<%=info.id%>" value="<%=info.id%>">
               </th>
-              <th><input name="product_name_<%=info.product_id%>" value="<%=info.product.title%>"   disabled="" alt="<%=info.id%>" >  </th>
-              <td><input name="num_<%=info.product_id %>"     id="num_<%=info.product_id %>"    class="num_<%=info.product_id %>"    alt="<%=info.product_id %>"  value="<%=info.num %>"     onblur="calTotal(<%=info.product_id %>)"  ></td>
-              <td><input name="price_<%=info.product_id %>"   id="price_<%=info.product_id %>"  class="price_<%=info.product_id %>"  alt="<%=info.product_id %>"  value="<%=info.price %>"   onblur="calTotal(<%=info.product_id %>)"  ></td>
-              <td><span  class="total_<%=info.product_id %>"  id="total_<%=info.product_id %>" ><%=info.total%></span> </td>
+              <th><input name="product_name_<%=info.id%>" value="<%=info.product.title%>"   disabled="" alt="<%=info.id%>" >  </th>
+              <td><input name="num_<%=info.id %>"     id="num_<%=info.id %>"    class="num_<%=info.id %>"    alt="<%=info.id %>"  value="<%=info.num %>"     onblur="calTotal(<%=info.id %>)"  ></td>
+              <td><input name="price_<%=info.id %>"   id="price_<%=info.id %>"  class="price_<%=info.id %>"  alt="<%=info.id %>"  value="<%=info.price %>"   onblur="calTotal(<%=info.id %>)"  ></td>
+              <td><span  class="total_<%=info.id %>"  id="total_<%=info.id %>" ><%=info.total%></span> </td>
           </tr>
 
         <%
@@ -411,23 +407,29 @@ $(document).ready(function() {
       //這是新增的時候
       $.post('/get_all_products',function(data){
             //一開始的時候做的產品列表
-            //$('#products_list').html(data);
+
+
             var ci = 1;
+            var ci_str = 'qwe';
             //新增產品的！！！！！！！！！
             $("#add_products").click(function(){
-                  //new
-                  var product_info2 =  '<tr>';
-                      product_info2 += '<th>'+ci+'</th>';
-                      product_info2 += '<td>'+'<input name="product_code_'+ci+'" id="product_code_'+ci+'" alt="'+ci+'" >';
-                      product_info2 += '<input type="hidden" name="product_id_'+ci+'" id="product_id_'+ci+'" value="'+ci+'">';
-                      product_info2 += '</td>';
-                      product_info2 += '<td>'+'<input name="product_name_'+ci+'" id="product_name_'+ci+'" alt="'+ci+'" ></td>';
-                      product_info2 += '<td>'+'<input name="num_'+ci+'" id="num_'+ci+'"       alt="'+ci+'"  onBlur="calTotal('+ci+')"   ></td>';
-                      product_info2 += '<td>'+'<input name="price_'+ci+'"  id="price_'+ci+'"  alt="'+ci+'"  onBlur="calTotal('+ci+')" ></td>';
-                      product_info2 += '<td>'+'<span  class="total_'+ ci+'"  id="total_'+ci+'"  alt="'+ci+'" ></span>'+'</td>';
-                      product_info2 += '</tr>';
 
-                      $(product_info2).appendTo('#tbody');
+                  $.post('/get_random_str',function(data){
+                        ci_str = data.toString();
+
+
+                        var product_info2 =  '<tr>';
+                            product_info2 += '<th>'+ci+'</th>';
+                            product_info2 += '<td>'+'<input name="product_code_'+ci_str.toString()+'" id="product_code_'+ci_str.toString()+'" alt="'+ci_str.toString()+'" >';
+                            product_info2 += '<input type="hidden" name="product_id_'+ci_str.toString()+'" id="product_id_'+ci_str.toString()+'" value="'+ci_str.toString()+'">';
+                            product_info2 += '</td>';
+                            product_info2 += '<td>'+'<input name="product_name_'+ci_str.toString()+'" id="product_name_'+ci_str.toString()+'" alt="'+ci_str.toString()+'" ></td>';
+                            product_info2 += '<td>'+'<input name="num_'+ci_str.toString()+'"     id="num_'+ci_str.toString()+'"       alt="'+ci_str.toString()+'"  onBlur="calTotal('+"'"+ci_str.toString()+"'"+')"   ></td>';
+                            product_info2 += '<td>'+'<input name="price_'+ci_str.toString()+'"   id="price_'+ci_str.toString()+'"     alt="'+ci_str.toString()+'"  onBlur="calTotal('+"'"+ci_str.toString()+"'"+')"   ></td>';
+                            product_info2 += '<td>'+'<span  class="total_'+ ci_str.toString()+'" id="total_'+ci_str.toString()+'"     alt="'+ci_str.toString()+'"  ></span>'+'</td>';
+                            product_info2 += '</tr>';
+
+                          $(product_info2).appendTo('#tbody');
 
 
 
@@ -452,7 +454,7 @@ $(document).ready(function() {
 
 
                   //自動完成
-                  $( "#product_code_" +ci).autocomplete({
+                  $( "#product_code_" +ci_str.toString()).autocomplete({
                       source: function( request, response ) {
                         $.post('/product_list_code.json',
                               {
@@ -500,7 +502,7 @@ $(document).ready(function() {
 
 
 
-                    $( "#product_name_" +ci).autocomplete({
+                    $( "#product_name_" +ci_str.toString()).autocomplete({
                         source: function( request, response ) {
 
                           $.post('/product_list_code.json',
@@ -544,6 +546,10 @@ $(document).ready(function() {
                         }
                       });
                   ci=ci+1;
+
+                  });
+                  //new
+
             });
         });
 
@@ -579,16 +585,18 @@ $(document).ready(function() {
                   var price_val     =   $("#price_"+alt).val();
                   var _this_total   =   $("#total_"+alt).val();
                 */
+                $.post('/get_random_str',function(data){
+                      ci_str = data.toString();
                 //update tr
                 var product_info2 =  '<tr>';
                     product_info2 += '<th>'+ci+'</th>';
-                    product_info2 += '<td>'+'<input name="product_code_'+ci+'" id="product_code_'+ci+'" alt="'+ci+'" >';
-                    product_info2 += '<input type="hidden" name="product_id_'+ci+'" id="product_id_'+ci+'" value="">';
+                    product_info2 += '<td>'+'<input name="product_code_'+ci_str+'" id="product_code_'+ci_str+'" alt="'+ci_str+'" >';
+                    product_info2 += '<input type="hidden" name="product_id_'+ci_str+'" id="product_id_'+ci_str+'" value="">';
                     product_info2 += '</td>';
-                    product_info2 += '<td>'+'<input name="product_name_'+ci+'" id="product_name_'+ci+'" alt="'+ci+'" ></td>';
-                    product_info2 += '<td>'+'<input name="num_'+ci+'"      id="num_'+ci+'"      alt="'+ci+'"  onBlur="calTotal('+ci+')"   ></td>';
-                    product_info2 += '<td>'+'<input name="price_'+ci+'"    id="price_'+ci+'"    alt="'+ci+'"  onBlur="calTotal('+ci+')"   ></td>';
-                    product_info2 += '<td>'+'<span  class="total_'+ ci+'"  id="total_'+ci+'"    alt="'+ci+'" ></span>'+'</td>';
+                    product_info2 += '<td>'+'<input name="product_name_'+ci_str+'" id="product_name_'+ci_str+'" alt="'+ci_str+'" ></td>';
+                    product_info2 += '<td>'+'<input name="num_'+ci_str+'"      id="num_'+ci_str+'"      alt="'+ci_str+'"  onBlur="calTotal('+"'"+ci_str+"'"+')"   ></td>';
+                    product_info2 += '<td>'+'<input name="price_'+ci_str+'"    id="price_'+ci_str+'"    alt="'+ci_str+'"  onBlur="calTotal('+"'"+ci_str+"'"+')"   ></td>';
+                    product_info2 += '<td>'+'<span  class="total_'+ ci_str+'"  id="total_'+ci_str+'"    alt="'+ci_str+'" ></span>'+'</td>';
                     product_info2 += '</tr>';
 
                 $(product_info2).appendTo('#tbody');
@@ -606,7 +614,7 @@ $(document).ready(function() {
 
 
 
-                $( "#product_code_" +ci).autocomplete({
+                $( "#product_code_" +ci_str).autocomplete({
                     source: function( request, response ) {
                       // alert( request.term);
                       $.post('/product_list_code.json',
@@ -652,7 +660,7 @@ $(document).ready(function() {
                   });
 
 
-                  $( "#product_name_" +ci).autocomplete({
+                  $( "#product_name_" + ci_str ).autocomplete({
                       source: function( request, response ) {
 
                         $.post('/product_list_code.json',
@@ -702,7 +710,7 @@ $(document).ready(function() {
                 ci      =   ci       +1;
 
 
-              // });
+              });
           });
       //this gg end
       // });
@@ -725,9 +733,9 @@ $(document).ready(function() {
 
 
 
-function calTotal(alt){
+function calTotal(alt_atr ){
+  var alt = alt_atr.toString();
 
-  // alert(alt);
   var num_val     =   $("#num_"+alt).val();
   var price_val   =   $("#price_"+alt).val();
   var _this_total   =   $("#total_"+alt).val();
@@ -746,15 +754,15 @@ function calTotal(alt){
           $("#total_"+alt).html( num_val * price_val );
 
           $('span[class^="total_"]').each(function(){
-              show_total_price =  parseInt( $(this).text() ) + parseInt( show_total_price );
+                if( parseInt( $(this).text() ) > 0 ){
+                      show_total_price =  parseInt( $(this).text() ) + parseInt( show_total_price );
+                }
           });
-
           //
           $("#all_total").val(show_total_price);
           $("#show_all_total").html(show_total_price);
 
       }else{
-
 
           if(parseInt(num_val)<=-1){
               $("#num_"+alt).val('');
@@ -793,18 +801,26 @@ function checkAllInput(){
     var one_count   = 0;
 
     var _flag       = true;
+
     var alert_msg   = '';
+    var alert_msg_code   = '';
+    var alert_msg_name   = '';
+    var alert_msg_num    = '';
+    var alert_msg_price  = '';
 
     //查看產品料號是否為正確的值
     $('input[name^="product_code_"]').each(function(){
 
           one_count+=1;
-          count_check_code[one_count] = $(this).val();
+          if(isInteger($(this).val())){
+              count_check_code[one_count] = $(this).val();
+              var disb = $(this).attr('disabled');
+              if( disb == undefined ){
+                  _flag     = false;
+                  alert_msg_code='產品料號錯誤\n';
+                  alert('qq');
+              }
 
-          var disb = $(this).attr('disabled');
-          if( disb == undefined ){
-              _flag     = false;
-              alert_msg+='產品料號錯誤\n';
           }
 
     });
@@ -814,12 +830,14 @@ function checkAllInput(){
     $('input[name^="product_name_"]').each(function(){
 
           one_count+=1;
-          count_check_name[one_count] = $(this).val();
-
-          var disb = $(this).attr('disabled');
-          if( disb == undefined ){
-              _flag=false;
-              alert_msg+='產品名稱錯誤\n';
+          if(isInteger($(this).val())){
+              count_check_name[one_count] = $(this).val();
+              var disb = $(this).attr('disabled');
+              if( disb == undefined ){
+                  _flag=false;
+                  alert_msg_name='產品名稱錯誤\n';
+                  alert('qq');
+              }
           }
     });
     one_count=0;
@@ -827,32 +845,34 @@ function checkAllInput(){
     $('input[name^="num_"]').each(function(){
 
           one_count+=1;
-          count_check_num[one_count] = $(this).val();
-
-          if( isInteger($(this).val()) == false ){
-              _flag=false;
-              alert_msg+='訂購數量錯誤\n';
+          if(isInteger($(this).val())){
+              count_check_num[one_count] = $(this).val();
+              if( isInteger($(this).val()) == false ){
+                  _flag=false;
+                  alert_msg_num ='訂購數量錯誤\n';
+                  alert('qq');
+              }
           }
 
     });
     one_count=0;
     //查看單價是否為正確的值
     $('input[name^="price_"]').each(function(){
-
-
           one_count+=1;
-          count_check_price[one_count] = $(this).val();
+          if(isInteger($(this).val())){
+              count_check_price[one_count] = $(this).val();
 
-
-          if( isInteger($(this).val()) == false ){
-              _flag=false;
-              alert_msg+='單價錯誤\n';
+              if( isInteger($(this).val()) == false ){
+                  _flag=false;
+                  alert_msg_price = '單價錯誤\n';
+                  alert('qq');
+              }
           }
     });
 
-    if(_flag==false){
-        alert(alert_msg);
-    }
+    // if(_flag==false){
+    //     alert(alert_msg);
+    // }
     true_flag = 0;
 
 
@@ -888,9 +908,8 @@ function checkAllInput(){
               df=true;
           }
 
-          if(af && bf && cf && df ){
+          if(af==true && bf==true && cf==true && df==true ){
               one_come_true=true;
-              // _flag=true;
           }
 
 
@@ -900,9 +919,15 @@ function checkAllInput(){
         _flag=true;
     }
 
-    // alert(one_come_true + 'YA' );
+    // else{
+    //     _flag=false;
+    //
+    //     alert_msg   = alert_msg_code  + alert_msg_name +
+    //                   alert_msg_num   + alert_msg_price ;
+    //     alert(alert_msg);
+    // }
 
-    // return false;
+
     return _flag;
 }
 </script>

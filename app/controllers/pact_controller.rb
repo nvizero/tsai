@@ -161,7 +161,7 @@ class PactController < ApplicationController
     code = params[:code]
     all_str = params[:all_str]
 
-    logger.info "//#{params}//"
+    # logger.info "//#{params}//"
 
 
     order_flag = false
@@ -178,7 +178,7 @@ class PactController < ApplicationController
       product_price     =  product_data[2]
       product_total     =  product_data[3]
 
-      logger.info  "--------#{product_data}------"
+      # logger.info  "--------#{product_data}------"
 
       if !product_id.nil? && !product_num.nil? && !product_price.nil? && !product_total.nil?
 
@@ -196,15 +196,17 @@ class PactController < ApplicationController
 
             orderPro.num   =  product_num
             orderPro.price =  product_price
-            orderPro.total =  product_total
+            orderPro.total =  product_total.to_i
             orderPro.modify_user_id = session[:user_id]
             orderPro.save
+
         else
-            OrderByProduct.create(:product_id => product_id,
-                                  :num   => product_num,
-                                  :price => product_price,
-                                  :total => total_price,
-                                  :code  => code,
+
+            OrderByProduct.create(:product_id     => product_id,
+                                  :num            => product_num,
+                                  :price          => product_price,
+                                  :total          => (product_num.to_i * product_price.to_i),
+                                  :code           => code,
                                   :create_user_id => session[:user_id] )
         end
 
@@ -239,44 +241,8 @@ class PactController < ApplicationController
       proOrder.save
 
     end
-
     render :text => order_flag
 
-    # member_id = params[:member_id]
-    # code = params[:code]
-    #
-    # # logger.info  " #{params} "
-    # pr_od = ProductOrder.find_by_code(code)
-    # pr_od.member_id = member_id
-    # pr_od.save
-    #
-    # d_new     = params[:new]
-    # d_update  = params[:update]
-    # dduu = ''
-    # #新增的
-    # d_new.split('/').each do |new_one|
-    #
-    #   product_num   =  new_one.split(',')
-    #   product_id    =  product_num[0].split('p_')
-    #   OrderByProduct.create(:product_id => product_id[1],
-    #                         :num => product_num[1],
-    #                         :code=>code)
-    # end
-    #
-    # #更新
-    # d_update.split('/').each do |up_date|
-    #
-    #   pInfo   = up_date.split(',')
-    #   dduu += "#{pInfo[0]}- #{pInfo[1]} "
-    #
-    #   # product_id    = product_num[0].split('p_')
-    #   obp = OrderByProduct.find(pInfo[0].to_i)
-    #   obp.num =pInfo[1].to_i
-    #   obp.save
-    #
-    # end
-    #
-    # render :text => 'true'
   end
 
 
@@ -404,7 +370,14 @@ class PactController < ApplicationController
         end
 
       end
+
   end
 
+
+  def get_random_str
+      o = [ ('a'..'z'),('1'..'9'),('A'..'Z') ].map { |i| i.to_a }.flatten
+      cg = (0...5).map { o[rand(o.length)] }.join
+      render :text => cg
+  end
 
 end
