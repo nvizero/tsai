@@ -195,17 +195,17 @@ $(document).ready(function() {
 
   $("#future_day").datepicker({format: 'yyyy-mm-dd'});
   $("#order_day").datepicker({format:  'yyyy-mm-dd'});
-
+  var _flag = true;
   //判斷是否 存在
   var old_id = $('#old_id').val();
 
-  if( undefined != old_id && old_id.length <1 ){
+  if( undefined != old_id && old_id.length < 1 ){
   //這是新增的時候
   //new
   $('#finial').click(function(){
 
 
-      var _flag = true;
+
       _flag = checkAllInput();
       //產品＆數量
       // alert(_flag);
@@ -214,10 +214,6 @@ $(document).ready(function() {
       var  total_str          =  '';
       var  all_str            =  '';
       var  show_all_total     =  0;
-
-
-
-
 
       $('input[name^="product_code_"]').each(function(){
 
@@ -233,7 +229,8 @@ $(document).ready(function() {
                 all_str += ThisProductId + '/' +ThisNum+ '/' +ThisPrice+ '/' +ThisTotal +',';
                 show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
             }
-            // all_str += ThisProductId + '/' +ThisNum+ '/' +ThisPrice+ '/' +ThisTotal +',';
+
+            // all_str += ThisProductId + '/' + ThisNum + '/' +ThisPrice+ '/' +ThisTotal +',';
             // show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
 
             // if( $(this).val()=='' ){
@@ -256,11 +253,17 @@ $(document).ready(function() {
                                 $("#all_total").val() + '/' +
                                 $("#pay_type_id").val() + '/' +
                                 $("#order_day").val()  ;
+      var product_code_count = 0;
+
+      $('input[name^="product_code_"]').each(function(){
+            product_code_count += 1;
+      });
+
       // alert(date_and_totalPrice);
 
 
 
-      if( mem_id == '' || mem_id==null || (_flag==false ) ){
+      if( mem_id == '' || mem_id == null || ( _flag == false )|| ( product_code_count == 0 ) ){
           // alert( mem_id +' / ' + mem_id+'  + '+_flag);
           alert('訂購失敗!~');
       }else{
@@ -282,7 +285,7 @@ $(document).ready(function() {
                   },
                 function(d){
 
-                  if( true ){
+                  if( d ){
                       $('#order-success-modal').modal('show');
                       $("#a_submit").click(function(){
                           //訂講成功
@@ -302,15 +305,20 @@ $(document).ready(function() {
   });
 
   }else{
-    //update
 
+
+
+
+
+
+
+
+    //update
     $('#finial').click(function(){
         //產品＆數量
         var _flag = true;
-        //產品＆數量
-
         _flag = checkAllInput();
-        //產品＆數量
+
         // alert(_flag);
         var  num_str          = '';
         var  price_str        = '';
@@ -415,9 +423,6 @@ $(document).ready(function() {
 
   }
 
-
-
-
     if( undefined != old_id && old_id.length <1 ){
 
       //這是新增的時候
@@ -447,30 +452,39 @@ $(document).ready(function() {
 
                           $(product_info2).appendTo('#tbody');
 
+                          $('#product_code_'+ci_str.toString()).blur(function(){
+                              var code_disb = $(this).attr('disabled');
+
+                              if( code_disb == undefined ){
+                                    alert('沒有這個料號');
+                              }
+                          })
+
+                          $('#product_name_'+ci_str.toString()).blur(function(){
+                              var name_disb = $(this).attr('disabled');
+                              if( name_disb == undefined ){
+                                    alert('沒有這個產品');
+                              }
+                          })
 
 
+              var str_all_code_val  = '';
+              var str_all_name_val  = '';
 
+              //get code
+              $('input[name^="product_code_"]').each(function(){
+                  str_all_code_val += $(this).val() +',';
+              });
 
-
-
-
-
-
-                  var str_all_code_val  = '';
-                  var str_all_name_val  = '';
-                  //get code
-                  $('input[name^="product_code_"]').each(function(){
-                      str_all_code_val += $(this).val() +',';
-                  });
-                  //get code
-                  $('input[name^="product_name_"]').each(function(){
-                      str_all_name_val += $(this).val() +',';
-                  });
+              //get code
+              $('input[name^="product_name_"]').each(function(){
+                  str_all_name_val += $(this).val() +',';
+              });
 
 
 
                   //自動完成
-                  $( "#product_code_" +ci_str.toString()).autocomplete({
+              $( "#product_code_" +ci_str.toString()).autocomplete({
                       source: function( request, response ) {
                         $.post('/product_list_code.json',
                               {
@@ -602,7 +616,8 @@ $(document).ready(function() {
                   var _this_total   =   $("#total_"+alt).val();
                 */
                 $.post('/get_random_str',function(data){
-                      ci_str = data.toString();
+
+                ci_str = data.toString();
                 //update tr
                 var product_info2 =  '<tr>';
                     product_info2 += '<th>'+ci+'</th>';
@@ -616,6 +631,23 @@ $(document).ready(function() {
                     product_info2 += '</tr>';
 
                 $(product_info2).appendTo('#tbody');
+
+
+                $('#product_code_'+ci_str.toString()).blur(function(){
+                    var code_disb = $(this).attr('disabled');
+                    if( code_disb == undefined ){
+                          alert('沒有這個料號');
+                    }
+                })
+
+                $('#product_name_'+ci_str.toString()).blur(function(){
+                    var name_disb = $(this).attr('disabled');
+                    if( name_disb == undefined ){
+                          alert('沒有這個產品');
+                    }
+                })
+
+
 
                 var str_all_code_val  = '';
                 var str_all_name_val  = '';
@@ -721,8 +753,6 @@ $(document).ready(function() {
                       }
                     });
 
-
-                // ci_rand =   ci_rand  +1;
                 ci      =   ci       +1;
 
 
@@ -818,11 +848,8 @@ function checkAllInput(){
     var count_check_name    =   Array();
     var count_check_num     =   Array();
     var count_check_price   =   Array();
-
     var one_count   = 0;
-
     var _flag       = true;
-
     var alert_msg   = '';
     var alert_msg_code   = '';
     var alert_msg_name   = '';
@@ -837,6 +864,7 @@ function checkAllInput(){
 
               var disb = $(this).attr('disabled');
               if( disb == undefined ){
+
                   count_check_code[one_count] = $(this).val();
                   _flag     = false;
                   alert_msg_code='產品料號錯誤\n';
@@ -856,8 +884,8 @@ function checkAllInput(){
 
 
               var disb = $(this).attr('disabled');
-
               if( disb == undefined ){
+
                   count_check_name[one_count] = $(this).val();
                   _flag = false;
                   alert_msg_name='產品名稱錯誤\n';
@@ -922,11 +950,11 @@ function checkAllInput(){
               bf=true;
           }
 
-          if( count_check_num[i] != '' ){
+          if( isInteger(count_check_num[i] ) ){
               cf=true;
           }
 
-          if( count_check_price[i] != '' ){
+          if( isInteger(count_check_price[i] ) ){
               df=true;
           }
 
@@ -940,7 +968,6 @@ function checkAllInput(){
     if(one_come_true){
         _flag=true;
     }
-
 
     // console.log( count_check_code  );
     // console.log( count_check_name  );
