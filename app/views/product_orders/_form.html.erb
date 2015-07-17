@@ -135,10 +135,10 @@
           <tr id="tr_<%=@pro_infos[info.id]%>">
               <th> <%=ci+=1 %> </th>
               <th>
-                  <input name="product_code_<%=info.id%>" value="<%=info.product.code%>"   disabled="" alt="<%=info.id%>" >
+                  <input name="product_code_<%=info.id%>" value="<%=info.product.code%>"   disabled="disabled" alt="<%=info.id%>" >
                   <input type="hidden" name="product_id_<%=info.id%>" id="product_id_<%=info.id%>" value="<%=info.id%>">
               </th>
-              <th><input name="product_name_<%=info.id%>" value="<%=info.product.title%>"   disabled="" alt="<%=info.id%>" >  </th>
+              <th><input name="product_name_<%=info.id%>" value="<%=info.product.title%>"   disabled="disabled" alt="<%=info.id%>" >  </th>
               <td><input name="num_<%=info.id %>"     id="num_<%=info.id %>"    class="num_<%=info.id %>"    alt="<%=info.id %>"  value="<%=info.num %>"     onblur="calTotal(<%=info.id %>)"  ></td>
               <td><input name="price_<%=info.id %>"   id="price_<%=info.id %>"  class="price_<%=info.id %>"  alt="<%=info.id %>"  value="<%=info.price %>"   onblur="calTotal(<%=info.id %>)"  ></td>
               <td><span  class="total_<%=info.id %>"  id="total_<%=info.id %>" ><%=info.total%></span> </td>
@@ -223,9 +223,15 @@ $(document).ready(function() {
             var ThisNum   =  $('#num_'+ThisId  ).val() ;
             var ThisPrice =  $('#price_'+ThisId ).val() ;
             var ThisTotal =  $('#total_'+ThisId ).text() ;
+            var code_disb = $(this).attr('disabled');
 
-            all_str += ThisProductId + '/' +ThisNum+ '/' +ThisPrice+ '/' +ThisTotal +',';
-            show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
+            var name_disb = $('#product_name_'+ThisId).attr('disabled');
+            if( code_disb == 'disabled' && name_disb == 'disabled' && isInteger(ThisNum) && isInteger(ThisPrice)  ){
+                all_str += ThisProductId + '/' +ThisNum+ '/' +ThisPrice+ '/' +ThisTotal +',';
+                show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
+            }
+            // all_str += ThisProductId + '/' +ThisNum+ '/' +ThisPrice+ '/' +ThisTotal +',';
+            // show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
 
             // if( $(this).val()=='' ){
             //     _flag=false;
@@ -252,12 +258,13 @@ $(document).ready(function() {
 
 
       if( mem_id == '' || mem_id==null || (_flag==false ) ){
-          alert('訂購失敗!');
+          // alert( mem_id +' / ' + mem_id+'  + '+_flag);
+          alert('訂購失敗!~');
       }else{
 
           //just alert!!
 
-          // alert('all sttr  -'+all_str+
+          // alert('all sttr  /'+all_str+
           //       'date_and_totalPrice  -' + date_and_totalPrice +
           //       'member  -' + $("#member_id").val() +
           //       'code  -' + $("#code").val()  );
@@ -281,7 +288,7 @@ $(document).ready(function() {
                           document.location.href=url;
                       });
                   }else{
-                      alert('訂購失敗!');
+                      alert('訂購失敗!!!!');
                   }
 
                 });
@@ -317,10 +324,15 @@ $(document).ready(function() {
               var ThisPrice =  $('#price_'+ThisId ).val() ;
               var ThisTotal =  $('#total_'+ThisId ).text() ;
 
-              all_str += ThisProductId + '/' +ThisNum+ '/' +ThisPrice+ '/' +ThisTotal +',';
+              
+              var code_disb = $(this).attr('disabled');
+              var name_disb = $('#product_name_'+ThisId).attr('disabled');
+              if( code_disb == 'disabled' && name_disb == 'disabled' && isInteger(ThisNum) && isInteger(ThisPrice)  ){
+              // if( code_disb == 'disabled' && name_disb == 'disabled'  ){
 
-              show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
-
+                  all_str += ThisProductId + '/' +ThisNum+ '/' +ThisPrice+ '/' +ThisTotal +',';
+                  show_all_total = parseInt(ThisTotal) + parseInt(show_all_total) ;
+              }
 
               // if( $(this).val()=='' ){
               //     _flag=false;
@@ -494,7 +506,7 @@ $(document).ready(function() {
                          $("#product_id_"   + _alt ).val(ui.item.id);
                          $("#product_name_"+_alt).val(ui.item.title).attr('disabled',true);
                          $(this).attr('disabled',true);
-
+                         calTotal(ci_str.toString() );
                   			 return false;
                       }
                     });
@@ -541,7 +553,7 @@ $(document).ready(function() {
                            $("#product_id_"   + _alt ).val(ui.item.id);
                            $("#product_code_"+_alt).val(ui.item.code).attr('disabled',true);
                            $(this).attr('disabled',true);
-
+                           calTotal(ci_str.toString() );
                     			 return false;
                         }
                       });
@@ -654,7 +666,7 @@ $(document).ready(function() {
                        $("#product_name_" + _alt).val(ui.item.title).attr('disabled',true);
 
                        $(this).attr('disabled',true);
-
+                       calTotal(ci_str );
                        return false;
                     }
                   });
@@ -700,7 +712,7 @@ $(document).ready(function() {
                          $("#product_code_" + _alt ).val(ui.item.code).attr('disabled',true);
 
                          $(this).attr('disabled',true);
-
+                         calTotal(ci_str );
                          return false;
                       }
                     });
@@ -734,10 +746,10 @@ $(document).ready(function() {
 
 
 function calTotal(alt_atr ){
-  var alt = alt_atr.toString();
 
-  var num_val     =   $("#num_"+alt).val();
-  var price_val   =   $("#price_"+alt).val();
+  var alt           =   alt_atr.toString();
+  var num_val       =   $("#num_"+alt).val();
+  var price_val     =   $("#price_"+alt).val();
   var _this_total   =   $("#total_"+alt).val();
 
   var num_flag    =   isInteger(num_val);
@@ -745,8 +757,14 @@ function calTotal(alt_atr ){
 
   var show_total_price   =  0;
 
+  var code_disabled = $("#product_code_" + alt_atr).attr('disabled');
+  var name_disabled = $("#product_name_" + alt_atr).attr('disabled');
 
-  if(num_flag && price_flag){
+
+  // alert('name/'+name_disabled+'\x/n    code/'+code_disabled);
+
+  if(num_flag && price_flag  &&  code_disabled == 'disabled' && name_disabled == 'disabled' ){
+
           //計算總金額
       if(  (parseInt(num_val) >= 0 ) &&  ( parseInt(price_val) >= 0 ) ){
 
@@ -779,7 +797,7 @@ function calTotal(alt_atr ){
 
   }else{
 
-      // alert('數量&單價,請輸入數字!');
+      // alert('請輸入正確的產品料號或產品名稱!!');
   }
 
 }
@@ -813,12 +831,13 @@ function checkAllInput(){
 
           one_count+=1;
           if(isInteger($(this).val())){
-              count_check_code[one_count] = $(this).val();
+
               var disb = $(this).attr('disabled');
               if( disb == undefined ){
+                  count_check_code[one_count] = $(this).val();
                   _flag     = false;
                   alert_msg_code='產品料號錯誤\n';
-                  alert('qq');
+                  // alert('qq');
               }
 
           }
@@ -830,13 +849,16 @@ function checkAllInput(){
     $('input[name^="product_name_"]').each(function(){
 
           one_count+=1;
-          if(isInteger($(this).val())){
-              count_check_name[one_count] = $(this).val();
+          if( $(this).val() ){
+
+
               var disb = $(this).attr('disabled');
+
               if( disb == undefined ){
-                  _flag=false;
+                  count_check_name[one_count] = $(this).val();
+                  _flag = false;
                   alert_msg_name='產品名稱錯誤\n';
-                  alert('qq');
+                  // alert('qq');
               }
           }
     });
@@ -850,7 +872,7 @@ function checkAllInput(){
               if( isInteger($(this).val()) == false ){
                   _flag=false;
                   alert_msg_num ='訂購數量錯誤\n';
-                  alert('qq');
+                  //alert('qq');
               }
           }
 
@@ -861,11 +883,11 @@ function checkAllInput(){
           one_count+=1;
           if(isInteger($(this).val())){
               count_check_price[one_count] = $(this).val();
-
               if( isInteger($(this).val()) == false ){
+
                   _flag=false;
                   alert_msg_price = '單價錯誤\n';
-                  alert('qq');
+                  // alert('qq');
               }
           }
     });
@@ -876,10 +898,7 @@ function checkAllInput(){
     true_flag = 0;
 
 
-    // console.log( count_check_code  );
-    // console.log( count_check_name  );
-    // console.log( count_check_num   );
-    // console.log( count_check_price );
+
 
 
     var one_come_true = false;
@@ -892,19 +911,19 @@ function checkAllInput(){
           var cf = false;
           var df = false;
 
-          if( count_check_code[i]){
+          if( count_check_code[i] != '' ){
               af=true;
           }
 
-          if( count_check_name[i]){
+          if( count_check_name[i] != '' ){
               bf=true;
           }
 
-          if( count_check_num[i]){
+          if( count_check_num[i] != '' ){
               cf=true;
           }
 
-          if( count_check_price[i]){
+          if( count_check_price[i] != '' ){
               df=true;
           }
 
@@ -919,14 +938,14 @@ function checkAllInput(){
         _flag=true;
     }
 
-    // else{
-    //     _flag=false;
-    //
-    //     alert_msg   = alert_msg_code  + alert_msg_name +
-    //                   alert_msg_num   + alert_msg_price ;
-    //     alert(alert_msg);
-    // }
 
+    console.log( count_check_code  );
+    console.log( count_check_name  );
+    console.log( count_check_num   );
+    console.log( count_check_price );
+
+
+    alert(one_come_true + '// one_come_true~~');
 
     return _flag;
 }

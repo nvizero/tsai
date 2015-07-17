@@ -161,9 +161,6 @@ class PactController < ApplicationController
     code = params[:code]
     all_str = params[:all_str]
 
-    # logger.info "//#{params}//"
-
-
     order_flag = false
 
     qq = ''
