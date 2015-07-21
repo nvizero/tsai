@@ -135,11 +135,13 @@
         <input type="hidden" id="has_product_ids" value="<%=info.product_id%>">
 
           <tr id="tr_<%=@pro_infos[info.id]%>">
-              <th> <%=ci+=1 %> </th>
+              <th> <%=ci+=1%> </th>
+
               <th>
                   <input name="product_code_<%=rand_str%>" id="product_code_<%=rand_str%>"  value="<%=info.product.code%>"     alt="<%=rand_str%>" disabled="disabled" >
                   <input type="hidden" name="product_id_<%=rand_str%>" id="product_id_<%=rand_str%>" value="<%=info.product.id%>">
               </th>
+
               <th><input name="product_name_<%=rand_str%>" id="product_name_<%=rand_str%>"   value="<%=info.product.title%>"    alt="<%=rand_str%>" disabled="disabled" >  </th>
 
               <td><input name="num_<%=rand_str %>"     id="num_<%=rand_str%>"    class="num_<%=rand_str%>"    alt="<%=rand_str%>"  value="<%=info.num %>"     onBlur="calTotal('<%=rand_str %>')"  ></td>
@@ -208,7 +210,7 @@ $(document).ready(function() {
 
       _flag = checkAllInput();
       //產品＆數量
-      // alert(_flag);
+      // alert(' one (1) _flag = ' + _flag);
       var  num_str            =  '';
       var  price_str          =  '';
       var  total_str          =  '';
@@ -262,6 +264,7 @@ $(document).ready(function() {
       // alert(date_and_totalPrice);
 
 
+      // alert('_flag = ' + _flag);
 
       if( mem_id == '' || mem_id == null || ( _flag == false )|| ( product_code_count == 0 ) ){
           // alert( mem_id +' / ' + mem_id+'  + '+_flag);
@@ -849,7 +852,8 @@ function checkAllInput(){
     var count_check_num     =   Array();
     var count_check_price   =   Array();
     var one_count   = 0;
-    var _flag       = true;
+    var _flag       = false;
+
     var alert_msg   = '';
     var alert_msg_code   = '';
     var alert_msg_name   = '';
@@ -874,7 +878,7 @@ function checkAllInput(){
           }
 
     });
-
+    // alert('two 2  flag = ' + _flag + '~~');
     one_count=0;
     //查看產品料號是否為正確的值
     $('input[name^="product_name_"]').each(function(){
@@ -934,6 +938,8 @@ function checkAllInput(){
 
     var one_come_true = false;
 
+    // alert('mid  flag = ' + _flag + '~~');
+
 
     for(  var i = 1 ; i <=one_count ; i++){
 
@@ -975,7 +981,7 @@ function checkAllInput(){
     // console.log( count_check_price );
 
 
-    // alert(one_come_true + '// one_come_true~~');
+    // alert('end flag = ' + _flag + '~~');
 
     return _flag;
 }
