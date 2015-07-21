@@ -42,17 +42,20 @@ class ProductInOutsController < ApplicationController
     @product_id = params[:product_id]
 
     if @product_id
-      @product_data = Product.find(:id=>@product_id.to_i)
+
+       @product_data = Product.find(:id=>@product_id.to_i)
+
     else
-      @product_data = Product.all
+
+       @product_data = Product.all
     end
 
-    if @flag=='N'
-        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.stoped.page params[:page]
-    elsif @flag=='Y'
-        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.page params[:page]
+    if @flag == 'N'
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.stoped.sorted.page params[:page]
+    elsif @flag == 'Y'
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.sorted.page params[:page]
     else
-        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.sorted.page params[:page]
         @flag='Y'
     end
 
@@ -117,17 +120,15 @@ class ProductInOutsController < ApplicationController
   def edit
 
     today_in_out_count
-    @whered = @product_in_out.in_or_out
-    @i_or_o         = @product_in_out.in_or_out
+    @whered         =   @product_in_out.in_or_out
+    @i_or_o         =   @product_in_out.in_or_out
+    @in_out_type    =   params[:type]
+    @store_areas    =   StoreArea.live
+    @product_id     =   params[:product_id]
+    @in_out_cates   =   InOutType.where(:cate=>@product_in_out.in_or_out)
 
-    @store_areas    = StoreArea.live
-    @product_id     = params[:product_id]
-    @in_out_cates   = InOutType.where(:cate=>@product_in_out.in_or_out)
-
-    @product_data   = Product.live
-
-
-    @product_id = params[:product_id]
+    @product_data   =   Product.live
+    @product_id     =   params[:product_id]
 
     if @product_id
       @product_data = Product.find(:id=>@product_id.to_i)

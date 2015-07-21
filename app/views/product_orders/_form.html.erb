@@ -128,6 +128,7 @@
         ci = 0
 
         if !@product_order.id.nil?
+
               @orderInfos.each do |info|
                 rand_str = get_random_str(6)
         %>
@@ -184,10 +185,8 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <!--
-
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
 -->
 
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
@@ -431,8 +430,6 @@ $(document).ready(function() {
       //這是新增的時候
       $.post('/get_all_products',function(data){
             //一開始的時候做的產品列表
-
-
             var ci = 1;
             var ci_str = 'qwe';
             //新增產品的！！！！！！！！！
@@ -460,6 +457,7 @@ $(document).ready(function() {
 
                               if( code_disb == undefined ){
                                     alert('沒有這個料號');
+                                    $(this).focus();
                               }
                           })
 
@@ -467,6 +465,7 @@ $(document).ready(function() {
                               var name_disb = $(this).attr('disabled');
                               if( name_disb == undefined ){
                                     alert('沒有這個產品');
+                                    $(this).focus();
                               }
                           })
 
@@ -486,56 +485,72 @@ $(document).ready(function() {
 
 
 
-                  //自動完成
-              $( "#product_code_" +ci_str.toString()).autocomplete({
-                      source: function( request, response ) {
-                        $.post('/product_list_code.json',
-                              {
-                                'code' : request.term ,
-                                'type' : 'code',
-                                'old_data' : str_all_code_val
-                              },
-                              function(data){
+              //自動完成
+              $( "#product_code_" +ci_str.toString())
+                .bind( 'focus', function(){
+                    $(this).autocomplete("search");
 
-                                // alert(str_all_name_val);
+                } )
+                .bind( 'click', function(){
+                    $(this).autocomplete("search");
+                } )
+                .autocomplete({
+                        source: function( request, response ) {
+                          $.post('/product_list_code.json',
+                                {
+                                  'code' : request.term ,
+                                  'type' : 'code',
+                                  'old_data' : str_all_code_val
+                                },
+                                function(data){
 
-
-                                response( $.map( data, function( item ) {
-        	                             return {
-                                          id: item.id ,
-                      								    label: item.code ,
-                                          value: item.code ,
-                                          title: item.title ,
-        	                             }
-	                              }));
-                        });
-                      },
-                      //最小的長度
-                      minLength: 1,
-
-                      select: function( event, ui ) {
-
-                         var terms = new Array();
-                  			//  if(this.title!="")
-                  			//    terms = this.title.split("/ ");
-                  			 terms.pop();
-                  			 terms.push( ui.item.value );
-                  			 terms.push("" );
-                  			 this.value = terms.join( "" );
-
-                         var _alt = $(this).attr('alt');
-                         $("#product_id_"   + _alt ).val(ui.item.id);
-                         $("#product_name_"+_alt).val(ui.item.title).attr('disabled',true);
-                         $(this).attr('disabled',true);
-                         calTotal(ci_str.toString() );
-                  			 return false;
-                      }
-                    });
+                                  // alert(str_all_name_val);
 
 
+                                  response( $.map( data, function( item ) {
+          	                             return {
+                                            id: item.id ,
+                        								    label: item.code ,
+                                            value: item.code ,
+                                            title: item.title ,
+          	                             }
+  	                              }));
+                          });
+                        },
+                        //最小的長度
+                        minLength: 0,
+
+                        select: function( event, ui ) {
+
+                           var terms = new Array();
+                    			//  if(this.title!="")
+                    			//    terms = this.title.split("/ ");
+                    			 terms.pop();
+                    			 terms.push( ui.item.value );
+                    			 terms.push("" );
+                    			 this.value = terms.join( "" );
+
+                           var _alt = $(this).attr('alt');
+                           $("#product_id_"   + _alt ).val(ui.item.id);
+                           $("#product_name_"+_alt).val(ui.item.title).attr('disabled',true);
+                           $(this).attr('disabled',true);
+                           calTotal(ci_str.toString() );
+                    			 return false;
+                        }
+                      });
 
 
-                    $( "#product_name_" +ci_str.toString()).autocomplete({
+
+
+                    $( "#product_name_" +ci_str.toString())
+                        .bind( 'focus', function(){
+                            $(this).autocomplete("search");
+
+                        } )
+                        .bind( 'click', function(){
+                            $(this).autocomplete("search");
+                        } )
+                        .autocomplete({
                         source: function( request, response ) {
 
                           $.post('/product_list_code.json',
@@ -558,8 +573,7 @@ $(document).ready(function() {
                           });
                         },
                         //最小的長度
-                        minLength: 1,
-
+                        minLength: 0,
                         select: function( event, ui ) {
 
                            var terms = new Array();
@@ -640,6 +654,7 @@ $(document).ready(function() {
                     var code_disb = $(this).attr('disabled');
                     if( code_disb == undefined ){
                           alert('沒有這個料號');
+                          $(this).focus();
                     }
                 })
 
@@ -647,6 +662,7 @@ $(document).ready(function() {
                     var name_disb = $(this).attr('disabled');
                     if( name_disb == undefined ){
                           alert('沒有這個產品');
+                          $(this).focus();
                     }
                 })
 
@@ -665,7 +681,15 @@ $(document).ready(function() {
 
 
 
-                $( "#product_code_" +ci_str).autocomplete({
+                $( "#product_code_" +ci_str)
+                  .bind( 'focus', function(){
+                      $(this).autocomplete("search");
+
+                  } )
+                  .bind( 'click', function(){
+                      $(this).autocomplete("search");
+                  } )
+                  .autocomplete({
                     source: function( request, response ) {
                       // alert( request.term);
                       $.post('/product_list_code.json',
@@ -687,10 +711,8 @@ $(document).ready(function() {
                       });
                     },
                     //最小的長度
-                    minLength: 1,
-
+                    minLength: 0,
                     select: function( event, ui ) {
-
                        var terms = new Array();
                       //  if(this.title!="")
                       //    terms = this.title.split("/ ");
@@ -711,7 +733,15 @@ $(document).ready(function() {
                   });
 
 
-                  $( "#product_name_" + ci_str ).autocomplete({
+                  $( "#product_name_" + ci_str )
+                      .bind( 'focus', function(){
+                          $(this).autocomplete("search");
+
+                      } )
+                      .bind( 'click', function(){
+                          $(this).autocomplete("search");
+                      } )
+                      .autocomplete({
                       source: function( request, response ) {
 
                         $.post('/product_list_code.json',
@@ -734,7 +764,7 @@ $(document).ready(function() {
                         });
                       },
                       //最小的長度
-                      minLength: 1,
+                      minLength: 0,
 
                       select: function( event, ui ) {
 

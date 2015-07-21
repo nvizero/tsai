@@ -34,7 +34,36 @@
       @product_id = @product_in_out.product_id
     end
   %>
-  <%= f.select(:product_id, @product_data.collect {|p| ["#{p.code}-#{p.title}", p.id]} , { :include_blank =>'-------' ,:selected =>@product_in_out.product_id } , :class=>'form-control', :id => 'product_id' ) %>
+
+<%
+  por_ar = []
+
+  @product_data.each do |pr_data|
+    por_ar[pr_data.id] = pr_data.title
+  end
+
+%>
+
+
+
+  <% if  !@product_in_out.id.nil? %>
+
+      <% if  @in_out_type == 'reduce' %>
+            <!--出庫-->
+            <%= f.select(:product_id, @product_data.collect {|p| ["#{p.code}-#{p.title}", p.id]} , { :include_blank =>'-------' ,:selected =>@product_id } , :class=>'form-control', :id => 'product_id' ) %>
+      <% elsif @in_out_type == 'add'%>
+            <!--入庫-->
+
+
+            <select id="serial" name="product_in_out[serial]" class='form-control' >
+                <option value="<%= @product_id %>" > <%= por_ar[@product_id]%></option>
+            </select>
+      <% end%>
+  <% else %>
+      <%= f.select(:product_id, @product_data.collect {|p| ["#{p.code}-#{p.title}", p.id]} , { :include_blank =>'-------' ,:selected =>@product_in_out.product_id } , :class=>'form-control', :id => 'product_id' ) %>
+  <% end %>
+
+
 </h3>
 </div>
 
@@ -47,19 +76,31 @@
     </font >
     <br>
 
-    <% if 'reduce'==@whered %>
-            <% f.select(:serial, @p_in_out_list.collect {|p| ["#{p.serial}", p.serial]} , {:include_blank =>'-------' , :selected =>@product_in_out.serial } , :class=>'form-control' ,:id =>"serial"  ) %>
-            <select id="serial" name="product_in_out[serial]" class='form-control' ></select>
-    <% else  %>
 
-        <% if !@product_in_out.id.nil? %>
-            <% f.select(:serial, @p_in_out_list.collect {|p| ["#{p.serial}", p.serial]} , {:include_blank =>'-------' , :selected =>@product_in_out.serial } , :class=>'form-control' ,:id =>"serial") %>
-            <select id="serial" name="product_in_out[serial]" class='form-control' ></select>
+
+
+
+
+
+        <% if  !@product_in_out.id.nil? %>
+
+            <% if  @in_out_type == 'reduce' %>
+                  <!--出庫-->
+                  <%= f.select(:serial , @p_in_out_list.collect{ |pay| [pay.serial , pay.serial  ] } , { :selected =>@product_in_out.serial  } , :id=>'serial' ,:class=>'form-control'  )%>
+            <% elsif @in_out_type == 'add'%>
+                  <!--入庫-->
+
+                  <!-- <%= f.select(:serial , @p_in_out_list.collect{ |pay| [pay.serial , pay.serial  ] } , { :selected =>@product_in_out.serial  } , :id=>'serial' ,:class=>'form-control'  )%> -->
+
+                  <select id="serial" name="product_in_out[serial]" class='form-control' >
+                      <option value="<%= @product_in_out.serial %>" ><%= @product_in_out.serial %></option>
+                  </select>
+            <% end%>
         <% else %>
-            <%= f.text_field :serial ,:id => "exampleInputFile" , :class => "form-control"  %>
+        <!--新增-->
+            <%= f.text_field :serial ,:id => "serial" , :class => "form-control"  %>
         <% end %>
 
-    <% end  %>
   </h3>
 
 </div>
@@ -142,7 +183,7 @@
         var _vl2 = checknum(_vl);
 
         if(!_vl2){
-          
+
             alert('請輸入正整數');
             $('#num').val('');
         }

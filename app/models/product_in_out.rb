@@ -3,6 +3,9 @@ class ProductInOut < ActiveRecord::Base
   belongs_to :product
   belongs_to :in_out_type
   belongs_to :store_area
+
+  # scope :sorted  , lambda { order("product_in_outs.id desc ") }
+  scope :sorted, lambda { order("product_in_outs.updated_at desc") }
   scope :in_come  , lambda { where("product_in_outs.in_or_out = 'add' ") }
   scope :out_come  , lambda { where("product_in_outs.in_or_out = 'reduce' ") }
 

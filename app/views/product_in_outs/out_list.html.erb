@@ -55,11 +55,8 @@
         <td>
 
           <% if product_in_out.state == 'Y'  %>
-
-            <%= link_to '編輯', edit_product_in_out_path(product_in_out), :class => 'btn btn-info btn-sm' %>
-            <a url="#" class="del btn btn-danger btn-sm" id='/product_in_outs/out_come/destroy/<%=product_in_out.id %>'> 停用 </a>
-
-
+            <a href="/product_in_outs/<%=product_in_out.id%>/edit?type=reduce"  class="btn btn-info btn-sm"> 編輯</a>
+            <a url="#" class="del btn btn-danger btn-sm:class => 'btn btn-info btn-sm' " id='/product_in_outs/out_come/destroy/<%=product_in_out.id %>'> 停用 </a>
           <% else %>
               <button class="btn btn-danger disabled">己停用</button>
           <% end %>
