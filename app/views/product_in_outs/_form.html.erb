@@ -3,7 +3,7 @@
   <% if @product_in_out.errors.any? %>
     <div id="error_explanation" >
       <% @product_in_out.errors.full_messages.each do |msg| %>
-          <%= @mss = "#{@mss}"+"#{msg}<br>\n" %>
+          <% @mss = "#{@mss}"+"#{msg}<br>\n" %>
       <% end %>
     </div>
   <% end %>
@@ -27,8 +27,8 @@
   <h3>
     <font color="red" >
         <%= f.label :product_id , '產品名稱' %>
-    </font >
-  <br>
+    </font>
+
   <%
     if @product_in_out
       @product_id = @product_in_out.product_id
@@ -37,7 +37,6 @@
 
 <%
   por_ar = []
-
   @product_data.each do |pr_data|
     por_ar[pr_data.id] = pr_data.title
   end
@@ -85,20 +84,33 @@
         <% if  !@product_in_out.id.nil? %>
 
             <% if  @in_out_type == 'reduce' %>
-                  <!--出庫-->
+
+                  <!-- 出庫 -->
+
                   <%= f.select(:serial , @p_in_out_list.collect{ |pay| [pay.serial , pay.serial  ] } , { :selected =>@product_in_out.serial  } , :id=>'serial' ,:class=>'form-control'  )%>
+
             <% elsif @in_out_type == 'add'%>
-                  <!--入庫-->
-
+                  <!-- 入庫 -->
                   <!-- <%= f.select(:serial , @p_in_out_list.collect{ |pay| [pay.serial , pay.serial  ] } , { :selected =>@product_in_out.serial  } , :id=>'serial' ,:class=>'form-control'  )%> -->
-
                   <select id="serial" name="product_in_out[serial]" class='form-control' >
-                      <option value="<%= @product_in_out.serial %>" ><%= @product_in_out.serial %></option>
+                        <option value="<%= @product_in_out.serial %>" ><%= @product_in_out.serial %></option>
                   </select>
+
             <% end%>
+
+
         <% else %>
-        <!--新增-->
+
+            <% if  @i_or_o == 'out' %>
+            <select id="serial" name="product_in_out[serial]" class='form-control' >
+            </select>
+                  <!-- <%= f.select(:serial , @p_in_out_list.collect{ |pay| [pay.serial , pay.serial  ] } , { :selected =>@product_in_out.serial  } , :id=>'serial' ,:class=>'form-control'  )%> -->
+            <% elsif @i_or_o == 'in'%>
+            <!--新增-->
             <%= f.text_field :serial ,:id => "serial" , :class => "form-control"  %>
+            <% end %>
+
+
         <% end %>
 
   </h3>
@@ -120,14 +132,14 @@
 
   <div class="col-xs-6">
         <h3>
-            <font color="red" ><%= f.label :num , '庫位' %></font><br>
+            <font color="red" ><%= f.label :num , '庫位' %></font>
             <%= f.select(:store_area_id, @store_areas.collect {|p| [ p.area_name , p.area_id ] } , { :selected =>@product_in_out.store_area_id } , :class=>'form-control' ,:id=>'store_area_id' ) %>
         </h3>
   </div>
 
   <div class="col-xs-6">
         <h3>
-            <font color="red" ><%= f.label :num , '等級' %></font><br>
+            <font color="red" ><%= f.label :num , '等級' %></font>
             <%= f.select(:level , @levels[0].collect {|lp| ["#{lp[1]}", lp[0] ]} , {:include_blank =>'-------' , :selected =>@product_in_out.level } , :class=>'form-control' ,:id =>'level' ) %>
         </h3>
   </div>
@@ -135,7 +147,7 @@
 
   <div class="col-xs-6">
         <h3>
-            <font color="red" ><%= f.label :num , '有效期限' %></font><br>
+            <font color="red" ><%= f.label :num , '有效期限' %></font>
             <%= f.text_field :save_date , :class=>'form-control' ,:id=>"save_date" %>
         </h3>
   </div>
@@ -145,7 +157,7 @@
           <h3>
             <font color="red" ><%= f.label :num , '數量' %></font>
             <span class="num"></span>
-            <br>
+
             <%= f.number_field :num , :class=>'form-control' , :id =>'num' %>
           </h3>
 

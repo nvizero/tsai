@@ -12,16 +12,11 @@ class ProductInOut < ActiveRecord::Base
   scope :live  , lambda { where("product_in_outs.state = 'Y' ") }
   scope :stoped  , lambda { where("product_in_outs.state = 'N' ") }
 
+  validates :level,             :presence => { :message => "等級不能空白" }
 
-
-  # validates :num,       :presence => {  :message => "產品數量－不能空白" ,
-  #                                       :only_integer => true,
-  #                                       :length => :minimum => 1 }
-
-
-
+  validates :product_id,        :presence => { :message => "產品名稱不能空白" }
   validates :in_out_type_id,       :presence => { :message => "入庫/出庫分類不能空白" }
-  validates_inclusion_of :num, :in => 1..9999999 ,:message => "產品數量－不能空白"
+  validates_inclusion_of :num, :in => 1..9999999 ,:message => "產品數量－為正整數"
   validates :num,       :presence => { :message => "產品數量－不能空白" }
   validates :serial, :presence => { :message => "批號不能空白" }
 

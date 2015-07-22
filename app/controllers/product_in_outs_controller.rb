@@ -181,12 +181,42 @@ class ProductInOutsController < ApplicationController
                           flash[:notice] = "新增成功"
                           redirect_to :controller=>'product_in_outs' , :action=>'out_list'
                     else
+                          # flash[:notice] = "errors1"
+                          # today_in_out_count
+                          # @i_or_o         = params[:type]
+                          # @product_id     = params[:product_id]
+                          # @product_data   = Product.live
+                          # # @product_in_out = ProductInOut.new
+                          # redirect_to :controller =>'product_in_outs' , :action=>'new' , :type=>'out'
+
                           today_in_out_count
-                          @i_or_o         = params[:type]
-                          @product_id     = params[:product_id]
-                          @product_data   = Product.live
-                          # @product_in_out = ProductInOut.new
-                          redirect_to :controller =>'product_in_outs' , :action=>'new' , :type=>'out'
+
+                          # @i_or_o         = params[:type]
+                          # @product_id     = params[:product_id]
+                          # @product_data   = Product.live
+
+
+
+                          today_in_out_count
+                          @whered         =   @product_in_out.in_or_out
+                          @i_or_o         =   @product_in_out.in_or_out
+                          @in_out_type    =   params[:type]
+                          @store_areas    =   StoreArea.live
+                          @product_id     =   params[:product_id]
+                          @in_out_cates   =   InOutType.where(:cate=>@product_in_out.in_or_out)
+
+                          @product_data   =   Product.live
+                          @product_id     =   params[:product_id]
+
+                          if @product_id
+                            @product_data = Product.find(:id=>@product_id.to_i)
+                          else
+                            @product_data = Product.all
+                          end
+                          
+                          @p_in_out_list = ProductInOut.live
+
+                          render action: 'new' ,:type => @in_out_type
                     end
               end
 
@@ -199,11 +229,33 @@ class ProductInOutsController < ApplicationController
                 redirect_to :controller=>'product_in_outs' , :action=>'in_list'
           else
                 today_in_out_count
+
                 @i_or_o         = params[:type]
                 @product_id     = params[:product_id]
                 @product_data   = Product.live
-                # @product_in_out = ProductInOut.new
-                redirect_to :controller =>'product_in_outs' , :action=>'new' , :type=>'in'
+
+
+
+                today_in_out_count
+                @whered         =   @product_in_out.in_or_out
+                @i_or_o         =   @product_in_out.in_or_out
+                @in_out_type    =   params[:type]
+                @store_areas    =   StoreArea.live
+                @product_id     =   params[:product_id]
+                @in_out_cates   =   InOutType.where(:cate=>@product_in_out.in_or_out)
+
+                @product_data   =   Product.live
+                @product_id     =   params[:product_id]
+
+                if @product_id
+                  @product_data = Product.find(:id=>@product_id.to_i)
+                else
+                  @product_data = Product.all
+                end
+                @p_in_out_list = ProductInOut.live
+
+                render action: 'new' ,:type => params[:type]
+                # redirect_to :controller =>'product_in_outs' , :action=>'new' , :type=>'in'
           end
     end
 
