@@ -377,4 +377,31 @@ class PactController < ApplicationController
       render :text => cg
   end
 
+
+
+  #只是測試用
+  def tgroup
+    cc=ProductInOut.group(:code).count
+    tttxg  = "#{cc.size}<br><br>"
+    tttxg += "<table border=1>"
+    i = 1
+
+     pios = ProductInOut
+            .select("product_in_outs.id, product_in_outs.code, SUM(product_in_outs.num) as sum_num")
+            .group("product_in_outs.in_or_out")
+            .order("product_in_outs.id")
+
+    pios.each do |pio|
+        tttxg += "<tr>"
+        tttxg += "<td>#{i}</td>"
+
+        tttxg += "<td>#{pio.code}</td>"
+        tttxg += "<td>#{pio.sum_num}</td>"
+        tttxg += "</tr>"
+        i     += 1
+    end
+    tttxg+="</table>"
+    render :text =>tttxg
+
+  end
 end

@@ -10,7 +10,7 @@ class ProductInOutsController < ApplicationController
   before_action :confirm_logged_in
   #取得一些基本資訊
   before_action :get_base_data
-
+  helper_method :sort_column, :sort_direction
   # GET /product_in_outs
   # GET /product_in_outs.json
   def index
@@ -51,11 +51,11 @@ class ProductInOutsController < ApplicationController
     end
 
     if @flag == 'N'
-        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.stoped.sorted.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.stoped.order(sort_column + " " + sort_direction).page params[:page]
     elsif @flag == 'Y'
-        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.sorted.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.order(sort_column + " " + sort_direction).page params[:page]
     else
-        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.sorted.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag='Y'
     end
 
@@ -213,7 +213,7 @@ class ProductInOutsController < ApplicationController
                           else
                             @product_data = Product.all
                           end
-                          
+
                           @p_in_out_list = ProductInOut.live
 
                           render action: 'new' ,:type => @in_out_type
@@ -331,6 +331,14 @@ class ProductInOutsController < ApplicationController
   end
 
   private
+
+    def sort_column
+      ProductInOut.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 
     def today_in_out_count
       in_out_cs = ProductInOut.where(

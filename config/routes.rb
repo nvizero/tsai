@@ -61,7 +61,8 @@ Tsai::Application.routes.draw do
 
   get '/product_in_outs/in_come/destroy(/:id)', :to => "product_in_outs#in_come_destroy"
   get '/product_in_outs/out_come/destroy(/:id)', :to => "product_in_outs#out_come_destroy"
-  get 'json_product_id', :to => "pact#json_product_id"
+  get '/json_product_id', :to => "pact#json_product_id"
+  get '/tgroup', :to => "pact#tgroup"
   ##########
 
 

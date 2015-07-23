@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
         cdi[cdi.count] = session[:user_id]
 
       elsif session[:vip_access] =='admin'
-        
+
         cdi = []
 
       elsif session[:vip_access] =='normal'
@@ -91,6 +91,15 @@ class ApplicationController < ActionController::Base
 
 
       return cdi
+  end
+
+
+
+
+  def get_random_str num
+        o = [('a'..'z'), ('1'..'9'),('A'..'Z') ].map { |i| i.to_a }.flatten
+        cg = (0...num).map { o[rand(o.length)] }.join
+        return cg
   end
 
 end

@@ -1,5 +1,4 @@
 
-
 <!-- Main content -->
 <section class="content">
   <div class="row">
@@ -7,8 +6,6 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">顧客列表</h3>
-
-
 
                     <div class="btn-group" id='head_btn'>
                         <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
@@ -39,9 +36,11 @@
               <table id="example2" class="table table-bordered table-striped">
   <thead>
     <tr>
-      <th>性名</th>
-      <th>電話</th>
-      <th>住址</th>
+      <!-- <th>性名</th> -->
+      <th><%= sortable "name" ,'性名' %></th>
+      <th><%= sortable "tel" ,'電話' %></th>
+      <th><%= sortable "address" ,'住址' %></th>
+
       <th></th>
     </tr>
   </thead>

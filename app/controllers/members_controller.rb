@@ -11,6 +11,11 @@ class MembersController < ApplicationController
   #要登入
   before_action :confirm_logged_in
 
+
+
+  helper_method :sort_column, :sort_direction
+
+
   # GET /members
   # GET /members.json
   def index
@@ -21,10 +26,12 @@ class MembersController < ApplicationController
     #   mem.save
     # end
 
-    # Member.create(:name=>i ,
-    #               :address=>i ,
-    #               :tel=> i ,
-    #               :create_user_id =>create_user_id )
+    # 666.times do |aa|
+    #     Member.create(:name=>get_random_str(10) ,
+    #                   :address=>get_random_str(10) ,
+    #                   :tel=>aa,
+    #                   :create_user_id =>aa )
+    # end
 
 
     @users_a = self.user_to_ar
@@ -32,13 +39,18 @@ class MembersController < ApplicationController
 
 
     if @flag=='Y'
-      @members = Member.vip_access(user_vip_access , session).live.page params[:page]
+      @members = Member.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
     elsif @flag=='N'
-      @members = Member.vip_access(user_vip_access , session).stoped.page params[:page]
+      @members = Member.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
     else
       @flag='Y'
-      @members = Member.vip_access(user_vip_access , session).live.page params[:page]
+      @members = Member.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
     end
+
+
+    #  @members = Member.vip_access(user_vip_access , session).live.page params[:page]
+
+    # @members = Member.order(sort_column + " " + sort_direction).page params[:page]
   end
 
   # GET /members/1
@@ -114,6 +126,18 @@ class MembersController < ApplicationController
   end
 
   private
+
+
+
+    def sort_column
+      Member.column_names.include?(params[:sort]) ? params[:sort] : "name"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
+
     def set_title
       @title = ['main1'=>'顧客', 'main2'=>'members','sub1'=>'顧客' , 'sub2'=>'members']
     end
