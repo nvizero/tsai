@@ -72,13 +72,15 @@
               <table id="example2" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>產品編號</th>
-                      <th>分類</th>
-                      <th>名稱</th>
-                      <th>規格</th>
+                      <th><%= sortable "code" ,'產品編號' %></th>
+                      <th><%= sortable "verify_type_main_id" ,'分類' %></th>
+                      <th><%= sortable "title" ,'名稱' %></th>
+                      <th><%= sortable "specification" ,'規格' %></th>
+
 
                       <th>出入庫</th>
-                      <th>屬於</th>
+                      <th><%= sortable "user_id" ,'屬於' %></th>
+                    
 
                     </tr>
                   </thead>

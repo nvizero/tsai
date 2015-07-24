@@ -76,15 +76,15 @@ class ProductInOutsController < ApplicationController
     end
 
     if @flag=='N'
-        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).out_come.stoped.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).out_come.stoped.order(sort_column + " " + sort_direction).page params[:page]
 
     elsif @flag=='Y'
 
-        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).out_come.live.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).out_come.live.order(sort_column + " " + sort_direction).page params[:page]
 
     else
 
-        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).out_come.live.page params[:page]
+        @product_in_outs = ProductInOut.vip_access(user_vip_access , session).out_come.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag='Y'
     end
 

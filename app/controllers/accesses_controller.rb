@@ -10,7 +10,7 @@ class AccessesController < ApplicationController
   #取得一些基本資訊
   before_action :get_base_data
 
-
+  helper_method :sort_column, :sort_direction
 
 
 
@@ -27,9 +27,9 @@ class AccessesController < ApplicationController
     # @accesses = Access.order(:id).page params[:page]
     @flag = params[:state]
     if @flag=='N'
-        @accesses = Access.stoped.page params[:page]
+        @accesses = Access.stoped.order(sort_column + " " + sort_direction).page params[:page]
     else
-        @accesses = Access.live.page params[:page]
+        @accesses = Access.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag='Y'
     end
 
@@ -104,6 +104,14 @@ class AccessesController < ApplicationController
   end
 
   private
+
+    def sort_column
+      Access.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 
     def set_title
       @title  = ['main1'=>'權限', 'main2'=>'accesses','sub1'=>'權限' , 'sub2'=>'accesses' ]

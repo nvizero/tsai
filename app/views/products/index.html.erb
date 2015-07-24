@@ -8,7 +8,7 @@
             <div class="box-header">
                 <h3 class="box-title">產品列表</h3>
 
-                
+
                 <div class="btn-group" id='head_btn'>
                     <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -39,13 +39,13 @@
               <table id="example2" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>產品編號</th>
-                      <th>分類</th>
-                      <th>名稱</th>
+                      <th><%= sortable "code" ,'產品編號' %></th>
+                      <th><%= sortable "verify_type_main_id" ,'分類' %></th>
+                      <th><%= sortable "title" ,'名稱' %></th>
+                      <th><%= sortable "specification" ,'規格' %></th>
+                      <th><%= sortable "user_id" ,'屬於' %></th>
 
 
-                      <th>規格</th>
-                      <th>屬於</th>
                       <th>
 
                       </th>

@@ -9,6 +9,7 @@ class ProductOrdersController < ApplicationController
   before_action :get_base_data
   #要登入
   before_action :confirm_logged_in
+  helper_method :sort_column, :sort_direction
 
   def set_title
     @title = ['main1'=>'訂單', 'main2'=>'product_orders','sub1'=>'訂單' , 'sub2'=>'product_orders']
@@ -48,12 +49,12 @@ class ProductOrdersController < ApplicationController
     @flag = params[:state]
 
     if @flag=='Y'
-      @product_orders = ProductOrder.vip_access(@vip_access , session).live.page params[:page]
+      @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
     elsif @flag=='N'
-      @product_orders = ProductOrder.vip_access(@vip_access , session).stoped.page params[:page]
+      @product_orders = ProductOrder.vip_access(@vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
     else
       @flag='N'
-      @product_orders = ProductOrder.vip_access(@vip_access , session).live.page params[:page]
+      @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
     end
 
 
@@ -140,6 +141,15 @@ class ProductOrdersController < ApplicationController
   end
 
   private
+
+
+    def sort_column
+      ProductOrder.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_product_order
       @product_order = ProductOrder.find(params[:id])

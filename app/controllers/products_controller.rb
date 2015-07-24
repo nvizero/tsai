@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
   before_action :get_base_data
   #要登入
   before_action :confirm_logged_in
-
+  helper_method :sort_column, :sort_direction
   # GET /products
   # GET /products.json
 
@@ -46,16 +46,16 @@ class ProductsController < ApplicationController
 
             if session[:user["access"]] =='all'
                 if @flag=='Y'
-                    @products = Product.vip_access(@vip_access , session).live.page params[:page]
+                    @products = Product.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
                 else
 
-                    @products = Product.vip_access(@vip_access , session).stoped.page params[:page]
+                    @products = Product.vip_access(@vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
                 end
             else
                 if @flag=='Y'
-                    @products = Product.vip_access(@vip_access , session).live.page params[:page]
+                    @products = Product.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
                 else
-                    @products = Product.vip_access(@vip_access , session).stoped.page params[:page]
+                    @products = Product.vip_access(@vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
                 end
             end
 
@@ -65,9 +65,9 @@ class ProductsController < ApplicationController
             if session[:user["access"]] =='all'
               # render :text => session[:vip_access]
               # //
-              @products = Product.vip_access(@vip_access , session).live.page params[:page]
+              @products = Product.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
             else
-              @products = Product.vip_access(@vip_access , session).live.page params[:page]
+              @products = Product.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
             end
         end
 
@@ -77,15 +77,15 @@ class ProductsController < ApplicationController
 
             if session[:user["access"]] =='all'
                 if @flag=='Y'
-                    @products = Product.vip_access(@vip_access , session).live.page params[:page]
+                    @products = Product.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
                 else
-                    @products = Product.vip_access(@vip_access , session).stoped.page params[:page]
+                    @products = Product.vip_access(@vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
                 end
             else
                 if @flag=='Y'
-                    @products = Product.vip_access(@vip_access , session).live.where(:user_id => @vip_access).page params[:page]
+                    @products = Product.vip_access(@vip_access , session).live.where(:user_id => @vip_access).order(sort_column + " " + sort_direction).page params[:page]
                 else
-                    @products = Product.vip_access(@vip_access , session).stoped.where(:user_id => @vip_access).page params[:page]
+                    @products = Product.vip_access(@vip_access , session).stoped.where(:user_id => @vip_access).order(sort_column + " " + sort_direction).page params[:page]
                 end
             end
 
@@ -95,10 +95,10 @@ class ProductsController < ApplicationController
             if session[:user["access"]] =='all'
 
                 #render :text => 'GG1'
-                @products = Product.vip_access(@vip_access , session).live.page params[:page]
+                @products = Product.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
             else
 
-                @products = Product.vip_access(@vip_access , session).where(:user_id => @vip_access).live.page params[:page]
+                @products = Product.vip_access(@vip_access , session).where(:user_id => @vip_access).live.order(sort_column + " " + sort_direction).page params[:page]
             end
         end
 
@@ -126,17 +126,17 @@ class ProductsController < ApplicationController
 
 
             if @flag=='Y'
-                @products = Product.vip_access(user_vip_access , session).live.page params[:page]
+                @products = Product.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
             else
-                @products = Product.vip_access(user_vip_access , session).stoped.page params[:page]
+                @products = Product.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
             end
 
         else
 
             if @flag=='Y'
-                @products = Product.vip_access(user_vip_access , session).live.page params[:page]
+                @products = Product.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).order(sort_column + " " + sort_direction).page params[:page]
             else
-                @products = Product.vip_access(user_vip_access , session).stoped.page params[:page]
+                @products = Product.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).order(sort_column + " " + sort_direction).page params[:page]
             end
 
         end
@@ -145,9 +145,9 @@ class ProductsController < ApplicationController
 
         @flag = 'Y'
         if session[:user["access"]] =='all'
-          @products = Product.vip_access(user_vip_access , session).live.page params[:page]
+          @products = Product.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
         else
-          @products = Product.vip_access(user_vip_access , session).live.page params[:page]
+          @products = Product.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
         end
 
     end
@@ -221,6 +221,14 @@ class ProductsController < ApplicationController
   end
 
   private
+
+    def sort_column
+      Product.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 
     def get_verify_type_main
       @verify_type_mains = VerifyTypeMain.live

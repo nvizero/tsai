@@ -327,7 +327,7 @@ class PactController < ApplicationController
     preduce = 0
 
     paola.each do |pa|
-      logger.info  "#{pa.id}"
+      # logger.info  "#{pa.id}"
       if pa.in_or_out == 'add'
         padd += pa.num
       end
@@ -371,6 +371,16 @@ class PactController < ApplicationController
   end
 
 
+  def member_list
+
+      if params[:name]
+        @members = Member.where("name like ?", "%#{params[:name]}%").limit(20)
+      else
+        @members = Member.limit(20)
+      end
+
+  end
+
   def get_random_str
       o = [ ('a'..'z'),('1'..'9'),('A'..'Z') ].map { |i| i.to_a }.flatten
       cg = (0...5).map { o[rand(o.length)] }.join
@@ -404,4 +414,43 @@ class PactController < ApplicationController
     render :text =>tttxg
 
   end
+
+
+
+  def search_product_info
+    logger.info  "#{params}"
+    if params[:type] == 'code'
+
+          proInfo = Product.where(:code => params[:code]).first
+
+          if proInfo
+            render :text => "#{proInfo.code}/#{proInfo.title}"
+          else
+            render :text => false
+          end
+
+    elsif  params[:type] == 'name'
+
+          proInfo = Product.where(:title => params[:name]).first
+
+          if proInfo
+            render :text => "#{proInfo.code}/#{proInfo.title}"
+          else
+            render :text => false
+          end
+    end
+
+  end
+
+  def find_member_name
+
+
+      memInfo = Member.where(:name=>params[:name]).first
+      if memInfo
+        render :text=> memInfo.id
+      else
+        render :text=> false
+      end
+  end
+
 end

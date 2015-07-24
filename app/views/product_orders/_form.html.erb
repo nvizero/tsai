@@ -63,7 +63,16 @@
                         <%= f.label :member_id, '客戶' %>
                   </font>
                 </h4>
-                  <%= f.select(:member_id , @members.collect{ |mem| [mem.name , mem.id  ] } , { :selected =>@product_order.member_id  },:id=>'member_id' ,:class=>'form-control'  )%>
+
+                <% f.select(:member_id , @members.collect{ |mem| [mem.name , mem.id  ] } , { :selected =>@product_order.member_id  },:id=>'member_id' ,:class=>'form-control'  )%>
+
+                <% if !@product_order.id.nil? %>
+                      <input type="text" name="name" value="<%=@product_order.member.name%>" class='form-control' id="member_name" >
+                <% else %>
+                      <%= f.text_field :member_id ,:id=>'member_name' ,:class=>'form-control'  %>
+                <% end %>
+                    <%= f.hidden_field :member_id ,:id=>'member_id' ,:class=>'form-control'  %>
+
             </div>
 
 
@@ -194,6 +203,53 @@
 $(document).ready(function() {
 
 
+  //顧客
+  $( "#member_name")
+      .bind( 'focus', function(){
+          $(this).autocomplete("search");
+      })
+      .bind( 'click', function(){
+          $(this).autocomplete("search");
+      })
+      .autocomplete({
+      source: function( request, response ) {
+
+        $.post('/member_list.json',
+              {'name':request.term },
+              function(data){
+
+                response( $.map( data, function( item ) {
+                             return {
+                          id: item.id ,
+                          label: item.name,
+                          name: item.name
+                             }
+                              }));
+        });
+      },
+      //最小的長度
+      minLength: 0,
+      select: function( event, ui ) {
+
+         var terms = new Array();
+        //  if(this.title!="")
+        //    terms = this.title.split("/ ");
+         terms.pop();
+         terms.push( ui.item.value);
+         terms.push("" );
+         this.value = terms.join( "" );
+
+         var _alt = $(this).attr('alt');
+        //  $(this).val(ui.item.name);
+        //  $("#product_code_"+_alt).val(ui.item.code).attr('disabled',true);
+         $('#member_name').attr('disabled',true);
+         $('#member_id').val(ui.item.id);
+        //  calTotal(ci_str.toString() );
+         return false;
+      }
+    });
+
+
   $("#future_day").datepicker({format: 'yyyy-mm-dd'});
   $("#order_day").datepicker({format:  'yyyy-mm-dd'});
   var _flag = true;
@@ -240,8 +296,9 @@ $(document).ready(function() {
 
       });
 
+      var member_disb = $("#member_name").attr('disabled');
 
-      var mem_id  =  $("#member_id").val();
+      // if( member_disb == undefined )
 
       //總金額
       $("#all_total").val( show_all_total );
@@ -265,7 +322,7 @@ $(document).ready(function() {
 
       // alert('_flag = ' + _flag);
 
-      if( mem_id == '' || mem_id == null || ( _flag == false )|| ( product_code_count == 0 ) ){
+      if( member_disb == undefined ||  ( _flag == false ) || ( product_code_count == 0 ) ){
           // alert( mem_id +' / ' + mem_id+'  + '+_flag);
           alert('訂購失敗!~');
       }else{
@@ -358,7 +415,7 @@ $(document).ready(function() {
 
 
 
-        var mem_id  =  $("#member_id").val();
+        // var mem_id  =  $("#member_id").val();
 
         // 總金額
         $("#all_total").val( show_all_total );
@@ -372,11 +429,24 @@ $(document).ready(function() {
                                   $("#all_total").val() + '/' +
                                   $("#pay_type_id").val() + '/' +
                                   $("#order_day").val()  ;
-        // alert(date_and_totalPrice);
+        //  alert(date_and_totalPrice);
+        $.post( '/find_member_name',
+              { 'name' : $("#member_name").val() },
+              function(data){
 
+                 if(data=='false'){
 
+                   _flag = false;
 
-        if( mem_id == '' || mem_id==null || (_flag==false ) ){
+                 }else{
+                  //  alert(data)
+                   $("#member_name").attr('disabled',true);
+                   $("#member_id").val(data);
+
+        var member_disb = $("#member_name").attr('disabled');
+        // if( member_disb == undefined || ( _flag == false ) || ( product_code_count == 0 ) ){
+        // _flag = false;
+        if( member_disb == undefined || ( _flag == false ) ){
 
             alert('訂購失敗!');
 
@@ -418,6 +488,11 @@ $(document).ready(function() {
                   });
 
           }
+          /////////////////////
+          }
+
+       });
+
 
 
 
@@ -456,16 +531,47 @@ $(document).ready(function() {
                               var code_disb = $(this).attr('disabled');
 
                               if( code_disb == undefined ){
-                                    alert('沒有這個料號');
-                                    $(this).focus();
+                                    var this_val = $(this).val();
+
+                                    $.post('/search_product_info',
+                                          {'code' : this_val,'type':'code'},
+                                          function(data){
+
+                                            if(data=='false'){
+                                              alert('沒有這個料號');
+                                              $(this).focus();
+                                            }else{
+                                              var _str = data.split("/");
+                                              $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
+                                              $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
+                                            }
+
+                                    });
                               }
                           })
 
                           $('#product_name_'+ci_str.toString()).blur(function(){
                               var name_disb = $(this).attr('disabled');
                               if( name_disb == undefined ){
-                                    alert('沒有這個產品');
-                                    $(this).focus();
+
+                                    // var this_val = $(this).val();
+                                    var this_val2 = $('#product_name_'+ci_str.toString()).val();
+
+                                    $.post('/search_product_info',
+                                          {'name' : this_val2 , 'type':'name'},
+                                          function(data){
+
+                                            if(data=='false'){
+                                              alert('沒有這個料號');
+                                              $(this).focus();
+                                            }else{
+
+                                              var _str = data.split("/");
+                                              $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
+                                              $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
+                                            }
+
+                                    });
                               }
                           })
 
@@ -627,11 +733,10 @@ $(document).ready(function() {
 
           // update
           $("#add_products").click(function(){
-                /*
-                  var num_val       =   $("#num_"+alt).val();
+
+                /*var num_val       =   $("#num_"+alt).val();
                   var price_val     =   $("#price_"+alt).val();
-                  var _this_total   =   $("#total_"+alt).val();
-                */
+                  var _this_total   =   $("#total_"+alt).val();*/
                 $.post('/get_random_str',function(data){
 
                 ci_str = data.toString();
@@ -653,16 +758,56 @@ $(document).ready(function() {
                 $('#product_code_'+ci_str.toString()).blur(function(){
                     var code_disb = $(this).attr('disabled');
                     if( code_disb == undefined ){
-                          alert('沒有這個料號');
-                          $(this).focus();
+
+                          // alert('沒有這個料號');
+
+                          var this_val = $(this).val();
+
+                          $.post('/search_product_info',
+                                {'code' : this_val , 'type':'code'},
+                                function(data){
+
+                                  if(data=='false'){
+
+                                    alert('沒有這個產品料號');
+                                    $(this).focus();
+
+                                  }else{
+
+                                    var _str = data.split("/");
+                                    $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
+                                    $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
+                                  }
+
+                          });
+
                     }
                 })
 
                 $('#product_name_'+ci_str.toString()).blur(function(){
                     var name_disb = $(this).attr('disabled');
+
                     if( name_disb == undefined ){
-                          alert('沒有這個產品');
-                          $(this).focus();
+                          var this_val = $(this).val();
+
+                          $.post('/search_product_info',
+                                {'name' : this_val , 'type':'name'},
+                                function(data){
+
+                                  if(data=='false'){
+
+                                    alert('沒有這個產品名稱');
+                                    $(this).focus();
+
+                                  }else{
+
+                                    var _str = data.split("/");
+                                    $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
+                                    $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
+
+                                  }
+
+                          });
                     }
                 })
 

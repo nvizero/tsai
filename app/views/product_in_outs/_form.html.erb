@@ -150,11 +150,12 @@
             <font color="red" ><%= f.label :num , '有效期限' %></font>
 
 
-                <% if  @i_or_o == 'out' %>
+                <% if  @i_or_o == 'reduce' %>
                   <%= f.text_field :save_date , :class=>'form-control' ,:id=>"save_date" , :disabled=>"disabled" %>
-                <% elsif  @i_or_o == 'in' %>
+                <% elsif  @i_or_o == 'add' %>
                   <%= f.text_field :save_date , :class=>'form-control' ,:id=>"save_date"  %>
                 <% end %>
+                
 
         </h3>
   </div>

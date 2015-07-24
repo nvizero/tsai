@@ -72,6 +72,10 @@ Tsai::Application.routes.draw do
 
   post 'product_list_code'  , :to=> "pact#product_list_code"
   post 'get_random_str'     , :to=> "pact#get_random_str"
+  post 'member_list'  , :to=> "pact#member_list"
+  post 'search_product_info'  , :to=> "pact#search_product_info"
+  post 'find_member_name'  , :to=> "pact#find_member_name"
+
 
   post 'p_good_or_not'  , :to=> "pact#p_good_or_not"
   post 'post_order_data'  , :to=> "pact#post_order_data"

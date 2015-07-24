@@ -42,10 +42,12 @@
               <table id="example2" class="table table-bordered table-striped">
   <thead>
     <tr>
-      <th>單號</th>
-      <th>付款方式</th>
-      <th>總金額</th>
-      <th>訂購者</th>
+
+      <th><%= sortable "code" ,'產品編號' %></th>
+      <th><%= sortable "pay_type_id" ,'付款方式' %></th>
+      <th><%= sortable "total" ,'總金額' %></th>
+      <th><%= sortable "member_id" ,'訂購者' %></th>
+
       <th></th>
     </tr>
   </thead>
