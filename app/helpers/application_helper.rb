@@ -137,7 +137,8 @@ module ApplicationHelper
   end
 
   def get_random_date
-      cstr=self.get_random_str(3)
+      # cstr=self.get_random_str(3)
+      cstr=''
       cstring = Time.now.strftime("%Y%m%d")
       return "#{cstring}#{cstr}"
   end

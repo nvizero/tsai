@@ -530,23 +530,33 @@ $(document).ready(function() {
                           $('#product_code_'+ci_str.toString()).blur(function(){
                               var code_disb = $(this).attr('disabled');
 
+
                               if( code_disb == undefined ){
                                     var this_val = $(this).val();
-
-                                    $.post('/search_product_info',
-                                          {'code' : this_val,'type':'code'},
-                                          function(data){
-
-                                            if(data=='false'){
-                                              alert('沒有這個料號');
-                                              $(this).focus();
-                                            }else{
-                                              var _str = data.split("/");
-                                              $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
-                                              $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
-                                            }
-
-                                    });
+                                    alert('沒有這個料號');
+                                    $(this).focus();
+                                    // $.post('/search_product_info',
+                                    //       {'code' : this_val,'type':'code'},
+                                    //       function(data){
+                                    //
+                                    //         if(data=='false'){
+                                    //           alert('沒有這個料號');
+                                    //           $(this).focus();
+                                    //         }else{
+                                    //           var _str = data.split("/");
+                                    //           $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
+                                    //           $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
+                                    //
+                                    //           $('#num_'+ci_str.toString()).focus()
+                                    //             .bind( 'click', function(){
+                                    //                 return false;
+                                    //             })
+                                    //             .bind( 'focus', function(){
+                                    //                 return false;
+                                    //             });
+                                    //         }
+                                    //
+                                    // });
                               }
                           })
 
@@ -556,22 +566,30 @@ $(document).ready(function() {
 
                                     // var this_val = $(this).val();
                                     var this_val2 = $('#product_name_'+ci_str.toString()).val();
-
-                                    $.post('/search_product_info',
-                                          {'name' : this_val2 , 'type':'name'},
-                                          function(data){
-
-                                            if(data=='false'){
-                                              alert('沒有這個料號');
-                                              $(this).focus();
-                                            }else{
-
-                                              var _str = data.split("/");
-                                              $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
-                                              $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
-                                            }
-
-                                    });
+                                    alert('沒有這個料號');
+                                    $(this).focus();
+                                    // $.post('/search_product_info',
+                                    //       {'name' : this_val2 , 'type':'name'},
+                                    //       function(data){
+                                    //
+                                    //         if(data=='false'){
+                                    //           alert('沒有這個料號');
+                                    //           $(this).focus();
+                                    //         }else{
+                                    //
+                                    //           var _str = data.split("/");
+                                    //           $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
+                                    //           $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
+                                    //           $('#num_'+ci_str.toString()).focus()
+                                    //           .bind( 'click', function(){
+                                    //               return false;
+                                    //           } )
+                                    //           .bind( 'focus', function(){
+                                    //               return false;
+                                    //           } );
+                                    //         }
+                                    //
+                                    // });
                               }
                           })
 
@@ -595,7 +613,6 @@ $(document).ready(function() {
               $( "#product_code_" +ci_str.toString())
                 .bind( 'focus', function(){
                     $(this).autocomplete("search");
-
                 } )
                 .bind( 'click', function(){
                     $(this).autocomplete("search");
@@ -760,26 +777,34 @@ $(document).ready(function() {
                     if( code_disb == undefined ){
 
                           // alert('沒有這個料號');
-
-                          var this_val = $(this).val();
-
-                          $.post('/search_product_info',
-                                {'code' : this_val , 'type':'code'},
-                                function(data){
-
-                                  if(data=='false'){
-
-                                    alert('沒有這個產品料號');
-                                    $(this).focus();
-
-                                  }else{
-
-                                    var _str = data.split("/");
-                                    $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
-                                    $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
-                                  }
-
-                          });
+                          alert('沒有這個產品料號');
+                          $(this).focus();
+                          // var this_val = $(this).val();
+                          //
+                          // $.post('/search_product_info',
+                          //       {'code' : this_val , 'type':'code'},
+                          //       function(data){
+                          //
+                          //         if(data=='false'){
+                          //
+                          //           alert('沒有這個產品料號');
+                          //           $(this).focus();
+                          //
+                          //         }else{
+                          //
+                          //           var _str = data.split("/");
+                          //           $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
+                          //           $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
+                          //           $('#num_'+ci_str.toString()).focus()
+                          //           .bind( 'click', function(){
+                          //               return false;
+                          //           })
+                          //           .bind( 'focus', function(){
+                          //               return false;
+                          //           });
+                          //         }
+                          //
+                          // });
 
                     }
                 })
@@ -789,25 +814,29 @@ $(document).ready(function() {
 
                     if( name_disb == undefined ){
                           var this_val = $(this).val();
+                          alert('沒有這個產品名稱');
+                          $(this).focus();
 
-                          $.post('/search_product_info',
-                                {'name' : this_val , 'type':'name'},
-                                function(data){
-
-                                  if(data=='false'){
-
-                                    alert('沒有這個產品名稱');
-                                    $(this).focus();
-
-                                  }else{
-
-                                    var _str = data.split("/");
-                                    $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
-                                    $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
-
-                                  }
-
-                          });
+                          // $.post('/search_product_info',
+                          //       {'name' : this_val , 'type':'name'},
+                          //       function(data){
+                          //
+                          //         if(data=='false'){
+                          //
+                          //           alert('沒有這個產品名稱');
+                          //           $(this).focus();
+                          //
+                          //         }else{
+                          //
+                          //           var _str = data.split("/");
+                          //           $('#product_code_'+ci_str.toString()).val(_str[0]).attr('disabled',true);
+                          //           $('#product_name_'+ci_str.toString()).val(_str[1]).attr('disabled',true);
+                          //           $('#num_'+ci_str.toString()).focus();
+                          //
+                          //
+                          //         }
+                          //
+                          // });
                     }
                 })
 
