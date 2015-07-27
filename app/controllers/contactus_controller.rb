@@ -3,16 +3,17 @@ class ContactusController < ApplicationController
   before_action :set_contactu, only: [:show, :edit, :update, :destroy]
 
   layout 'admin'
-  
+
   before_action :set_title
   #要登入
   before_action :confirm_logged_in
   #取得一些基本資訊
   before_action :get_base_data
+  helper_method :sort_column, :sort_direction
   # GET /contactus
   # GET /contactus.json
   def index
-    @contactus = Contactu.page params[:page]
+    @contactus = Contactu.order(sort_column + " " + sort_direction).page params[:page]
   end
 
 
@@ -84,6 +85,14 @@ class ContactusController < ApplicationController
   end
 
   private
+
+    def sort_column
+      Contactu.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 
     def set_title
       @title  = ['main1'=>'聯絡我們', 'main2'=>'contact us','sub1'=>'聯絡我們' , 'sub2'=>'contact us' ]

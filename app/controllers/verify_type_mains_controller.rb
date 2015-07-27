@@ -11,6 +11,8 @@ class VerifyTypeMainsController < ApplicationController
   before_action :get_base_data
   before_action :set_title
 
+  helper_method :sort_column, :sort_direction
+
   # GET /verify_type_mains
   # GET /verify_type_mains.json
   def index
@@ -24,7 +26,7 @@ class VerifyTypeMainsController < ApplicationController
 
     self.jadge_access 'verify_type_mains/index'
 
-    @verify_type_mains = VerifyTypeMain.page params[:page]
+    @verify_type_mains = VerifyTypeMain.order(sort_column + " " + sort_direction).page params[:page]
 
 
   end
@@ -95,6 +97,14 @@ class VerifyTypeMainsController < ApplicationController
   end
 
   private
+
+    def sort_column
+      VerifyTypeMain.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 
     def set_title
       @title  = ['main1'=>'三證類型主檔', 'main2'=>'verify_type_mains','sub1'=>'首頁' , 'sub2'=>'三證類型主檔']
