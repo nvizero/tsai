@@ -10,6 +10,8 @@ class StoreAreasController < ApplicationController
 
   before_action :set_store_area, only: [:show, :edit, :update, :destroy]
 
+  helper_method :sort_column, :sort_direction
+
   # GET /store_areas
   # GET /store_areas.json
   def comm
@@ -25,9 +27,9 @@ class StoreAreasController < ApplicationController
     # @store_areas = StoreArea.page params[:page]
     @flag = params[:state]
     if @flag=='N'
-        @store_areas = StoreArea.stoped.page params[:page]
+        @store_areas = StoreArea.stoped.order(sort_column + " " + sort_direction).page params[:page]
     else
-        @store_areas = StoreArea.live.page params[:page]
+        @store_areas = StoreArea.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag='Y'
     end
   end
@@ -107,6 +109,14 @@ class StoreAreasController < ApplicationController
   end
 
   private
+
+    def sort_column
+      StoreArea.column_names.include?(params[:sort]) ? params[:sort] : "area_id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_store_area
       @store_area = StoreArea.find(params[:id])

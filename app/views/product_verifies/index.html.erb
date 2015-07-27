@@ -44,10 +44,17 @@
 
   <thead>
     <tr>
-      <th>產品名稱</th>
-      <th>狀態</th>
-      <th style="width:10%;">申請主類別</th>
-      <th>申請類別</th>
+      <th><%= sortable "product_id" ,'產品名稱' %></th>
+      <th><%= sortable "product_verify_state_id" ,'狀態' %></th>
+
+      <th style="width:10%;">
+          <%= sortable "product_id" ,'申請主類別' %>
+      </th>
+
+      <th>
+        <%= sortable "product_verify_type_id" ,'申請類別' %>
+
+      </th>
       <th>
           <%  link_to '申請三證', new_product_verify_path %>
       </th>

@@ -8,6 +8,8 @@ class IdSeqsController < ApplicationController
 
   before_action :set_id_seq, only: [:show, :edit, :update, :destroy]
 
+  helper_method :sort_column, :sort_direction
+
   def comm
     return ['main1'=>'流水號', 'main2'=>'id_seqs','sub1'=>'首頁' , 'sub2'=>'流水號' ]
   end
@@ -17,7 +19,7 @@ class IdSeqsController < ApplicationController
   def index
     @title  = self.comm
     @table_title = "流水號列表"
-    @id_seqs = IdSeq.all
+    @id_seqs = IdSeq.order(sort_column + " " + sort_direction).all
   end
 
   # GET /id_seqs/1
@@ -78,6 +80,15 @@ class IdSeqsController < ApplicationController
   end
 
   private
+
+    def sort_column
+      IdSeq.column_names.include?(params[:sort]) ? params[:sort] : "pre_id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_id_seq
       @id_seq = IdSeq.find(params[:id])

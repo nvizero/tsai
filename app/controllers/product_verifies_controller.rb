@@ -11,7 +11,7 @@ class ProductVerifiesController < ApplicationController
 
   #取得一些基本資訊
   before_action :get_base_data
-
+  helper_method :sort_column, :sort_direction
   # GET /product_verifies
   # GET /product_verifies.json
   def index
@@ -34,10 +34,10 @@ class ProductVerifiesController < ApplicationController
     if @iid
 
       if @flag=='N'
-          @product_verifies = ProductVerify.vip_access(user_vip_access , session).stoped.page params[:page]
+          @product_verifies = ProductVerify.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
       else
           @flag='Y'
-          @product_verifies = ProductVerify.vip_access(user_vip_access , session).live.page params[:page]
+          @product_verifies = ProductVerify.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
       end
 
     else
@@ -45,19 +45,19 @@ class ProductVerifiesController < ApplicationController
         if  session[:user["access"]]
 
             if @flag=='N'
-                @product_verifies = ProductVerify.vip_access(user_vip_access , session).stoped.page params[:page]
+                @product_verifies = ProductVerify.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
             else
                 @flag='Y'
-                @product_verifies = ProductVerify.vip_access(user_vip_access , session).live.page params[:page]
+                @product_verifies = ProductVerify.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
             end
 
         else
           #不是管理員
           if @flag=='N'
-              @product_verifies = ProductVerify.vip_access(user_vip_access , session).stoped.page params[:page]
+              @product_verifies = ProductVerify.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
           else
               @flag='Y'
-              @product_verifies = ProductVerify.vip_access(user_vip_access , session).live.page params[:page]
+              @product_verifies = ProductVerify.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
           end
 
         end
@@ -155,6 +155,15 @@ class ProductVerifiesController < ApplicationController
   end
 
   private
+
+    def sort_column
+      ProductVerify.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
     def set_title
       @title = ['main1'=>'三證進度', 'main2'=>'product_verifies','sub1'=>'首頁' , 'sub2'=>'三證進度']
     end

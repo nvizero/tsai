@@ -9,7 +9,7 @@ class TradesController < ApplicationController
   before_action :set_title
 
   before_action :set_trade, only: [:show, :edit, :update, :destroy]
-
+  helper_method :sort_column, :sort_direction
 
   def comm
     return ['main1'=>'交易代碼', 'main2'=>'trades','sub1'=>'首頁' , 'sub2'=>'交易代碼']
@@ -29,10 +29,10 @@ class TradesController < ApplicationController
 
     @flag = params[:state]
     if @flag=='N'
-        @trades = Trade.stoped.page params[:page]
+        @trades = Trade.stoped.order(sort_column + " " + sort_direction).page params[:page]
 
     else
-        @trades = Trade.live.page params[:page]
+        @trades = Trade.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag='Y'
     end
 
@@ -125,13 +125,21 @@ class TradesController < ApplicationController
     @trade.state='N'
     @trade.save
 
-   
+
     redirect_to '/trades'
 
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def sort_column
+      Trade.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
     def set_trade
       @trade = Trade.find(params[:id])
     end

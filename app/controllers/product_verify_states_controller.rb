@@ -9,6 +9,8 @@ class ProductVerifyStatesController < ApplicationController
 
   before_action :set_product_verify_state, only: [:show, :edit, :update, :destroy]
 
+  helper_method :sort_column, :sort_direction
+
   # GET /product_verify_states
   # GET /product_verify_states.json
   def index
@@ -24,15 +26,15 @@ class ProductVerifyStatesController < ApplicationController
 
     if @flag =='N'
 
-        @product_verify_states = ProductVerifyState.stoped.page params[:page]
+        @product_verify_states = ProductVerifyState.stoped.order(sort_column + " " + sort_direction).page params[:page]
         @flag = 'N'
 
     elsif @flag =='Y'
 
-        @product_verify_states = ProductVerifyState.live.page params[:page]
+        @product_verify_states = ProductVerifyState.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag = 'Y'
     else
-        @product_verify_states = ProductVerifyState.live.page params[:page]
+        @product_verify_states = ProductVerifyState.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag = 'Y'
 
     end
@@ -93,7 +95,7 @@ class ProductVerifyStatesController < ApplicationController
     @product_verify_state.stop_user_id = session[:user_id]
     @product_verify_state.state='N'
     @product_verify_state.save
-   
+
 
     respond_to do |format|
       format.html { redirect_to product_verify_states_url }
@@ -102,6 +104,14 @@ class ProductVerifyStatesController < ApplicationController
   end
 
   private
+
+    def sort_column
+      ProductVerifyState.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 
     def set_title
       @title  = ['main1'=>'三證申請狀態', 'main2'=>'product_verify_state','sub1'=>'三證申請狀態' , 'sub2'=>'product_verify_state' ]

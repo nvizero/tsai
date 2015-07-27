@@ -13,7 +13,7 @@ class ProductVerifyTypesController < ApplicationController
 
   #取得一些基本資訊
   before_action :get_base_data
-
+  helper_method :sort_column, :sort_direction
 
 
   # GET /product_verify_types
@@ -36,10 +36,10 @@ class ProductVerifyTypesController < ApplicationController
     # @product_verify_types = ProductVerifyType.all
     @flag = params[:state]
     if @flag=='N'
-        @product_verify_types = ProductVerifyType.stoped.page params[:page]
+        @product_verify_types = ProductVerifyType.stoped.order(sort_column + " " + sort_direction).page params[:page]
 
     else
-        @product_verify_types = ProductVerifyType.live.page params[:page]
+        @product_verify_types = ProductVerifyType.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag='Y'
     end
 
@@ -111,6 +111,15 @@ class ProductVerifyTypesController < ApplicationController
   end
 
   private
+
+    def sort_column
+      ProductVerifyType.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_product_verify_type
       @product_verify_type = ProductVerifyType.find(params[:id])

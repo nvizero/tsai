@@ -12,6 +12,7 @@ class InOutTypesController < ApplicationController
   #要登入
   before_action :confirm_logged_in
 
+  helper_method :sort_column, :sort_direction
 
   # GET /in_out_types
   # GET /in_out_types.json
@@ -27,11 +28,11 @@ class InOutTypesController < ApplicationController
     @flag = params[:state]
 
     if @flag=='Y'
-      @in_out_types = InOutType.live.page params[:page]
+      @in_out_types = InOutType.live.order(sort_column + " " + sort_direction).page params[:page]
     elsif @flag=='N'
-      @in_out_types = InOutType.stoped.page params[:page]
+      @in_out_types = InOutType.stoped.order(sort_column + " " + sort_direction).page params[:page]
     else
-      @in_out_types = InOutType.live.page params[:page]
+      @in_out_types = InOutType.live.order(sort_column + " " + sort_direction).page params[:page]
     end
 
   end
@@ -110,6 +111,15 @@ class InOutTypesController < ApplicationController
   end
 
   private
+
+    def sort_column
+      InOutType.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
     def set_title
       @title = ['main1'=>'入出庫類別', 'main2'=>'in_out_types','sub1'=>'首頁' , 'sub2'=>'in_out_types']
     end

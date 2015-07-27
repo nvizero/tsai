@@ -37,11 +37,11 @@
               <table id="example2" class="table table-bordered table-striped">
 
   <thead>
-    <tr>
-      <th>名稱</th>
-      <th>分類</th>
-      <th></th>
-    </tr>
+      <tr>
+          <th><%= sortable "title" ,'名稱' %></th>
+          <th><%= sortable "cate" ,'分類' %></th>
+          <th></th>
+      </tr>
   </thead>
 
   <tbody>
@@ -51,7 +51,7 @@
         <td><%= in_out_type.title %></td>
         <td><%= in_out_type.cate %></td>
         <td>
-          
+
           <% if  in_out_type.state == 'Y' %>
               <%= link_to '編輯', edit_in_out_type_path(in_out_type), :class => 'btn btn-info btn-sm' %>
               <a url="#" class="del btn btn-danger btn-sm" id='/in_out_types/destroy/<%=in_out_type.id %>'> 停用 </a>

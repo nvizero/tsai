@@ -5,7 +5,10 @@ class RolesController < ApplicationController
 
   layout "admin"
   #取得一些基本資訊
+
   before_action :get_base_data
+  helper_method :sort_column, :sort_direction
+
   # GET /roles
   # GET /roles.json
   def index
@@ -19,10 +22,10 @@ class RolesController < ApplicationController
     # @roles = Role.page params[:page]
     @flag = params[:state]
     if @flag=='N'
-        @roles = Role.stoped.page params[:page]
+        @roles = Role.stoped.order(sort_column + " " + sort_direction).page params[:page]
 
     else
-        @roles = Role.live.page params[:page]
+        @roles = Role.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag='Y'
     end
   end
@@ -129,6 +132,15 @@ class RolesController < ApplicationController
   end
 
   private
+
+    def sort_column
+      Role.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_role
       @role = Role.find(params[:id])

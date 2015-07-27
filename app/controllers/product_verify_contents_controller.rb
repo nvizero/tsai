@@ -10,7 +10,8 @@ class ProductVerifyContentsController < ApplicationController
 
 
   before_action :set_product_verify_content, only: [:show, :edit, :update, :destroy]
-
+  
+  helper_method :sort_column, :sort_direction
   # GET /product_verify_contents
   # GET /product_verify_contents.json
   def index

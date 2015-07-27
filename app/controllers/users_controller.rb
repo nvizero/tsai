@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   before_action :get_base_data
   before_action :set_title
 
+  helper_method :sort_column, :sort_direction
+
   def comm
     return ['main1'=>'使用者', 'main2'=>'Users','sub1'=>'首頁' , 'sub2'=>'使用者']
   end
@@ -35,12 +37,12 @@ class UsersController < ApplicationController
     di = self.user_vip_access
     if @flag=='N'
 
-        @users = User.vip_access(user_vip_access , session).stoped.order(:name).page params[:page]
+        @users = User.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
 
     else
 
         # @users = User.live.where.not(:id=> di ).order(:id).page params[:page]
-        @users = User.vip_access(user_vip_access , session).live.order(:id).page params[:page]
+        @users = User.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
         @flag='Y'
     end
 
@@ -277,6 +279,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+    def sort_column
+      User.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])

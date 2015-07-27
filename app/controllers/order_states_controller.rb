@@ -9,6 +9,7 @@ class OrderStatesController < ApplicationController
   #要登入
   before_action :confirm_logged_in
 
+  helper_method :sort_column, :sort_direction
 
 
   # GET /order_states
@@ -23,12 +24,18 @@ class OrderStatesController < ApplicationController
     @users_a = self.user_to_ar
     @flag = params[:state]
     if @flag=="Y"
-      @order_states = OrderState.live.page params[:page]
+
+      @order_states = OrderState.live.order(sort_column + " " + sort_direction).page params[:page]
+
     elsif @flag=="N"
-      @order_states = OrderState.stoped.page params[:page]
+
+      @order_states = OrderState.stoped.order(sort_column + " " + sort_direction).page params[:page]
+
     else
+
       @flag="Y"
-      @order_states = OrderState.live.page params[:page]
+      @order_states = OrderState.live.order(sort_column + " " + sort_direction).page params[:page]
+
     end
   end
 
@@ -108,6 +115,14 @@ class OrderStatesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def sort_column
+      OrderState.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
 
     def set_title
       @title = ['main1'=>'訂單狀態', 'main2'=>'order_states','sub1'=>'訂單狀態' , 'sub2'=>'order_states']
