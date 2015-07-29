@@ -7,13 +7,20 @@ class OrderByProductsController < ApplicationController
   #取得一些基本資訊
   before_action :get_base_data
   #要登入
-  before_action :confirm_logged_in
+  # before_action :confirm_logged_in
 
-  
+  layout "admin"
+  #取得一些基本資訊
+  before_action :get_base_data
+  #要登入
+  before_action :confirm_logged_in
+  helper_method :sort_column, :sort_direction
+
+
   # GET /order_by_products
   # GET /order_by_products.json
   def index
-    @order_by_products = OrderByProduct.all
+    @order_by_products = OrderByProduct.order(sort_column + " " + sort_direction).all
   end
 
   # GET /order_by_products/1
@@ -71,6 +78,17 @@ class OrderByProductsController < ApplicationController
   end
 
   private
+    def sort_column
+      OrderByProduct.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
+    def set_title
+      @title = ['main1'=>'待出貨列表', 'main2'=>'order by products','sub1'=>'首頁' , 'sub2'=>'待出貨列表']
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_order_by_product
       @order_by_product = OrderByProduct.find(params[:id])

@@ -58,6 +58,7 @@ Tsai::Application.routes.draw do
   get 'store_list', :to => "products#store_list"
 
   get 'advance_pas', :to => "login#advance_pas"
+  get '/wait_orders', :to => "product_orders#wait_orders"
 
   get '/product_in_outs/in_come/destroy(/:id)', :to => "product_in_outs#in_come_destroy"
   get '/product_in_outs/out_come/destroy(/:id)', :to => "product_in_outs#out_come_destroy"
@@ -75,7 +76,7 @@ Tsai::Application.routes.draw do
   post 'member_list'  , :to=> "pact#member_list"
   post 'search_product_info'  , :to=> "pact#search_product_info"
   post 'find_member_name'  , :to=> "pact#find_member_name"
-
+  post 'post_to_out_order' , :to=> "pact#post_to_out_order"
 
   post 'p_good_or_not'  , :to=> "pact#p_good_or_not"
   post 'post_order_data'  , :to=> "pact#post_order_data"
@@ -86,6 +87,7 @@ Tsai::Application.routes.draw do
 
   post 'do_in_or_out'  , :to=> "pact#do_in_or_out"
   post 'get_all_products' , :to => "pact#get_all_products"
+  post 'product_order_confirm' , :to => "pact#product_order_confirm"
 
 
   post 'change_product_verify_state' , :to => "pact#change_product_verify_state"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150710081409) do
+ActiveRecord::Schema.define(version: 20150727070155) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 20150710081409) do
     t.integer  "total"
     t.integer  "pay_type_id"
     t.date     "future_day"
+    t.string   "confirm_order",  limit: 2
   end
 
   create_table "product_verifies", force: true do |t|

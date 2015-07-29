@@ -443,14 +443,41 @@ class PactController < ApplicationController
   end
 
   def find_member_name
-
-
       memInfo = Member.where(:name=>params[:name]).first
       if memInfo
         render :text=> memInfo.id
       else
         render :text=> false
       end
+  end
+
+
+  def product_order_confirm
+
+      product_order = ProductOrder.find(params[:product_order_id])
+      product_order.confirm_order = 'Y'
+      if product_order.save
+          render :text => true
+      else
+          render :text => false
+      end
+
+  end
+
+  def post_to_out_order
+
+    obp = OrderByProduct.find(params[:order_by_product_id])
+    if obp
+
+         io_str = "\n"
+         proInfo_str = "\n"
+         add , reduce , final = self.product_stock(obp)
+         render :text => "#{add} \n -#{reduce} \n final = #{final}"        
+
+    else
+        render :text => "false"
+    end
+
   end
 
 end

@@ -97,9 +97,42 @@ class ApplicationController < ActionController::Base
 
 
   def get_random_str num
+
         o = [('a'..'z'), ('1'..'9'),('A'..'Z') ].map { |i| i.to_a }.flatten
         cg = (0...num).map { o[rand(o.length)] }.join
+
         return cg
   end
+
+
+  def product_stock obj
+        # serial
+        pios = ProductInOut.where(:product_id => obj.product_id)
+                          
+
+
+        add = 0
+        reduce = 0
+        pios.each do |pio|
+
+            if pio.in_or_out == 'add'
+              add += pio.num
+
+            end
+
+            if pio.in_or_out == 'reduce'
+              reduce += pio.num
+            end
+
+
+        end
+
+        final = add - reduce
+
+        return add , reduce , final
+  end
+
+
+
 
 end

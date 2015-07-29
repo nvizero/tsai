@@ -8,9 +8,19 @@
     len_s = order_serial_code @code_serial.count.to_s.length
     len_s = "#{len_s}#{@code_serial.count.to_i+1}"
   %>
+<% if !@product_order.id.nil? %>
+    <input type="hidden" id="product_order_id" value="<%=@product_order.id%>">
 
+    <% if @product_order.confirm_order !='Y' %>
+        <a class="btn btn-primary" href="#" id="confirm_products" style="float:right;margin:0px 30px 0px 0px" >訂單確認</a>
+    <% else %>
+        <a class="btn btn-primary" href="#" style="float:right;margin:0px 30px 0px 0px" >訂單己確認</a>
+    <% end %>
 
-<div class="form-group">
+<% end %>
+
+  <div class="form-group">
+
 
 
         <div class="col-xs-6">
@@ -20,15 +30,11 @@
                 </h4>
                 <h4 >
                   <% if !@product_order.id.nil? %>
-
-                      <%= @product_order.code%>
-                      <%=f.hidden_field :code , :id=>'code' %>
-
+                        <%= @product_order.code%>
+                        <%=f.hidden_field :code , :id=>'code' %>
                   <% else %>
-
-                      <%= hide_code = "#{get_random_date}#{len_s}"%>
-                      <%=f.hidden_field :code ,:value => hide_code , :id=>'code'  %>
-
+                        <%= hide_code = "#{get_random_date}#{len_s}"%>
+                        <%=f.hidden_field :code ,:value => hide_code , :id=>'code'  %>
                   <% end %>
                 </h4>
             </div>
@@ -109,7 +115,13 @@
 
     <h4>
         <span  id="products_list"></span>
-        <a class="btn btn-success" href="#" id="add_products" >新增產品</a>
+
+        <% if @product_order.confirm_order !='Y' %>
+            <a class="btn btn-success" href="#" id="add_products" >新增產品</a>
+        <% else %>
+
+        <% end %>
+
     </h4>
 
 
@@ -187,21 +199,50 @@
 
 
   <div class="box-footer">
-      <button type="button" class="btn btn-primary" id="finial">確定</button>
+
+    <% if !@product_order.id.nil? %>
+
+        <% if @product_order.confirm_order !='Y' %>
+            <button type="button" class="btn btn-primary" id="finial">確定</button>
+        <% end %>
+
+    <% else %>
+            <button type="button" class="btn btn-primary" id="finial">確定</button>
+    <% end %>
+
       <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
   </div>
 <% end %>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<!--
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
--->
 
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
+  //
+  $("#confirm_products").click(function(){
+
+      var product_order_id =  $('#product_order_id').val();
+      $.post('/product_order_confirm',
+            {'product_order_id':product_order_id},
+            function(data){
+                if(data=='true'){
+                  var element = document.getElementById("finial");
+
+                  if(element && element.click) {
+                     element.click();
+                  };
+                  // var l = document.getElementById('finial');
+                  // l.click();
+
+                }
+
+      });
+
+
+
+  });
 
   //顧客
   $( "#member_name")

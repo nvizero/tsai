@@ -37,13 +37,14 @@ class ProductOrdersController < ApplicationController
     @mems = Member.all.count
     @os = OrderState.all.count
     #換
-    # ProductOrder.all.each do |po|
-    #   po.state = 'Y'
-    #   po.member_id = rand(1...@mems)
-    #   po.create_user_id = rand(1...4)
-    #   po.order_state_id = rand(1...@os)
-    #   po.save
-    # end
+    ProductOrder.all.each do |po|
+      # po.state = 'Y'
+      # po.confirm_order = ''
+      # po.member_id = rand(1...@mems)
+      # po.create_user_id = rand(1...4)
+      # po.order_state_id = rand(1...@os)
+      po.save
+    end
     @vip_access = user_vip_access
     @users_a = self.user_to_ar
     @flag = params[:state]
@@ -140,6 +141,35 @@ class ProductOrdersController < ApplicationController
     # end
   end
 
+
+  def wait_orders
+
+    @mems = Member.all.count
+    @os = OrderState.all.count
+    #換
+    ProductOrder.all.each do |po|
+      # po.state = 'Y'
+      # po.confirm_order = ''
+      # po.member_id = rand(1...@mems)
+      # po.create_user_id = rand(1...4)
+      # po.order_state_id = rand(1...@os)
+      # po.save
+    end
+    @vip_access = user_vip_access
+    @users_a = self.user_to_ar
+    @flag = params[:state]
+
+    if @flag=='Y'
+      @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+    elsif @flag=='N'
+      @product_orders = ProductOrder.vip_access(@vip_access , session).stoped.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+    else
+      @flag='N'
+      @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+    end
+
+  end
+
   private
 
 
@@ -159,4 +189,6 @@ class ProductOrdersController < ApplicationController
     def product_order_params
       params.require(:product_order).permit(:code, :order_state_id, :member_id, :state)
     end
+
+
 end

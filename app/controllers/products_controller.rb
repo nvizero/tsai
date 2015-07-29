@@ -64,7 +64,6 @@ class ProductsController < ApplicationController
             @flag = 'Y'
             if session[:user["access"]] =='all'
               # render :text => session[:vip_access]
-              # //
               @products = Product.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
             else
               @products = Product.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
@@ -104,10 +103,7 @@ class ProductsController < ApplicationController
 
     end
 
-
     @users_a = self.user_to_ar
-
-
   end
 
   # GET /products/1

@@ -75,8 +75,16 @@
 
 
             <% if product_order.state == 'Y' %>
-                <%= link_to '編輯', edit_product_order_path(product_order), :class => 'btn btn-info btn-sm' %>
-                <a url="#" class="del btn btn-danger btn-sm" id='/product_orders/destroy/<%=product_order.id %>'> 停用 </a>
+
+
+                <% if product_order.confirm_order == 'Y'  %>
+                      <%= link_to '編輯', edit_product_order_path(product_order), :class => 'btn btn-info btn-sm' %>
+                      <a url="#" class="btn btn-primary btn-sm" > 己確認 </a>
+                <% else %>
+                      <%= link_to '編輯', edit_product_order_path(product_order), :class => 'btn btn-info btn-sm' %>
+                      <a url="#" class="del btn btn-danger btn-sm" id='/product_orders/destroy/<%=product_order.id %>'> 停用 </a>
+                <% end %>
+
             <% end %>
 
               <a class="btn btn-warning info" id="<%=product_order.id %>">
