@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  product_id: 1
+  code: MyString
+  num: MyString
+  state: MyString
+  create_user_id: 1
+  modify_user_id: 1
+  stop_user_id: 1
+  stoped_at: 2015-07-30
+  serial: MyString
+  save_date: 2015-07-30
+
+two:
+  product_id: 1
+  code: MyString
+  num: MyString
+  state: MyString
+  create_user_id: 1
+  modify_user_id: 1
+  stop_user_id: 1
+  stoped_at: 2015-07-30
+  serial: MyString
+  save_date: 2015-07-30

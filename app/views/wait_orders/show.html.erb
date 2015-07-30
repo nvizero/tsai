@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @wait_order.product_id %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @wait_order.code %>
+</p>
+
+<p>
+  <strong>Num:</strong>
+  <%= @wait_order.num %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @wait_order.state %>
+</p>
+
+<p>
+  <strong>Create user:</strong>
+  <%= @wait_order.create_user_id %>
+</p>
+
+<p>
+  <strong>Modify user:</strong>
+  <%= @wait_order.modify_user_id %>
+</p>
+
+<p>
+  <strong>Stop user:</strong>
+  <%= @wait_order.stop_user_id %>
+</p>
+
+<p>
+  <strong>Stoped at:</strong>
+  <%= @wait_order.stoped_at %>
+</p>
+
+<p>
+  <strong>Serial:</strong>
+  <%= @wait_order.serial %>
+</p>
+
+<p>
+  <strong>Save date:</strong>
+  <%= @wait_order.save_date %>
+</p>
+
+<%= link_to 'Edit', edit_wait_order_path(@wait_order) %> |
+<%= link_to 'Back', wait_orders_path %>

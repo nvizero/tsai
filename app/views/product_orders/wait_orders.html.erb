@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-xs-12">
         <div class="box">
-            <div class="box-header">
+            <div class="box-header" style="display:none;">
                 <h3 class="box-title">待出貨明細</h3>
                     <div class="btn-group" id='head_btn'>
                         <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
@@ -20,7 +20,7 @@
                     </div>
 
 
-                    <%= link_to '新增訂單', new_product_order_path ,:class=>'btn btn-success',:id=>'head_btn' %>
+                    <% link_to '新增訂單', new_product_order_path ,:class=>'btn btn-success',:id=>'head_btn' %>
 
 
 
@@ -51,37 +51,37 @@
     <% opbs = search_order_by_product( product_order.code) %>
     <% opbs = opbs.to_a.sort %>
     <% opbs.each do |obp|%>
+        <% if obp.num.to_i != 0 %>
+        <%= render 'comm/info' , :info => obp , :users => @users_a , :title => "#{obp.id} 訊息"  %>
+          <tr>
+            <td>
+              <%= product_order.code %>
+            </td>
 
-    <%= render 'comm/info' , :info => obp , :users => @users_a , :title => "#{obp.id} 訊息"  %>
-      <tr>
-        <td>
-          <%= product_order.code %>
-        </td>
-
-        <td>
-          <%= product_order.member.name %>
-        </td>
-        <td><%= obp.product.title %></td>
-        <td><%= obp.num %></td>
-
-
-        <td>
-
-          <%= product_order.order_day %>
-        </td>
-        <td><%= product_order.future_day  %>     </td>
+            <td>
+              <%= product_order.member.name %>
+            </td>
+            <td><%= obp.product.title %></td>
+            <td><%= obp.num %></td>
 
 
-        <td>
-            <% link_to 'Show', product_order %>
-            <% link_to 'Edit', edit_product_order_path(product_order) %>
-            <% link_to 'Destroy', product_order, method: :delete, data: { confirm: 'Are you sure?' } %>
-              <a url="#" class="btn confirm_order btn-primary btn-sm" id="<%=obp.id %>" > 確認 </a>
-              <a class="btn btn-warning info" id="<%=obp.id %>" >訊息</a>
-        </td>
+            <td>
 
-      </tr>
+              <%= product_order.order_day %>
+            </td>
+            <td><%= product_order.future_day  %>     </td>
 
+
+            <td>
+                <% link_to 'Show', product_order %>
+                <% link_to 'Edit', edit_product_order_path(product_order) %>
+                <% link_to 'Destroy', product_order, method: :delete, data: { confirm: 'Are you sure?' } %>
+                  <a url="#" class="btn confirm_order btn-primary btn-sm" id="<%=obp.id %>" > 確認 </a>
+                  <a class="btn btn-warning info" id="<%=obp.id %>" >訊息</a>
+            </td>
+
+          </tr>
+          <% end %>
       <% end %>
 
     <% end %>

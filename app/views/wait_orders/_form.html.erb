@@ -1,0 +1,57 @@
+<%= form_for(@wait_order) do |f| %>
+  <% if @wait_order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@wait_order.errors.count, "error") %> prohibited this wait_order from being saved:</h2>
+
+      <ul>
+      <% @wait_order.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :product_id %><br>
+    <%= f.number_field :product_id %>
+  </div>
+  <div class="field">
+    <%= f.label :code %><br>
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :num %><br>
+    <%= f.text_field :num %>
+  </div>
+  <div class="field">
+    <%= f.label :state %><br>
+    <%= f.text_field :state %>
+  </div>
+  <div class="field">
+    <%= f.label :create_user_id %><br>
+    <%= f.number_field :create_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :modify_user_id %><br>
+    <%= f.number_field :modify_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :stop_user_id %><br>
+    <%= f.number_field :stop_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :stoped_at %><br>
+    <%= f.date_select :stoped_at %>
+  </div>
+  <div class="field">
+    <%= f.label :serial %><br>
+    <%= f.text_field :serial %>
+  </div>
+  <div class="field">
+    <%= f.label :save_date %><br>
+    <%= f.date_select :save_date %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

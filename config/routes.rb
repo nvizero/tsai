@@ -1,5 +1,7 @@
 Tsai::Application.routes.draw do
 
+  resources :wait_orders
+
   resources :pay_types
 
   resources :contactus
@@ -58,7 +60,7 @@ Tsai::Application.routes.draw do
   get 'store_list', :to => "products#store_list"
 
   get 'advance_pas', :to => "login#advance_pas"
-  get '/wait_orders', :to => "product_orders#wait_orders"
+  get '/wat_orders', :to => "product_orders#wat_orders"
 
   get '/product_in_outs/in_come/destroy(/:id)', :to => "product_in_outs#in_come_destroy"
   get '/product_in_outs/out_come/destroy(/:id)', :to => "product_in_outs#out_come_destroy"

@@ -1,0 +1,45 @@
+<h1>Listing wait_orders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Code</th>
+      <th>Num</th>
+      <th>State</th>
+      <th>Create user</th>
+      <th>Modify user</th>
+      <th>Stop user</th>
+      <th>Stoped at</th>
+      <th>Serial</th>
+      <th>Save date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wait_orders.each do |wait_order| %>
+      <tr>
+        <td><%= wait_order.product_id %></td>
+        <td><%= wait_order.code %></td>
+        <td><%= wait_order.num %></td>
+        <td><%= wait_order.state %></td>
+        <td><%= wait_order.create_user_id %></td>
+        <td><%= wait_order.modify_user_id %></td>
+        <td><%= wait_order.stop_user_id %></td>
+        <td><%= wait_order.stoped_at %></td>
+        <td><%= wait_order.serial %></td>
+        <td><%= wait_order.save_date %></td>
+        <td><%= link_to 'Show', wait_order %></td>
+        <td><%= link_to 'Edit', edit_wait_order_path(wait_order) %></td>
+        <td><%= link_to 'Destroy', wait_order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Wait order', new_wait_order_path %>

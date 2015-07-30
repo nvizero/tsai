@@ -104,12 +104,10 @@ class ApplicationController < ActionController::Base
         return cg
   end
 
-
+  #算庫存
   def product_stock obj
         # serial
         pios = ProductInOut.where(:product_id => obj.product_id)
-                          
-
 
         add = 0
         reduce = 0
@@ -117,19 +115,82 @@ class ApplicationController < ActionController::Base
 
             if pio.in_or_out == 'add'
               add += pio.num
-
             end
 
             if pio.in_or_out == 'reduce'
               reduce += pio.num
             end
 
-
         end
 
         final = add - reduce
 
         return add , reduce , final
+  end
+
+
+  def order_serial_code str_len
+    ct = 5-str_len.to_i
+    cstr = ''
+    ct.times do |ee|
+      cstr+='0'
+    end
+    return cstr
+  end
+
+
+  def product_out obj
+
+        code_serial = ProductInOut.where('created_at >= :start_days_ago or created_at >= :end_days_ago',
+                                              :start_days_ago  => Time.now.strftime("%Y-%m-%d 00:00:01"),
+                                              :end_days_ago => Time.now.strftime("%Y-%m-%d 23:23:59"))
+
+        len_s = self.order_serial_code(code_serial.count.to_s.length)
+        len_s = "#{len_s}#{code_serial.count.to_i+1}"
+        cstring = Time.now.strftime("%Y%m%d")
+
+        hide_code = "#{cstring}2#{len_s}"
+
+        pios = ProductInOut.where(:product_id => obj.product_id)
+
+        pio_final_num   = 0
+        pio_add_num     = 0
+        pio_reduce_num  = 0
+
+        pios.each do |pio|
+
+            if  pio.in_or_out=='add'
+                  pio_add_num += pio.num
+            end
+
+            if  pio.in_or_out=='reduce'
+                  pio_reduce_num += pio.num
+            end
+
+        end
+
+        pio_final_num = pio_add_num + pio_reduce_num
+
+
+        pioFirst = ProductInOut.where(:product_id => obj.product_id).first
+
+        if obj.num.to_i <= pio_final_num
+
+              ProductInOut.create(:product_id => obj.product_id ,
+                                  :create_user_id => session[:user_id],
+                                  :in_or_out => 'reduce',
+                                  :in_out_type_id => 2,
+                                  :serial  =>  pioFirst.serial ,
+                                  :level   =>  pioFirst.level ,
+                                  :state   =>  'Y' ,
+                                  :save_date => pioFirst.save_date ,
+                                  :store_area_id => pioFirst.store_area_id,
+                                  :num  => obj.num.to_i,
+                                  :code => obj.code
+                                  )
+        end
+
+        return obj
   end
 
 

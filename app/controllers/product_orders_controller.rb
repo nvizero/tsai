@@ -37,25 +37,32 @@ class ProductOrdersController < ApplicationController
     @mems = Member.all.count
     @os = OrderState.all.count
     #換
-    ProductOrder.all.each do |po|
+    # ProductOrder.all.each do |po|
       # po.state = 'Y'
       # po.confirm_order = ''
       # po.member_id = rand(1...@mems)
       # po.create_user_id = rand(1...4)
       # po.order_state_id = rand(1...@os)
-      po.save
-    end
+      # po.save
+    # end
     @vip_access = user_vip_access
     @users_a = self.user_to_ar
     @flag = params[:state]
 
     if @flag=='Y'
-      @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
+      @product_orders = ProductOrder.vip_access(@vip_access , session)
+                                    .live.order(sort_column + " " + sort_direction)
+                                    .page params[:page]
     elsif @flag=='N'
-      @product_orders = ProductOrder.vip_access(@vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
+      @product_orders = ProductOrder.vip_access(@vip_access , session)
+                                    .stoped
+                                    .order(sort_column + " " + sort_direction)
+                                    .page params[:page]
     else
       @flag='N'
-      @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
+      @product_orders = ProductOrder.vip_access(@vip_access , session)
+                                    .live.order(sort_column + " " + sort_direction)
+                                    .page params[:page]
     end
 
 
@@ -142,19 +149,21 @@ class ProductOrdersController < ApplicationController
   end
 
 
-  def wait_orders
+  def wat_orders
+    @title  = ['main1'=>'待出貨明細', 'main2'=>'wait orders','sub1'=>'待出貨明細' , 'sub2'=>'wait orders']
+    @mems   = Member.all.count
+    @os     = OrderState.all.count
 
-    @mems = Member.all.count
-    @os = OrderState.all.count
     #換
-    ProductOrder.all.each do |po|
+    # ProductOrder.all.each do |po|
       # po.state = 'Y'
       # po.confirm_order = ''
       # po.member_id = rand(1...@mems)
       # po.create_user_id = rand(1...4)
       # po.order_state_id = rand(1...@os)
       # po.save
-    end
+    # end
+
     @vip_access = user_vip_access
     @users_a = self.user_to_ar
     @flag = params[:state]
@@ -164,10 +173,20 @@ class ProductOrdersController < ApplicationController
     elsif @flag=='N'
       @product_orders = ProductOrder.vip_access(@vip_access , session).stoped.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
     else
+
+
+
       @flag='N'
-      @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+      # @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+      # @product_orders = ProductOrder.joins(:category)
+
+      # Client.joins('LEFT OUTER JOIN addresses ON addresses.client_id = clients.id')
+
+      @product_orders = ProductOrder.joins('LEFT OUTER JOIN product_in_outs ON product_in_outs.code = product_orders.code').vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+      
     end
 
+    render 'wait_orders'
   end
 
   private

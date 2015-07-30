@@ -472,8 +472,19 @@ class PactController < ApplicationController
          io_str = "\n"
          proInfo_str = "\n"
          add , reduce , final = self.product_stock(obp)
-         render :text => "#{add} \n -#{reduce} \n final = #{final}"        
 
+        #  render :text => "#{add} \n -#{reduce} \n final = #{final}"
+        if final.to_i == 0
+            render :text => "false \nfinal = #{final}"
+        else
+            pioInfo = self.product_out(obp)
+
+            render :text => "+#{add}\n"     +
+                            "-#{reduce}\n"  +
+                            "final=#{final}\n" +
+                            "#{pioInfo.id}\n"  +
+                            "pioInfo.num=#{pioInfo.num}"
+        end
     else
         render :text => "false"
     end
