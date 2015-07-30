@@ -1,5 +1,5 @@
 class CreateWaitOrders < ActiveRecord::Migration
-  def change
+  def up
     create_table :wait_orders do |t|
       t.integer :product_id
       t.string :code
@@ -14,5 +14,9 @@ class CreateWaitOrders < ActiveRecord::Migration
 
       t.timestamps
     end
+  end
+
+  def down
+    drop_table :wait_orders
   end
 end

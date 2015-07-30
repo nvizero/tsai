@@ -1,6 +1,6 @@
 Tsai::Application.routes.draw do
 
-  resources :wait_orders
+  # resources :wait_orders
 
   resources :pay_types
 
@@ -98,6 +98,7 @@ Tsai::Application.routes.draw do
   #ajax/post_username
 
   post 'check_username' , :to => "pact#check_username"
+  post 'product_order_confirm_check' , :to => "pact#product_order_confirm_check"
   post 'check_email' , :to => "pact#check_email"
   post 'update_order_data' , :to => "pact#update_order_data"
   post 'get_select_products' , :to => "pact#get_select_products"

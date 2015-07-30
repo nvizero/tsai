@@ -475,7 +475,7 @@ class PactController < ApplicationController
 
         #  render :text => "#{add} \n -#{reduce} \n final = #{final}"
         if final.to_i == 0
-            render :text => "false \nfinal = #{final}"
+            render :text => false
         else
             pioInfo = self.product_out(obp)
 
@@ -490,5 +490,32 @@ class PactController < ApplicationController
     end
 
   end
+
+
+  def product_order_confirm_check
+
+    product_order = ProductOrder.find(params[:product_order_id])
+    # logger.info  "--------#{params[:product_order_id]}------"
+    if product_order.confirm_order == 'Y'
+
+        obps = OrderByProduct.where(:code =>product_order.code )
+        # logger.info  "---product_order.code-----#{product_order.code}------"
+        # render :text =>'qweqwe'
+        obps.each do |obp|
+              # logger.info  "---obp.id-----#{obp.id}------"
+              WaitOrder.create( :product_id => obp.product_id ,
+                                :create_user_id => session[:user_id],
+                                # :serial  =>  pio.serial ,
+                                :state   =>  'Y' ,
+                                :num  =>  obp.num.to_i,
+                                :price  => obp.price.to_i,
+                                :total  => (obp.num.to_i * obp.price.to_i ) ,
+                                :code => obp.code
+                                )
+        end
+    end
+    render :text =>true
+  end
+
 
 end

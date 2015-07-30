@@ -36,14 +36,17 @@ class ProductOrdersController < ApplicationController
 
     @mems = Member.all.count
     @os = OrderState.all.count
-    #換
+    
+    # 換
+
     # ProductOrder.all.each do |po|
-      # po.state = 'Y'
-      # po.confirm_order = ''
-      # po.member_id = rand(1...@mems)
-      # po.create_user_id = rand(1...4)
-      # po.order_state_id = rand(1...@os)
-      # po.save
+    #
+    #   po.confirm_order = ''
+    #   # po.state = 'Y'
+    #   # po.member_id = rand(1...@mems)
+    #   # po.create_user_id = rand(1...4)
+    #   # po.order_state_id = rand(1...@os)
+    #   po.save
     # end
     @vip_access = user_vip_access
     @users_a = self.user_to_ar
@@ -177,13 +180,13 @@ class ProductOrdersController < ApplicationController
 
 
       @flag='N'
+
       # @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
       # @product_orders = ProductOrder.joins(:category)
-
       # Client.joins('LEFT OUTER JOIN addresses ON addresses.client_id = clients.id')
 
       @product_orders = ProductOrder.joins('LEFT OUTER JOIN product_in_outs ON product_in_outs.code = product_orders.code').vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
-      
+
     end
 
     render 'wait_orders'

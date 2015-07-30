@@ -53,7 +53,7 @@
     <% opbs.each do |obp|%>
         <% if obp.num.to_i != 0 %>
         <%= render 'comm/info' , :info => obp , :users => @users_a , :title => "#{obp.id} 訊息"  %>
-          <tr>
+          <tr id="obp_<%=obp.id%>">
             <td>
               <%= product_order.code %>
             </td>
@@ -101,7 +101,18 @@ $('document').ready(function(){
           $.post('/post_to_out_order',
                 {'order_by_product_id':order_by_product_id},
                 function(data){
-                  alert(data);
+
+                  // alert(data);
+
+                    if(data=='false'){
+                        // $('#obp_'+order_by_product_id).hide(2000);
+                        alert('庫存不足!!');
+                    }else{
+                        $('#obp_'+order_by_product_id).hide(2000);
+                        alert(data);
+
+                    }
+
                 });
 
 

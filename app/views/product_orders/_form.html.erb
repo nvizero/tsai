@@ -232,7 +232,10 @@ $(document).ready(function() {
 
                   if(element && element.click) {
                      element.click();
+
                   };
+
+
                   // var l = document.getElementById('finial');
                   // l.click();
 
@@ -513,6 +516,15 @@ $(document).ready(function() {
                     if( d == 'true' ){
 
                         $('#order-success-modal').modal('show');
+
+                        var product_order_id =  $('#product_order_id').val();
+
+                        //到待出貨明細
+                        $.post('/product_order_confirm_check',
+                              {'product_order_id':product_order_id},
+                              function(data){
+                               //  alert('ddddinfaldl')
+                              });
 
                         $("#a_submit").click(function(){
                             //訂講成功

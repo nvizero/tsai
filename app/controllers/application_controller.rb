@@ -176,18 +176,15 @@ class ApplicationController < ActionController::Base
 
         if obj.num.to_i <= pio_final_num
 
-              ProductInOut.create(:product_id => obj.product_id ,
-                                  :create_user_id => session[:user_id],
-                                  :in_or_out => 'reduce',
-                                  :in_out_type_id => 2,
-                                  :serial  =>  pioFirst.serial ,
-                                  :level   =>  pioFirst.level ,
-                                  :state   =>  'Y' ,
-                                  :save_date => pioFirst.save_date ,
-                                  :store_area_id => pioFirst.store_area_id,
-                                  :num  => obj.num.to_i,
-                                  :code => obj.code
-                                  )
+              WaitOrder.create( :product_id => obj.product_id ,
+                                :create_user_id => session[:user_id],
+                                :serial  =>  pioFirst.serial ,
+                                :state   =>  'Y' ,
+                                :num  =>  obj.num.to_i,
+                                :price  => obj.price.to_i,
+                                :total  => (obj.num.to_i * obj.price.to_i ) ,
+                                :code => obj.code
+                                )
         end
 
         return obj
