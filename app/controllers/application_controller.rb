@@ -148,8 +148,7 @@ class ApplicationController < ActionController::Base
         len_s = self.order_serial_code(code_serial.count.to_s.length)
         len_s = "#{len_s}#{code_serial.count.to_i+1}"
         cstring = Time.now.strftime("%Y%m%d")
-
-        hide_code = "#{cstring}2#{len_s}"
+        hide_code = "OUT#{cstring}-#{len_s}"
 
         pios = ProductInOut.where(:product_id => obj.product_id)
 
@@ -187,7 +186,7 @@ class ApplicationController < ActionController::Base
                                    :state   =>  'Y' ,
                                    :num  =>  obj.num.to_i  ,
                                    :in_or_out  =>  'reduce',
-                                   :in_out_type_id => 2 , 
+                                   :in_out_type_id => 2 ,
                                    :store_area_id => pioFirst.store_area_id,
                                    :level =>pioFirst.store_area_id,
                                    :save_date =>pioFirst.save_date

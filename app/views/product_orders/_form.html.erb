@@ -6,7 +6,7 @@
   <%
     #先算出長度
     len_s = order_serial_code @code_serial.count.to_s.length
-    len_s = "#{len_s}#{@code_serial.count.to_i+1}"
+    len_s = "-#{len_s}#{@code_serial.count.to_i+1}"
   %>
 <% if !@product_order.id.nil? %>
     <input type="hidden" id="product_order_id" value="<%=@product_order.id%>">
@@ -33,7 +33,7 @@
                         <%= @product_order.code%>
                         <%=f.hidden_field :code , :id=>'code' %>
                   <% else %>
-                        <%= hide_code = "#{get_random_date}#{len_s}"%>
+                        <%= hide_code = "ORDER-#{get_random_date}#{len_s}"%>
                         <%=f.hidden_field :code ,:value => hide_code , :id=>'code'  %>
                   <% end %>
                 </h4>
