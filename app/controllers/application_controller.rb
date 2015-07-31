@@ -169,22 +169,26 @@ class ApplicationController < ActionController::Base
 
         end
 
-        pio_final_num = pio_add_num + pio_reduce_num
+        pio_final_num = pio_add_num - pio_reduce_num
 
 
         pioFirst = ProductInOut.where(:product_id => obj.product_id).first
 
         if obj.num.to_i <= pio_final_num
 
-              WaitOrder.create( :product_id => obj.product_id ,
-                                :create_user_id => session[:user_id],
-                                :serial  =>  pioFirst.serial ,
-                                :state   =>  'Y' ,
-                                :num  =>  obj.num.to_i,
-                                :price  => obj.price.to_i,
-                                :total  => (obj.num.to_i * obj.price.to_i ) ,
-                                :code => obj.code
-                                )
+              ProductInOut.create( :product_id => obj.product_id ,
+                                   :create_user_id => session[:user_id],
+                                   :serial  =>  pioFirst.serial ,
+                                   :state   =>  'Y' ,
+                                   :num  =>  obj.num.to_i  ,
+                                   :in_or_out  =>  'reduce',                                   
+                                   :code => obj.code
+                                 )
+
+            wo = WaitOrder.find(obj.id)
+            wo.product_in_outs_code = pioFirst.serial
+            wo.save
+
         end
 
         return obj

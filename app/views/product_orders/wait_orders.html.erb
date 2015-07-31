@@ -48,7 +48,7 @@
   <tbody>
     <% @product_orders.each do |product_order| %>
 
-    <% opbs = search_order_by_product( product_order.code) %>
+    <% opbs = search_wait_order( product_order.code) %>
     <% opbs = opbs.to_a.sort %>
     <% opbs.each do |obp|%>
         <% if obp.num.to_i != 0 %>
@@ -101,15 +101,17 @@ $('document').ready(function(){
           $.post('/post_to_out_order',
                 {'order_by_product_id':order_by_product_id},
                 function(data){
-
-                  // alert(data);
-
                     if(data=='false'){
-                        // $('#obp_'+order_by_product_id).hide(2000);
                         alert('庫存不足!!');
+
                     }else{
-                        $('#obp_'+order_by_product_id).hide(2000);
-                        alert(data);
+
+                        $('#obp_'+order_by_product_id)
+                          .hide(1000,
+                            function(){
+                              alert('出貨成功!!');
+                        });
+                        // alert(data);
 
                     }
 
@@ -121,14 +123,6 @@ $('document').ready(function(){
     });
 
 
-    // $('.del').click(function(){
-    //     var url = $(this).attr('id');
-    //     var n =confirm('確定停用！？');
-    //
-    //     if(n){
-    //         document.location.href=url;
-    //     }
-    // });
 
 
     $('.info').click(function(){

@@ -466,18 +466,18 @@ class PactController < ApplicationController
 
   def post_to_out_order
 
-    obp = OrderByProduct.find(params[:order_by_product_id])
-    if obp
+    wo = WaitOrder.find(params[:order_by_product_id])
+    if wo
 
          io_str = "\n"
          proInfo_str = "\n"
-         add , reduce , final = self.product_stock(obp)
+         add , reduce , final = self.product_stock(wo)
 
         #  render :text => "#{add} \n -#{reduce} \n final = #{final}"
         if final.to_i == 0
             render :text => false
         else
-            pioInfo = self.product_out(obp)
+            pioInfo = self.product_out(wo)
 
             render :text => "+#{add}\n"     +
                             "-#{reduce}\n"  +
