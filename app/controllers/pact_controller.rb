@@ -148,7 +148,6 @@ class PactController < ApplicationController
       Product.where('id not in (?)',params[:pids].split('/') ).live.each do |pro|
         pros_str+="<option value=#{pro.id}>#{pro.title}</option>"
       end
-
       pros_str+='</select>'
       render :text => pros_str
   end

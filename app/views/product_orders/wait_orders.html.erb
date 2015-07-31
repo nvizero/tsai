@@ -103,13 +103,12 @@ $('document').ready(function(){
                 function(data){
                     if(data=='false'){
                         alert('庫存不足!!');
-
                     }else{
 
                         $('#obp_'+order_by_product_id)
-                          .hide(1000,
+                          .hide(
                             function(){
-                              alert('出貨成功!!');
+                              alert('出貨成功!!'+data);
                         });
                         // alert(data);
 

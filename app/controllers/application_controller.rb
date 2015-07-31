@@ -169,26 +169,35 @@ class ApplicationController < ActionController::Base
 
         end
 
+
+        # logger.info  "#{obj.product_id}_other_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pio"
         pio_final_num = pio_add_num - pio_reduce_num
 
 
         pioFirst = ProductInOut.where(:product_id => obj.product_id).first
+        # logger.info  "#{obj.num} >= #{pio_final_num}"
 
-        if obj.num.to_i <= pio_final_num
+        if pio_final_num.to_i >= obj.num.to_i
 
-              ProductInOut.create( :product_id => obj.product_id ,
-                                   :create_user_id => session[:user_id],
+
+              ProductInOut.create( :product_id => obj.product_id.to_i ,
+                                   :code => obj.code,
+                                   :create_user_id => session[:user_id].to_i,
                                    :serial  =>  pioFirst.serial ,
                                    :state   =>  'Y' ,
                                    :num  =>  obj.num.to_i  ,
-                                   :in_or_out  =>  'reduce',                                   
-                                   :code => obj.code
+                                   :in_or_out  =>  'reduce',
+                                   :in_out_type_id => 2 , 
+                                   :store_area_id => pioFirst.store_area_id,
+                                   :level =>pioFirst.store_area_id,
+                                   :save_date =>pioFirst.save_date
+
                                  )
 
             wo = WaitOrder.find(obj.id)
             wo.product_in_outs_code = pioFirst.serial
             wo.save
-
+            # logger.info  "-sandy-|-sandy-|-sandy-|-sandy-|-sandy-"
         end
 
         return obj

@@ -36,7 +36,7 @@ class ProductOrdersController < ApplicationController
 
     @mems = Member.all.count
     @os = OrderState.all.count
-    
+
     # 換
 
     # ProductOrder.all.each do |po|
