@@ -27,7 +27,11 @@ class ProductInOut < ActiveRecord::Base
   # .group(:in_or_out)
   # .group(:store_area_id)
   # .group(:level)
-
+  # is_finish
+  before_create do
+    self.state = "Y"
+    self.is_finish = 'N'
+  end
   scope :gby, lambda {
       self
       .group(:serial)

@@ -470,6 +470,7 @@ class PactController < ApplicationController
 
          io_str = "\n"
          proInfo_str = "\n"
+         #算庫存
          add , reduce , final = self.product_stock(wo)
 
         #  render :text => "#{add} \n -#{reduce} \n final = #{final}"
@@ -478,11 +479,11 @@ class PactController < ApplicationController
         else
             pioInfo = self.product_out(wo)
 
-            render :text => "+#{add}\n"     +
-                            "-#{reduce}\n"  +
-                            "final=#{final}\n" +
-                            "#{pioInfo.id}\n"  +
-                            "pioInfo.num=#{pioInfo.num}"
+            render :text => "+ #{add} \n "     +
+                            "- #{reduce} \n "  +
+                            "final=#{final} \n" +
+                            "#{pioInfo.id} \n"  +
+                            "pioInfo.num = #{pioInfo.num} "
         end
     else
         render :text => "false"

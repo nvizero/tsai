@@ -30,7 +30,7 @@ class Product < ActiveRecord::Base
   validates :user_id,       :presence => { :message => "使用者－不能空白" }
   validates :specification,       :presence => { :message => "規格－不能空白" },
                                   :length => {:minimum => 1, :maximum => 20, :message => "規格－最多輸入20碼" }
-
+  # is_finish
   before_create do
     self.state = "Y"
   end

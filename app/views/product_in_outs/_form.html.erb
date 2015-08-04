@@ -18,18 +18,15 @@
         <% end %>
 
 <%
-  string = ''
+
   if @i_or_o == 'out'
 %>
     <font style="color:#0C95B7"><%= string = "OUT-"+get_random_date+"-"+@io_s %></font>
 
-
 <% elsif @i_or_o == 'in'%>
     <font style="color:#0C95B7"><%= string = "IN-"+get_random_date+"-"+@io_s %></font>
 
-    <% if @product_in_out.nil? %>
-      <%=string=@product_in_out.code %>
-    <% end %>
+
 <% end %>
 </h3>
 
@@ -38,8 +35,16 @@
 
 </div>
 
- 
-<%= f.hidden_field :code , :value => @product_in_out.code %>
+
+<% if @product_in_out.code %>
+
+    <%= f.hidden_field :code     ,  :value => @product_in_out.code %>
+
+<% else %>
+     
+
+    <%= f.hidden_field :code , :value => string %>
+<% end %>
 
 
 

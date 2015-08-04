@@ -41,7 +41,9 @@ Tsai::Application.configure do
         # :authentication       => :plain,
         :enable_starttls_auto => true
   }
-  
-  config.log_level = :debug
 
+  # config.log_level = :debug
+  # :info
+  config.log_level = :warn
+  # config.log_level = :info
 end

@@ -185,7 +185,7 @@ class ProductOrdersController < ApplicationController
       # @product_orders = ProductOrder.joins(:category)
       # Client.joins('LEFT OUTER JOIN addresses ON addresses.client_id = clients.id')
 
-      @product_orders = ProductOrder.joins('LEFT OUTER JOIN product_in_outs ON product_in_outs.code = product_orders.code').vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+      @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
 
     end
 
