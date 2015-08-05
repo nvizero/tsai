@@ -139,6 +139,20 @@ class ApplicationController < ActionController::Base
   end
 
 
+  def get_pro_in_outs_code(head)
+
+    code_serial = ProductInOut.where('created_at >= :start_days_ago or created_at >= :end_days_ago',
+                                          :start_days_ago  => Time.now.strftime("%Y-%m-%d 00:00:01"),
+                                          :end_days_ago => Time.now.strftime("%Y-%m-%d 23:23:59"))
+
+    len_s = self.order_serial_code(code_serial.count.to_s.length)
+    len_s = "#{len_s}#{code_serial.count.to_i+1}"
+    cstring = Time.now.strftime("%Y%m%d")
+
+    return hide_code = "#{head}-#{cstring}-#{len_s}"
+
+  end
+
   def product_out obj
 
         code_serial = ProductInOut.where('created_at >= :start_days_ago or created_at >= :end_days_ago',
@@ -150,7 +164,7 @@ class ApplicationController < ActionController::Base
         cstring = Time.now.strftime("%Y%m%d")
         hide_code = "OUT-#{cstring}-#{len_s}"
 
-        pios = ProductInOut.where(:product_id => obj.product_id)
+        pios = ProductInOut.where(:product_id => obj.product_id )
 
         pio_final_num   = 0
         pio_add_num     = 0
@@ -169,53 +183,106 @@ class ApplicationController < ActionController::Base
         end
 
 
-        # logger.info  "#{obj.product_id}_other_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pioother_pio"
-        pio_final_num = pio_add_num - pio_reduce_num
 
+        pio_final_num = pio_add_num - pio_reduce_num
+        logger.fatal  "庫存#{pio_final_num} 等於= （進貨）#{pio_add_num} 減去- （出庫）#{pio_reduce_num}"
 
         pioFirst = ProductInOut.where(:product_id => obj.product_id,:is_finish => 'N', :in_or_out =>'add')
+                               .group(:level)
+                               .group(:store_area_id)
+                               .group(:serial)
+                               .group(:save_date)
                                .order("save_date ASC")
                                .first
 
 
-        logger.fatal " id = #{pioFirst.id}  code = #{pioFirst.code}  serial = #{pioFirst.serial}"
-        logger.fatal " num = #{pioFirst.num}\nnow obj num = #{obj.num}       "
-        logger.fatal " ----------------------------------------------------- "
-        logger.fatal " #{pio_final_num} = #{pio_add_num} - #{pio_reduce_num} "
-        logger.fatal " ===================================================== "
-        logger.fatal " obj.num = #{obj.num} "
-        logger.fatal " %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% "
 
-        if pio_final_num.to_i >= obj.num.to_i
-            #訂單數  大於  單筆的筆數
-            if  obj.num.to_i > pioFirst.num.to_i
+        # logger.fatal  "2.pioFirst.id = #{pioFirst.id} / num = #{pioFirst.id} \nobj.num.to_i = #{obj.num.to_i}"
+        #庫存數    大於  訂單數
+        strHead     =   "OUT"
+        sHead       =   get_pro_in_outs_code(strHead)
 
-                remain_num = obj.num.to_i - pioFirst.num.to_i
+        #訂單數          小於     庫存數
+        if obj.num.to_i < pio_final_num.to_i
 
-                ProductInOut.create( :product_id => obj.product_id.to_i ,
-                                     :code => pioFirst.code,
-                                     :create_user_id => session[:user_id].to_i,
-                                     :serial  =>  pioFirst.serial ,
-                                     :state   =>  'Y' ,
-                                    #  :num  =>  obj.num.to_i  ,
-                                     :num  =>  pioFirst.num.to_i ,
-                                     :in_or_out  =>  'reduce',
-                                     :in_out_type_id => 2 ,
-                                     :store_area_id => pioFirst.store_area_id,
-                                     :level =>pioFirst.level,
-                                     :save_date =>pioFirst.save_date )
+                #訂單數  大於  單筆庫存的筆數
+                if  obj.num.to_i > pioFirst.num.to_i
+                    # logger.fatal  "3.-1"
+                    remain_num  =   obj.num.to_i - pioFirst.num.to_i
 
-                pioFirst.is_finish = 'Y'
-                pioFirst.save
-                
-                self.remain_reduce(remain_num , pioFirst.product_id )
 
-            end
+                    ProductInOut.create( :product_id => obj.product_id.to_i ,
+                                         :code => sHead ,
+                                         :create_user_id => session[:user_id].to_i,
+                                         :serial  =>  pioFirst.serial ,
+                                         :state   =>  'Y' ,
+                                         :wait_order_id  =>  obj.id,
+                                         :num  =>  pioFirst.num.to_i ,
+                                         :in_or_out  =>  'reduce',
+                                         :in_out_type_id => 2 ,
+                                         :store_area_id => pioFirst.store_area_id,
+                                         :level =>pioFirst.level,
+                                         :save_date =>pioFirst.save_date )
 
-            wo = WaitOrder.find(obj.id)
-            wo.product_in_outs_code = pioFirst.serial
-            wo.save
-            # logger.info  "-sandy-|-sandy-|-sandy-|-sandy-|-sandy-"
+                    pioFirst.is_finish = 'Y'
+                    pioFirst.save
+                    self.remain_reduce(remain_num , pioFirst.product_id , obj )
+
+
+                elsif obj.num.to_i < pioFirst.num.to_i
+                    # 當單筆的庫存數  大於  訂單數
+                    # logger.fatal  "4."
+                    ProductInOut.create( :product_id => obj.product_id.to_i ,
+                                         :code => sHead ,
+                                         :create_user_id => session[:user_id].to_i,
+                                         :serial  =>  pioFirst.serial ,
+                                         :state   =>  'Y' ,
+                                         :wait_order_id  =>  obj.id,
+                                         :num  =>  obj.num.to_i,
+                                         :in_or_out  =>  'reduce',
+                                         :in_out_type_id => 2 ,
+                                         :store_area_id => pioFirst.store_area_id,
+                                         :level =>pioFirst.level,
+                                         :save_date =>pioFirst.save_date )
+
+                elsif obj.num.to_i == pioFirst.num.to_i
+
+                    ProductInOut.create( :product_id => obj.product_id.to_i ,
+                                         :code => sHead ,
+                                         :create_user_id => session[:user_id].to_i,
+                                         :serial  =>  pioFirst.serial ,
+                                         :state   =>  'Y' ,
+                                         :wait_order_id  =>  obj.id,
+                                         :num  =>  pioFirst.num.to_i ,
+                                         :in_or_out  =>  'reduce',
+                                         :in_out_type_id => 2 ,
+                                         :store_area_id => pioFirst.store_area_id,
+                                         :level =>pioFirst.level,
+                                         :save_date =>pioFirst.save_date)
+
+                    pioFirst.is_finish = 'Y'
+                    pioFirst.save
+
+                end
+
+        elsif pio_final_num.to_i == obj.num.to_i
+
+          ProductInOut.create( :product_id => obj.product_id.to_i ,
+                               :code => sHead ,
+                               :create_user_id => session[:user_id].to_i,
+                               :serial  =>  pioFirst.serial ,
+                               :state   =>  'Y' ,
+                               :wait_order_id  =>  obj.id,
+                               :num  =>  obj.num.to_i ,
+                               :in_or_out  =>  'reduce',
+                               :in_out_type_id => 2 ,
+                               :store_area_id => pioFirst.store_area_id,
+                               :level =>pioFirst.level,
+                               :save_date =>pioFirst.save_date)
+
+              logger.fatal  "3.-#{pioFirst.id}/#{pioFirst.num}"
+              logger.fatal  "pio_final_num.to_i = #{pio_final_num.to_i}  ======  obj.num.to_i = #{obj.num.to_i}"
+
         end
 
         return obj
@@ -223,30 +290,39 @@ class ApplicationController < ActionController::Base
 
 
   #                 剩下的數量  ，產品ID
-  def remain_reduce(remain_num , product_id )
+  def remain_reduce(remain_num , product_id ,obj)
 
       remain_num2 = 0
 
       pio_one = ProductInOut.where(:product_id => product_id )
                             .where(:is_finish => 'N')
                             .where(:in_or_out => 'add')
+                            .group(:level)
+                            .group(:store_area_id)
+                            .group(:serial)
+                            .group(:save_date)
                             .order("save_date ASC")
                             .first
 
-      logger.fatal "\nRemain num =  #{remain_num.to_i}"
-      logger.fatal "\npio_one[object] =  #{pio_one.id}"
+      # logger.fatal "\nRemain num =  #{remain_num.to_i}"
+      # logger.fatal "\npio_one[object] =  #{pio_one.id}"
 
       remain_num2 = remain_num.to_i - pio_one.num.to_i
 
+      strHead="OUT"
+
+      sHead =  get_pro_in_outs_code(strHead)
+
       if  remain_num.to_i > pio_one.num.to_i
 
-          logger.fatal "\nin side pio_one [object] =  #{pio_one.id} "
+          # logger.fatal "\nin side pio_one [object] =  #{pio_one.id} "
 
           ProductInOut.create( :product_id => product_id.to_i ,
-                               :code => pio_one.code,
+                               :code => sHead ,
                                :create_user_id => session[:user_id].to_i,
                                :serial  =>  pio_one.serial ,
                                :state   =>  'Y' ,
+                               :wait_order_id  =>  obj.id,
                                :num  =>  pio_one.num.to_i ,
                                :in_or_out  =>  'reduce',
                                :in_out_type_id => 2 ,
@@ -258,18 +334,19 @@ class ApplicationController < ActionController::Base
 
           pio_one.is_finish = 'Y'
           pio_one.save
-          self.remain_reduce(remain_num2.to_i , product_id )
+          self.remain_reduce(remain_num2.to_i , product_id , obj )
 
       else
 
 
         ProductInOut.create( :product_id => product_id.to_i ,
-                             :code => pio_one.code,
+                             :code => sHead,
                              :create_user_id => session[:user_id].to_i,
                              :serial  =>  pio_one.serial ,
                              :state   =>  'Y' ,
                              :num  =>  remain_num.to_i ,
                              :in_or_out  =>  'reduce',
+                             :wait_order_id  =>  obj.id,
                              :in_out_type_id => 2 ,
                              :store_area_id => pio_one.store_area_id,
                              :level =>pio_one.level,

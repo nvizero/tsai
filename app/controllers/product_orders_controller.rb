@@ -158,14 +158,15 @@ class ProductOrdersController < ApplicationController
     @os     = OrderState.all.count
 
     #換
-    # ProductOrder.all.each do |po|
-      # po.state = 'Y'
-      # po.confirm_order = ''
-      # po.member_id = rand(1...@mems)
-      # po.create_user_id = rand(1...4)
-      # po.order_state_id = rand(1...@os)
-      # po.save
-    # end
+    ProductInOut.all.each do |po|
+
+        if po.in_or_out == 'add'
+            po.is_finish = 'N'
+            po.save
+        else
+            po.delete
+        end
+    end
 
     @vip_access = user_vip_access
     @users_a = self.user_to_ar

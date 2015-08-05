@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150730055254) do
+ActiveRecord::Schema.define(version: 20150805015335) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20150730055254) do
     t.string   "level"
     t.date     "save_date"
     t.string   "is_finish",      limit: 2
+    t.integer  "wait_order_id"
   end
 
   create_table "product_orders", force: true do |t|
@@ -370,8 +371,8 @@ ActiveRecord::Schema.define(version: 20150730055254) do
     t.string   "serial"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "product_order_code",   limit: 100
-    t.string   "product_in_outs_code", limit: 100
+    t.string   "product_order_code",  limit: 100
+    t.string   "product_in_out_code", limit: 100
     t.integer  "price"
     t.integer  "total"
   end
