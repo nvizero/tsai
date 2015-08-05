@@ -1,6 +1,6 @@
 
 <div class="modal fade" id="info-modal111<%=product.id%>" tabindex="-1" role="dialog" aria-hidden="true" >
-    <div class="modal-dialog" style="width:720px">
+    <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -8,10 +8,11 @@
                 <%#=simple_format(obj.title) %>
             </div>
 
-            <div class="modal-body" style="padding:10px 0px 40px 0px;">
+            <div class="modal-body" style="padding:10px 0px 40px 0px;margin:20px 0px 10px 0px;">
                 <%#=simple_format(obj.content) %>
 
                 <h4 style="color:blue;" ><%=product.title %></h4>
+                
                 <hr>
                 <%
                   product.product_in_outs.each do |love|
@@ -33,7 +34,7 @@
 
             </div>
 
-            <div class="modal-footer clearfix">
+            <div class="modal-footer clearfix" style="margin-top:<%=product.product_in_outs.count*17 %>px;">
                 <button type="submit" class="btn btn-primary" data-dismiss="modal"> 確定</button>
             </div>
 
