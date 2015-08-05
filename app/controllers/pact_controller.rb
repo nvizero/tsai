@@ -474,7 +474,7 @@ class PactController < ApplicationController
          add , reduce , final = self.product_stock(wo)
 
         #  render :text => "#{add} \n -#{reduce} \n final = #{final}"
-        if final.to_i == 0
+        if wo.num.to_i > final.to_i
             render :text => false
         else
             pioInfo = self.product_out(wo)

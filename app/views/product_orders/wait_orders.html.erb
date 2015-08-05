@@ -46,41 +46,47 @@
   </thead>
 
   <tbody>
+
     <% @product_orders.each do |product_order| %>
+    <% opbs  = search_wait_order( product_order.code) %>
 
-    <% opbs = search_wait_order( product_order.code) %>
-    <% opbs = opbs.to_a.sort %>
-    <% opbs.each do |obp|%>
-        <% if obp.num.to_i != 0 %>
-        <%= render 'comm/info' , :info => obp , :users => @users_a , :title => "#{obp.id} 訊息"  %>
-          <tr id="obp_<%=obp.id%>">
-            <td>
-              <%= product_order.code %>
-            </td>
-
-            <td>
-              <%= product_order.member.name %>
-            </td>
-            <td><%= obp.product.title %></td>
-            <td><%= obp.num %></td>
+    <% opbs.each do |obp| %>
+        <% check_num  = check_wait_order_show( obp.id ) %>
+        <% #if check_flag == false %>
 
 
-            <td>
+        <% if   (check_num.to_i - obp.num.to_i )!=0 %>
+            <% if obp.num.to_i != 0 %>
+                <%= render 'comm/info' , :info => obp , :users => @users_a , :title => "#{obp.id} 訊息"  %>
+                <tr id="obp_<%=obp.id%>">
+                  <td>
+                    <%= product_order.code %>
+                  </td>
 
-              <%= product_order.order_day %>
-            </td>
-            <td><%= product_order.future_day  %>     </td>
+                  <td>
+                    <%= product_order.member.name %>
+                  </td>
+                  <td><%= obp.product.title %></td>
+                  <td><%= obp.num %></td>
 
 
-            <td>
-                <% link_to 'Show', product_order %>
-                <% link_to 'Edit', edit_product_order_path(product_order) %>
-                <% link_to 'Destroy', product_order, method: :delete, data: { confirm: 'Are you sure?' } %>
-                  <a url="#" class="btn confirm_order btn-primary btn-sm" id="<%=obp.id %>" > 確認 </a>
-                  <a class="btn btn-warning info" id="<%=obp.id %>" >訊息</a>
-            </td>
+                  <td>
 
-          </tr>
+                    <%= product_order.order_day %>
+                  </td>
+                  <td><%= product_order.future_day  %>     </td>
+
+
+                  <td>
+                      <% link_to 'Show', product_order %>
+                      <% link_to 'Edit', edit_product_order_path(product_order) %>
+                      <% link_to 'Destroy', product_order, method: :delete, data: { confirm: 'Are you sure?' } %>
+                        <a url="#" class="btn confirm_order btn-primary btn-sm" id="<%=obp.id %>" > 確認 </a>
+                        <a class="btn btn-warning info" id="<%=obp.id %>" >訊息</a>
+                  </td>
+
+                </tr>
+              <% end %>
           <% end %>
       <% end %>
 
@@ -105,11 +111,11 @@ $('document').ready(function(){
                         alert('庫存不足!!');
                     }else{
 
-                        // $('#obp_'+order_by_product_id)
-                        //   .hide(
-                        //     function(){
-                              alert('出貨成功!!'+data);
-                        // });
+                        $('#obp_'+order_by_product_id)
+                          .hide(
+                            function(){
+                              alert('出貨成功!!');
+                        });
                         // alert(data);
 
                     }

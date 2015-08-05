@@ -55,16 +55,19 @@ class ProductOrdersController < ApplicationController
     if @flag=='Y'
       @product_orders = ProductOrder.vip_access(@vip_access , session)
                                     .live.order(sort_column + " " + sort_direction)
+                                    .order('id desc')
                                     .page params[:page]
     elsif @flag=='N'
       @product_orders = ProductOrder.vip_access(@vip_access , session)
                                     .stoped
                                     .order(sort_column + " " + sort_direction)
+                                    .order('id desc')
                                     .page params[:page]
     else
       @flag='N'
       @product_orders = ProductOrder.vip_access(@vip_access , session)
                                     .live.order(sort_column + " " + sort_direction)
+                                    .order('id desc')
                                     .page params[:page]
     end
 
@@ -158,15 +161,14 @@ class ProductOrdersController < ApplicationController
     @os     = OrderState.all.count
 
     #換
-    ProductInOut.all.each do |po|
-
-        if po.in_or_out == 'add'
-            po.is_finish = 'N'
-            po.save
-        else
-            po.delete
-        end
-    end
+    # ProductInOut.all.each do |po|
+    #     if  po.in_or_out == 'add'
+    #         po.is_finish = 'N'
+    #         po.save
+    #     else
+    #         po.delete
+    #     end
+    # end
 
     @vip_access = user_vip_access
     @users_a = self.user_to_ar

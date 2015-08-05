@@ -185,7 +185,7 @@ class ApplicationController < ActionController::Base
 
 
         pio_final_num = pio_add_num - pio_reduce_num
-        logger.fatal  "庫存#{pio_final_num} 等於= （進貨）#{pio_add_num} 減去- （出庫）#{pio_reduce_num}"
+        # logger.fatal  "庫存#{pio_final_num} 等於= （進貨）#{pio_add_num} 減去- （出庫）#{pio_reduce_num}"
 
         pioFirst = ProductInOut.where(:product_id => obj.product_id,:is_finish => 'N', :in_or_out =>'add')
                                .group(:level)
@@ -279,9 +279,11 @@ class ApplicationController < ActionController::Base
                                :store_area_id => pioFirst.store_area_id,
                                :level =>pioFirst.level,
                                :save_date =>pioFirst.save_date)
-
-              logger.fatal  "3.-#{pioFirst.id}/#{pioFirst.num}"
-              logger.fatal  "pio_final_num.to_i = #{pio_final_num.to_i}  ======  obj.num.to_i = #{obj.num.to_i}"
+         #出庫完成 入庫結束                       
+         pioFirst.is_finish = 'Y'
+         pioFirst.save
+              # logger.fatal  "3.-#{pioFirst.id}/#{pioFirst.num}"
+              # logger.fatal  "pio_final_num.to_i = #{pio_final_num.to_i}  ======  obj.num.to_i = #{obj.num.to_i}"
 
         end
 
