@@ -17,16 +17,10 @@
           <font style="color:#0C95B7"><%=@product_in_out.code %></font>
         <% end %>
 
-<%
-
-  if @i_or_o == 'out'
-%>
+<% if @i_or_o == 'out' %>
     <font style="color:#0C95B7"><%= string = "OUT-"+get_random_date+"-"+@io_s %></font>
-
-<% elsif @i_or_o == 'in'%>
+<% elsif @i_or_o == 'in' %>
     <font style="color:#0C95B7"><%= string = "IN-"+get_random_date+"-"+@io_s %></font>
-
-
 <% end %>
 </h3>
 
@@ -41,7 +35,7 @@
     <%= f.hidden_field :code     ,  :value => @product_in_out.code %>
 
 <% else %>
-     
+
 
     <%= f.hidden_field :code , :value => string %>
 <% end %>
@@ -99,7 +93,7 @@
     <font color="red" >
       <label for="">批號</label>
     </font >
-    <br>
+
 
 
 
@@ -125,13 +119,13 @@
             <% end%>
 
 
-        <% else %>
+    <% else %>
 
-            <% if  @i_or_o == 'out' %>
+            <% if  @whered == 'reduce' %>
             <select id="serial" name="product_in_out[serial]" class='form-control' >
             </select>
                   <!-- <%= f.select(:serial , @p_in_out_list.collect{ |pay| [pay.serial , pay.serial  ] } , { :selected =>@product_in_out.serial  } , :id=>'serial' ,:class=>'form-control'  )%> -->
-            <% elsif @i_or_o == 'in'%>
+            <% elsif @whered == 'add'%>
             <!--新增-->
             <%= f.text_field :serial ,:id => "serial" , :class => "form-control"  %>
             <% end %>
