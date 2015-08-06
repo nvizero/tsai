@@ -80,6 +80,8 @@ Tsai::Application.routes.draw do
   post 'find_member_name'  , :to=> "pact#find_member_name"
   post 'post_to_out_order' , :to=> "pact#post_to_out_order"
 
+  post 'search_member_name' , :to =>"pact#search_member_name"
+
   post 'p_good_or_not'  , :to=> "pact#p_good_or_not"
   post 'post_order_data'  , :to=> "pact#post_order_data"
   post 'get_p_in_out_serial'  , :to=> "pact#get_p_in_out_serial"  ##

@@ -17,6 +17,18 @@ class PactController < ApplicationController
   end
 
 
+  def search_member_name
+
+      aMember = Member.where(:name => params[:name]).first
+      if !aMember.nil?
+          # render :text => "#{aMember.name}/#{aMember.name.length}"
+          render :text => "#{aMember.id}"
+      else
+          render :text => false
+      end
+
+  end
+
   def check_username
     user = User.where(:username=>params['username']).first
     if user

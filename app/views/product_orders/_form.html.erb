@@ -252,8 +252,31 @@ $(document).ready(function() {
       .bind( 'focus', function(){
           $(this).autocomplete("search");
       })
+      .bind( 'blur', function(){
+
+        if($(this).val()!='' ){
+          // alert( $(this).val() );
+          //search_member_name
+          $.post('/search_member_name',
+                {'name' : $(this).val() },
+                function(data){
+
+                    if( data != 'false' ){
+                      // alert(data)
+                      $('#member_name').attr('disabled',true);
+                      $('#member_id').val(data);
+                    }else{
+                      $('#member_name').val('');
+                      alert('沒有這個客顧');
+
+                    }
+                });
+        }
+
+      })
       .bind( 'click', function(){
           $(this).autocomplete("search");
+
       })
       .autocomplete({
       source: function( request, response ) {
