@@ -184,7 +184,7 @@
 
 
   $('document').ready(function(){
-    
+
     $("#check_date").datepicker({ format: 'yyyy-mm-dd'});
 
     $('#vip_access').change(function(){
@@ -198,7 +198,9 @@
     });
 
     var errors_msg =$('#error_explanation').html();
-    if( errors_msg.length > 3 ){
+    // undefined !== theHref && theHref.length
+    if( undefined !== errors_msg && errors_msg.length ){
+    // if( errors_msg.length > 3 ){
       // alert( errors_msg );
       $('#ckbox-modal').modal('show');
     }

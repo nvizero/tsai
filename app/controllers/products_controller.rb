@@ -114,29 +114,21 @@ class ProductsController < ApplicationController
   def store_list
 
     @title[0]['main1']='商品庫存'
-
     if !params['state'].nil?
-
         @flag    = params['state']
         if session[:user["access"]] =='all'
-
-
-            if @flag=='Y'
-                @products = Product.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
-            else
-                @products = Product.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
-            end
-
+              if @flag=='Y'
+                  @products = Product.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
+              else
+                  @products = Product.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).page params[:page]
+              end
         else
-
-            if @flag=='Y'
-                @products = Product.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).order(sort_column + " " + sort_direction).page params[:page]
-            else
-                @products = Product.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).order(sort_column + " " + sort_direction).page params[:page]
-            end
-
+              if @flag=='Y'
+                  @products = Product.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).order(sort_column + " " + sort_direction).page params[:page]
+              else
+                  @products = Product.vip_access(user_vip_access , session).stoped.order(sort_column + " " + sort_direction).order(sort_column + " " + sort_direction).page params[:page]
+              end
         end
-
     else
 
         @flag = 'Y'
