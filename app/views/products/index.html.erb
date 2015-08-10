@@ -40,15 +40,11 @@
                   <thead>
                     <tr>
                       <th><%= sortable "code" ,'產品編號' %></th>
-                      <th><%= sortable "verify_type_main_id" ,'分類' %></th>
-                      <th><%= sortable "title" ,'名稱' %></th>
-                      <th><%= sortable "specification" ,'規格' %></th>
+                      <th><%= sortable "title" ,'產品名稱' %></th>
+                      <th><%= sortable "specification" ,'產品規格' %></th>
+                      <th><%= sortable "verify_type_main_id" ,'產品分類' %></th>
                       <th><%= sortable "user_id" ,'屬於' %></th>
-
-
-                      <th>
-
-                      </th>
+                      <th></th>
                     </tr>
                   </thead>
 
@@ -61,20 +57,14 @@
 
       <tr>
         <td><%= product.code %></td>
+        <td><%= product.title %></td>
+        <td><%= product.specification %></td>
         <td>
           <% if product.verify_type_main %>
             <%= product.verify_type_main.title %>
           <% end %>
         </td>
-        <td><%= product.title %></td>
 
-
-
-        <td>
-
-            <%= product.specification %>
-
-        </td>
 
         <td>
           <% if product.user %>

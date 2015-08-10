@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    @rolesInfo= Role.all.to_a
     @users_a =  self.user_to_ar
     @title   =  self.comm
     # @users = User.order("id desc")

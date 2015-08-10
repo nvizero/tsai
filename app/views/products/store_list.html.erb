@@ -41,7 +41,7 @@
   <div class="row">
     <div class="col-xs-12">
         <div class="box">
-           
+
             <% @mss ='qqq'%>
 
 
@@ -91,7 +91,7 @@
                         <%in_out_cal(product.product_in_outs)%>
                   <% end %>
 
-                  <a class="btn btn-success info btn-xs" id="111<%=product.id %>">入庫</a>
+                  <a class="btn btn-success info-in btn-xs" id="<%=product.id %>">入庫</a>
                   <span class="text-success">
                     <%=@in_num%>
                   </span>
@@ -99,7 +99,7 @@
           </span>
 
           <span  style="width:25%;float:left;">
-              <a class="btn btn-danger info btn-xs" id="<%=product.id %>">出庫</a>
+              <a class="btn btn-danger info-out btn-xs" id="<%=product.id %>">出庫</a>
 
               <span class="text-red">
                 <%=@out_num%>
@@ -149,10 +149,18 @@
           }
 
       });
-
-      $('.info').click(function(){
+      //入庫
+      $('.info-in').click(function(){
           var t_id = $(this).attr('id');
-          $('#info-modal'+t_id).modal('show');
+          alert(t_id);
+          $('#info-in-modal'+t_id).modal('show');
+      });
+
+      //出庫
+      $('.info-out').click(function(){
+          var t_id = $(this).attr('id');
+
+          $('#info-out-modal'+t_id).modal('show');
       });
 
   })

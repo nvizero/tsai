@@ -73,7 +73,9 @@
                 <% f.select(:member_id , @members.collect{ |mem| [mem.name , mem.id  ] } , { :selected =>@product_order.member_id  },:id=>'member_id' ,:class=>'form-control'  )%>
 
                 <% if !@product_order.id.nil? %>
-                      <input type="text" name="name" value="<%=@product_order.member.name%>" class='form-control' id="member_name" >
+                      <% if @product_order.member %>
+                          <input type="text" name="name" value="<%=@product_order.member.name%>" class='form-control' id="member_name" >
+                      <% end %>
                 <% else %>
                       <%= f.text_field :member_id ,:id=>'member_name' ,:class=>'form-control'  %>
                 <% end %>

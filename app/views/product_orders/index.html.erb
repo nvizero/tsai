@@ -38,15 +38,21 @@
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
 
-
               <table id="example2" class="table table-bordered table-striped">
   <thead>
     <tr>
 
-      <th><%= sortable "code" ,'產品編號' %></th>
+      <th><%= sortable "code" ,'訂單單號' %></th>
+      <th><%= sortable "member_id" ,'客戶代號' %></th>
+      <th><%= sortable "member_id" ,'客戶名稱' %></th>
+
+      <th><%= sortable "order_day" ,'訂單日期' %></th>
+      <th><%= sortable "future_day" ,'預定交貨日' %></th>
+
+
       <th><%= sortable "pay_type_id" ,'付款方式' %></th>
       <th><%= sortable "total" ,'總金額' %></th>
-      <th><%= sortable "member_id" ,'訂購者' %></th>
+
 
       <th></th>
     </tr>
@@ -58,16 +64,30 @@
       <tr>
         <td><%= product_order.code %></td>
         <td>
+            <% if product_order.member%>
+            <%= product_order.member.id %>
+            <% end %>
+        </td>
+        <td>
+            <% if product_order.member%>
+            <%= product_order.member.name %>
+            <% end %>
+        </td>
+
+        <td><%= product_order.order_day %></td>
+        <td><%= product_order.future_day %></td>
+
+
+
+        <td>
           <% if product_order.pay_type %>
               <%= product_order.pay_type.content %>
           <% end %>
         </td>
 
         <td><%= product_order.total %></td>
-        <td>
-            <% product_order.member_id %>
-            <%= product_order.member.name %>
-        </td>
+
+
         <td>
             <% link_to 'Show', product_order %>
             <% link_to 'Edit', edit_product_order_path(product_order) %>

@@ -1,5 +1,6 @@
 class Role < ActiveRecord::Base
   paginates_per 5
+  belongs_to :user
   #.permit(:title, :text)
   validates :title,  :presence => { :message => "角色名稱－不能空白" } ,
                      :uniqueness => { :message => "角色名稱－有重複,請重新輸入" }

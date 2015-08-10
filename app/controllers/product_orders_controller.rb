@@ -54,20 +54,18 @@ class ProductOrdersController < ApplicationController
 
     if @flag=='Y'
       @product_orders = ProductOrder.vip_access(@vip_access , session)
-                                    .live.order(sort_column + " " + sort_direction)
-                                    .order('id desc')
+                                    .live.order(sort_column + " " + sort_direction)                                    
                                     .page params[:page]
     elsif @flag=='N'
       @product_orders = ProductOrder.vip_access(@vip_access , session)
                                     .stoped
                                     .order(sort_column + " " + sort_direction)
-                                    .order('id desc')
                                     .page params[:page]
     else
       @flag='N'
       @product_orders = ProductOrder.vip_access(@vip_access , session)
-                                    .live.order(sort_column + " " + sort_direction)
-                                    .order('id desc')
+                                    .live
+                                    .order(sort_column + " " + sort_direction)
                                     .page params[:page]
     end
 

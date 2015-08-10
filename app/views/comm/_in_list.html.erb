@@ -1,5 +1,5 @@
 
-<div class="modal fade" id="info-modal111<%=product.id%>" tabindex="-1" role="dialog" aria-hidden="true" >
+<div class="modal fade" id="info-in-modal<%=product.id%>" tabindex="-1" role="dialog" aria-hidden="true" >
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,29 +12,39 @@
                 <%#=simple_format(obj.content) %>
 
                 <h4 style="color:blue;" ><%=product.title %></h4>
-                
-                <hr>
+
+                <div class="main_col">
+                    <span class="col" id="col_code"   >單號</span>
+                    <span class="col" id="col_serial">批號</span>
+                    <span class="col" id="col_num">數量</span>
+                    <span class="col" id="col_store_area">庫位</span>
+                    <span class="col" id="col_save_date">有限期限 </span>
+                </div>
+
+                <hr style="margin:35px 0px 10px 0px;">
+
                 <%
                   product.product_in_outs.each do |love|
                     if love.in_or_out == 'add'
                   %>
                       <div class="main_col">
-                          <span class="col" id="col_code"   >單號:<%=love.code %></span>
-                          <span class="col" id="col_serial">批號:<%=love.serial %></span>
-                          <span class="col" id="col_num">數量:<font color="red"><%=love.num %></font></span>
-                          <span class="col" id="col_store_area">庫位:<%=love.store_area_id %></span>
-                          <span class="col" id="col_save_date">有限期限:<%=love.save_date%></span>
+                          <span class="col" id="col_code"   ><%=love.code %></span>
+                          <span class="col" id="col_serial"><%=love.serial %></span>
+                          <span class="col" id="col_num"><font color="red"><%=love.num %></font></span>
+                          <span class="col" id="col_store_area"><%=love.store_area_id %></span>
+                          <span class="col" id="col_save_date"> <%=love.save_date%></span>
                       </div>
 
                 <%    end
                   end
                 %>
+                <hr style="margin:-40px 0px 10px 0px;">
 
 
 
             </div>
 
-            <div class="modal-footer clearfix" style="margin-top:<%=product.product_in_outs.count*17 %>px;">
+            <div class="modal-footer clearfix" style="margin-top:<%=product.product_in_outs.count*15 %>px;">
                 <button type="submit" class="btn btn-primary" data-dismiss="modal"> 確定</button>
             </div>
 

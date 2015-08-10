@@ -29,15 +29,23 @@
             <div class="box-body table-responsive">
 
 
+
 <table id="example2" class="table table-bordered table-striped">
   <thead>
     <tr>
-      <th><%= sortable "code" ,'訂單編號' %>     </th>
-      <th>客戶</th>
-      <th>產品</th>
-      <th><%= sortable "num" ,'產品數量' %> </th>
+      <th><%= sortable "code" ,'訂單單號' %>     </th>
+      <th>客戶代號</th>
+      <th>客戶名稱</th>
+
+      <th>產品編號</th>
+      <th>產品名稱</th>
+      <th>產品規格</th>
       <th><%= sortable "order_day" ,'訂單日期' %>     </th>
-      <th><%= sortable "future_day" ,'預定交貨日期' %>     </th>
+      <th><%= sortable "future_day" ,'預定交期' %>     </th>
+
+
+      <th><%= sortable "num" ,'訂單數量' %> </th>
+
 
       <th>確認</th>
 
@@ -64,24 +72,28 @@
                   </td>
 
                   <td>
+                    <%= product_order.member_id %>
+                  </td>
+
+                  <td>
                     <%= product_order.member.name %>
                   </td>
+                  <td><%= obp.product.code %></td>
                   <td><%= obp.product.title %></td>
+                  <td><%= obp.product.specification %></td>
+                  <td><%= product_order.order_day %></td>
+                  <td><%= product_order.future_day  %>     </td>
                   <td><%= obp.num %></td>
 
 
-                  <td>
 
-                    <%= product_order.order_day %>
-                  </td>
-                  <td><%= product_order.future_day  %>     </td>
 
 
                   <td>
                       <% link_to 'Show', product_order %>
                       <% link_to 'Edit', edit_product_order_path(product_order) %>
                       <% link_to 'Destroy', product_order, method: :delete, data: { confirm: 'Are you sure?' } %>
-                        <a url="#" class="btn confirm_order btn-primary btn-sm" id="<%=obp.id %>" > 確認 </a>
+                        <a url="#" class="btn confirm_order btn-primary btn-sm" id="<%=obp.id %>" > 出貨 </a>
                         <a class="btn btn-warning info" id="<%=obp.id %>" >訊息</a>
                   </td>
 

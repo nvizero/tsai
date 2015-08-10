@@ -40,16 +40,16 @@
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
 
-
               <table id="example2" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th><%= sortable "email" ,'E-mail' %></th>
+                      <th><%= sortable "username" ,'帳號' %></th>
                       <th><%= sortable "name" ,'姓名' %></th>
                       <th><%= sortable "boss" ,'負責人' %></th>
-                      <th>擁有產品數</th>
-
-
+                      <th><%= sortable "role_id" ,'角色' %></th>
+                      <th><%= sortable "vip_access" ,'權限' %></th>
+                      <th><%= sortable "email" ,'電子郵件' %></th>
+                      <th width="60px">產品數</th>
                       <th>
 
                       </th>
@@ -60,19 +60,31 @@
                     <% @users.each do |user| %>
 
                     <%= render 'comm/info' , :info => user , :users => @users_a , :title => "使用者:#{user.name} 訊息"  %>
+                    <%= render 'comm/user_has_products' , :info => user , :users => @users_a , :title => "使用者:#{user.name} 訊息"  %>
 
                       <tr>
-                        <td>
-                          <%= user.email %>
-
-                          <% user.id %>
-                        </td>
+                        <td><%= user.username %></td>
                         <td><%= user.name %></td>
                         <td><%= user.boss %></td>
                         <td>
+                          <%
+                              user_role_id_to_i_title=user.role_id.to_i-1
+                          %>
+                          <%=@rolesInfo[user_role_id_to_i_title].title%>
 
 
-                            <%= user.products.count %>
+
+
+                        </td>
+                        <td><%= user.vip_access %></td>
+                        <td><%= user.email %></td>
+                        <td>
+                          <a class="btn btn-warning pinfo btn-sm" id="<%=user.id %>">
+                              產品數
+                          </a>
+                          <% #user.products.each do |proInfo| %>
+                              <%#=proInfo.title%>
+                          <%# end %>
                         </td>
 
                         <td>
@@ -118,6 +130,11 @@
                     $('.info').click(function(){
                         var t_id = $(this).attr('id');
                         $('#info-modal'+t_id).modal('show');
+                    });
+
+                    $('.pinfo').click(function(){
+                        var t_id = $(this).attr('id');
+                        $('#info-pinfo'+t_id).modal('show');
                     });
 
 

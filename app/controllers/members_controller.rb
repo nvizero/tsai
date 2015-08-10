@@ -20,10 +20,12 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     # create_user_id = ''
-    # Member.all.each do |mem|
+    # notid=[1,2]
+    # mems = Member.where("id not in(?)",notid)
+    # mems.each do |mem|
     #   create_user_id = Random.rand(55)+2
     #   mem.create_user_id =create_user_id
-    #   mem.save
+    #   mem.delete
     # end
 
     # 666.times do |aa|
@@ -46,11 +48,10 @@ class MembersController < ApplicationController
       @flag='Y'
       @members = Member.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
     end
-
-
-    #  @members = Member.vip_access(user_vip_access , session).live.page params[:page]
-
+    
+    # @members = Member.vip_access(user_vip_access , session).live.page params[:page]
     # @members = Member.order(sort_column + " " + sort_direction).page params[:page]
+
   end
 
   # GET /members/1
