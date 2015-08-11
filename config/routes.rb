@@ -73,6 +73,8 @@ Tsai::Application.routes.draw do
   post 'do_login' , :to => "login#do_login"
   post 'do_advance_pas' , :to => "login#do_advance_pas"
 
+  get 'get_add_product_in_outs' , :to=> "pact#get_add_product_in_outs"
+
   post 'product_list_code'  , :to=> "pact#product_list_code"
   post 'get_random_str'     , :to=> "pact#get_random_str"
   post 'member_list'  , :to=> "pact#member_list"

@@ -1,5 +1,5 @@
 
-<div class="modal fade" id="info-in-modal<%=product.id%>" tabindex="-1" role="dialog" aria-hidden="true" >
+<div class="modal fade" id="info-in-modal-<%=product.id%>" tabindex="-1" role="dialog" aria-hidden="true" >
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,8 +8,8 @@
                 <%#=simple_format(obj.title) %>
             </div>
 
-            <div class="modal-body" style="padding:10px 0px 40px 0px;margin:20px 0px 10px 0px;">
-                <%#=simple_format(obj.content) %>
+            <div class="modal-body-<%=product.id%>" style="padding:10px 0px 40px 0px;margin:20px 0px 10px 0px;">
+
 
                 <h4 style="color:blue;" ><%=product.title %></h4>
 
@@ -23,21 +23,10 @@
 
                 <hr style="margin:35px 0px 10px 0px;">
 
-                <%
-                  product.product_in_outs.each do |love|
-                    if love.in_or_out == 'add'
-                  %>
-                      <div class="main_col">
-                          <span class="col" id="col_code"   ><%=love.code %></span>
-                          <span class="col" id="col_serial"><%=love.serial %></span>
-                          <span class="col" id="col_num"><font color="red"><%=love.num %></font></span>
-                          <span class="col" id="col_store_area"><%=love.store_area_id %></span>
-                          <span class="col" id="col_save_date"> <%=love.save_date%></span>
-                      </div>
 
-                <%    end
-                  end
-                %>
+                <div id="main_col-<%=product.id%>">
+
+                </div>
                 <hr style="margin:-40px 0px 10px 0px;">
 
 

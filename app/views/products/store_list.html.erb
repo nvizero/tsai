@@ -52,14 +52,14 @@
               <table id="example2" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th><%= sortable "code" ,'產品編號' %></th>
-                      <th><%= sortable "verify_type_main_id" ,'分類' %></th>
-                      <th><%= sortable "title" ,'名稱' %></th>
-                      <th><%= sortable "specification" ,'規格' %></th>
+                      <th>產品編號</th>
+                      <th>分類</th>
+                      <th>名稱</th>
+                      <th>規格</th>
 
 
                       <th>出入庫</th>
-                      <th><%= sortable "user_id" ,'屬於' %></th>
+                      <th>屬於</th>
 
 
                     </tr>
@@ -152,8 +152,37 @@
       //入庫
       $('.info-in').click(function(){
           var t_id = $(this).attr('id');
-          alert(t_id);
-          $('#info-in-modal'+t_id).modal('show');
+          // alert(t_id);
+          $.get('/get_add_product_in_outs',
+                {'product_id':t_id},
+                function(data){
+
+                   $( "#main_col-" + t_id ).html(data);
+
+                       $(".pagination .next a").bind('click',function(){
+
+                            var url             =   $(this).attr('href') ;
+                            var url_split_str   =   url.split("?");
+                            var _split_url      =   url_split_str[1].split("&");
+                            var page_str        =   _split_url[0].split("=");
+                            var product_id_str  =   _split_url[1].split("=");
+
+                            $.get('/get_add_product_in_outs',
+                                 {'product_id':product_id_str[1],'page':page_str[1]},
+                                function(data2){
+                                  $( "#main_col-" + t_id ).html(data2);
+                                }
+                            );
+
+                            $(this).attr('href','#') ;
+                            return false;
+                       });
+                });
+
+
+          // alert($(".modal-body-"+t_id).html() );
+
+          $('#info-in-modal-'+t_id).modal('show');
       });
 
       //出庫

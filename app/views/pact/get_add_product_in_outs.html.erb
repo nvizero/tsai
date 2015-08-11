@@ -1,0 +1,10 @@
+<div class="main_col">
+<% @pios.each do |pio| %>
+       <span class=col id=col_code   ><%=pio.code%></span>
+       <span class=col id=col_serial   ><%=pio.serial%></span>
+       <span class=col id=col_num   ><%=pio.num%></span>
+       <span class=col id=col_store_area   ><%=pio.store_area_id %></span>
+       <span class=col id=col_save_date   ><%=pio.save_date%></span>
+ <% end %>
+ <%= paginate @pios  %>
+ </div>

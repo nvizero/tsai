@@ -530,4 +530,22 @@ class PactController < ApplicationController
   end
 
 
+  def get_add_product_in_outs
+
+        @pios      = ProductInOut.where(:product_id =>params[:product_id] , :in_or_out =>'add').page params[:page]
+
+        # pios_str  = '<div class="main_col">'
+        # pios.each do |pio|
+        #       pios_str +="<span class=col id=col_code   >#{pio.code}</span>"
+        #       pios_str +="<span class=col id=col_serial   >#{pio.serial}</span>"
+        #       pios_str +="<span class=col id=col_num   >#{pio.num}</span>"
+        #       pios_str +="<span class=col id=col_store_area   >#{pio.store_area_id}</span>"
+        #       pios_str +="<span class=col id=col_save_date   >#{pio.save_date}</span>"
+        # end
+        # pios_str +="</div>"
+        # /pios_str +="#{paginate pios}"
+        render 'get_add_product_in_outs'
+        # render :text => "#{pios_str}"
+  end
+
 end
