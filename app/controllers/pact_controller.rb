@@ -532,7 +532,21 @@ class PactController < ApplicationController
 
   def get_add_product_in_outs
 
-        @pios      = ProductInOut.where(:product_id =>params[:product_id] , :in_or_out =>'add').page params[:page]
+        @product_id  = 0
+        @page_num    = 0
+        @page_max    = 2
+
+        if !params[:product_id].nil?
+            @product_id   =   params[:product_id]
+        else
+            @product_id   =   1
+        end
+
+        if !params[:page_num].nil?
+            @page_num = params[:page_num]
+        end
+
+        @pios      = ProductInOut.where(:product_id =>@product_id , :in_or_out =>'add').offset(@page_num).limit(@page_max)
 
         # pios_str  = '<div class="main_col">'
         # pios.each do |pio|

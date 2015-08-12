@@ -1,10 +1,33 @@
-<div class="main_col">
-<% @pios.each do |pio| %>
-       <span class=col id=col_code   ><%=pio.code%></span>
-       <span class=col id=col_serial   ><%=pio.serial%></span>
-       <span class=col id=col_num   ><%=pio.num%></span>
-       <span class=col id=col_store_area   ><%=pio.store_area_id %></span>
-       <span class=col id=col_save_date   ><%=pio.save_date%></span>
- <% end %>
- <%= paginate @pios  %>
- </div>
+<span style="display:none;">頁數(<%=@page_num%>)</span>
+
+    <% @pios.each do |pio| %>
+            <div class="main_col">
+               <span class=col id=col_code   ><%=pio.code%></span>
+               <span class=col id=col_serial   ><%=pio.serial%></span>
+               <span class=col id=col_num   ><%=pio.num%></span>
+               <span class=col id=col_store_area   ><%=pio.store_area_id %></span>
+               <span class=col id=col_save_date   ><%=pio.save_date%></span>
+           </div>
+     <% end %>
+
+<% if @page_max.to_i >= @pios.count.to_i && @page_num.to_i != 0 %>
+    <span class="pre_page" id="/get_add_product_in_outs?page_num=<%=@page_num.to_i-1%>&product_id=<%=@product_id%>"   >
+        上一頁
+    </span>
+<% end %>
+
+
+<% if @page_max.to_i <= @pios.count.to_i %>
+<div>
+    <span class="next_page" id="/get_add_product_in_outs?page_num=<%=@page_num.to_i+1%>&product_id=<%=@product_id%>" >
+        下一頁
+    </span>
+</div>
+<% end %>
+<span style="display:none;">
+
+<br>
+<%=@page_max.to_i %>
+<br>
+page number = <%=@pios.count%>
+</span>

@@ -48,7 +48,7 @@ class MembersController < ApplicationController
       @flag='Y'
       @members = Member.vip_access(user_vip_access , session).live.order(sort_column + " " + sort_direction).page params[:page]
     end
-    
+
     # @members = Member.vip_access(user_vip_access , session).live.page params[:page]
     # @members = Member.order(sort_column + " " + sort_direction).page params[:page]
 

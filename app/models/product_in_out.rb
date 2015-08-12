@@ -1,5 +1,5 @@
 class ProductInOut < ActiveRecord::Base
-  paginates_per 2
+  paginates_per 10
   belongs_to :product
   belongs_to :in_out_type
   belongs_to :store_area
@@ -29,9 +29,12 @@ class ProductInOut < ActiveRecord::Base
   # .group(:level)
   # is_finish
   before_create do
-    self.state = "Y"
-    self.is_finish = 'N'
+    self.state             = "Y"
+    self.is_finish         = 'N'
+    self.in_come_check	   = 'N'
   end
+
+
   scope :gby, lambda {
       self
       .group(:serial)

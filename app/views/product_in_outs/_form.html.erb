@@ -203,12 +203,15 @@
   <%= f.hidden_field :state  ,:value=>'Y' %>
 
 
-  <div class="col-xs-12">
-        <div class="box-footer">
-            <button type="submit" class="btn btn-primary">確定</button>
-            <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
+
+        <div class="col-xs-12">
+              <div class="box-footer">
+                  <% if !@product_in_out.nil? && @product_in_out.in_come_check!='Y' %>
+                      <button type="submit" class="btn btn-primary">確定</button>
+                  <% end %>
+                  <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
+              </div>
         </div>
-  </div>
 
 <% end %>
 

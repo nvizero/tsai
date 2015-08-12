@@ -159,24 +159,27 @@
 
                    $( "#main_col-" + t_id ).html(data);
 
-                       $(".pagination .next a").bind('click',function(){
+                   $("span.next_page").click(function(){
 
-                            var url             =   $(this).attr('href') ;
-                            var url_split_str   =   url.split("?");
-                            var _split_url      =   url_split_str[1].split("&");
-                            var page_str        =   _split_url[0].split("=");
-                            var product_id_str  =   _split_url[1].split("=");
+                        var url             =   $(this).attr('id') ;
+                        var url_split_str   =   url.split("?");
+                        var _split_url      =   url_split_str[1].split("&");
+                        var page_str        =   _split_url[0].split("=");
+                        var product_id_str  =   _split_url[1].split("=");
+                        $.get('/get_add_product_in_outs',
+                             {'product_id':product_id_str[1],'page_num':page_str[1]},
+                            function(data2){
+                              $( "#main_col-" + t_id ).html(data2);
 
-                            $.get('/get_add_product_in_outs',
-                                 {'product_id':product_id_str[1],'page':page_str[1]},
-                                function(data2){
-                                  $( "#main_col-" + t_id ).html(data2);
-                                }
-                            );
 
-                            $(this).attr('href','#') ;
-                            return false;
-                       });
+
+
+                            }
+                        );
+                        //
+                        // $(this).attr('href','#') ;
+                        // return false;
+                   });
                 });
 
 

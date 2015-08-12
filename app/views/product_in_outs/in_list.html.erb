@@ -5,7 +5,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                 
+
 
 
                     <div class="btn-group" id='head_btn'>
@@ -40,13 +40,13 @@
     <tr>
 
       <th><%= sortable "code" ,'單號' %></th>
-      <th style="width:200px;"><%= sortable "product_id" ,'產品' %></th>
-      <th style="width:200px;"><%= sortable "serial" ,'批號' %></th>
+      <th style="width:180px;"><%= sortable "product_id" ,'產品' %></th>
+      <th style="width:170px;"><%= sortable "serial" ,'批號' %></th>
       <th> <%= sortable "num" ,'數量' %></th>
       <th> <%= sortable "store_area_id" ,'庫位' %></th>
       <th> <%= sortable "level" ,'分類' %></th>
       <th> <%= sortable "save_date" ,'有限期限' %></th>
-      <th></th>
+      <th width="230px;"></th>
     </tr>
   </thead>
 
@@ -72,18 +72,22 @@
 
           <% if product_in_out.state == 'Y'  %>
               <a href="/product_in_outs/<%=product_in_out.id%>/edit?type=add"  class="btn btn-info btn-sm"> 編輯</a>
-
               <a url="#" class="del btn btn-danger btn-sm" id='/product_in_outs/in_come/destroy/<%=product_in_out.id %>'> 停用 </a>
-
           <% else %>
-
-
-
+              <button class="btn btn-danger disabled">己停用</button>
           <% end %>
 
-          <a class="btn btn-warning info" id="<%=product_in_out.id %>">
-              訊息
-          </a>
+
+
+
+
+          <a class="btn btn-warning info" id="<%=product_in_out.id %>">訊息</a>
+
+          <% if product_in_out.in_come_check == 'N'  %>
+              <a url="#" class="in_come_check btn btn-primary btn-sm" id='/product_in_outs/in_come_check/<%=product_in_out.id %>'>確認</a>
+          <% elsif product_in_out.in_come_check == 'Y' %>
+              <a url="#" class="btn btn-primary btn-sm"  >己確認</a>
+          <% end %>
 
         </td>
       </tr>
@@ -97,6 +101,17 @@
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 $('document').ready(function(){
+
+
+    $('.in_come_check').click(function(){
+
+        var url = $(this).attr('id');
+        var n =confirm('入庫確認!?');
+        if(n){
+          document.location.href=url;
+        }
+    });
+
 
     $('.del').click(function(){
 

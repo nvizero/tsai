@@ -2,7 +2,7 @@ class ProductInOutsController < ApplicationController
 
   layout 'admin'
 
-  before_action :set_product_in_out, only: [:show, :edit, :update, :destroy , :out_come_destroy , :in_come_destroy]
+  before_action :set_product_in_out, only: [:show, :edit, :update, :destroy , :out_come_destroy , :in_come_destroy , :in_come_check , :out_come_check]
 
   before_action :set_title
   before_action :set_in_out_type
@@ -310,6 +310,27 @@ class ProductInOutsController < ApplicationController
   #   end
   # end
 
+  def in_come_check
+
+    # @product_in_out.stop_user_id = session[:user_id]
+    # @product_in_out.stoped_at = DateTime.now
+    @product_in_out.in_come_check = "Y"
+    @product_in_out.save
+
+    redirect_to :action=>'in_list'
+
+  end
+
+  def out_come_check
+
+    # @product_in_out.stop_user_id = session[:user_id]
+    # @product_in_out.stoped_at = DateTime.now
+    @product_in_out.in_come_check = "Y"
+    @product_in_out.save
+
+    redirect_to :action=>'out_list'
+
+  end
 
   def in_come_destroy
 

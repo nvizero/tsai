@@ -6,7 +6,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                 
+
                     <div class="btn-group" id='head_btn'>
                         <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
                         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -59,6 +59,13 @@
           <% else %>
               <button class="btn btn-danger disabled">己停用</button>
           <% end %>
+
+          <% if product_in_out.in_come_check == 'N'  %>
+              <a url="#" class="in_come_check btn btn-primary btn-sm" id='/product_in_outs/out_come_check/<%=product_in_out.id %>'>確認</a>
+          <% elsif product_in_out.in_come_check == 'Y' %>
+              <a url="#" class="btn btn-primary btn-sm"  >己確認</a>
+          <% end %>
+
           <a class="btn btn-warning info" id="<%=product_in_out.id %>">
               訊息
           </a>
@@ -80,6 +87,15 @@ $('document').ready(function(){
 
         var url = $(this).attr('id');
         var n =confirm('確定停用！？');
+        if(n){
+          document.location.href=url;
+        }
+    });
+
+    $('.in_come_check').click(function(){
+
+        var url = $(this).attr('id');
+        var n =confirm('入庫確認!?');
         if(n){
           document.location.href=url;
         }

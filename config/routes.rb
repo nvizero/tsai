@@ -67,7 +67,7 @@ Tsai::Application.routes.draw do
   get '/json_product_id', :to => "pact#json_product_id"
   get '/tgroup', :to => "pact#tgroup"
   ##########
-
+  get '/product_in_outs/in_come_check(/:id)' , :to => "product_in_outs#in_come_check"
 
   post 'do_forget_pas' , :to => "login#do_forget_pas"
   post 'do_login' , :to => "login#do_login"

@@ -115,13 +115,13 @@ module ApplicationHelper
 
 
     obj.each do |pio|
-        #入庫
-        if pio.in_or_out == 'add' && pio.state == 'Y'
+        #入庫 且 pio.in_come_check 要等於 'Y'
+        if pio.in_or_out == 'add' && pio.state == 'Y' && pio.in_come_check == 'Y'
             @in_num += pio.num.to_i
         end
 
-        #出貨
-        if pio.in_or_out == 'reduce' && pio.state == 'Y'
+        #出貨 且 pio.in_come_check 要等於 'Y'
+        if pio.in_or_out == 'reduce' && pio.state == 'Y' && pio.in_come_check == 'Y'
             @out_num += pio.num.to_i
         end
 

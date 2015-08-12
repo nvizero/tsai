@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
   def index
 
     ci = 1
-   
+
 
     @vip_access = user_vip_access
 
@@ -95,6 +95,8 @@ class ProductsController < ApplicationController
   def show
   end
 
+
+  #'商品庫存'
   def store_list
 
     @title[0]['main1']='商品庫存'
