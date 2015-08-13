@@ -353,6 +353,67 @@ class ProductInOutsController < ApplicationController
 
   end
 
+  def stock
+
+    product_id    =  params[:product_id]
+    in_or_out     =  params[:in_or_out]
+    in_or_out_str = ''
+    @users_a = self.user_to_ar
+
+    if in_or_out!= 'save'
+          @pios = ProductInOut.where(:product_id =>  product_id )
+                              .where(:in_or_out  =>  in_or_out  )
+                              .order(sort_column + " " + sort_direction)
+                              .page params[:page]
+
+    elsif in_or_out == 'save'
+
+          @pios = ProductInOut.where(:product_id     =>  product_id )
+                                 .where(:in_come_check  =>  'Y'  )
+                                 .group(:code)
+                                 .group(:store_area_id)
+                                 .group(:save_date)
+                                 .group(:serial)
+                                 .page params[:page]
+
+
+          _add_num    = 0
+          reduce_num  = 0
+
+          @pios.each do |pio|
+
+              if pio.in_or_out =='add'
+
+              end
+
+              if pio.in_or_out =='reduce'
+                
+              end
+
+          end
+
+
+    end
+
+    proInfo       = Product.find(product_id)
+
+    if in_or_out == 'add'
+       in_or_out_str = '入庫'
+
+    elsif  in_or_out=='reduce'
+       in_or_out_str = '出庫'
+
+    elsif  in_or_out=='save'
+       in_or_out_str = '庫存'
+    end
+
+    @title[0]["main1"]  = "#{proInfo.title}"
+    @title[0]["main2"]  = "#{in_or_out_str}"
+
+
+
+  end
+
   private
 
     def sort_column

@@ -1,0 +1,89 @@
+
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+
+            <div class="box-header">
+            </div>
+            
+            <div class="box-body table-responsive">
+
+              <table id="example2" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>單號</th>
+                      <th> 批號</th>
+                      <th> 數量 </th>
+                      <th> 庫位 </th>
+                      <th> 有效期限 </th>
+                      <th></th>
+                    </tr>
+                  </thead>
+
+
+
+  <tbody>
+    <% @pios.each do |pio| %>
+
+    <%= render 'comm/info' , :info => pio , :users => @users_a , :title => "產品:#{pio.id} 訊息"  %>
+
+      <tr>
+        <td><%= pio.code %></td>
+        <td><%= pio.serial %></td>
+        <td><%= pio.num %></td>
+        <td>
+          <%# if pio.product.verify_type_main %>
+            <%=pio.store_area_id %>
+          <%# end %>
+        </td>
+
+
+        <td>
+          <%# if pio.user %>
+            <%= pio.save_date %>
+          <%# end %>
+        </td>
+
+        <td>
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%#= paginate @pios  %>
+
+
+
+
+</div>
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+  $('document').ready(function(){
+
+      // $('.del').click(function(){
+      //
+      //     var url = $(this).attr('id');
+      //     var n =confirm('確定停用！？');
+      //     if(n){
+      //       document.location.href=url;
+      //     }
+      //
+      // });
+      //
+      // $('.info').click(function(){
+      //     var t_id = $(this).attr('id');
+      //     $('#info-modal'+t_id).modal('show');
+      // });
+
+  })
+</script>
+
+</div>
+</div>
+</div>
+</section><!-- /.content -->

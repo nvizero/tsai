@@ -59,9 +59,9 @@ Tsai::Application.routes.draw do
   get 'out_list', :to => "product_in_outs#out_list"
   get 'store_list', :to => "products#store_list"
 
-  get 'advance_pas', :to => "login#advance_pas"
-  get '/wat_orders', :to => "product_orders#wat_orders"
-
+  get 'advance_pas' , :to => "login#advance_pas"
+  get '/wat_orders' , :to => "product_orders#wat_orders"
+  get '/stock'      , :to => "product_in_outs#stock"
   get '/product_in_outs/in_come/destroy(/:id)', :to => "product_in_outs#in_come_destroy"
   get '/product_in_outs/out_come/destroy(/:id)', :to => "product_in_outs#out_come_destroy"
   get '/json_product_id', :to => "pact#json_product_id"

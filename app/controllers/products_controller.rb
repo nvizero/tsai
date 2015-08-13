@@ -95,6 +95,8 @@ class ProductsController < ApplicationController
   def show
   end
 
+  
+
 
   #'商品庫存'
   def store_list
