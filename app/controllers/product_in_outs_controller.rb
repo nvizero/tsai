@@ -32,10 +32,10 @@ class ProductInOutsController < ApplicationController
   def in_list
 
     # ProductInOut.all.each do |pio|
-    #       if pio.in_or_out == 'reduce'
-    #           pio.delete
-    #           pio.save
-    #       end
+          # if pio.in_or_out == 'reduce'
+              # pio.in_come_check = 'N'
+              # pio.save
+          # end
     # end
 
     @title[0]['main1'] = '入庫列表'
