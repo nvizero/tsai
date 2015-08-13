@@ -98,6 +98,12 @@ class ProductsController < ApplicationController
 
   #'商品庫存'
   def store_list
+    # pios  = ProductInOut.all
+    # pios.each do |io|
+    #     io.in_come_check = 'Y'
+    #     io.save
+    # end
+
 
     @title[0]['main1']='商品庫存'
     if !params['state'].nil?

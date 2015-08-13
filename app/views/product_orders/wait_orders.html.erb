@@ -119,6 +119,9 @@ $('document').ready(function(){
           $.post('/post_to_out_order',
                 {'order_by_product_id':order_by_product_id},
                 function(data){
+
+                    // alert(data);
+
                     if(data=='false'){
                         alert('庫存不足!!');
                     }else{
@@ -128,6 +131,7 @@ $('document').ready(function(){
                             function(){
                               alert('出貨成功!!');
                         });
+                        // alert('出貨~~test');
                         // alert(data);
 
                     }

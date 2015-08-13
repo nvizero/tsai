@@ -156,30 +156,89 @@
           $.get('/get_add_product_in_outs',
                 {'product_id':t_id},
                 function(data){
+                  $("#main_col-"+t_id).html(data);
 
-                   $( "#main_col-" + t_id ).html(data);
-
-                   $("span.next_page").click(function(){
-
-                        var url             =   $(this).attr('id') ;
-                        var url_split_str   =   url.split("?");
-                        var _split_url      =   url_split_str[1].split("&");
-                        var page_str        =   _split_url[0].split("=");
-                        var product_id_str  =   _split_url[1].split("=");
-                        $.get('/get_add_product_in_outs',
-                             {'product_id':product_id_str[1],'page_num':page_str[1]},
-                            function(data2){
-                              $( "#main_col-" + t_id ).html(data2);
+                  var n_url =  $('.next_page').attr('href');
+                  //下一頁網址
+                  var p_url =  $('.pre_page').attr('href');
+                  //上一頁網址
+                  if(p_url==undefined){
+                    $('#p_page').hide();
+                  }
 
 
+                   $("#n_page").click(function(){
 
 
-                            }
-                        );
+                     $('#p_page').show();
+
+                      $.get(n_url,
+                            function(n_data){
+
+                              $( "#main_col-" + t_id ).html(n_data);
+
+                              var n_url =  $('.next_page').attr('href');
+                              var p_url =  $('.pre_page').attr('href');
+                              alert( ' next // ' + n_url ) ;
+                              alert(p_url);
+                              if(p_url==undefined){
+                                $('#p_page').hide();
+                              }
+
+                              if(n_url==undefined){
+                                $('#n_page').hide();
+                              }
+
+                      });
+
+
+                   });
+
+
+
+                   $("#p_page").click(function(){
+                      // alert( $('.pre_page').attr('href') );
+                      $('#n_page').show();
+                      $('#p_page').show();
+
+                      $.get(p_url,
+                            function(p_data){
+                              $( "#main_col-" + t_id ).html(p_data);
+
+                              var n_url =  $('.next_page').attr('href');
+                              var p_url =  $('.pre_page').attr('href');
+
+                              if(p_url==undefined){
+                                $('#p_page').hide();
+                              }
+
+                              if(n_url==undefined){
+                                $('#n_page').hide();
+                              }
+
+                            });
+                   });
+
+                        //  $("span.next_page").click(function(){
+                         //
+                        //       var url             =   $(this).attr('id') ;
+                        //       var url_split_str   =   url.split("?");
+                        //       var _split_url      =   url_split_str[1].split("&");
+                        //       var page_str        =   _split_url[0].split("=");
+                        //       var product_id_str  =   _split_url[1].split("=");
+
+                        // $.get('/get_add_product_in_outs',
+                        //      {'product_id':product_id_str[1],'page_num':page_str[1]},
+                        //     function(data2){
+                        //       $( "#main_col-" + t_id ).html(data2);
+                        //     }
+                        // );
                         //
                         // $(this).attr('href','#') ;
                         // return false;
-                   });
+                  //  });
+
+
                 });
 
 

@@ -10,20 +10,19 @@
            </div>
      <% end %>
 
-<% if @page_max.to_i >= @pios.count.to_i && @page_num.to_i != 0 %>
-    <span class="pre_page" id="/get_add_product_in_outs?page_num=<%=@page_num.to_i-1%>&product_id=<%=@product_id%>"   >
-        上一頁
-    </span>
-<% end %>
+    <div style="display:none;">
+        <% if @page_max.to_i >= @pios.count.to_i && @page_num.to_i != 0 %>
+            <span class="pre_page" href="/get_add_product_in_outs?page_num=<%=@page_num.to_i-1%>&product_id=<%=@product_id%>"   >
+                上一頁
+            </span>
+        <% end %>
+        <% if @page_max.to_i <= @pios.count.to_i %>
+                <span class="next_page" href="/get_add_product_in_outs?page_num=<%=@page_num.to_i+1%>&product_id=<%=@product_id%>" >
+                    下一頁
+                </span>
+        <% end %>
+    </div>
 
-
-<% if @page_max.to_i <= @pios.count.to_i %>
-<div>
-    <span class="next_page" id="/get_add_product_in_outs?page_num=<%=@page_num.to_i+1%>&product_id=<%=@product_id%>" >
-        下一頁
-    </span>
-</div>
-<% end %>
 <span style="display:none;">
 
 <br>

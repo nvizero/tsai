@@ -54,7 +54,7 @@ class ProductOrdersController < ApplicationController
 
     if @flag=='Y'
       @product_orders = ProductOrder.vip_access(@vip_access , session)
-                                    .live.order(sort_column + " " + sort_direction)                                    
+                                    .live.order(sort_column + " " + sort_direction)
                                     .page params[:page]
     elsif @flag=='N'
       @product_orders = ProductOrder.vip_access(@vip_access , session)
@@ -201,7 +201,7 @@ class ProductOrdersController < ApplicationController
     end
 
     def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_product_order

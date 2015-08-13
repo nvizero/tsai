@@ -113,11 +113,11 @@ class ApplicationController < ActionController::Base
         reduce = 0
         pios.each do |pio|
 
-            if pio.in_or_out == 'add'
+            if pio.in_or_out == 'add' && pio.in_come_check == 'Y'
               add += pio.num
             end
 
-            if pio.in_or_out == 'reduce'
+            if pio.in_or_out == 'reduce' && pio.in_come_check == 'Y'
               reduce += pio.num
             end
 
@@ -164,7 +164,7 @@ class ApplicationController < ActionController::Base
         cstring = Time.now.strftime("%Y%m%d")
         hide_code = "OUT-#{cstring}-#{len_s}"
 
-        pios = ProductInOut.where(:product_id => obj.product_id )
+        pios = ProductInOut.where(:product_id => obj.product_id ,:in_come_check =>'Y' )
 
         pio_final_num   = 0
         pio_add_num     = 0
@@ -211,7 +211,7 @@ class ApplicationController < ActionController::Base
                     remain_num  =   obj.num.to_i - pioFirst.num.to_i
 
 
-                    ProductInOut.create( :product_id => obj.product_id.to_i ,
+                    firstPIO = ProductInOut.create( :product_id => obj.product_id.to_i ,
                                          :code => sHead ,
                                          :create_user_id => session[:user_id].to_i,
                                          :serial  =>  pioFirst.serial ,
@@ -222,7 +222,11 @@ class ApplicationController < ActionController::Base
                                          :in_out_type_id => 2 ,
                                          :store_area_id => pioFirst.store_area_id,
                                          :level =>pioFirst.level,
+                                         :in_come_check =>'Y',
                                          :save_date =>pioFirst.save_date )
+
+                    firstPIO.in_come_check ='Y'
+                    firstPIO.save
 
                     pioFirst.is_finish = 'Y'
                     pioFirst.save
@@ -232,7 +236,7 @@ class ApplicationController < ActionController::Base
                 elsif obj.num.to_i < pioFirst.num.to_i
                     # 當單筆的庫存數  大於  訂單數
                     # logger.fatal  "4."
-                    ProductInOut.create( :product_id => obj.product_id.to_i ,
+                    firstPIO = ProductInOut.create( :product_id => obj.product_id.to_i ,
                                          :code => sHead ,
                                          :create_user_id => session[:user_id].to_i,
                                          :serial  =>  pioFirst.serial ,
@@ -243,11 +247,13 @@ class ApplicationController < ActionController::Base
                                          :in_out_type_id => 2 ,
                                          :store_area_id => pioFirst.store_area_id,
                                          :level =>pioFirst.level,
+                                         :in_come_check =>'Y',
                                          :save_date =>pioFirst.save_date )
-
+                   firstPIO.in_come_check ='Y'
+                   firstPIO.save
                 elsif obj.num.to_i == pioFirst.num.to_i
 
-                    ProductInOut.create( :product_id => obj.product_id.to_i ,
+                    firstPIO = ProductInOut.create( :product_id => obj.product_id.to_i ,
                                          :code => sHead ,
                                          :create_user_id => session[:user_id].to_i,
                                          :serial  =>  pioFirst.serial ,
@@ -258,8 +264,10 @@ class ApplicationController < ActionController::Base
                                          :in_out_type_id => 2 ,
                                          :store_area_id => pioFirst.store_area_id,
                                          :level =>pioFirst.level,
+                                         :in_come_check =>'Y',
                                          :save_date =>pioFirst.save_date)
-
+                    firstPIO.in_come_check ='Y'
+                    firstPIO.save
                     pioFirst.is_finish = 'Y'
                     pioFirst.save
 
@@ -267,7 +275,7 @@ class ApplicationController < ActionController::Base
 
         elsif pio_final_num.to_i == obj.num.to_i
 
-          ProductInOut.create( :product_id => obj.product_id.to_i ,
+          firstPIO = ProductInOut.create( :product_id => obj.product_id.to_i ,
                                :code => sHead ,
                                :create_user_id => session[:user_id].to_i,
                                :serial  =>  pioFirst.serial ,
@@ -278,8 +286,14 @@ class ApplicationController < ActionController::Base
                                :in_out_type_id => 2 ,
                                :store_area_id => pioFirst.store_area_id,
                                :level =>pioFirst.level,
+                               :in_come_check =>'Y',
                                :save_date =>pioFirst.save_date)
-         #出庫完成 入庫結束                       
+
+         #出庫完成 入庫結束
+
+         firstPIO.in_come_check ='Y'
+         firstPIO.save
+
          pioFirst.is_finish = 'Y'
          pioFirst.save
               # logger.fatal  "3.-#{pioFirst.id}/#{pioFirst.num}"
@@ -319,7 +333,8 @@ class ApplicationController < ActionController::Base
 
           # logger.fatal "\nin side pio_one [object] =  #{pio_one.id} "
 
-          ProductInOut.create( :product_id => product_id.to_i ,
+          firstPIO.in_come_check ='Y'
+          firstPIO = ProductInOut.create( :product_id => product_id.to_i ,
                                :code => sHead ,
                                :create_user_id => session[:user_id].to_i,
                                :serial  =>  pio_one.serial ,
@@ -330,9 +345,12 @@ class ApplicationController < ActionController::Base
                                :in_out_type_id => 2 ,
                                :store_area_id => pio_one.store_area_id,
                                :level =>pio_one.level,
+                               :in_come_check =>'Y',
                                :save_date =>pio_one.save_date )
 
 
+          firstPIO.in_come_check ='Y'
+          firstPIO.save
 
           pio_one.is_finish = 'Y'
           pio_one.save
@@ -341,7 +359,7 @@ class ApplicationController < ActionController::Base
       else
 
 
-        ProductInOut.create( :product_id => product_id.to_i ,
+        firstPIO = ProductInOut.create( :product_id => product_id.to_i ,
                              :code => sHead,
                              :create_user_id => session[:user_id].to_i,
                              :serial  =>  pio_one.serial ,
@@ -352,7 +370,10 @@ class ApplicationController < ActionController::Base
                              :in_out_type_id => 2 ,
                              :store_area_id => pio_one.store_area_id,
                              :level =>pio_one.level,
+                             :in_come_check =>'Y',
                              :save_date =>pio_one.save_date )
+         firstPIO.in_come_check ='Y'
+         firstPIO.save
 
       end
 
