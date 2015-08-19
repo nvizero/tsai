@@ -356,54 +356,74 @@ class ProductInOutsController < ApplicationController
   def stock
 
     product_id    =  params[:product_id]
-    in_or_out     =  params[:in_or_out]
+    @in_or_out     =  params[:in_or_out]
     in_or_out_str = ''
     @users_a = self.user_to_ar
 
-    if in_or_out!= 'save'
+    if @in_or_out!= 'save'
           @pios = ProductInOut.where(:product_id =>  product_id )
-                              .where(:in_or_out  =>  in_or_out  )
+                              .where(:in_or_out  =>  @in_or_out  )
                               .order(sort_column + " " + sort_direction)
                               .page params[:page]
 
-    elsif in_or_out == 'save'
+    elsif @in_or_out == 'save'
 
-          @pios = ProductInOut.where(:product_id     =>  product_id )
-                                 .where(:in_come_check  =>  'Y'  )
-                                 .group(:code)
-                                 .group(:store_area_id)
-                                 .group(:save_date)
-                                 .group(:serial)
-                                 .page params[:page]
+          query = "SELECT
+                  `p_add`.`serial` ,
+                  `p_add`.`code` as `code`      ,
+                  `p_add`.`level`       ,
+                  `p_add`.`save_date`   ,
+                  `p_add`.`store_area_id` ,
+                  `p_add`.`add_total` -  `p_reduce`.`reduce_total`   as `re_total`
+                  FROM
+                  (
+                  SELECT `serial` , `level` , `save_date` , `store_area_id` ,
+                  `product_id` ,`code` , `id` , sum(num)  as `add_total`
+                  FROM `product_in_outs`where `in_or_out` = 'add' AND in_come_check = 'Y' AND product_id = 1 GROUP BY serial , level , save_date , store_area_id
+                  ) as `p_add`
+                  ,
+                  (
+                  SELECT `serial` , `level` , `save_date` , `store_area_id` ,
+                  product_id , id , sum(num)  as `reduce_total`
+                  FROM `product_in_outs`where `in_or_out` = 'reduce' AND in_come_check = 'Y'  AND product_id = 1 GROUP BY serial , level , save_date , store_area_id
+                  ) as `p_reduce`
+                  WHERE  `p_reduce`.`product_id`  =  `p_add`.`product_id` AND  `p_add`.`product_id` = 1
+                  AND `p_reduce`.`save_date`  =  `p_add`.`save_date`
+                  AND `p_reduce`.`level`  =  `p_add`.`level`
+                  AND `p_reduce`.`serial`  =  `p_add`.`serial`
+                  AND `p_reduce`.`store_area_id`  =  `p_add`.`store_area_id`
+                  HAVING re_total > 1 "
+                  @pios = ActiveRecord::Base.connection.execute(query)
+
 
 
           _add_num    = 0
           reduce_num  = 0
 
-          @pios.each do |pio|
-
-              if pio.in_or_out =='add'
-
-              end
-
-              if pio.in_or_out =='reduce'
-                
-              end
-
-          end
+          # @pios.each do |pio|
+          #
+          #     if pio.in_or_out =='add'
+          #
+          #     end
+          #
+          #     if pio.in_or_out =='reduce'
+          #
+          #     end
+          #
+          # end
 
 
     end
 
     proInfo       = Product.find(product_id)
 
-    if in_or_out == 'add'
+    if @in_or_out == 'add'
        in_or_out_str = '入庫'
 
-    elsif  in_or_out=='reduce'
+    elsif  @in_or_out=='reduce'
        in_or_out_str = '出庫'
 
-    elsif  in_or_out=='save'
+    elsif  @in_or_out=='save'
        in_or_out_str = '庫存'
     end
 

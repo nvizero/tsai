@@ -1,5 +1,3 @@
-
-
 <!-- Main content -->
 <section class="content">
   <div class="row">
@@ -8,7 +6,7 @@
 
             <div class="box-header">
             </div>
-            
+
             <div class="box-body table-responsive">
 
               <table id="example2" class="table table-bordered table-striped">
@@ -19,7 +17,7 @@
                       <th> 數量 </th>
                       <th> 庫位 </th>
                       <th> 有效期限 </th>
-                      <th></th>
+
                     </tr>
                   </thead>
 
@@ -28,28 +26,16 @@
   <tbody>
     <% @pios.each do |pio| %>
 
-    <%= render 'comm/info' , :info => pio , :users => @users_a , :title => "產品:#{pio.id} 訊息"  %>
+    <%# render 'comm/info' , :info => pio , :users => @users_a , :title => "產品:#{pio.id} 訊息"  %>
 
       <tr>
-        <td><%= pio.code %></td>
-        <td><%= pio.serial %></td>
-        <td><%= pio.num %></td>
-        <td>
-          <%# if pio.product.verify_type_main %>
-            <%=pio.store_area_id %>
-          <%# end %>
-        </td>
+        <td><%= (@in_or_out!="save") ? "#{pio.code}" : "#{pio[0]}" %></td>
+        <td><%= (@in_or_out!="save") ? "#{pio.serial}" : "#{pio[1]}" %></td>
+        <td><%= (@in_or_out!="save") ? "#{pio.serial}" : "#{pio[5]}" %></td>
+        <td><%= (@in_or_out!="save") ? "#{pio.store_area_id}" : "#{pio[4]}" %></td>
+        <td><%= (@in_or_out!="save") ? "#{pio.save_date}" : "#{pio[3]}" %></td>
 
 
-        <td>
-          <%# if pio.user %>
-            <%= pio.save_date %>
-          <%# end %>
-        </td>
-
-        <td>
-
-        </td>
       </tr>
     <% end %>
   </tbody>
