@@ -60,11 +60,13 @@ class PactController < ApplicationController
 
     id =  params[:id]
     val =  params[:val]
-    prv = ProductVerify.find(id)
+
+    prv = ProductVerify.find(id.to_i)
+        product_verify_state_id
     prv.product_verify_state_id = val.to_i
     prv.save
 
-    pvs=ProductVerifyState.find(val.to_i)
+    pvs = ProductVerifyState.find(val.to_i)
 
     render :text => pvs.title
     # render :text => "#{params} + #{id} - #{prv}"

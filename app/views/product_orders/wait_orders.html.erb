@@ -63,9 +63,9 @@
         <% #if check_flag == false %>
 
 
-        <% if   (check_num.to_i - obp.num.to_i )!=0 %>
+        <% if (check_num.to_i - obp.num.to_i ) != 0 %>
             <% if obp.num.to_i != 0 %>
-                <%= render 'comm/info' , :info => obp , :users => @users_a , :title => "#{obp.id} 訊息"  %>
+                <%= render 'comm/info' , :info => obp , :users => @users_a , :title => "訂單單號 #{obp.code} 訊息"  %>
                 <tr id="obp_<%=obp.id%>">
                   <td>
                     <%= product_order.code %>

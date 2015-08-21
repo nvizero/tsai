@@ -23,11 +23,17 @@ class VerifyTypeMainsController < ApplicationController
     #   ad.state = 'Y'
     #   ad.save
     # end
+    @flag = params[:state]
 
     self.jadge_access 'verify_type_mains/index'
 
-    @verify_type_mains = VerifyTypeMain.order(sort_column + " " + sort_direction).page params[:page]
-
+    if @flag=='Y'
+      @verify_type_mains = VerifyTypeMain.order(sort_column + " " + sort_direction).live.page params[:page]
+    elsif @flag=='N'
+      @verify_type_mains = VerifyTypeMain.order(sort_column + " " + sort_direction).stoped.page params[:page]
+    else
+      @verify_type_mains = VerifyTypeMain.order(sort_column + " " + sort_direction).live.page params[:page]
+    end
 
   end
 

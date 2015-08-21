@@ -34,6 +34,7 @@ class ProductInOutsController < ApplicationController
     # ProductInOut.all.each do |pio|
           # if pio.in_or_out == 'reduce'
               # pio.in_come_check = 'N'
+              # pio.state = 'Y'
               # pio.save
           # end
     # end
@@ -112,7 +113,7 @@ class ProductInOutsController < ApplicationController
 
     @store_areas    =  StoreArea.live
     @product_id     =  params[:product_id]
-    @in_out_cates   =  InOutType.where(:cate=>@whered)
+    @in_out_cates   =  InOutType.where(:cate=>@whered,:state=>'Y')
     @p_in_out_list  =  ProductInOut.live
     @product_data   =  Product.live
     @product_in_out =  ProductInOut.new
@@ -363,6 +364,7 @@ class ProductInOutsController < ApplicationController
     if @in_or_out!= 'save'
           @pios = ProductInOut.where(:product_id =>  product_id )
                               .where(:in_or_out  =>  @in_or_out  )
+                              .where(:in_come_check  =>  'Y' )
                               .order(sort_column + " " + sort_direction)
                               .page params[:page]
 

@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
   #要登入
   before_action :confirm_logged_in
   helper_method :sort_column, :sort_direction
+  
   # GET /products
   # GET /products.json
 
@@ -95,7 +96,7 @@ class ProductsController < ApplicationController
   def show
   end
 
-  
+
 
 
   #'商品庫存'

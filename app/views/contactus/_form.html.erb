@@ -13,20 +13,20 @@
 
 
   <div class="field">
-    <%= f.label :title , '標題' %><br>
-    <%= f.text_field :title %>
+    <font color="red"><%= f.label :title , '標題' %></font>
+    <%= f.text_field :title, :class=>'form-control'  %>
   </div>
 
 
   <div class="field">
-    <%= f.label :email , 'E-Mail' %><br>
-    <%= f.text_field :email %>
+    <font color="red"><%= f.label :email , 'E-Mail' %></font>
+    <%= f.text_field :email, :class=>'form-control'  %>
   </div>
 
 
 
   <div class="field">
-    <%= f.label :content , '內容'%><br>
+    <font color="red"><%= f.label :content , '內容'%></font>
     <%= f.text_area :content %>
   </div>
 

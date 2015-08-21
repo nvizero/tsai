@@ -81,3 +81,11 @@ Product.create!(:title=>'達利咖啡',:specification => 'coffe2w21q' , :user_id
 
 ProductVerifyState.create!(:id=>1 ,:title=>'申請中', :state=>'Y')
 ProductVerifyState.create!(:id=>2 ,:title=>'申請成功', :state=>'Y')
+
+PayType.create!(:code=>'card' ,:content=>'信用卡', :state=>'Y')
+PayType.create!(:code=>'pay' ,:content=>'現金', :state=>'Y')
+
+Member.create!(:name=>'boy', :tel =>'091234567', :address=>'1' ,  :state =>'Y')
+Member.create!(:name=>'girl', :tel =>'091234567', :address=>'2', :state =>'Y')
+Member.create!(:name=>'gg', :tel =>'091234567', :address=>'3', :state =>'Y')
+Member.create!(:name=>'victor', :tel =>'091234567', :address=>'4', :state =>'Y')

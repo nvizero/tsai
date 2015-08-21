@@ -19,11 +19,11 @@ class ProductVerifyTypesController < ApplicationController
   # GET /product_verify_types
   # GET /product_verify_types.json
   def index
+    
     # pps = ProductVerifyType.all
     # pps.each do |pvt|
     #   pvt.state = "Y"
     #   pvt.save
-    #
     # end
 
     # ProductVerifyType.all.each do |ee|
@@ -37,12 +37,10 @@ class ProductVerifyTypesController < ApplicationController
     @flag = params[:state]
     if @flag=='N'
         @product_verify_types = ProductVerifyType.stoped.order(sort_column + " " + sort_direction).page params[:page]
-
     else
         @product_verify_types = ProductVerifyType.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag='Y'
     end
-
 
   end
 
@@ -70,11 +68,14 @@ class ProductVerifyTypesController < ApplicationController
     @product_verify_type.create_user_id = session[:user_id]
     # respond_to do |format|
       if @product_verify_type.save
+
         flash[:notice] = "三證類型－新增成功"
         redirect_to action: 'index'
 
       else
+
         render action: 'new'
+
         # format.json { render json: @product_verify_type.errors, status: :unprocessable_entity }
       end
     # end

@@ -1,5 +1,3 @@
-
-
 <%= form_for(@product_verify) do |f| %>
   <% if @product_verify.errors.any? %>
     <div id="error_explanation" style="display:none;">
@@ -30,7 +28,7 @@
               <th >
                   <font color="red" size="4" ><%= f.label :product_verify_type_id, '狀態' %></font>
                   <font size="4" id="v_state"><%=@product_verify.product_verify_state.title %></font>
-                  <%=select_tag 'verify_states', options_for_select(@product_verify_states.collect{ |u| [u.title, u.id] }) %>
+                  <%=select_tag 'verify_states', options_for_select(@product_verify_states.collect{ |u| [u.title, u.id] }, { :include_blank =>'-------' ,:selected =>@product_verify.product_verify_state_id } ) %>
               </th>
             </tr>
         </thead>
@@ -124,14 +122,21 @@
 
       $('#verify_states').change(function(){
 
+        var r = confirm("是否變更狀態");
 
-          $.post('/change_product_verify_state' , {"id":$('#vid').val() , 'val':$(this).val()},function(data){
+        if (r == true) {
+          // alert( $('#vid').val() +'/'+ $(this).val() );
+            $.post('/change_product_verify_state' ,
+                  {
+                   "id"  : $('#vid').val() ,
+                   'val' : $(this).val() },
+                  function(data){
+                    // alert(data);
+                    $("#v_state").html(data);
+            })
 
-              // alert('變更成功！');
-              // location.reload();
-              $("#v_state").html(data);
+        }
 
-          })
       });
 
       $('.info').click(function(){

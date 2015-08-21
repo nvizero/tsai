@@ -17,7 +17,7 @@
         <section class="content">
             <div class="row">
                 <!-- left column -->
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <!-- general form elements -->
                     <div class="box box-primary">
                         <div class="box-header">
@@ -31,15 +31,10 @@
 
                                 <div class="form-group <% if !@trade.errors[:id].blank? %> has-error <% end %> ">
                                   <font color="red" ><%= f.label :id , '交易代碼' %></font>
-
-
-
                                     <% if @trade.id %>
                                         <%= f.text_field :id , :id=>"exampleInputFile",:class=>"form-control", :disabled=>"" %>
-
                                     <% else %>
                                         <%= f.text_field :id , :id=>"exampleInputFile",:class=>"form-control" %>
-
                                     <% end %>
                                 </div>
 

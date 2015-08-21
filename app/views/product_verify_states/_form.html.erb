@@ -11,13 +11,13 @@
 
   <div class="field">
     <%= f.label :title ,'狀態名稱' %><br>
-    <%= f.text_field :title %>
+    <%= f.text_field :title ,:class=>"form-control"  %>
     <%= f.hidden_field :state , :value=>'Y' %>
   </div>
 
 
 
-  <div class="box-footer">
+  <div class="box-footer" style="margin-top:10px;">
       <button type="submit" class="btn btn-primary">確定</button>
       <%= link_to "取消", :back ,:class =>'btn btn-danger' %>
   </div>

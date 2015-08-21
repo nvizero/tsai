@@ -27,13 +27,14 @@ class UsersController < ApplicationController
     @title   =  self.comm
     # @users = User.order("id desc")
     #分頁
-    # User.all.each do |ur|
-    #     if ur.vip_access.nil?
-    #
-    #         ur.vip_access = 'normal'
-    #         ur.save
-    #     end
-    # end
+    StoreArea.all.each do |one|
+        one.state = 'Y'
+        one.save
+        # if ur.vip_access.nil?
+        #     ur.vip_access = 'normal'
+        #     ur.save
+        # end
+    end
     @flag = params[:state]
     di = self.user_vip_access
     if @flag=='N'
@@ -130,10 +131,11 @@ class UsersController < ApplicationController
 
               if @user.save
                  #流水號
-                 self.insert_id_seq  params["user"]["username"]
+                 insert_id_seq  params["user"]["username"]
 
                  @user.state = 'Y'
                  @user.password = Digest::SHA256.hexdigest @user.password
+
                  uu = @user
 
                  UserMailer.new_user(uu).deliver
@@ -187,7 +189,7 @@ class UsersController < ApplicationController
        fname += '0'
       }
       fname +=username
-      IdSeq.create(:pre_id => fname )
+      IdSeq.create(:pre_id => fname )    
     end
 
   end
