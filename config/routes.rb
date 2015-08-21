@@ -1,7 +1,8 @@
 Tsai::Application.routes.draw do
 
   # resources :wait_orders
-
+  get '/users/edit_password' , :to => "users#edit_password"
+  post '/users/update_password' , :to => "users#update_password"
   resources :pay_types
 
   resources :contactus
@@ -65,7 +66,8 @@ Tsai::Application.routes.draw do
   get '/product_in_outs/in_come/destroy(/:id)', :to => "product_in_outs#in_come_destroy"
   get '/product_in_outs/out_come/destroy(/:id)', :to => "product_in_outs#out_come_destroy"
   get '/json_product_id', :to => "pact#json_product_id"
-  get '/tgroup', :to => "pact#tgroup"
+  get '/tgroup' , :to => "users#tgroup"
+
   ##########
   get '/product_in_outs/in_come_check(/:id)' , :to => "product_in_outs#in_come_check"
 

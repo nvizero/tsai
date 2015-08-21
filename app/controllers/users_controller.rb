@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   layout "admin"
   #登入
   before_action :confirm_logged_in
-
+   skip_before_filter :verify_authenticity_token, :only => [:update_password]
   #設定上面的TITLT
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -88,6 +88,13 @@ class UsersController < ApplicationController
   def show
     @roles = Role.live
     @trades = Trade.sorted
+  end
+
+  # GET /users/1
+  # GET /users/1.json
+  def edit_password
+    @user = User.find(params[:id])
+    # @trades = Trade.sorted
   end
 
   # GET /users/new
@@ -189,10 +196,15 @@ class UsersController < ApplicationController
        fname += '0'
       }
       fname +=username
-      IdSeq.create(:pre_id => fname )    
+      IdSeq.create(:pre_id => fname )
     end
 
   end
+
+
+
+
+
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
@@ -254,6 +266,31 @@ class UsersController < ApplicationController
 
   end
 
+
+
+
+  def update_password
+
+    logger.info  "-sssssss-------#{(params[:passowrd].to_s == params[:re_passowrd].to_s)} , #{params[:re_passowrd].nil?}-#{params[:passowrd].nil?} "
+
+    if (params[:passowrd].to_s == params[:re_passowrd].to_s) && (params[:passowrd].nil?) && (params[:re_passowrd].nil?)
+
+        user = User.find(params[:id])
+        user_data = params[:user]
+        pas       = Digest::SHA256.hexdigest params[:password].to_s.rstrip.lstrip
+        user.password = pas
+        user.save
+
+        flash[:notice] = "會員密碼更新成功!"
+        redirect_to action: "index"
+    else
+
+        flash[:notice] = "輸入錯誤!密碼要相等!"
+        redirect_to action: "edit_password", :id =>params[:id]
+
+    end
+
+  end
   # DEadminE /users/1
   # DEadminE /users/1.json
   def destroy
