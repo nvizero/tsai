@@ -370,31 +370,56 @@ class ProductInOutsController < ApplicationController
 
     elsif @in_or_out == 'save'
 
-          query = "SELECT
-                  `p_add`.`serial` ,
-                  `p_add`.`code` as `code`      ,
-                  `p_add`.`level`       ,
-                  `p_add`.`save_date`   ,
-                  `p_add`.`store_area_id` ,
-                  `p_add`.`add_total` -  `p_reduce`.`reduce_total`   as `re_total`
-                  FROM
-                  (
-                  SELECT `serial` , `level` , `save_date` , `store_area_id` ,
-                  `product_id` ,`code` , `id` , sum(num)  as `add_total`
-                  FROM `product_in_outs`where `in_or_out` = 'add' AND in_come_check = 'Y' AND product_id = 1 GROUP BY serial , level , save_date , store_area_id
-                  ) as `p_add`
-                  ,
-                  (
-                  SELECT `serial` , `level` , `save_date` , `store_area_id` ,
-                  product_id , id , sum(num)  as `reduce_total`
-                  FROM `product_in_outs`where `in_or_out` = 'reduce' AND in_come_check = 'Y'  AND product_id = 1 GROUP BY serial , level , save_date , store_area_id
-                  ) as `p_reduce`
-                  WHERE  `p_reduce`.`product_id`  =  `p_add`.`product_id` AND  `p_add`.`product_id` = 1
-                  AND `p_reduce`.`save_date`  =  `p_add`.`save_date`
-                  AND `p_reduce`.`level`  =  `p_add`.`level`
-                  AND `p_reduce`.`serial`  =  `p_add`.`serial`
-                  AND `p_reduce`.`store_area_id`  =  `p_add`.`store_area_id`
-                  HAVING re_total > 1 "
+          query = "
+ select  `serial` ,
+                  `code` as `code`      ,
+                   `level`       ,
+                  `save_date`   ,
+`store_area_id` ,
+                  sum(add_total)   as `re_total`
+  from
+                  (SELECT
+                      `serial` ,
+                      `level` ,
+                      `save_date` ,
+                      `store_area_id` ,
+                      `product_id` ,
+					  `code` ,
+                      sum(`num`)  as `add_total`
+                  FROM `product_in_outs`  where
+                                          `in_or_out` = 'add'
+                                          AND in_come_check = 'Y'
+
+                                              GROUP BY  serial ,
+                                                        level ,
+                                                        save_date ,
+                                                        store_area_id
+
+
+                    UNION
+
+
+                  SELECT `serial` ,
+                         `level` ,
+                         `save_date` ,
+                         `store_area_id` ,
+                         `product_id` ,
+                         `code` ,
+                         sum(num)*-1  as `re_total`
+                  FROM `product_in_outs`  where
+                                          `in_or_out` = 'reduce'
+                                          AND in_come_check = 'Y'
+
+                                              GROUP BY  serial ,
+                                                        level  ,
+                                                        save_date ,
+                                                        store_area_id) as aaa
+                                                  group by serial ,level ,save_date , store_area_id
+                                                  having   sum(add_total) > 1
+
+
+                  "
+                  # "HAVING re_total > 1 "
                   @pios = ActiveRecord::Base.connection.execute(query)
 
 

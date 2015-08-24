@@ -29,8 +29,8 @@
     <%# render 'comm/info' , :info => pio , :users => @users_a , :title => "產品:#{pio.id} 訊息"  %>
 
       <tr>
-        <td><%= (@in_or_out!="save") ? "#{pio.code}" : "#{pio[0]}" %></td>
-        <td><%= (@in_or_out!="save") ? "#{pio.serial}" : "#{pio[1]}" %></td>
+        <td><%= (@in_or_out!="save") ? "#{pio.code}" : "#{pio[1]}" %></td>
+        <td><%= (@in_or_out!="save") ? "#{pio.serial}" : "#{pio[0]}" %></td>
         <td><%= (@in_or_out!="save") ? "#{pio.serial}" : "#{pio[5]}" %></td>
         <td><%= (@in_or_out!="save") ? "#{pio.store_area_id}" : "#{pio[4]}" %></td>
         <td><%= (@in_or_out!="save") ? "#{pio.save_date}" : "#{pio[3]}" %></td>
