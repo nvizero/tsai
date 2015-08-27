@@ -87,8 +87,11 @@ class DailiesController < ApplicationController
 
 
   def daily_18
+    
+      @title  = ['main1'=>'排班/日報', 'main2'=>'Daily','sub1'=>'日報' , 'sub2'=>'Daily' ]
       @day0 = Date.today
 
+      @all_days = Daily.all.to_a
       @day1 = Date.today.at_beginning_of_month.strftime
       @beginning＿on_week = Date.today.at_beginning_of_month.wday
 
@@ -96,7 +99,7 @@ class DailiesController < ApplicationController
       @day2 = Date.today.at_end_of_month.strftime
       @day＿week = Date.today.wday
 
-      render :layout => false
+      # render :layout => false
       # layout nil
       # render 'daily_18'
 

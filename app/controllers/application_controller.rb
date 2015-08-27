@@ -308,6 +308,9 @@ class ApplicationController < ActionController::Base
   #                 剩下的數量  ，產品ID
   def remain_reduce(remain_num , product_id ,obj)
 
+      logger.info "remain_reduce(remain_num , product_id ,obj)"
+      logger.info "#{remain_num.to_i} - #{product_id} - #{obj}"
+
       remain_num2 = 0
 
       pio_one = ProductInOut.where(:product_id => product_id )
@@ -325,15 +328,16 @@ class ApplicationController < ActionController::Base
 
       remain_num2 = remain_num.to_i - pio_one.num.to_i
 
-      strHead="OUT"
+      strHead =  "OUT"
 
-      sHead =  get_pro_in_outs_code(strHead)
+      sHead   =  get_pro_in_outs_code(strHead)
 
       if  remain_num.to_i > pio_one.num.to_i
 
-          # logger.fatal "\nin side pio_one [object] =  #{pio_one.id} "
+          logger.info "if  remain_num.to_i > pio_one.num.to_i"
+          logger.info "#{remain_num.to_i}-#{pio_one.num.to_i}"
 
-          firstPIO.in_come_check ='Y'
+          # firstPIO.in_come_check ='Y'
           firstPIO = ProductInOut.create( :product_id => product_id.to_i ,
                                :code => sHead ,
                                :create_user_id => session[:user_id].to_i,
@@ -354,9 +358,13 @@ class ApplicationController < ActionController::Base
 
           pio_one.is_finish = 'Y'
           pio_one.save
+
           self.remain_reduce(remain_num2.to_i , product_id , obj )
 
-      else
+      elsif  remain_num.to_i <= pio_one.num.to_i
+
+        logger.info "elsif  remain_num.to_i < pio_one.num.to_i"
+        logger.info " #{remain_num.to_i} - #{pio_one.num.to_i}"
 
 
         firstPIO = ProductInOut.create( :product_id => product_id.to_i ,
@@ -372,6 +380,7 @@ class ApplicationController < ActionController::Base
                              :level =>pio_one.level,
                              :in_come_check =>'Y',
                              :save_date =>pio_one.save_date )
+
          firstPIO.in_come_check ='Y'
          firstPIO.save
 

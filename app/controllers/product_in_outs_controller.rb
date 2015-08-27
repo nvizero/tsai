@@ -36,6 +36,7 @@ class ProductInOutsController < ApplicationController
               # pio.in_come_check = 'N'
               # pio.state = 'Y'
               # pio.save
+              # pio.delete
           # end
     # end
 

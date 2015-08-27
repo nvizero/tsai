@@ -115,7 +115,7 @@ $('document').ready(function(){
     $(".confirm_order").click(function(){
 
           var order_by_product_id = $(this).attr('id');
-
+          // alert( order_by_product_id );
           $.post('/post_to_out_order',
                 {'order_by_product_id':order_by_product_id},
                 function(data){

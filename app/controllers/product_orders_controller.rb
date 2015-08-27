@@ -35,18 +35,18 @@ class ProductOrdersController < ApplicationController
   def index
 
     @mems = Member.all.count
-    @os = OrderState.all.count
+    @os   = OrderState.all.count
 
     # 換
 
     # ProductOrder.all.each do |po|
-    #
-    #   po.confirm_order = ''
-    #   # po.state = 'Y'
-    #   # po.member_id = rand(1...@mems)
-    #   # po.create_user_id = rand(1...4)
-    #   # po.order_state_id = rand(1...@os)
-    #   po.save
+      # po.confirm_order = ''
+      # po.state = 'Y'
+      # po.member_id = rand(1...@mems)
+      # po.create_user_id = rand(1...4)
+      # po.order_state_id = rand(1...@os)
+      # po.save
+      # po.delete
     # end
     @vip_access = user_vip_access
     @users_a = self.user_to_ar

@@ -1,12 +1,28 @@
 
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
 <% empty_tds = (7-(7-@beginning＿on_week.to_i+1) ) %>
 
 <% with_tds = (7-@beginning＿on_week.to_i+1) %>
 
-<table>
+<div class="box-body table-responsive">
+  <table id="example2" class="table table-bordered table-striped">
+
     <tr>
-        <% (1..7).each do |wk|%>
-            <td><%=wk%></td>
+        <%
+        week_days = ['一','二','三','四','五','六','日']
+        (0..6).each do |wk|
+        %>
+            <td >
+              <font style="color:blue;font-size:18px;">
+                  <%=week_days[wk]%>
+              </font>
+            </td>
         <% end %>
     </tr>
 
@@ -31,7 +47,11 @@
 %>
     <% if first_flag %>
 
-        <td><%= dd %></td>
+        <td>
+          <%= dd %>號<br>
+          <br>
+          <%= simple_format match_day @all_days , "#{@day1.split('-')[0].to_i}-0#{@day1.split('-')[1].to_i}-0#{dd}"%>
+        </td>
 
         <% if with_tds.to_i == dd %>
           </tr>
@@ -50,12 +70,33 @@
               </tr>
           <% end %>
 
-          <td><%= dd %></td>
+          <td>
+            <%= dd %><br>
+            <br>
+            <%
+            the_day , the_month = ''
+
+            the_month =  @day1.split('-')[1].to_i
+
+            if the_month.to_i < 10
+              the_month   =  "0#{@day1.split('-')[1].to_i}"
+            else
+              the_month   =   @day1.split('-')[1].to_i
+            end
+
+            if dd.to_i < 10
+              the_day   =  "0#{dd}"
+            else
+              the_day   =   dd
+            end
+
+            %>
+            <%= simple_format match_day @all_days , "#{@day1.split('-')[0].to_i}-#{the_month}-#{the_day}"%>
+          </td>
 
     <% end %>
 
 <% end %>
-</table>
 
 
 
@@ -66,3 +107,31 @@
 
 
 <% @day_week%>
+
+
+
+
+
+
+  </table>
+</div>
+
+
+</div>
+</div>
+</div>
+</section><!-- /.content -->
+<style media="screen">
+  table tr td{
+    width:14%;
+
+  }
+  .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th{
+    width:14%;
+
+
+  }
+  .table table-bordered table-striped td{
+    width:14%;
+  }
+</style>
