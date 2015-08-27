@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150812080558) do
+ActiveRecord::Schema.define(version: 20150825065628) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -49,6 +49,19 @@ ActiveRecord::Schema.define(version: 20150812080558) do
     t.integer  "modify_user_id"
     t.integer  "stop_user_id"
     t.datetime "stoped_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "dailies", force: true do |t|
+    t.date     "day"
+    t.string   "day_type"
+    t.string   "title"
+    t.text     "content"
+    t.integer  "created_user_id"
+    t.integer  "modify_user_id"
+    t.datetime "stoped_at"
+    t.integer  "stop_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

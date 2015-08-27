@@ -68,7 +68,7 @@ class TradesController < ApplicationController
     else
 
       # render action: 'edit'
-
+      
       render action: 'new'
     end
 

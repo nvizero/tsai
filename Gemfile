@@ -39,7 +39,7 @@ end
 gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use unicorn as the app server
- gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 gem 'capistrano', group: :development
@@ -47,6 +47,7 @@ gem 'paperclip'
 # Use debugger
 #gem 'debugger', group: [:development, :test]
 gem "ckeditor"
+gem "rails-i18n"
 
 gem 'to_xls-rails'# Last officially released gem
 gem 'bootstrap-wysihtml5-rails'

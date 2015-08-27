@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Day:</strong>
+  <%= @daily.day %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @daily.day_type %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @daily.title %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @daily.content %>
+</p>
+
+<p>
+  <strong>Created user:</strong>
+  <%= @daily.created_user_id %>
+</p>
+
+<p>
+  <strong>Modify user:</strong>
+  <%= @daily.modify_user_id %>
+</p>
+
+<p>
+  <strong>Stoped at:</strong>
+  <%= @daily.stoped_at %>
+</p>
+
+<p>
+  <strong>Stop user:</strong>
+  <%= @daily.stop_user_id %>
+</p>
+
+<%= link_to 'Edit', edit_daily_path(@daily) %> |
+<%= link_to 'Back', dailies_path %>

@@ -1,0 +1,68 @@
+
+<% empty_tds = (7-(7-@beginning＿on_week.to_i+1) ) %>
+
+<% with_tds = (7-@beginning＿on_week.to_i+1) %>
+
+<table>
+    <tr>
+        <% (1..7).each do |wk|%>
+            <td><%=wk%></td>
+        <% end %>
+    </tr>
+
+    <tr>
+      <% 7.times do |aa|%>
+          <td>-</td>
+      <% end %>
+    </tr>
+
+
+<tr>
+
+<% empty_tds.to_i.times do |i| %>
+    <td></td>
+<% end
+  first_flag = true
+%>
+
+
+<%
+  (@day1.split('-')[2].to_i .. @day2.split('-')[2].to_i).each do |dd|
+%>
+    <% if first_flag %>
+
+        <td><%= dd %></td>
+
+        <% if with_tds.to_i == dd %>
+          </tr>
+        <%
+          first_flag = false
+          end
+        %>
+
+    <% else %>
+
+          <% if (dd.to_i - with_tds.to_i )%7==1 %>
+              <tr>
+          <% end %>
+
+          <% if (dd.to_i - with_tds.to_i ) %7==7 %>
+              </tr>
+          <% end %>
+
+          <td><%= dd %></td>
+
+    <% end %>
+
+<% end %>
+</table>
+
+
+
+ <% @beginning＿on_week%>
+
+
+<% @day0%>
+
+
+<% @day_week%>

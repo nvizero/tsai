@@ -67,6 +67,11 @@ class ProductInOutsController < ApplicationController
 
   def out_list
 
+    # ProductInOut.out_come.each do |poo|
+    #     poo.delete
+    # end
+
+
     @title[0]['main1'] = '出貨列表'
     @users_a = self.user_to_ar
     @flag = params[:state]
@@ -370,14 +375,14 @@ class ProductInOutsController < ApplicationController
 
     elsif @in_or_out == 'save'
 
-          query = "
- select  `serial` ,
-                  `code` as `code`      ,
+          query = "select
+                   `serial` ,
+                   `code` as `code`      ,
                    `level`       ,
-                  `save_date`   ,
-`store_area_id` ,
+                   `save_date`   ,
+                   `store_area_id` ,
                   sum(add_total)   as `re_total`
-  from
+                  from
                   (SELECT
                       `serial` ,
                       `level` ,
@@ -389,36 +394,29 @@ class ProductInOutsController < ApplicationController
                   FROM `product_in_outs`  where
                                           `in_or_out` = 'add'
                                           AND in_come_check = 'Y'
-
+                                          AND `product_id` = #{product_id}
                                               GROUP BY  serial ,
                                                         level ,
                                                         save_date ,
                                                         store_area_id
-
-
                     UNION
-
-
-                  SELECT `serial` ,
+                    SELECT `serial` ,
                          `level` ,
                          `save_date` ,
                          `store_area_id` ,
                          `product_id` ,
                          `code` ,
-                         sum(num)*-1  as `re_total`
-                  FROM `product_in_outs`  where
+                         sum(`num`)*-1  as `re_total`
+                         FROM `product_in_outs`  where
                                           `in_or_out` = 'reduce'
                                           AND in_come_check = 'Y'
-
+                                          AND `product_id` = #{product_id}
                                               GROUP BY  serial ,
                                                         level  ,
                                                         save_date ,
                                                         store_area_id) as aaa
                                                   group by serial ,level ,save_date , store_area_id
-                                                  having   sum(add_total) > 1
-
-
-                  "
+                                                  having   sum(add_total) != 0 "
                   # "HAVING re_total > 1 "
                   @pios = ActiveRecord::Base.connection.execute(query)
 

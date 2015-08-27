@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  day: 2015-08-25
+  type: 
+  title: MyString
+  content: MyText
+  created_user_id: 1
+  modify_user_id: 1
+  stoped_at: 2015-08-25 14:51:47
+  stop_user_id: 1
+
+two:
+  day: 2015-08-25
+  type: 
+  title: MyString
+  content: MyText
+  created_user_id: 1
+  modify_user_id: 1
+  stoped_at: 2015-08-25 14:51:47
+  stop_user_id: 1
