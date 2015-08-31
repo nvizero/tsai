@@ -22,7 +22,20 @@ class DailiesController < ApplicationController
   # GET /dailies
   # GET /dailies.json
   def index
-    @dailies = Daily.all
+
+    # Daily.all.each do |dai|
+    #     dai.state = 'Y'
+    #     dai.save
+    # end
+
+    @flag = params[:state]
+    if @flag=='N'
+        @dailies = Daily.stoped.page params[:page]
+    else
+        @dailies = Daily.live.page params[:page]
+        @flag='Y'
+    end
+
   end
 
   # GET /dailies/1
@@ -44,41 +57,91 @@ class DailiesController < ApplicationController
   # POST /dailies
   # POST /dailies.json
   def create
+
     @daily = Daily.new(daily_params)
 
-    # respond_to do |format|
-      if @daily.save
+      daily = params[:daily]
+      daily_a = daily.to_a
+      good_day_to_die = "#{daily_a[0][1]}-#{daily_a[1][1]}-#{daily_a[2][1]}"
 
-        flash[:notice] = "日報-新增成功!"
-        redirect_to :action=> :index
+      # render :text => "#{good_day_to_die} #{daily[:day_type]}"
+      find_day = Daily.where(:day_type => daily[:day_type] , :day => good_day_to_die).first
 
-        # format.html { redirect_to @daily, notice: 'Daily was successfully created.' }
-        # format.json { render action: 'show', status: :created, location: @daily }
+      if !find_day.nil?
+            #有找到一樣的～不可以再輸入一次
+            # render :text => "yes day !!->>>#{find_day.id} "
+            flash[:notice] = "日報-有重複的日期!!"
+            @time_type = ['早上','下午']
+            @daily = Daily.new
+            render action: 'new'
       else
-        format.html { render action: 'new' }
-        format.json { render json: @daily.errors, status: :unprocessable_entity }
+
+            #沒有找到一樣的～可以就新增!!
+            if @daily.save
+
+              flash[:notice] = "日報-新增成功!"
+              redirect_to :action=> :index
+              # format.html { redirect_to @daily, notice: 'Daily was successfully created.' }
+              # format.json { render action: 'show', status: :created, location: @daily }
+            else
+              @time_type = ['早上','下午']
+              @daily = Daily.new
+              render action: 'new'
+              # format.html { render action: 'new' }
+              # format.json { render json: @daily.errors, status: :unprocessable_entity }
+            end
+
       end
-    # end
+      # if @daily.save
+      #   flash[:notice] = "日報-新增成功!"
+      #   redirect_to :action=> :index
+      #   # format.html { redirect_to @daily, notice: 'Daily was successfully created.' }
+      #   # format.json { render action: 'show', status: :created, location: @daily }
+      # else
+      #   format.html { render action: 'new' }
+      #   format.json { render json: @daily.errors, status: :unprocessable_entity }
+      # end
+
   end
 
   # PATCH/PUT /dailies/1
   # PATCH/PUT /dailies/1.json
   def update
-    respond_to do |format|
-      if @daily.update(daily_params)
-        format.html { redirect_to @daily, notice: 'Daily was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @daily.errors, status: :unprocessable_entity }
-      end
+    # respond_to do |format|
+    daily = params[:daily]
+    daily_a = daily.to_a
+    good_day_to_die = "#{daily_a[0][1]}-#{daily_a[1][1]}-#{daily_a[2][1]}"
+
+    # render :text => "#{good_day_to_die} #{daily[:day_type]}"
+    find_day = Daily.where(:day_type => daily[:day_type] , :day => good_day_to_die).first
+
+    if !find_day.nil?
+          #有找到一樣的～不可以再輸入一次
+          # render :text => "yes day !!->>>#{find_day.id} "
+          flash[:notice] = "日報-有重複的日期!!"
+          @time_type = ['早上','下午']
+          @daily = Daily.new
+          render action: 'edit'
+    else
+          if @daily.update(daily_params)
+            format.html { redirect_to @daily, notice: 'Daily was successfully updated.' }
+            format.json { head :no_content }
+          else
+            format.html { render action: 'edit' }
+            format.json { render json: @daily.errors, status: :unprocessable_entity }
+          end
     end
   end
 
   # DELETE /dailies/1
   # DELETE /dailies/1.json
   def destroy
-    @daily.destroy
+
+    @daily.state = 'N'
+    @daily.save
+
+    # @daily.destroy
+
     respond_to do |format|
       format.html { redirect_to dailies_url }
       format.json { head :no_content }
@@ -87,7 +150,7 @@ class DailiesController < ApplicationController
 
 
   def daily_18
-    
+
       @title  = ['main1'=>'排班/日報', 'main2'=>'Daily','sub1'=>'日報' , 'sub2'=>'Daily' ]
       @day0 = Date.today
 

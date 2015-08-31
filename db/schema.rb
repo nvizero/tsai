@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825065628) do
+ActiveRecord::Schema.define(version: 20150831061110) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20150825065628) do
     t.integer  "stop_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state",           limit: 1
   end
 
   create_table "id_seqs", primary_key: "pre_id", force: true do |t|

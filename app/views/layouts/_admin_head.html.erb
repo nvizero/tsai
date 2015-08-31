@@ -1,22 +1,41 @@
-
+<style media="screen">
+@media all and (min-width: 768px) and (max-width: 1280px) {
+  /*body{
+    font-size:16px;
+  }*/
+}
+@media all and (min-width: 480px) and (max-width: 768px) {
+  .navbar-left{
+    display:none;
+  }
+}
+@media all and (min-width: 320px) and (max-width: 480px) {
+  .navbar-left{
+    display:none;
+  }
+}
+@media all and (max-width: 320px) {
+  .navbar-left{
+    display:none;
+  }
+}
+</style>
     <a href="/" class="logo">
-        <!-- Add the class icon to your logo image or logo icon to add the margining -->
         智富國際店子商務平台
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
 
-        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button" style="display:none;">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </a>
+        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
 
         <div class="navbar-left">
             <ul class="nav navbar-nav">
-
               <% @head_msgs.each do |msg| %>
                 <li class="user user-menu">
                     <a href="/msgs/<%=msg.id%>" >
