@@ -193,6 +193,38 @@ class ProductOrdersController < ApplicationController
     render 'wait_orders'
   end
 
+
+  def sale_list
+    @title  = ['main1'=>'銷售額查詢', 'main2'=>'wait orders','sub1'=>'銷售額查詢' , 'sub2'=>'wait orders']
+    @mems   = Member.all.count
+    @os     = OrderState.all.count
+
+    #換
+    @vip_access = user_vip_access
+    @users_a = self.user_to_ar
+    @flag = params[:state]
+
+    if @flag=='Y'
+        @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+    elsif @flag=='N'
+        @product_orders = ProductOrder.vip_access(@vip_access , session).stoped.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+    else
+
+
+
+      @flag='N'
+
+      # @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+      # @product_orders = ProductOrder.joins(:category)
+      # Client.joins('LEFT OUTER JOIN addresses ON addresses.client_id = clients.id')
+
+      @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+
+    end
+
+    # render 'wait_orders'
+  end
+
   private
 
 

@@ -30,6 +30,8 @@ module ProductOrdersHelper
     return obps
   end
 
+
+
   def check_wait_order_show wait_order_id
         empty = 0
         flag  = true
@@ -50,6 +52,21 @@ module ProductOrdersHelper
         # end
 
         return empty
+
+  end
+
+  def get_all_total_price  
+
+      obps = WaitOrder.all
+      all_total_price = 0
+
+      obps.each do |ob|
+
+        all_total_price += ( ob.num.to_i * ob.price.to_i )
+
+      end
+
+      return all_total_price
 
   end
 

@@ -11,29 +11,38 @@
     </div>
   <% end %>
 
-  <div class="field">
+
+  <div class="field" <% if !@daily.id.nil?%> style="display:none;" <% end %> >
     <%= f.label :day ,'日期' %><br>
     <%= f.date_select :day %>
   </div>
 
-  <div class="field">
-    <%= f.label :day_type , '早上/下午'%>  
+  <div class="field"  <% if !@daily.id.nil?%> style="display:none;" <% end %> >
+    <%= f.label :day_type , '早上/下午'%>
     <%= f.select(:day_type, @time_type.collect {|p| [p[0..9], p[0..9]]} , { :selected =>@daily.day_type } , :class=>'form-control', :id => 'product_id' ) %>
-    
   </div>
-  <div class="field">
+
+  <div class="field"  <% if !@daily.id.nil?%> style="display:none;" <% end %> >
     <%= f.label :title , '人員' %><br>
     <%= f.text_field :title , :class=>'form-control' %>
   </div>
+
+  <% if !@daily.id.nil?%> style="display:none;"
+  <div class="field" >
+    <%= f.label :title , '人員' %><br>
+    <%= f.text_field :title , :class=>'form-control' %>
+  </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :content , '回報'%><br>
-    <%= f.text_area :content  , :rows=>"4" ,:style=>"width:968px;margin:10px 0px 10px 0px;" %>
+    <%= f.text_area :content  , :rows=>"4" ,:style=>"width:100%;margin:10px 0px 10px 0px;" %>
   </div>
-  
+
     <%= f.hidden_field :created_user_id %>
-  
-  
-  
+
+
+
   <div class="actions">
     <button type="submit" class="btn btn-primary">確定</button>
   </div>

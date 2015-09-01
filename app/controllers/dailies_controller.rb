@@ -108,29 +108,32 @@ class DailiesController < ApplicationController
   # PATCH/PUT /dailies/1.json
   def update
     # respond_to do |format|
-    daily = params[:daily]
-    daily_a = daily.to_a
-    good_day_to_die = "#{daily_a[0][1]}-#{daily_a[1][1]}-#{daily_a[2][1]}"
-
-    # render :text => "#{good_day_to_die} #{daily[:day_type]}"
-    find_day = Daily.where(:day_type => daily[:day_type] , :day => good_day_to_die).first
-
-    if !find_day.nil?
-          #有找到一樣的～不可以再輸入一次
-          # render :text => "yes day !!->>>#{find_day.id} "
-          flash[:notice] = "日報-有重複的日期!!"
-          @time_type = ['早上','下午']
-          @daily = Daily.new
-          render action: 'edit'
-    else
+    # daily = params[:daily]
+    # daily_a = daily.to_a
+    # good_day_to_die = "#{daily_a[0][1]}-#{daily_a[1][1]}-#{daily_a[2][1]}"
+    #
+    # # render :text => "#{good_day_to_die} #{daily[:day_type]}"
+    # find_day = Daily.where(:day_type => daily[:day_type] , :day => good_day_to_die).first
+    #
+    # if !find_day.nil?
+    #       #有找到一樣的～不可以再輸入一次
+    #       # render :text => "yes day !!->>>#{find_day.id} "
+    #       flash[:notice] = "日報-有重複的日期!!"
+    #       @time_type = ['早上','下午']
+    #       @daily = Daily.new
+    #       render action: 'edit'
+    # else
           if @daily.update(daily_params)
-            format.html { redirect_to @daily, notice: 'Daily was successfully updated.' }
-            format.json { head :no_content }
+            flash[:notice] = "日報-更新成功!!"
+            redirect_to action: 'index'
+            # format.html { redirect_to @daily, notice: 'Daily was successfully updated.' }
+            # format.json { head :no_content }
           else
-            format.html { render action: 'edit' }
-            format.json { render json: @daily.errors, status: :unprocessable_entity }
+            # format.html { render action: 'edit' }
+            # format.json { render json: @daily.errors, status: :unprocessable_entity }
+            render action: 'edit'
           end
-    end
+    # end
   end
 
   # DELETE /dailies/1

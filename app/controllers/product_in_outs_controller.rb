@@ -31,26 +31,14 @@ class ProductInOutsController < ApplicationController
 
   def in_list
 
-    # ProductInOut.all.each do |pio|
-          # if pio.in_or_out == 'reduce'
-              # pio.in_come_check = 'N'
-              # pio.state = 'Y'
-              # pio.save
-              # pio.delete
-          # end
-    # end
-
     @title[0]['main1'] = '入庫列表'
     @users_a = self.user_to_ar
     @flag = params[:state]
     @product_id = params[:product_id]
 
     if @product_id
-
        @product_data = Product.find(:id=>@product_id.to_i)
-
     else
-
        @product_data = Product.all
     end
 
@@ -62,7 +50,6 @@ class ProductInOutsController < ApplicationController
         @product_in_outs = ProductInOut.vip_access(user_vip_access , session).in_come.live.order(sort_column + " " + sort_direction).page params[:page]
         @flag='Y'
     end
-
 
   end
 
@@ -98,11 +85,13 @@ class ProductInOutsController < ApplicationController
     end
 
   end
+
+
   # GET /product_in_outs/1
   # GET /product_in_outs/1.json
   def show
   end
-
+ 
   # GET /product_in_outs/new
   def new
 

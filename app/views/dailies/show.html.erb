@@ -1,44 +1,48 @@
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+
+
+
+
+
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
+
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Day:</strong>
+  <strong>日期:</strong>
   <%= @daily.day %>
 </p>
 
 <p>
-  <strong>Type:</strong>
+  <strong>早上/下午:</strong>
   <%= @daily.day_type %>
 </p>
 
 <p>
-  <strong>Title:</strong>
+  <strong>人員:</strong>
   <%= @daily.title %>
 </p>
 
 <p>
-  <strong>Content:</strong>
+  <strong>回報:</strong>
   <%= @daily.content %>
 </p>
 
-<p>
-  <strong>Created user:</strong>
-  <%= @daily.created_user_id %>
-</p>
 
-<p>
-  <strong>Modify user:</strong>
-  <%= @daily.modify_user_id %>
-</p>
+<% link_to 'Edit', edit_daily_path(@daily) %>
+<%= link_to '上一頁', daily_18_path %>
 
-<p>
-  <strong>Stoped at:</strong>
-  <%= @daily.stoped_at %>
-</p>
 
-<p>
-  <strong>Stop user:</strong>
-  <%= @daily.stop_user_id %>
-</p>
+</div>
 
-<%= link_to 'Edit', edit_daily_path(@daily) %> |
-<%= link_to 'Back', dailies_path %>
+     
+</div>
+</div>
+</div>
+</section><!-- /.content -->

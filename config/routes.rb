@@ -3,6 +3,8 @@ Tsai::Application.routes.draw do
   resources :dailies
 
   # resources :wait_orders
+  get '/sale_list', :to => "product_orders#sale_list"
+
   get '/users/edit_password' , :to => "users#edit_password"
   get '/daily_18' , :to => "dailies#daily_18"
   post '/users/update_password' , :to => "users#update_password"

@@ -6,11 +6,17 @@
   <div class="row">
     <div class="col-xs-12">
         <div class="box">
+          <% if judgment_access 'dailies/new' %>
+              <%= link_to '新增日報', new_daily_path, :class=>"btn btn-primary head_btn"  , :id=>'head_btn'  %>
+          <% end %>
+
+          <br>
+
 <% empty_tds = (7-(7-@beginning＿on_week.to_i+1) ) %>
 
 <% with_tds = (7-@beginning＿on_week.to_i+1) %>
 
-<div class="box-body table-responsive">
+<div class="box-body table-responsive" style="margin:20px 0px 0px 0px">
   <table id="example2" class="table table-bordered table-striped">
 
     <tr>

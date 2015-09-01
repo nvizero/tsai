@@ -1,0 +1,161 @@
+
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header" style="display:none;">
+                <h3 class="box-title">待出貨明細</h3>
+                    <div class="btn-group" id='head_btn'>
+                        <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><%= link_to '未停用', {:controller =>'product_orders' , :action =>'index' , :state =>'Y'}  %></li>
+                            <li><%= link_to '停用', {:controller =>'product_orders' , :action =>'index' , :state =>'N'}  %></li>
+                        </ul>
+                    </div>
+
+
+                    <% link_to '新增訂單', new_product_order_path ,:class=>'btn btn-success',:id=>'head_btn' %>
+
+
+
+
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
+
+
+
+<table id="example2" class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th><%= sortable "order_day" ,'訂單日期' %>     </th>
+      <th><%= sortable "code" ,'訂單單號' %>     </th>
+      <th>客戶代號</th>
+      <th>客戶名稱</th>
+
+      <th>產品編號</th>
+      <th>產品名稱</th>
+
+
+
+
+      <th><%= sortable "num" ,'訂單數量' %> </th>
+      <th><%= sortable "num" ,'產名單價' %> </th>
+      <th> 小計 </th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+<% all_total_price  = 0 %>
+<% page_total       = 0 %>
+    <% @product_orders.each do |product_order| %>
+    <% opbs             = search_wait_order( product_order.code) %>
+
+
+    <% opbs.each do |obp| %>
+        <% check_num  = check_wait_order_show( obp.id ) %>
+        <% #if check_flag == false %>
+
+
+        <%# if (check_num.to_i - obp.num.to_i ) != 0 %>
+            <%# if obp.num.to_i != 0 %>
+                <%= render 'comm/info' , :info => obp , :users => @users_a , :title => "訂單單號 #{obp.code} 訊息"  %>
+                <tr id="obp_<%=obp.id%>">
+                  <td><%= product_order.order_day %></td>
+                  <td><%= product_order.code %></td>
+
+                  <td>
+                    <%= product_order.member_id %>
+                  </td>
+
+                  <td>
+                    <%= product_order.member.name %>
+                  </td>
+                  <td><%= obp.product.code %></td>
+                  <td><%= obp.product.title %></td>
+
+                  <td><%= obp.num  %> </td>
+                  <td><%= obp.price %></td>
+                  <td>
+                    <% page_total +=obp.num.to_i * obp.price.to_i %>
+                    <%= ( obp.num.to_i * obp.price.to_i) %></td>
+                </tr>
+              <%# end %>
+          <%# end %>
+      <% end %>
+
+    <% end %>
+  </tbody>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>頁面小計 : <%=page_total%></td>
+  </tr>
+</table>
+<%= paginate @product_orders  %>
+</div>
+總銷售額 : <%= get_all_total_price  %>
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$('document').ready(function(){
+
+    $(".confirm_order").click(function(){
+
+          var order_by_product_id = $(this).attr('id');
+          // alert( order_by_product_id );
+          $.post('/post_to_out_order',
+                {'order_by_product_id':order_by_product_id},
+                function(data){
+
+                    // alert(data);
+
+                    if(data=='false'){
+                        alert('庫存不足!!');
+                    }else{
+
+                        $('#obp_'+order_by_product_id)
+                          .hide(
+                            function(){
+                              alert('出貨成功!!');
+                        });
+                        // alert('出貨~~test');
+                        // alert(data);
+
+                    }
+
+                });
+
+
+
+
+    });
+
+
+
+
+    $('.info').click(function(){
+        var t_id = $(this).attr('id');
+        // alert(t_id)
+        $('#info-modal'+t_id).modal('show');
+    });
+
+
+})
+</script>
+
+</div>
+</div>
+</div>
+</section><!-- /.content -->
