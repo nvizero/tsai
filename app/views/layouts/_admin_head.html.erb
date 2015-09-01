@@ -3,20 +3,32 @@
   /*body{
     font-size:16px;
   }*/
+  li.daily_18{
+    display: none;
+  }
 }
 @media all and (min-width: 480px) and (max-width: 768px) {
   .navbar-left{
     display:none;
+  }
+  li.daily_18{
+    display: none;
   }
 }
 @media all and (min-width: 320px) and (max-width: 480px) {
   .navbar-left{
     display:none;
   }
+  a.dailies_18{
+    display:inline;
+  }
 }
 @media all and (max-width: 320px) {
   .navbar-left{
     display:none;
+  }
+  a.dailies_18{
+    display:inline;
   }
 }
 </style>
@@ -26,13 +38,17 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
+        
 
         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </a>
+        </a>
+
+
+
 
         <div class="navbar-left">
             <ul class="nav navbar-nav">
@@ -43,6 +59,10 @@
                     </a>
                 </li>
               <% end %>
+
+
+
+
 
               <li class="user user-menu" style="display:none;">
                   <a href="#" >
