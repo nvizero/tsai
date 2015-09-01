@@ -24,8 +24,9 @@ class DailiesController < ApplicationController
   def index
 
     # Daily.all.each do |dai|
-    #     dai.state = 'Y'
-    #     dai.save
+        # dai.state = 'Y'
+        # dai.save
+    #     dai.delete
     # end
 
     @flag = params[:state]

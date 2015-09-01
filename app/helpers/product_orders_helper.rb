@@ -31,6 +31,24 @@ module ProductOrdersHelper
   end
 
 
+  def search_wait_order_for_sale code
+
+      obps = ''
+      # User.where(["name = :name and email = :email", { name: "Joe", email: "joe@example.com" }])
+      # if !@pars[:order_number].nil?
+
+          obps = WaitOrder.where(:code=>code)
+      # else
+      #
+      # end
+
+      # obps = WaitOrder.where( :code => code )
+
+      return obps
+
+  end
+
+
 
   def check_wait_order_show wait_order_id
         empty = 0
@@ -55,7 +73,7 @@ module ProductOrdersHelper
 
   end
 
-  def get_all_total_price  
+  def get_all_total_price
 
       obps = WaitOrder.all
       all_total_price = 0

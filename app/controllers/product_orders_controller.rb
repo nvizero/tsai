@@ -1,6 +1,6 @@
 class ProductOrdersController < ApplicationController
   before_action :set_product_order, only: [:show, :edit, :update, :destroy]
-
+  skip_before_action :verify_authenticity_token
   before_action :set_title
   before_action :set_product_date
 
@@ -195,6 +195,8 @@ class ProductOrdersController < ApplicationController
 
 
   def sale_list
+
+    @pars = params
     @title  = ['main1'=>'銷售額查詢', 'main2'=>'wait orders','sub1'=>'銷售額查詢' , 'sub2'=>'wait orders']
     @mems   = Member.all.count
     @os     = OrderState.all.count
@@ -214,11 +216,18 @@ class ProductOrdersController < ApplicationController
 
       @flag='N'
 
-      # @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
-      # @product_orders = ProductOrder.joins(:category)
-      # Client.joins('LEFT OUTER JOIN addresses ON addresses.client_id = clients.id')
-
-      @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+      if @pars[:date].nil?
+          @product_orders = ProductOrder.vip_access(@vip_access , session)
+                                        .live.order(sort_column + " " + sort_direction)
+                                        .where(:confirm_order=>'Y')
+                                        .page params[:page]
+      elsif !@pars[:date].nil?
+          @product_orders = ProductOrder.vip_access(@vip_access , session)
+                                        .live.order(sort_column + " " + sort_direction)
+                                        .where(:confirm_order=>'Y')
+                                        .where(:order_day=>params[:date])
+                                        .page params[:page]
+      end
 
     end
 

@@ -5,47 +5,48 @@
   <div class="row">
     <div class="col-xs-12">
         <div class="box">
-            <div class="box-header" style="display:none;">
-                <h3 class="box-title">待出貨明細</h3>
-                    <div class="btn-group" id='head_btn'>
-                        <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
-                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><%= link_to '未停用', {:controller =>'product_orders' , :action =>'index' , :state =>'Y'}  %></li>
-                            <li><%= link_to '停用', {:controller =>'product_orders' , :action =>'index' , :state =>'N'}  %></li>
-                        </ul>
-                    </div>
+            <div class="box-header" style="float:right;margin:8px 12px 8px 8px;">
+              <div class=""  style="float:left;margin:12px 22px 8px 0px;">
 
-
-                    <% link_to '新增訂單', new_product_order_path ,:class=>'btn btn-success',:id=>'head_btn' %>
+                <%=@pars%><br>
 
 
 
+                <form action="/search_sale_list" method="post" >
+                    日期:
+                    <input type="text" name="date" value="">
+                    單號:
+                    <input type="text" name="order_number" value="">
+                    客戶:
+                    <input type="text" name="member_name" value="">
+                    產品:
+                    <input type="text" name="product_name" value="">
+                    <input type="submit"   value="搜尋" class="btn btn-success" >
+                </form>
+              </div>
 
+              <div class=""  style="float:right;margin:0px 12px 8px 8px;">
+                <h4>總銷售額 : <%= get_all_total_price  %></h4>
+              </div>
             </div><!-- /.box-header -->
+
             <div class="box-body table-responsive">
 
 
 
 <table id="example2" class="table table-bordered table-striped">
+
   <thead>
+
     <tr>
-      <th><%= sortable "order_day" ,'訂單日期' %>     </th>
-      <th><%= sortable "code" ,'訂單單號' %>     </th>
+      <th><%= sortable "order_day" ,'訂單日期' %></th>
+      <th><%= sortable "code" ,'訂單單號' %></th>
       <th>客戶代號</th>
       <th>客戶名稱</th>
-
       <th>產品編號</th>
       <th>產品名稱</th>
-
-
-
-
       <th><%= sortable "num" ,'訂單數量' %> </th>
-      <th><%= sortable "num" ,'產名單價' %> </th>
+      <th><%= sortable "price" ,'產名單價' %> </th>
       <th> 小計 </th>
 
     </tr>
@@ -55,7 +56,8 @@
 <% all_total_price  = 0 %>
 <% page_total       = 0 %>
     <% @product_orders.each do |product_order| %>
-    <% opbs             = search_wait_order( product_order.code) %>
+
+    <% opbs             = search_wait_order_for_sale( product_order.code   ) %>
 
 
     <% opbs.each do |obp| %>
@@ -106,7 +108,7 @@
 </table>
 <%= paginate @product_orders  %>
 </div>
-總銷售額 : <%= get_all_total_price  %>
+
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 $('document').ready(function(){
