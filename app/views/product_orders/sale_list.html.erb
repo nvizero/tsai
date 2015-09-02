@@ -8,7 +8,21 @@
             <div class="box-header" style="float:right;margin:8px 12px 8px 8px;">
               <div class=""  style="float:left;margin:12px 22px 8px 0px;">
 
-                <%=@pars%><br>
+
+
+                <%
+                     @product_name
+                    if !@pars[:product_name].nil?
+                        if @pars[:product_name].length > 0
+                            @product_name = @pars[:product_name]
+                %>
+                            <%#=@product_name%>
+                <%
+                        end
+                    end
+                %>
+
+
 
 
 
@@ -43,10 +57,10 @@
       <th><%= sortable "code" ,'訂單單號' %></th>
       <th>客戶代號</th>
       <th>客戶名稱</th>
-      <th>產品編號</th>
+
       <th>產品名稱</th>
       <th><%= sortable "num" ,'訂單數量' %> </th>
-      <th><%= sortable "price" ,'產名單價' %> </th>
+      <th><%= sortable "price" ,'產品單價' %> </th>
       <th> 小計 </th>
 
     </tr>
@@ -57,36 +71,119 @@
 <% page_total       = 0 %>
     <% @product_orders.each do |product_order| %>
 
-    <% opbs             = search_wait_order_for_sale( product_order.code   ) %>
+    <%
+        post_page_total = 0
+        @product_name
+        if !@pars[:product_name].nil?
+
+              if @pars[:product_name].length > 0
+
+                  @product_name = @pars[:product_name]
+                  opbs = search_wait_order_for_sale( product_order[0]  , @product_name )
+
+              else
+                  opbs = search_wait_order( product_order[0]   )
+              end
+        else
+                  opbs = search_wait_order( product_order[0]   )
+        end
+    %>
+
+    <%# opbs             = search_wait_order_for_sale( product_order[0]   ) %>
 
 
     <% opbs.each do |obp| %>
-        <% check_num  = check_wait_order_show( obp.id ) %>
+
+        <% check_num  = check_wait_order_show( obp[0] ) %>
         <% #if check_flag == false %>
 
 
         <%# if (check_num.to_i - obp.num.to_i ) != 0 %>
             <%# if obp.num.to_i != 0 %>
-                <%= render 'comm/info' , :info => obp , :users => @users_a , :title => "訂單單號 #{obp.code} 訊息"  %>
-                <tr id="obp_<%=obp.id%>">
-                  <td><%= product_order.order_day %></td>
-                  <td><%= product_order.code %></td>
+                <%#= render 'comm/info' , :info => obp , :users => @users_a , :title => "訂單單號 #{obp[3]} 訊息"  %>
+                <tr id="obp_<%=obp[0]%>">
+                  <td><%= product_order[1] %></td>
+                  <td><%= product_order[0] %></td>
 
                   <td>
-                    <%= product_order.member_id %>
+                    <%= product_order[4] %>
                   </td>
 
                   <td>
-                    <%= product_order.member.name %>
+                    <%= product_order[3] %>
                   </td>
-                  <td><%= obp.product.code %></td>
-                  <td><%= obp.product.title %></td>
 
-                  <td><%= obp.num  %> </td>
-                  <td><%= obp.price %></td>
                   <td>
-                    <% page_total +=obp.num.to_i * obp.price.to_i %>
-                    <%= ( obp.num.to_i * obp.price.to_i) %></td>
+                    <%
+                    if !@pars[:product_name].nil?
+                          if @pars[:product_name].length > 0
+                             %>
+                              <%=obp[4]%>
+                              <%
+                          end
+                    else
+                    %>
+                          <%=obp.product.title %>
+                    <%
+                    end
+                    %>
+                  </td>
+
+                  <td>
+
+                    <%
+                    if !@pars[:product_name].nil?
+                          if @pars[:product_name].length > 0
+                             %>
+                              <%=obp[1]%>
+                              <%
+                          end
+                    else
+                    %>
+                          <%=obp.num%>
+                    <%
+                    end
+                    %>
+                  </td>
+                  <td>
+
+                    <%
+                    if !@pars[:product_name].nil?
+                          if @pars[:product_name].length > 0
+                             %>
+                              <%=obp[2]%>
+                              <%
+                          end
+                    else
+                    %>
+                          <%=obp.price%>
+                    <%
+                    end
+                    %>
+                  </td>
+
+
+                  <td>
+                    <%
+                    if !@pars[:product_name].nil?
+                          if @pars[:product_name].length > 0
+                             %>
+                              <%=obp[6]%>
+                              <% page_total += obp[6] %>
+                              <%
+                          end
+                    else
+                    %>
+                          <% page_total += obp.total %>
+                          <%=obp.total%>
+                    <%
+                    end
+                    %>
+
+                     
+
+                  </td>
+
                 </tr>
               <%# end %>
           <%# end %>
@@ -102,11 +199,11 @@
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
-    <td>頁面小計 : <%=page_total%></td>
+
+    <td>頁面小計 : <%= page_total %></td>
   </tr>
 </table>
-<%= paginate @product_orders  %>
+<%#= paginate @product_orders  %>
 </div>
 
 <script src="/admin/js/jquery-2.1.4.min.js"></script>

@@ -91,7 +91,7 @@ class ProductInOutsController < ApplicationController
   # GET /product_in_outs/1.json
   def show
   end
- 
+
   # GET /product_in_outs/new
   def new
 
@@ -390,7 +390,8 @@ class ProductInOutsController < ApplicationController
                                                         save_date ,
                                                         store_area_id
                     UNION
-                    SELECT `serial` ,
+                    SELECT
+                         `serial` ,
                          `level` ,
                          `save_date` ,
                          `store_area_id` ,

@@ -30,20 +30,49 @@ module ProductOrdersHelper
     return obps
   end
 
+  #搜尋商品名稱
+  def search_wait_order_for_sale code , produce_name
 
-  def search_wait_order_for_sale code
+      sql   = " SELECT "+
+              " `wait_orders`.`id` , "+
+              " `wait_orders`.`num` , "+
+              " `wait_orders`.`price` , "+
+              " `wait_orders`.`code` , "+
+              " `products`.`title` , "+
+              " `products`.`code`  ,"+
+              " `wait_orders`.`total`  "+
 
-      obps = ''
-      # User.where(["name = :name and email = :email", { name: "Joe", email: "joe@example.com" }])
-      # if !@pars[:order_number].nil?
+              " FROM wait_orders " +
+              " LEFT JOIN products ON " +
+              " wait_orders.product_id = products.id " +
+              " where `wait_orders`.`code` = '" + "#{code}" + "' "+
+              " AND "+
+              " `products`.`title` like '" + "%#{produce_name}%" + "' "
 
-          obps = WaitOrder.where(:code=>code)
-      # else
-      #
-      # end
 
-      # obps = WaitOrder.where( :code => code )
+      obps = ActiveRecord::Base.connection.execute(sql)
+      return obps
 
+  end
+
+
+  def just_wait_order_for_sale code
+
+      sql   = " SELECT "+
+              " `wait_orders`.`id` , "+
+              " `wait_orders`.`num` , "+
+              " `wait_orders`.`price` , "+
+              " `wait_orders`.`code` , "+
+              " `products`.`title` , "+
+              " `products`.`code`  "+
+
+              " FROM wait_orders " +
+              " LEFT JOIN products ON " +
+              " wait_orders.product_id = products.id " +
+              " where `wait_orders`.`code` = '" + "#{code}" + "' "+
+
+
+      obps = ActiveRecord::Base.connection.execute(sql)
       return obps
 
   end

@@ -215,19 +215,74 @@ class ProductOrdersController < ApplicationController
 
 
       @flag='N'
+      @sql_str = []
+      a_str = ''
 
-      if @pars[:date].nil?
-          @product_orders = ProductOrder.vip_access(@vip_access , session)
-                                        .live.order(sort_column + " " + sort_direction)
-                                        .where(:confirm_order=>'Y')
-                                        .page params[:page]
-      elsif !@pars[:date].nil?
-          @product_orders = ProductOrder.vip_access(@vip_access , session)
-                                        .live.order(sort_column + " " + sort_direction)
-                                        .where(:confirm_order=>'Y')
-                                        .where(:order_day=>params[:date])
-                                        .page params[:page]
+      #
+      if !@pars[:date].nil? && @pars[:date].to_s.length > 0
+        a_str = ' `product_orders`.`order_day` = '+" '#{@pars[:date]}' "
+        @sql_str.push(a_str)
       end
+
+      if !@pars[:order_number].nil? && @pars[:order_number].to_s.length > 0
+        a_str = ' `product_orders`.`code` = '+" '#{@pars[:order_number]}' "
+        @sql_str.push(a_str)
+      end
+
+      if !@pars[:member_name].nil? && @pars[:member_name].to_s.length > 0
+        a_str = ' `members`.`name` = '+" '#{@pars[:member_name]}' "
+        @sql_str.push(a_str)
+      end
+
+      if !@pars[:product_name].nil? && @pars[:product_name].to_s.length > 0
+        # a_str = ' `date` = '+" '#{@pars[:product_name]}' "
+        # @sql_str.push(a_str)
+      end
+
+
+      fl=true
+      @sql_schema = ''
+      @sql_str.each do |sqls|
+          if fl
+              @sql_schema +=  " #{sqls} "
+              fl=false
+          else
+              @sql_schema +=  " AND #{sqls} "
+          end
+      end
+
+
+
+      query = " SELECT  " +
+                  " product_orders.code , "+
+                  " product_orders.order_day , "+
+                  " product_orders.member_id , "+
+                  " members.name ,"+
+                  " members.id "+
+              " FROM product_orders "+
+              " LEFT JOIN members "+
+              " ON product_orders.member_id = members.id "
+      #如果搜尋條件有的話
+      if @sql_schema.to_s.length > 2
+        query += " where " + @sql_schema.to_s
+      end
+
+      @product_orders = ActiveRecord::Base.connection.execute(query)
+
+
+      # if @pars[:date].nil?
+      #
+      #     @product_orders = ProductOrder.vip_access(@vip_access , session)
+      #                                   .live.order(sort_column + " " + sort_direction)
+      #                                   .where(:confirm_order=>'Y')
+      #                                   .page params[:page]
+      # elsif !@pars[:date].nil?
+      #     @product_orders = ProductOrder.vip_access(@vip_access , session)
+      #                                   .live.order(sort_column + " " + sort_direction)
+      #                                   .where(:confirm_order=>'Y')
+      #                                   .where(:order_day=>params[:date])
+      #                                   .page params[:page]
+      # end
 
     end
 
