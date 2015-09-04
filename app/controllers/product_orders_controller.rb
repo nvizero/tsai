@@ -232,12 +232,12 @@ class ProductOrdersController < ApplicationController
       end
 
       if !@pars[:order_number].nil? && @pars[:order_number].to_s.length > 0
-        a_str = ' `product_orders`.`code` = '+" '#{@pars[:order_number]}' "
+        a_str = ' `product_orders`.`code` like '+"'%"+"#{@pars[:order_number]}"+"%'"
         @sql_str.push(a_str)
       end
 
       if !@pars[:member_name].nil? && @pars[:member_name].to_s.length > 0
-        a_str = ' members.name = '+" '#{@pars[:member_name]}' "
+        a_str = ' members.name like '+"'%"+ "#{@pars[:member_name]}"+ "%' "
         @sql_str.push(a_str)
       end
 
