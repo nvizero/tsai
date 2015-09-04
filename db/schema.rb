@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150831061110) do
+ActiveRecord::Schema.define(version: 20150902140107) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -390,6 +390,7 @@ ActiveRecord::Schema.define(version: 20150831061110) do
     t.string   "product_in_out_code", limit: 100
     t.integer  "price"
     t.integer  "total"
+    t.string   "product_name",        limit: 100
   end
 
 end

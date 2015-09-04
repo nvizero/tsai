@@ -517,9 +517,13 @@ class PactController < ApplicationController
         # render :text =>'qweqwe'
         obps.each do |obp|
               # logger.info  "---obp.id-----#{obp.id}------"
+
+              productInfo = Product.find(obp.product_id.to_i)
+
               WaitOrder.create( :product_id => obp.product_id ,
                                 :create_user_id => session[:user_id],
                                 # :serial  =>  pio.serial ,
+                                :product_name  =>  productInfo.title ,
                                 :state   =>  'Y' ,
                                 :num  =>  obp.num.to_i,
                                 :price  => obp.price.to_i,

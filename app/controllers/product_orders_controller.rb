@@ -220,23 +220,23 @@ class ProductOrdersController < ApplicationController
 
       #
       if !@pars[:date].nil? && @pars[:date].to_s.length > 0
-        a_str = ' `product_orders`.`order_day` = '+" '#{@pars[:date]}' "
+        a_str = ' `pro`.`order_day` = '+" '#{@pars[:date]}' "
         @sql_str.push(a_str)
       end
 
       if !@pars[:order_number].nil? && @pars[:order_number].to_s.length > 0
-        a_str = ' `product_orders`.`code` = '+" '#{@pars[:order_number]}' "
+        a_str = ' `pro`.`code` = '+" '#{@pars[:order_number]}' "
         @sql_str.push(a_str)
       end
 
       if !@pars[:member_name].nil? && @pars[:member_name].to_s.length > 0
-        a_str = ' `members`.`name` = '+" '#{@pars[:member_name]}' "
+        a_str = ' mem.name = '+" '#{@pars[:member_name]}' "
         @sql_str.push(a_str)
       end
 
       if !@pars[:product_name].nil? && @pars[:product_name].to_s.length > 0
-        # a_str = ' `date` = '+" '#{@pars[:product_name]}' "
-        # @sql_str.push(a_str)
+        a_str = ' wo.product_name like '+" '%"+"#{@pars[:product_name]}" +"%' "
+        @sql_str.push(a_str)
       end
 
 
@@ -253,18 +253,26 @@ class ProductOrdersController < ApplicationController
 
 
 
-      query = " SELECT  " +
-                  " product_orders.code , "+
-                  " product_orders.order_day , "+
-                  " product_orders.member_id , "+
-                  " members.name ,"+
-                  " members.id "+
-              " FROM product_orders "+
-              " LEFT JOIN members "+
-              " ON product_orders.member_id = members.id "
+      query = " select  "+
+                " pro.code, "+
+                " pro.order_day, "+
+                " pro.member_id , "+
+                " mem.name , "+
+                " wo.product_name,  "+
+                " wo.num,  "+
+                " wo.price,  "+
+                " wo.total  "+
+              " from "+
+              " `product_orders` pro , "+
+              " `members` mem , "+
+              " `wait_orders` wo "+
+              " where "+
+              " pro.member_id = mem.id "+
+              " and "+
+              " pro.code = wo.code "
       #如果搜尋條件有的話
       if @sql_schema.to_s.length > 2
-        query += " where " + @sql_schema.to_s
+        query += " and  " + @sql_schema.to_s
       end
 
       @product_orders = ActiveRecord::Base.connection.execute(query)

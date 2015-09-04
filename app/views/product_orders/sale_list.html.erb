@@ -72,26 +72,26 @@
     <% @product_orders.each do |product_order| %>
 
     <%
-        post_page_total = 0
-        @product_name
-        if !@pars[:product_name].nil?
-
-              if @pars[:product_name].length > 0
-
-                  @product_name = @pars[:product_name]
-                  opbs = search_wait_order_for_sale( product_order[0]  , @product_name )
-
-              else
-                  opbs = search_wait_order( product_order[0]   )
-              end
-        else
-                  opbs = search_wait_order( product_order[0]   )
-        end
+        # post_page_total = 0
+        # @product_name
+        # if !@pars[:product_name].nil?
+        #
+        #       if @pars[:product_name].length > 0
+        #
+        #           @product_name = @pars[:product_name]
+        #           opbs = search_wait_order_for_sale( product_order[0]  , @product_name )
+        #
+        #       else
+        opbs = search_wait_order( product_order[0]   )
+        #       end
+        # else
+        #           opbs = search_wait_order( product_order[0]   )
+        # end
     %>
 
     <%# opbs             = search_wait_order_for_sale( product_order[0]   ) %>
 
-
+    
     <% opbs.each do |obp| %>
 
         <% check_num  = check_wait_order_show( obp[0] ) %>
@@ -106,7 +106,7 @@
                   <td><%= product_order[0] %></td>
 
                   <td>
-                    <%= product_order[4] %>
+                    <%= product_order[2] %>
                   </td>
 
                   <td>
@@ -114,74 +114,20 @@
                   </td>
 
                   <td>
-                    <%
-                    if !@pars[:product_name].nil?
-                          if @pars[:product_name].length > 0
-                             %>
-                              <%=obp[4]%>
-                              <%
-                          end
-                    else
-                    %>
-                          <%=obp.product.title %>
-                    <%
-                    end
-                    %>
+                    <%= product_order[4] %>
                   </td>
 
                   <td>
-
-                    <%
-                    if !@pars[:product_name].nil?
-                          if @pars[:product_name].length > 0
-                             %>
-                              <%=obp[1]%>
-                              <%
-                          end
-                    else
-                    %>
-                          <%=obp.num%>
-                    <%
-                    end
-                    %>
+                    <%= product_order[5] %>
                   </td>
                   <td>
-
-                    <%
-                    if !@pars[:product_name].nil?
-                          if @pars[:product_name].length > 0
-                             %>
-                              <%=obp[2]%>
-                              <%
-                          end
-                    else
-                    %>
-                          <%=obp.price%>
-                    <%
-                    end
-                    %>
+                    <%= product_order[6] %>
                   </td>
 
 
                   <td>
-                    <%
-                    if !@pars[:product_name].nil?
-                          if @pars[:product_name].length > 0
-                             %>
-                              <%=obp[6]%>
-                              <% page_total += obp[6] %>
-                              <%
-                          end
-                    else
-                    %>
-                          <% page_total += obp.total %>
-                          <%=obp.total%>
-                    <%
-                    end
-                    %>
-
-                     
-
+                          <% page_total += product_order[7].to_i %>
+                          <%=product_order[7]%>
                   </td>
 
                 </tr>
