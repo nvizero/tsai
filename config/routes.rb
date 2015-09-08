@@ -4,11 +4,14 @@ Tsai::Application.routes.draw do
 
   # resources :wait_orders
   get '/sale_list', :to => "product_orders#sale_list"
-
+  get '/sale_compare', :to => "product_orders#sale_compare"
   get '/users/edit_password' , :to => "users#edit_password"
   get '/daily_18' , :to => "dailies#daily_18"
+
   post '/users/update_password' , :to => "users#update_password"
   post 'search_sale_list' , :to => "product_orders#sale_list"
+  post 'search_sale_compare' , :to => "product_orders#sale_compare"
+  # search_sale_compare
 
   resources :pay_types
 

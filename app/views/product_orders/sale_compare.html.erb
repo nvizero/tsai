@@ -1,0 +1,252 @@
+
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header" style="float:right;margin:8px 12px 8px 8px;">
+              <div class=""  style="float:left;margin:12px 22px 8px 0px;">
+
+
+
+                <%
+                     @product_name
+                    if !@pars[:product_name].nil?
+                        if @pars[:product_name].length > 0
+                            @product_name = @pars[:product_name]
+                %>
+                            <%#=@product_name%>
+                <%
+                        end
+                    end
+                %>
+
+
+
+
+
+                <form action="/search_sale_compare" method="post" >
+                    日期:
+                    <input type="text" name="date"
+                    value="<%= (!@pars[:date].nil? && @pars[:date].to_s.length > 0 ) ?@pars[:date] : '' %>" >
+                    單號:
+                    <input type="text" name="order_number" value="<%= (!@pars[:order_number].nil? && @pars[:order_number].to_s.length > 0 ) ?@pars[:order_number] : '' %>">
+                    客戶:
+                    <input type="text" name="member_name" value="<%= (!@pars[:member_name].nil? && @pars[:member_name].to_s.length > 0 ) ?@pars[:member_name] : '' %>">
+                    產品:
+                    <input type="text" name="product_name" value="<%= (!@pars[:product_name].nil? && @pars[:product_name].to_s.length > 0   ) ?@pars[:product_name] : '' %>">
+                    <input type="submit"   value="搜尋" class="btn btn-success" >
+                </form>
+              </div>
+
+              <div class=""  style="float:right;margin:0px 12px 8px 8px;">
+                <h4>銷貨淨額 : <%= get_all_total_price  %></h4>
+              </div>
+            </div><!-- /.box-header -->
+
+            <div class="box-body table-responsive">
+
+ 
+
+<table id="example2" class="table table-bordered table-striped">
+
+  <thead>
+
+    <tr>
+      <th><%= sortable "order_day" ,'銷貨日期' %></th>
+      <th><%= sortable "code" ,'銷貨單號' %></th>
+      <th>客戶名稱</th>
+
+      <th>產品名稱</th>
+      <th><%= sortable "num" ,'銷貨數量' %> </th>
+      <th><%= sortable "price" ,'單價' %> </th>
+
+      <th> 銷貨金額 </th>
+
+      <th> 平台提成 </th>
+      <th> 銷售提成 </th>
+      <th> 其他費用 </th>
+
+      <th style="width:100px;"> 銷貨淨額 </th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+<% all_total_price  = 0 %>
+<% page_total       = 0 %>
+    <% @pos.each do |product_order| %>
+
+    <%
+        # post_page_total = 0
+        # @product_name
+        # if !@pars[:product_name].nil?
+        #
+        #       if @pars[:product_name].length > 0
+        #
+        #           @product_name = @pars[:product_name]
+        #           opbs = search_wait_order_for_sale( product_order[0]  , @product_name )
+        #
+        #       else
+        opbs = search_wait_order( product_order.code   )
+        #       end
+        # else
+        #           opbs = search_wait_order( product_order[0]   )
+        # end
+    %>
+
+    <%# opbs             = search_wait_order_for_sale( product_order[0]   ) %>
+
+
+    <% opbs.each do |obp| %>
+
+        <% check_num  = check_wait_order_show( obp[0] ) %>
+        <% #if check_flag == false %>
+
+
+        <%# if (check_num.to_i - obp.num.to_i ) != 0 %>
+            <%# if obp.num.to_i != 0 %>
+                <%#= render 'comm/info' , :info => obp , :users => @users_a , :title => "訂單單號 #{obp[3]} 訊息"  %>
+                <tr id="obp_<%=obp.id%>">
+                  <td><%= product_order.order_day %></td>
+                  <td><%= product_order.code %></td>
+                  <td>
+                    <%= product_order.member.name %>
+                  </td>
+
+                  <td>
+                    <%= product_order.product_name %>
+                  </td>
+
+                  <td>
+                    <%= product_order.num %>
+                  </td>
+                  <td>
+                    <%= product_order.price %>
+                  </td>
+
+
+                  <td>
+                          <% page_total += product_order.total %>
+                          <%=product_order.total%>
+                  </td>
+
+                  <%
+                  prod      =  get_product(product_order.product_id)
+                  total_per = 0
+                  %>
+
+                  <td>
+                    <%=prod.web_sale_per %>%
+                    <% total_per += prod.web_sale_per %>
+                  </td>
+
+                  <td>
+                    <%=  prod.sale_per %>%
+                    <% total_per += prod.sale_per  %>
+                  </td>
+                  <td>
+                    <%=  prod.other_per %>%
+                    <% total_per += prod.other_per %>
+                  </td>
+
+
+                  <td>
+                      <% page_total += product_order.total
+                      a=0
+                      b=0
+                      %>
+
+
+                      <%    total_per %>
+
+                      <%   a = product_order.total  %>
+
+                      <%   b = product_order.total * total_per %>
+
+                      <%=(a - b).round(2) %>
+
+
+                  </td>
+
+                </tr>
+              <%# end %>
+          <%# end %>
+      <% end %>
+
+    <% end %>
+  </tbody>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+
+
+    <td></td>
+
+    <td>頁面小計 : <%= page_total %></td>
+  </tr>
+</table>
+<%= paginate @pos  %>
+</div>
+
+<script src="/admin/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+$('document').ready(function(){
+
+    $(".confirm_order").click(function(){
+
+          var order_by_product_id = $(this).attr('id');
+          // alert( order_by_product_id );
+          $.post('/post_to_out_order',
+                {'order_by_product_id':order_by_product_id},
+                function(data){
+
+                    // alert(data);
+
+                    if(data=='false'){
+                        alert('庫存不足!!');
+                    }else{
+
+                        $('#obp_'+order_by_product_id)
+                          .hide(
+                            function(){
+                              alert('出貨成功!!');
+                        });
+                        // alert('出貨~~test');
+                        // alert(data);
+
+                    }
+
+                });
+
+
+
+
+    });
+
+
+
+
+    $('.info').click(function(){
+        var t_id = $(this).attr('id');
+        // alert(t_id)
+        $('#info-modal'+t_id).modal('show');
+    });
+
+
+})
+</script>
+
+</div>
+</div>
+</div>
+</section><!-- /.content -->

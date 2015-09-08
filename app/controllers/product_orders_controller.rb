@@ -194,13 +194,91 @@ class ProductOrdersController < ApplicationController
   end
 
 
+
+  def sale_compare
+
+    @pars = params
+    @title  = ['main1'=>'對帳單查詢', 'main2'=>'wait orders','sub1'=>'對帳單查詢' , 'sub2'=>'wait orders']
+    @mems   = Member.all.count
+    @os     = OrderState.all.count
+
+    #換
+    @vip_access = user_vip_access
+    @users_a = self.user_to_ar
+    @flag = params[:state]
+
+    if @flag=='Y'
+        @product_orders = ProductOrder.vip_access(@vip_access , session).live.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+    elsif @flag=='N'
+        @product_orders = ProductOrder.vip_access(@vip_access , session).stoped.order(sort_column + " " + sort_direction).where(:confirm_order=>'Y').page params[:page]
+    else
+
+
+
+      @flag='N'
+      @sql_str = []
+      a_str = ''
+
+      #
+      if !@pars[:date].nil? && @pars[:date].to_s.length > 0
+        a_str = ' `product_orders`.`order_day` = '+" '#{@pars[:date].strip}' "
+        @sql_str.push(a_str)
+      end
+
+      if !@pars[:order_number].nil? && @pars[:order_number].to_s.length > 0
+        a_str = ' `product_orders`.`code` like '+"'%"+"#{@pars[:order_number].strip}"+"%'"
+        @sql_str.push(a_str)
+      end
+
+      if !@pars[:member_name].nil? && @pars[:member_name].to_s.length > 0
+        a_str = ' members.name like '+"'%"+ "#{@pars[:member_name].strip}"+ "%' "
+        @sql_str.push(a_str)
+      end
+
+      if !@pars[:product_name].nil? && @pars[:product_name].to_s.length > 0
+        a_str = ' wait_orders.product_name like '+" '%"+"#{@pars[:product_name].strip}" +"%' "
+        @sql_str.push(a_str)
+      end
+
+
+      fl=true
+      @sql_schema = ''
+      @sql_str.each do |sqls|
+          if fl
+              @sql_schema +=  " #{sqls} "
+              fl=false
+          else
+              @sql_schema +=  " AND #{sqls} "
+          end
+      end
+
+
+
+      #如果搜尋條件有的話
+      if  @sql_schema.to_s.length > 2
+
+          @pos = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
+                             .select("wait_orders.product_id as product_id")
+                             .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
+                             .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
+                             .where(@sql_schema)
+                             .page params[:page]
+      else
+          @pos = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
+                             .select("wait_orders.product_id as product_id")
+                             .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
+                             .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
+                             .page params[:page]
+
+      end
+
+    end
+
+  end
+
+
   def sale_list
 
-    # WaitOrder.all.each do |wo|
-    #     pp=Product.find(wo.product_id)
-    #     wo.product_name = pp.title
-    #     wo.save
-    # end
 
 
     @pars = params
@@ -227,22 +305,22 @@ class ProductOrdersController < ApplicationController
 
       #
       if !@pars[:date].nil? && @pars[:date].to_s.length > 0
-        a_str = ' `product_orders`.`order_day` = '+" '#{@pars[:date]}' "
+        a_str = ' `product_orders`.`order_day` = '+" '#{@pars[:date].strip}' "
         @sql_str.push(a_str)
       end
 
       if !@pars[:order_number].nil? && @pars[:order_number].to_s.length > 0
-        a_str = ' `product_orders`.`code` like '+"'%"+"#{@pars[:order_number]}"+"%'"
+        a_str = ' `product_orders`.`code` like '+"'%"+"#{@pars[:order_number].strip}"+"%'"
         @sql_str.push(a_str)
       end
 
       if !@pars[:member_name].nil? && @pars[:member_name].to_s.length > 0
-        a_str = ' members.name like '+"'%"+ "#{@pars[:member_name]}"+ "%' "
+        a_str = ' members.name like '+"'%"+ "#{@pars[:member_name].strip}"+ "%' "
         @sql_str.push(a_str)
       end
 
       if !@pars[:product_name].nil? && @pars[:product_name].to_s.length > 0
-        a_str = ' wait_orders.product_name like '+" '%"+"#{@pars[:product_name]}" +"%' "
+        a_str = ' wait_orders.product_name like '+" '%"+"#{@pars[:product_name].strip}" +"%' "
         @sql_str.push(a_str)
       end
 
@@ -275,27 +353,9 @@ class ProductOrdersController < ApplicationController
                              .page params[:page]
 
       end
+     end
 
-      # @product_orders = ActiveRecord::Base.connection.execute(query)
 
-
-      # if @pars[:date].nil?
-      #
-      #     @product_orders = ProductOrder.vip_access(@vip_access , session)
-      #                                   .live.order(sort_column + " " + sort_direction)
-      #                                   .where(:confirm_order=>'Y')
-      #                                   .page params[:page]
-      # elsif !@pars[:date].nil?
-      #     @product_orders = ProductOrder.vip_access(@vip_access , session)
-      #                                   .live.order(sort_column + " " + sort_direction)
-      #                                   .where(:confirm_order=>'Y')
-      #                                   .where(:order_day=>params[:date])
-      #                                   .page params[:page]
-      # end
-
-    end
-
-    # render 'wait_orders'
   end
 
   private

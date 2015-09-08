@@ -6,7 +6,7 @@
             <div class="box-header">
 
                 <div class="btn-group" id='head_btn'>
-                  
+
                     <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
 
                     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -61,11 +61,13 @@
         <td>
 
           <% if  daily.state == 'Y' %>
-              <% if  !(Date.today > daily.day) %>
+
+              <% if  !(Date.today-3 > daily.day) %>
                   <% if judgment_access 'dailies/edit' %>
                       <%= link_to '編輯', edit_daily_path(daily) , :class => 'btn btn-info btn-sm'  %>
                   <% end %>
               <% end %>
+
               <% if judgment_access 'dailies/del' %>
                   <a url="#" class="del btn btn-danger btn-sm" id='/dailies/destroy/<%=daily.id %>'> 停用 </a>
               <% end %>

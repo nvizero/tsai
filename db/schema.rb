@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150902140107) do
+ActiveRecord::Schema.define(version: 20150908073431) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -289,6 +289,9 @@ ActiveRecord::Schema.define(version: 20150902140107) do
     t.integer  "income_number"
     t.integer  "stop_user_id"
     t.datetime "stoped_at"
+    t.float    "web_sale_per"
+    t.float    "sale_per"
+    t.float    "other_per"
   end
 
   create_table "roles", force: true do |t|

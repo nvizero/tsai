@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
   #要登入
   before_action :confirm_logged_in
   helper_method :sort_column, :sort_direction
-  
+
   # GET /products
   # GET /products.json
 
@@ -229,6 +229,7 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit(:title, :content, :num, :user_id, :verify_type_main_id ,:code,:specification  ,:create_users_id ,
                                       :one_base , :one_heavy1, :one_heavy1_unit, :one_heavy2, :one_heavy2_unit,:modify_users_id,
+                                      :web_sale_per, :sale_per, :other_per,
                                       :size, :size1, :size2, :size3 ,:item_size, :item_size1, :item_size2, :item_size3, :unit_save,
                                       :unit_support, :ratio1, :ratio2 ,:create_users_id, :modify_users_id, :category, :form, :buy_batch,
                                       :affect_day, :head_date, :safe_save, :standard_store_area, :income_unit , :income_number, :stop_user_id , :stoped_at )

@@ -31,9 +31,9 @@ class DailiesController < ApplicationController
 
     @flag = params[:state]
     if @flag=='N'
-        @dailies = Daily.stoped.page params[:page]
+        @dailies = Daily.stoped.order('id desc').page params[:page]
     else
-        @dailies = Daily.live.page params[:page]
+        @dailies = Daily.live.order('id desc').page params[:page]
         @flag='Y'
     end
 

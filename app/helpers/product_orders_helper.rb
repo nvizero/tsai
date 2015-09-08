@@ -117,4 +117,9 @@ module ProductOrdersHelper
 
   end
 
+
+  def get_product id
+     pro = Product.find(id)
+     return pro
+  end   
 end
