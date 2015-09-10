@@ -41,7 +41,7 @@
               </div>
 
               <div class=""  style="float:right;margin:0px 12px 8px 8px;">
-                <h4>總銷售額 : <%= get_all_total_price  %></h4>
+                <h4>總銷售額 : <%= @all_pos_total  %></h4>
               </div>
             </div><!-- /.box-header -->
 
@@ -147,7 +147,7 @@
     <td></td>
     <td></td>
 
-    <td>頁面小計 : <%= page_total %></td>
+    <td>頁面小計 : <%= @this_page_total %></td>
   </tr>
 </table>
 <%= paginate @pos  %>

@@ -257,18 +257,45 @@ class ProductOrdersController < ApplicationController
       #如果搜尋條件有的話
       if  @sql_schema.to_s.length > 2
 
-          @pos = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
+          @pos1 = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
                              .select("wait_orders.product_id as product_id")
                              .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
                              .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
                              .where(@sql_schema)
-                             .page params[:page]
+
+          @pos = @pos1.page params[:page]
+
+          @all_pos_total = 0
+          @this_page_total = 0
+
+          @pos1.each do |a_po|
+             @all_pos_total       += a_po.total
+          end
+
+          @pos.each do |t_po|
+             @this_page_total       += t_po.total
+          end
+
       else
-          @pos = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
-                             .select("wait_orders.product_id as product_id")
-                             .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
-                             .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
-                             .page params[:page]
+
+        @pos1 = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
+                           .select("wait_orders.product_id as product_id")
+                           .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
+                           .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
+
+
+        @pos = @pos1.page params[:page]
+
+        @all_pos_total = 0
+        @this_page_total = 0
+
+        @pos1.each do |a_po|
+           @all_pos_total       += a_po.total
+        end
+
+        @pos.each do |t_po|
+           @this_page_total       += t_po.total
+        end
 
       end
 
@@ -341,16 +368,43 @@ class ProductOrdersController < ApplicationController
       #如果搜尋條件有的話
       if  @sql_schema.to_s.length > 2
 
-          @pos = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
+          @pos1 = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
                              .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
                              .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
                              .where(@sql_schema)
-                             .page params[:page]
+
+
+          @pos = @pos1.page params[:page]
+
+          @all_pos_total = 0
+          @this_page_total = 0
+
+          @pos1.each do |a_po|
+             @all_pos_total       += a_po.total
+          end
+
+          @pos.each do |t_po|
+             @this_page_total       += t_po.total
+          end
+
       else
-          @pos = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
+          @pos1 = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
                              .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
                              .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
-                             .page params[:page]
+
+
+          @pos = @pos1.page params[:page]
+
+          @all_pos_total    = 0
+          @this_page_total  = 0
+
+          @pos1.each do |a_po|
+             @all_pos_total       += a_po.total
+          end
+
+          @pos.each do |t_po|
+             @this_page_total       += t_po.total
+          end
 
       end
      end

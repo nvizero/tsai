@@ -106,11 +106,8 @@ module ProductOrdersHelper
 
       obps = WaitOrder.all
       all_total_price = 0
-
       obps.each do |ob|
-
         all_total_price += ( ob.num.to_i * ob.price.to_i )
-
       end
 
       return all_total_price
@@ -121,5 +118,5 @@ module ProductOrdersHelper
   def get_product id
      pro = Product.find(id)
      return pro
-  end   
+  end
 end
