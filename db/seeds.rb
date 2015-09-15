@@ -74,8 +74,9 @@ Access.create!(:title => '出貨列表', :code=>'out_list'   , :state =>'Y')
 Access.create!(:title => '出貨', :code=>'product_in_outs/new?type=out'   , :state =>'Y')
 
 
-Access.create!(:title => '銷售額查詢', :code=>'sale_list'   , :state =>'Y')
-Access.create!(:title => '待出貨明細', :code=>'wat_orders'   , :state =>'Y')
+Access.create!(:title => '銷售額查詢', :code=>'sale_list'      , :state =>'Y')
+Access.create!(:title => '待出貨明細', :code=>'wat_orders'     , :state =>'Y')
+Access.create!(:title => '對帳單查詢', :code=>'sale_compare'   , :state =>'Y')
 
 Access.create!(:title => '日報', :code=>'dailies'   , :state =>'Y')
 Access.create!(:title => '新增日報', :code=>'dailies/new'   , :state =>'Y')
@@ -86,7 +87,7 @@ Access.create!(:title => '聯絡我們', :code=>'contactus'   , :state =>'Y')
 Access.create!(:title => 'all', :code=>'all'   , :state =>'Y')
 
 # 銷售額查詢 sale list
-# 對帳單查詢 wait orders
+# 對帳單查詢 sale_compare
 # 日報 Daily
 # 排班/日報 Daily 18
 # 聯絡我們 contact us

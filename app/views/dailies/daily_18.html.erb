@@ -54,7 +54,7 @@
     <% if first_flag %>
 
         <td>
-          <%= dd %>號<br>
+          <%=dd%><br>
           <br>
           <%= simple_format match_day @all_days , "#{@day1.split('-')[0].to_i}-0#{@day1.split('-')[1].to_i}-0#{dd}"%>
         </td>

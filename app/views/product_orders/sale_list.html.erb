@@ -29,7 +29,10 @@
                 <form action="/search_sale_list" method="post" >
                     日期:
                     <input type="text" name="date"
-                    value="<%= (!@pars[:date].nil? && @pars[:date].to_s.length > 0 ) ?@pars[:date] : '' %>" >
+                    value="<%= (!@pars[:date].nil? && @pars[:date].to_s.length > 0 ) ?@pars[:date] : '' %>"
+                    id="date"
+                    >
+
                     單號:
                     <input type="text" name="order_number" value="<%= (!@pars[:order_number].nil? && @pars[:order_number].to_s.length > 0 ) ?@pars[:order_number] : '' %>">
                     客戶:
@@ -156,7 +159,7 @@
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 $('document').ready(function(){
-
+    $("#date").datepicker( { format: 'yyyy-mm-dd'} );
     $(".confirm_order").click(function(){
 
           var order_by_product_id = $(this).attr('id');
