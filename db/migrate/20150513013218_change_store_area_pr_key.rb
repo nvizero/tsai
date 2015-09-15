@@ -7,7 +7,10 @@ class ChangeStoreAreaPrKey < ActiveRecord::Migration
       change_column :store_areas, :area_name, :string, :limit=>10
   end
 
+
   def down
+
+
       execute "ALTER TABLE `store_areas` MODIFY area_id INT NOT NULL;"
       execute "ALTER TABLE `store_areas` DROP PRIMARY KEY;"
       add_column :store_areas, :id, :primary_key

@@ -17,7 +17,7 @@ class CreateDailies < ActiveRecord::Migration
 
 
   def down
-
+    drop_table :dailies
   end
 
 

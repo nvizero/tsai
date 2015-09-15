@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20150908073431) do
     t.integer  "stop_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",           limit: 1
+    t.string   "state",           limit: 2
   end
 
   create_table "id_seqs", primary_key: "pre_id", force: true do |t|

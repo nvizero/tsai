@@ -1,7 +1,7 @@
 class AddColumnToDailies < ActiveRecord::Migration
-  
+
     def up
-      add_column :dailies , :state , :string  , :limit =>1
+      add_column :dailies , :state , :string  , :limit =>2
     end
 
     def down

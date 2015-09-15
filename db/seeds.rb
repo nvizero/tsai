@@ -14,6 +14,8 @@ Msg.create!( :title => "三證說明", :content => '三證說明＿' , :state=>'
 VerifyTypeMain.create!( :title => "食品", :content => '' , :state=>'Y' )
 VerifyTypeMain.create!( :title => "化裝品", :content => '' , :state=>'Y')
 
+
+
 Access.create!(:title => '三檔類型主檔－首頁', :code=>'verify_type_mains/index' , :state =>'Y')
 Access.create!(:title => '三檔類型主檔－新增', :code=>'verify_type_mains/new'   , :state =>'Y')
 Access.create!(:title => '三檔類型主檔－編輯', :code=>'verify_type_mains/edit'  , :state =>'Y')
@@ -64,7 +66,31 @@ Access.create!(:title => '入庫－新增', :code=>'product_in_outs/new'   , :st
 Access.create!(:title => '入庫－編輯', :code=>'product_in_outs/edit'  , :state =>'Y')
 Access.create!(:title => '入庫－删除', :code=>'product_in_outs/del'   , :state =>'Y')
 
+
+Access.create!(:title => '入庫列表', :code=>'in_list'   , :state =>'Y')
+Access.create!(:title => '入庫', :code=>'product_in_outs/new?type=in'   , :state =>'Y')
+
+Access.create!(:title => '出貨列表', :code=>'out_list'   , :state =>'Y')
+Access.create!(:title => '出貨', :code=>'product_in_outs/new?type=out'   , :state =>'Y')
+
+
+Access.create!(:title => '銷售額查詢', :code=>'sale_list'   , :state =>'Y')
+Access.create!(:title => '待出貨明細', :code=>'wat_orders'   , :state =>'Y')
+
+Access.create!(:title => '日報', :code=>'dailies'   , :state =>'Y')
+Access.create!(:title => '新增日報', :code=>'dailies/new'   , :state =>'Y')
+Access.create!(:title => '排班/日報', :code=>'daily_18'   , :state =>'Y')
+
+Access.create!(:title => '聯絡我們', :code=>'contactus'   , :state =>'Y')
+
 Access.create!(:title => 'all', :code=>'all'   , :state =>'Y')
+
+# 銷售額查詢 sale list
+# 對帳單查詢 wait orders
+# 日報 Daily
+# 排班/日報 Daily 18
+# 聯絡我們 contact us
+
 
 ProductVerifyType.create!(:name=>'食品-台灣官方',:verify_type_main_id=>1 , :state=>'Y')
 ProductVerifyType.create!(:name=>'食品-大陸官方',:verify_type_main_id=>1 , :state=>'Y')
@@ -73,6 +99,12 @@ ProductVerifyType.create!(:name=>'食品-國際',:verify_type_main_id=>1 , :stat
 ProductVerifyType.create!(:name=>'化裝品-台灣官方',:verify_type_main_id=>2 , :state=>'Y')
 ProductVerifyType.create!(:name=>'化裝品-大陸官方',:verify_type_main_id=>2 , :state=>'Y')
 
+StoreArea.create!(:area_id =>'qw' , :area_name=>'test', :state => 'Y')
+
+Trade.create!(:id =>'at' , :description=>'test', :state => 'Y')
+
+InOutType.create!(:title =>'入庫' , :cate =>'add', :state => 'Y')
+InOutType.create!(:title =>'出貨' , :cate =>'reduce', :state => 'Y')
 
 Role.create!(:title => 'admin' , :text =>'all' , :code=>'all' , :state => 'Y')
 

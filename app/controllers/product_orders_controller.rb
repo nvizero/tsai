@@ -309,7 +309,7 @@ class ProductOrdersController < ApplicationController
 
 
     @pars = params
-    @title  = ['main1'=>'銷售額查詢', 'main2'=>'wait orders','sub1'=>'銷售額查詢' , 'sub2'=>'wait orders']
+    @title  = ['main1'=>'銷售額查詢', 'main2'=>'sale list','sub1'=>'銷售額查詢' , 'sub2'=>'sale list']
     @mems   = Member.all.count
     @os     = OrderState.all.count
 

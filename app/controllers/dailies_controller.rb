@@ -155,7 +155,7 @@ class DailiesController < ApplicationController
 
   def daily_18
 
-      @title  = ['main1'=>'排班/日報', 'main2'=>'Daily','sub1'=>'日報' , 'sub2'=>'Daily' ]
+      @title  = ['main1'=>'排班/日報', 'main2'=>'Daily 18','sub1'=>'日報' , 'sub2'=>'Daily 18' ]
       @day0 = Date.today
 
       @all_days = Daily.all.to_a
