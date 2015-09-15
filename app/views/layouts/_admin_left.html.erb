@@ -45,11 +45,13 @@
               </li>
           <% end %>
 
+          <% if judgment_access 'members/index' %>
           <li >
               <a href="/members">
                   <span>顧客列表</span>
               </a>
           </li>
+          <% end %>
 
 
 
@@ -71,60 +73,79 @@
               </li>
           <% end %>
 
+          <% if judgment_access '/store_list' %>
           <li>
               <a href="/store_list">
                   <span>商品庫存查詢</span>
               </a>
           </li>
+          <% end %>
 
-
+          <% if judgment_access '/product_orders' %>
           <li>
               <a href="/product_orders">
                   <span>訂單查詢</span>
               </a>
           </li>
+          <% end %>
 
+          <% if judgment_access '/wat_orders' %>
           <li>
               <a href="/wat_orders">
                   <span>待出貨明細</span>
               </a>
           </li>
+          <% end %>
 
+          <% if judgment_access '/wat_orders' %>
           <li >
               <a href="/in_list">
                   <span>入庫查詢</span>
               </a>
           </li>
+          <% end %>
 
+          <% if judgment_access '/out_list' %>
           <li >
               <a href="/out_list">
                   <span>出庫/出貨查詢</span>
               </a>
           </li>
+          <% end %>
 
+          <% if judgment_access '/sale_list' %>
           <li >
               <a href="/sale_list">
                   <span>銷售額查詢</span>
               </a>
           </li>
+          <% end %>
 
+
+          <% if judgment_access '/sale_compare' %>
           <li>
               <a href="/sale_compare">
                   <span>對帳單查詢</span>
               </a>
           </li>
+          <% end %>
 
+          <% if judgment_access '/dailies' %>
           <li >
               <a href="/dailies">
                   <span>日報</span>
               </a>
           </li>
+          <% end %>
 
+          <% if judgment_access '/daily_18' %>
           <li >
               <a href="/daily_18" >
                   <span> 排班/日報</span>
               </a>
           </li>
+          <% end %>
+
 
             <% if judgment_access 'msgs/index' %>
                 <li>
