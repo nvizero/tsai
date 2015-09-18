@@ -21,10 +21,20 @@ Access.create!(:title => '三檔類型主檔－新增', :code=>'verify_type_main
 Access.create!(:title => '三檔類型主檔－編輯', :code=>'verify_type_mains/edit'  , :state =>'Y')
 Access.create!(:title => '三檔類型主檔－删除', :code=>'verify_type_mains/del'   , :state =>'Y')
 
-Access.create!(:title => '會員－首頁', :code=>'users/index' , :state =>'Y')
-Access.create!(:title => '會員－新增', :code=>'users/new'   , :state =>'Y')
-Access.create!(:title => '會員－編輯', :code=>'users/edit'  , :state =>'Y')
-Access.create!(:title => '會員－删除', :code=>'users/del'   , :state =>'Y')
+Access.create!(:title => '會員－首頁',   :code=>'users/index' , :state =>'Y')
+Access.create!(:title => '會員－新增',   :code=>'users/new'   , :state =>'Y')
+Access.create!(:title => '會員－編輯',   :code=>'users/edit'  , :state =>'Y')
+Access.create!(:title => '會員－删除',   :code=>'users/del'   , :state =>'Y')
+
+Access.create!(:title => '會員－EXCEL', :code=>'users/excel'   , :state =>'Y')
+Access.create!(:title => '會員－修改密碼', :code=>'users/edit_password'   , :state =>'Y')
+
+
+Access.create!(:title => '顧客－首頁',   :code=>'members/index' , :state =>'Y')
+Access.create!(:title => '顧客－新增',   :code=>'members/new'   , :state =>'Y')
+Access.create!(:title => '顧客－編輯',   :code=>'members/edit'  , :state =>'Y')
+Access.create!(:title => '顧客－删除',   :code=>'members/del'   , :state =>'Y')
+
 
 Access.create!(:title => '角色－首頁', :code=>'roles/index' , :state =>'Y')
 Access.create!(:title => '角色－新增', :code=>'roles/new'   , :state =>'Y')
@@ -46,15 +56,26 @@ Access.create!(:title => '權限－新增', :code=>'accesses/new'   , :state =>'
 Access.create!(:title => '權限－編輯', :code=>'accesses/edit'  , :state =>'Y')
 Access.create!(:title => '權限－删除', :code=>'accesses/del'   , :state =>'Y')
 
+
+
+
 Access.create!(:title => '三檔類型－首頁', :code=>'product_verify_types/index' , :state =>'Y')
 Access.create!(:title => '三檔類型－新增', :code=>'product_verify_types/new'   , :state =>'Y')
 Access.create!(:title => '三檔類型－編輯', :code=>'product_verify_types/edit'  , :state =>'Y')
 Access.create!(:title => '三檔類型－删除', :code=>'product_verify_types/del'   , :state =>'Y')
 
-Access.create!(:title => '商品－首頁', :code=>'products/index' , :state =>'Y')
-Access.create!(:title => '商品－新增', :code=>'products/new'   , :state =>'Y')
-Access.create!(:title => '商品－編輯', :code=>'products/edit'  , :state =>'Y')
-Access.create!(:title => '商品－删除', :code=>'products/del'   , :state =>'Y')
+Access.create!(:title => '商品管理－首頁', :code=>'products/index' , :state =>'Y'  )
+Access.create!(:title => '商品管理－新增', :code=>'products/new'   , :state =>'Y'  )
+Access.create!(:title => '商品管理－編輯', :code=>'products/edit'  , :state =>'Y'  )
+Access.create!(:title => '商品管理－删除', :code=>'products/del'   , :state =>'Y'  )
+Access.create!(:title => '商品管理－三證進度', :code=>'watch_verify' , :state =>'Y' )
+Access.create!(:title => '商品管理－辦理三證', :code=>'do_3_verify' , :state =>'Y'  )
+
+# 商品庫存查詢
+Access.create!(:title => '商品管理－辦理三證', :code=>'do_3_verify' , :state =>'Y'  )
+Access.create!(:title => '商品管理－辦理三證', :code=>'do_3_verify' , :state =>'Y'  )
+Access.create!(:title => '商品管理－辦理三證', :code=>'do_3_verify' , :state =>'Y'  )
+
 
 Access.create!(:title => '辦證進度查詢－首頁', :code=>'product_verifies/index' , :state =>'Y')
 Access.create!(:title => '辦證進度查詢－新增', :code=>'product_verifies/new'   , :state =>'Y')

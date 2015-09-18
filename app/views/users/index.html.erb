@@ -26,7 +26,10 @@
                     <% if judgment_access 'users/new' %>
                         <%= link_to '新增使用者', new_user_path ,:class=>'btn btn-success',:id=>'head_btn' %>
                     <% end %>
-                    <%= link_to '輸出EXCEL', {:controller=>'users' , :action=>"excel"} , :class =>'btn btn-primary',:id=>'head_btn' %>
+
+                    <% if judgment_access 'users/excel' %>
+                        <%= link_to '輸出EXCEL', {:controller=>'users' , :action=>"excel"} , :class =>'btn btn-primary',:id=>'head_btn' %>
+                    <% end %>
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
 

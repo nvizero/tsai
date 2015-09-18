@@ -24,7 +24,10 @@
 
                         </ul>
                     </div>
-                    <%= link_to '新增顧客', new_member_path ,:class=>'btn btn-success',:id=>'head_btn' %>
+
+                    <% if judgment_access 'members/new' %>
+                        <%= link_to '新增顧客', new_member_path ,:class=>'btn btn-success',:id=>'head_btn' %>
+                    <% end %>
 
 
 
@@ -56,10 +59,15 @@
 
         <td>
           <% if member.state == 'Y' %>
-            <%= link_to '編輯', edit_member_path(member), :class => 'btn btn-info btn-sm' %>
 
+            <% if judgment_access 'members/new' %>
+                <%= link_to '編輯', edit_member_path(member), :class => 'btn btn-info btn-sm' %>
+            <% end %>
 
-            <a url="#" class="del btn btn-danger btn-sm" id='/members/destroy/<%=member.id %>'> 停用 </a>
+            <% if judgment_access 'members/new' %>
+                <a url="#" class="del btn btn-danger btn-sm" id='/members/destroy/<%=member.id %>'> 停用 </a>
+            <% end %>
+            
           <% end %>
 
             <a class="btn btn-warning info" id="<%=member.id %>">

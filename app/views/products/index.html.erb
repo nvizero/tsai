@@ -88,11 +88,15 @@
 
               <% if product.product_verifies.count > 0 %>
 
-                <%= link_to '三證進度', {:controller=>'product_verifies' , :action=>'index',:id=>product.id } ,:class=>"btn btn-primary btn-sm" %>
+                    <% if judgment_access 'watch_verify' %>
+                        <%= link_to '三證進度', {:controller=>'product_verifies' , :action=>'index',:id=>product.id } ,:class=>"btn btn-primary btn-sm" %>
+                    <% end %>
 
               <% else %>
 
-                <%= link_to '辦理三證', {:controller=>'product_verifies' , :action=>'make' ,:id=>product.id } ,:class=>"btn btn-primary btn-sm"  %>
+                    <% if judgment_access 'do_3_verify' %>
+                        <%= link_to '辦理三證', {:controller=>'product_verifies' , :action=>'make' ,:id=>product.id } ,:class=>"btn btn-primary btn-sm"  %>
+                    <% end %>
 
               <% end %>
           <% else %>
