@@ -128,22 +128,23 @@
                   %>
 
                   <td>
-                    <%=((prod.web_sale_per * 0.01) *product_order.total).round(3) %>
-                    <% total_per += prod.web_sale_per %>
+                    <%=((prod.web_sale_per.to_i * 0.01) *product_order.total).round(3) %>
+                    <% total_per += prod.web_sale_per.to_i %>
                   </td>
 
                   <td>
-                    <%= ( (prod.sale_per * 0.01 ) * product_order.total ).round(3) %>
-                    <%  total_per += prod.sale_per %>
+                    <%= ( (prod.sale_per.to_i * 0.01 ) * product_order.total ).round(3) %>
+                    <%  total_per += prod.sale_per.to_i %>
                   </td>
                   <td>
-                    <%= ( ( prod.other_per* 0.01 ) *product_order.total).round(3)  %>
-                    <% total_per += prod.other_per %>
+                    <%= ( ( prod.other_per.to_i * 0.01 ) *product_order.total).round(3)  %>
+                    <% total_per += prod.other_per.to_i %>
                   </td>
 
 
                   <td>
-                      <% page_total += product_order.total
+                      <%
+                      page_total += product_order.total
                       a=0
                       b=0
                       %>
