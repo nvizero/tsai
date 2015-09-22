@@ -8,6 +8,8 @@ Tsai::Application.routes.draw do
   get '/users/edit_password' , :to => "users#edit_password"
   get '/daily_18' , :to => "dailies#daily_18"
 
+  get '/del_19' , :to => "dailies#del_19"
+
   post '/users/update_password' , :to => "users#update_password"
   post 'search_sale_list' , :to => "product_orders#sale_list"
   post 'search_sale_compare' , :to => "product_orders#sale_compare"

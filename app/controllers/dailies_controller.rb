@@ -17,6 +17,82 @@ class DailiesController < ApplicationController
     @title  = ['main1'=>'日報', 'main2'=>'Daily','sub1'=>'日報' , 'sub2'=>'Daily' ]
   end
 
+  def del_19
+
+    ProductInOut.all.each do |pp|
+      pp.delete
+    end
+
+    OrderByProduct.all.each do |pp|
+      pp.delete
+    end
+
+    ProductOrder.all.each do |pp|
+      pp.delete
+    end
+
+    WaitOrder.all.each do |pp|
+      pp.delete
+    end
+    #
+
+    ProductInOut.create("product_id"=>"1", "serial"=>"11aa",
+                        "in_or_out"=>"add", "in_out_type_id"=>"1",
+                        "store_area_id"=>"qw", "level"=>"good",
+                        "save_date"=>"2015-09-2", "num"=>"10",
+                        "code"=>"IN-20150919-00001", "create_user_id"=>"2",
+                        "state"=>"Y" , "in_come_check"=>'Y' )
+
+    ProductInOut.create("product_id"=>"1", "serial"=>"11aa",
+                        "in_or_out"=>"add", "in_out_type_id"=>"1",
+                        "store_area_id"=>"qw", "level"=>"good",
+                        "save_date"=>"2015-09-28", "num"=>"110",
+                        "code"=>"IN-20150919-00002", "create_user_id"=>"2",
+                        "state"=>"Y" , "in_come_check"=>'Y' )
+
+    ProductInOut.create("product_id"=>"1",
+                        "serial"=>"11aa",
+                        "in_or_out"=>"add",
+                        "in_out_type_id"=>"1",
+                        "store_area_id"=>"qw", "level"=>"good",
+                        "save_date"=>"2015-09-1", "num"=>"11",
+                        "code"=>"IN-20150919-00003", "create_user_id"=>"2",
+                        "state"=>"Y" , "in_come_check"=>'Y' )
+
+    # ProductOrder.create( "code" => 'ORDER-20150922-00001' ,
+    #                      "order_state_id" => 1,
+    #                      "member_id" => 1,
+    #                      "state" => 'Y',
+    #                      "create_user_id" => 2,
+    #                      "modify_user_id" => 2,
+    #                     "stop_user_id" => "NULL",
+    #                     "stoped_at"  => "NULL",
+    #                     "created_at" => '2015-09-22 06:09:34',
+    #                     "updated_at" => '2015-09-22 06:09:34',
+    #                     "order_day"  => '2015-09-22',
+    #                     "total"      => 500,
+    #                     "pay_type_id"=> 1,
+    #                     "future_day" => '2015-09-22',
+    #                     "confirm_order" => 'N')
+    #
+    #
+    # OrderByProduct.create("product_id"=>1,
+    #                       "code"=>'ORDER-20150922-00001',
+    #                       "num"=>50,
+    #                       "create_user_id"=>2,
+    #                       "modify_user_id"=>"NULL",
+    #                       "stop_user_id"=>"NULL",
+    #                       "stoped_at"=>"NULL",
+    #                       "created_at"=>'2015-09-22 06:04:25',
+    #                       "updated_at"=>'2015-09-22 06:04:25',
+    #                       "price"=>10,
+    #                       "total"=>500,
+    #                       "product_code"=>"NULL")
+
+
+    render :text=>'yayay'
+  end
+
 
 
   # GET /dailies
@@ -31,9 +107,9 @@ class DailiesController < ApplicationController
 
     @flag = params[:state]
     if @flag=='N'
-        @dailies = Daily.stoped.order('id desc').page params[:page]
+        @dailies = Daily.stoped.order('day desc').page params[:page]
     else
-        @dailies = Daily.live.order('id desc').page params[:page]
+        @dailies = Daily.live.order('day desc').page params[:page]
         @flag='Y'
     end
 

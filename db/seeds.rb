@@ -72,9 +72,8 @@ Access.create!(:title => '商品管理－三證進度', :code=>'watch_verify' , 
 Access.create!(:title => '商品管理－辦理三證', :code=>'do_3_verify' , :state =>'Y'  )
 
 # 商品庫存查詢
-Access.create!(:title => '商品管理－辦理三證', :code=>'do_3_verify' , :state =>'Y'  )
-Access.create!(:title => '商品管理－辦理三證', :code=>'do_3_verify' , :state =>'Y'  )
-Access.create!(:title => '商品管理－辦理三證', :code=>'do_3_verify' , :state =>'Y'  )
+
+
 
 
 Access.create!(:title => '辦證進度查詢－首頁', :code=>'product_verifies/index' , :state =>'Y')

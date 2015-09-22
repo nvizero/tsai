@@ -28,10 +28,11 @@ class ProductInOut < ActiveRecord::Base
   # .group(:store_area_id)
   # .group(:level)
   # is_finish
+
   before_create do
-    self.state             = "Y"
-    self.is_finish         = 'N'
-    self.in_come_check	   = 'N'
+      self.state             = "Y"
+      self.is_finish         = 'N'
+      self.in_come_check	   = 'Y'
   end
 
 
