@@ -481,7 +481,7 @@ class PactController < ApplicationController
 
     wo = WaitOrder.find(params[:order_by_product_id])
     if wo
-
+      
          io_str = "\n"
          proInfo_str = "\n"
          #算庫存

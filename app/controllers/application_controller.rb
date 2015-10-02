@@ -107,6 +107,7 @@ class ApplicationController < ActionController::Base
   #算庫存
   def product_stock obj
         # serial
+        # logger.fatal  "庫存#{pio_final_num} 等於= （進貨）#{pio_add_num} 減去- （出庫）#{pio_reduce_num}"
         pios = ProductInOut.where(:product_id => obj.product_id)
 
         add = 0
@@ -197,7 +198,7 @@ class ApplicationController < ActionController::Base
 
 
 
-        # logger.fatal  "2.pioFirst.id = #{pioFirst.id} / num = #{pioFirst.id} \nobj.num.to_i = #{obj.num.to_i}"
+        logger.fatal  "庫存數    大於  訂單數2.pioFirst.id = #{pioFirst.id} / num = #{pioFirst.id} \nobj.num.to_i = #{obj.num.to_i}"
         #庫存數    大於  訂單數
         strHead     =   "OUT"
         sHead       =   get_pro_in_outs_code(strHead)
@@ -207,7 +208,7 @@ class ApplicationController < ActionController::Base
 
                 #訂單數  大於  單筆庫存的筆數
                 if  obj.num.to_i > pioFirst.num.to_i
-                    # logger.fatal  "3.-1"
+                    logger.fatal  "333333"
                     remain_num  =   obj.num.to_i - pioFirst.num.to_i
 
 
@@ -230,12 +231,13 @@ class ApplicationController < ActionController::Base
 
                     pioFirst.is_finish = 'Y'
                     pioFirst.save
+                    #要再加
                     self.remain_reduce(remain_num , pioFirst.product_id , obj )
 
 
                 elsif obj.num.to_i < pioFirst.num.to_i
                     # 當單筆的庫存數  大於  訂單數
-                    # logger.fatal  "4."
+                    logger.fatal  "444444"
                     firstPIO = ProductInOut.create( :product_id => obj.product_id.to_i ,
                                          :code => sHead ,
                                          :create_user_id => session[:user_id].to_i,
@@ -251,8 +253,11 @@ class ApplicationController < ActionController::Base
                                          :save_date =>pioFirst.save_date )
                    firstPIO.in_come_check ='Y'
                    firstPIO.save
+
                 elsif obj.num.to_i == pioFirst.num.to_i
 
+                    logger.fatal  "#{obj.num.to_i}/#{pioFirst.num.to_i}"
+                    logger.fatal  "5555555"
                     firstPIO = ProductInOut.create( :product_id => obj.product_id.to_i ,
                                          :code => sHead ,
                                          :create_user_id => session[:user_id].to_i,
@@ -274,7 +279,7 @@ class ApplicationController < ActionController::Base
                 end
 
         elsif pio_final_num.to_i == obj.num.to_i
-
+          logger.fatal  "6666666"
           firstPIO = ProductInOut.create( :product_id => obj.product_id.to_i ,
                                :code => sHead ,
                                :create_user_id => session[:user_id].to_i,
@@ -308,8 +313,9 @@ class ApplicationController < ActionController::Base
   #                 剩下的數量  ，產品ID
   def remain_reduce(remain_num , product_id ,obj)
 
-      logger.info "remain_reduce(remain_num , product_id ,obj)"
-      logger.info "#{remain_num.to_i} - #{product_id} - #{obj}"
+      logger.fatal  "7777777"
+      logger.info   "remain_reduce(remain_num , product_id ,obj)"
+      logger.info   "#{remain_num.to_i} - #{product_id} - #{obj.id}"
 
       remain_num2 = 0
 
