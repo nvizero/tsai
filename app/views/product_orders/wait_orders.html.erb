@@ -6,7 +6,9 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header" style="display:none;">
-                <h3 class="box-title">待出貨明細</h3>
+
+                    <h3 class="box-title">待出貨明細</h3>
+                    
                     <div class="btn-group" id='head_btn'>
                         <button type="button" class="btn btn-info"><%=(@flag=='Y')?('未停用'):('停用') %></button>
                         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
@@ -120,22 +122,15 @@ $('document').ready(function(){
                 {'order_by_product_id':order_by_product_id},
                 function(data){
 
-                    // alert(data);
-
-                    if(data=='false'){
+                    if( data == 'false' ){
                         alert('庫存不足!!');
                     }else{
-
                         $('#obp_'+order_by_product_id)
                           .hide(
                             function(){
                               alert('出貨成功!!');
                         });
-                        // alert('出貨~~test');
-                        // alert(data);
-
                     }
-
                 });
 
 

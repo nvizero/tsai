@@ -144,7 +144,7 @@ class ApplicationController < ActionController::Base
 
     code_serial = ProductInOut.where('created_at >= :start_days_ago or created_at >= :end_days_ago',
                                           :start_days_ago  => Time.now.strftime("%Y-%m-%d 00:00:01"),
-                                          :end_days_ago => Time.now.strftime("%Y-%m-%d 23:23:59"))
+                                          :end_days_ago    => Time.now.strftime("%Y-%m-%d 23:23:59"))
 
     len_s = self.order_serial_code(code_serial.count.to_s.length)
     len_s = "#{len_s}#{code_serial.count.to_i+1}"
@@ -186,31 +186,66 @@ class ApplicationController < ActionController::Base
 
 
         pio_final_num = pio_add_num - pio_reduce_num
-        # logger.fatal  "庫存#{pio_final_num} 等於= （進貨）#{pio_add_num} 減去- （出庫）#{pio_reduce_num}"
+
+        logger.fatal  "庫存 | #{pio_final_num} 等於 |=|=| （進貨）#{pio_add_num} 減去   - （出庫）#{pio_reduce_num}"
 
         pioFirst = ProductInOut.where(:product_id => obj.product_id,:is_finish => 'N', :in_or_out =>'add')
-                               .group(:level)
-                               .group(:store_area_id)
-                               .group(:serial)
-                               .group(:save_date)
-                               .order("save_date ASC")
-                               .first
+                                .group(:level)
+                                .group(:store_area_id)
+                                .group(:serial)
+                                .group(:save_date)
+                                .order("save_date ASC")
+                                .first
+
+        new_pios = ProductInOut.select('COUNT(num) AS count_num')
+                               .where('serial'=> pioFirst.serial)
+                               .where('level'=> pioFirst.store_area_id)
+                               .where("in_or_out"=> 'reduce')
+                               .where('store_area_id' => pioFirst.store_area_id)
 
 
+        pio_adds    = ProductInOut.where( :product_id => pioFirst.product_id,
+                             :is_finish => 'N',
+                             :serial => pioFirst.serial,
+                             :in_or_out =>'add')
 
-        logger.fatal  "庫存數    大於  訂單數2.pioFirst.id = #{pioFirst.id} / num = #{pioFirst.id} \nobj.num.to_i = #{obj.num.to_i}"
+
+        pio_reduces = ProductInOut.where( :product_id => pioFirst.product_id,
+                             :is_finish => 'N',
+                             :serial => pioFirst.serial,
+                             :in_or_out =>'reduce')
+
+         p_a_num = 0
+         pio_adds.each do |t_add|
+             p_a_num += t_add.num
+         end
+
+         p_d_num = 0
+         pio_reduces.each do |t_reduce|
+             p_d_num += t_reduce.num
+         end
+
+         final_p_num = p_a_num - p_d_num
+         logger.fatal  " 彭珊迪 ～ #{final_p_num}  =  #{p_a_num}  -  #{p_d_num}"
+
+        logger.fatal  " love sandy #{new_pios[0]['count_num']} "
         #庫存數    大於  訂單數
         strHead     =   "OUT"
         sHead       =   get_pro_in_outs_code(strHead)
 
-        #訂單數          小於     庫存數
+        #訂單數          小於     總庫存數
         if obj.num.to_i < pio_final_num.to_i
 
-                #訂單數  大於  單筆庫存的筆數
-                if  obj.num.to_i > pioFirst.num.to_i
-                    logger.fatal  "333333"
-                    remain_num  =   obj.num.to_i - pioFirst.num.to_i
 
+
+
+                #訂單數  大於  單筆庫存的筆數
+                if  obj.num.to_i > final_p_num.to_i
+
+                    remain_num  =   obj.num.to_i - final_p_num.to_i
+
+                    logger.fatal  "333333"
+                    logger.fatal  "#{remain_num}=#{obj.num.to_i}-#{pioFirst.num.to_i}"
 
                     firstPIO = ProductInOut.create( :product_id => obj.product_id.to_i ,
                                          :code => sHead ,
@@ -218,7 +253,7 @@ class ApplicationController < ActionController::Base
                                          :serial  =>  pioFirst.serial ,
                                          :state   =>  'Y' ,
                                          :wait_order_id  =>  obj.id,
-                                         :num  =>  pioFirst.num.to_i ,
+                                         :num  =>  final_p_num.to_i ,
                                          :in_or_out  =>  'reduce',
                                          :in_out_type_id => 2 ,
                                          :store_area_id => pioFirst.store_area_id,
@@ -235,7 +270,7 @@ class ApplicationController < ActionController::Base
                     self.remain_reduce(remain_num , pioFirst.product_id , obj )
 
 
-                elsif obj.num.to_i < pioFirst.num.to_i
+                elsif obj.num.to_i < final_p_num.to_i
                     # 當單筆的庫存數  大於  訂單數
                     logger.fatal  "444444"
                     firstPIO = ProductInOut.create( :product_id => obj.product_id.to_i ,
@@ -254,7 +289,7 @@ class ApplicationController < ActionController::Base
                    firstPIO.in_come_check ='Y'
                    firstPIO.save
 
-                elsif obj.num.to_i == pioFirst.num.to_i
+                elsif obj.num.to_i == final_p_num.to_i
 
                     logger.fatal  "#{obj.num.to_i}/#{pioFirst.num.to_i}"
                     logger.fatal  "5555555"
@@ -279,6 +314,7 @@ class ApplicationController < ActionController::Base
                 end
 
         elsif pio_final_num.to_i == obj.num.to_i
+
           logger.fatal  "6666666"
           firstPIO = ProductInOut.create( :product_id => obj.product_id.to_i ,
                                :code => sHead ,
@@ -313,13 +349,12 @@ class ApplicationController < ActionController::Base
   #                 剩下的數量  ，產品ID
   def remain_reduce(remain_num , product_id ,obj)
 
-      logger.fatal  "7777777"
-      logger.info   "remain_reduce(remain_num , product_id ,obj)"
-      logger.info   "#{remain_num.to_i} - #{product_id} - #{obj.id}"
 
-      remain_num2 = 0
 
-      pio_one = ProductInOut.where(:product_id => product_id )
+    logger.fatal  "7777777"
+    remain_num2   = 0
+
+    pio_one = ProductInOut.where(:product_id => product_id )
                             .where(:is_finish => 'N')
                             .where(:in_or_out => 'add')
                             .group(:level)
@@ -331,17 +366,40 @@ class ApplicationController < ActionController::Base
 
       # logger.fatal "\nRemain num =  #{remain_num.to_i}"
       # logger.fatal "\npio_one[object] =  #{pio_one.id}"
+      pio_adds    = ProductInOut.where( :product_id => pio_one.product_id,
+                           :is_finish => 'N',
+                           :serial => pio_one.serial,
+                           :in_or_out =>'add')
 
-      remain_num2 = remain_num.to_i - pio_one.num.to_i
+
+      pio_reduces = ProductInOut.where( :product_id => pio_one.product_id,
+                           :is_finish => 'N',
+                           :serial => pio_one.serial,
+                           :in_or_out =>'reduce')
+
+       p_a_num = 0
+       pio_adds.each do |t_add|
+           p_a_num += t_add.num
+       end
+
+       p_d_num = 0
+       pio_reduces.each do |t_reduce|
+           p_d_num += t_reduce.num
+       end
+
+       final_p_num = p_a_num - p_d_num
+       logger.fatal  " 謝 ～ #{final_p_num}  =  #{p_a_num}  -  #{p_d_num}"
+
+      # remain_num2 =  final_p_num.to_i － remain_num.to_i
 
       strHead =  "OUT"
 
       sHead   =  get_pro_in_outs_code(strHead)
 
-      if  remain_num.to_i > pio_one.num.to_i
+      if  remain_num.to_i > final_p_num.to_i
 
-          logger.info "if  remain_num.to_i > pio_one.num.to_i"
-          logger.info "#{remain_num.to_i}-#{pio_one.num.to_i}"
+          logger.info "8888888"
+          # logger.info "#{remain_num.to_i} - #{pio_one.num.to_i} "
 
           # firstPIO.in_come_check ='Y'
           firstPIO = ProductInOut.create( :product_id => product_id.to_i ,
@@ -350,7 +408,7 @@ class ApplicationController < ActionController::Base
                                :serial  =>  pio_one.serial ,
                                :state   =>  'Y' ,
                                :wait_order_id  =>  obj.id,
-                               :num  =>  pio_one.num.to_i ,
+                               :num  =>  final_p_num.to_i ,
                                :in_or_out  =>  'reduce',
                                :in_out_type_id => 2 ,
                                :store_area_id => pio_one.store_area_id,
@@ -365,12 +423,17 @@ class ApplicationController < ActionController::Base
           pio_one.is_finish = 'Y'
           pio_one.save
 
+          remain_num2 =  remain_num.to_i  - final_p_num.to_i
+
+          #remain_num2 =  final_p_num.to_i － remain_num.to_i
+
           self.remain_reduce(remain_num2.to_i , product_id , obj )
 
-      elsif  remain_num.to_i <= pio_one.num.to_i
+      elsif  remain_num.to_i <= final_p_num.to_i
 
-        logger.info "elsif  remain_num.to_i < pio_one.num.to_i"
-        logger.info " #{remain_num.to_i} - #{pio_one.num.to_i}"
+        logger.info " ```99999``` "
+        logger.info " remain_num.to_i    <= final_p_num.to_i     "
+        logger.info " #{remain_num.to_i} -  #{final_p_num.to_i}"
 
 
         firstPIO = ProductInOut.create( :product_id => product_id.to_i ,

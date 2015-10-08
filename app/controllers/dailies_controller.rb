@@ -36,21 +36,21 @@ class DailiesController < ApplicationController
     end
     #
 
-    ProductInOut.create("product_id"=>"1", "serial"=>"121aa",
+    ProductInOut.create("product_id"=>"1", "serial"=>"11111",
                         "in_or_out"=>"add", "in_out_type_id"=>"1",
                         "store_area_id"=>"qw", "level"=>"good",
                         "save_date"=>"2015-09-02", "num"=>"100",
                         "code"=>"IN-20150919-00001", "create_user_id"=>"2",
                         "state"=>"Y" , "in_come_check"=>'Y' )
 
-    ProductInOut.create("product_id"=>"1", "serial"=>"1aqws",
+    ProductInOut.create("product_id"=>"1", "serial"=>"22222",
                         "in_or_out"=>"add", "in_out_type_id"=>"1",
                         "store_area_id"=>"qw", "level"=>"good",
                         "save_date"=>"2015-09-01", "num"=>"240",
                         "code"=>"IN-20150919-00004", "create_user_id"=>"2",
                         "state"=>"Y" , "in_come_check"=>'Y' )
 
-    ProductInOut.create("product_id"=>"1", "serial"=>"131aa",
+    ProductInOut.create("product_id"=>"1", "serial"=>"33333",
                         "in_or_out"=>"add", "in_out_type_id"=>"1",
                         "store_area_id"=>"qw", "level"=>"good",
                         "save_date"=>"2015-09-28", "num"=>"220",
@@ -58,7 +58,7 @@ class DailiesController < ApplicationController
                         "state"=>"Y" , "in_come_check"=>'Y' )
 
     ProductInOut.create("product_id"=>"1",
-                        "serial"=>"11aa",
+                        "serial"=>"44444",
                         "in_or_out"=>"add",
                         "in_out_type_id"=>"1",
                         "store_area_id"=>"qw", "level"=>"good",
@@ -128,7 +128,7 @@ class DailiesController < ApplicationController
                           "product_code"=>"NULL")
 
 
-    render :text=>'yayay'
+    render :text=>'sandy'
   end
 
 
@@ -183,7 +183,7 @@ class DailiesController < ApplicationController
       find_day = Daily.where(:day_type => daily[:day_type] , :day => good_day_to_die).first
 
       if !find_day.nil?
-            #有找到一樣的～不可以再輸入一次
+            # 有找到一樣的～不可以再輸入一次
             # render :text => "yes day !!->>>#{find_day.id} "
             flash[:notice] = "日報-有重複的日期!!"
             @time_type = ['早上','下午']
