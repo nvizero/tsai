@@ -6,6 +6,12 @@
   <div class="row">
     <div class="col-xs-12">
         <div class="box">
+          [俊德<%=@d_user1.count%>/<%=@d_user1.to_sql%>]<br>
+          [嘉俊<%=@d_user2.count%>]<br>
+          [為明<%=@d_user3.count%>]<br>
+            <h1><%=@show_y_m%></h1>
+          <a href="/daily_18?month=<%=@date_month-1%>">上個月</a>
+          <a href="/daily_18?month=<%=@date_month+1%>">下個月</a>
           <% if judgment_access 'dailies/new' %>
               <%= link_to '新增日報', new_daily_path, :class=>"btn btn-primary head_btn"  , :id=>'head_btn'  %>
           <% end %>
@@ -25,6 +31,7 @@
         (0..6).each do |wk|
         %>
             <td >
+
               <font style="color:blue;font-size:18px;">
                   <%=week_days[wk]%>
               </font>
@@ -54,6 +61,7 @@
     <% if first_flag %>
 
         <td>
+
           <%=dd%><br>
           <br>
           <%= simple_format match_day @all_days , "#{@day1.split('-')[0].to_i}-0#{@day1.split('-')[1].to_i}-0#{dd}"%>

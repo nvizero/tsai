@@ -269,20 +269,63 @@ class DailiesController < ApplicationController
 
   def daily_18
 
+      @d_user1 = Daily.where("title like ?", "%俊德%")
+      @d_user2 = Daily.where("title like ?", "%嘉俊%")
+      @d_user3 = Daily.where("title like ?", "%為明%")
+
       @title  = ['main1'=>'排班/日報', 'main2'=>'Daily 18','sub1'=>'日報' , 'sub2'=>'Daily 18' ]
+
+      @date = Time.now
+
+      if !params[:month].nil?
+        @_today = @date.strftime("%Y-"+params[:month]+"-%d")
+      else
+        @_today = @date.strftime("%Y-%m-%d")
+      end
+
+
       @day0 = Date.today
+      @params_moth = @day0.to_s.split('-')[1].to_i
 
-      @all_days = Daily.all.to_a
-      @day1 = Date.today.at_beginning_of_month.strftime
-      @beginning＿on_week = Date.today.at_beginning_of_month.wday
+      if (@params_moth == @_today.to_s.split('-')[1].to_i)
+
+          @sandy_word = 'GG-if'
+          @day_next = Date.today + 1.month
+          @day_prev = Date.today.prev_month(1)
+          @all_days = Daily.all.to_a
+          @day1 = Date.today.at_beginning_of_month.strftime
+          @beginning＿on_week = Date.today.at_beginning_of_month.wday
+          @day2 = Date.today.at_end_of_month.strftime
+          @day＿week = Date.today.wday
+          @show_y_m = Date.today.strftime("%Y-%m")
+          @date_month = Date.today.strftime("%m").to_i
+
+      else
 
 
-      @day2 = Date.today.at_end_of_month.strftime
-      @day＿week = Date.today.wday
+          @date = Time.now
 
-      # render :layout => false
-      # layout nil
-      # render 'daily_18'
+          @d_p_m = @_today.split('-')[1].to_i
+          @t_p_m = @date.strftime("%Y-%m-%d").split('-')[1].to_i
+
+          @reduce_p_m = @t_p_m - @d_p_m
+          @sandy_word = 'month -> '+@reduce_p_m.to_s
+
+          @day_next = Date.today + (@reduce_p_m.to_i).month
+          @day_prev = Date.today.prev_month(1)
+          @all_days = Daily.all.to_a
+
+
+          @r_day = Date.today.prev_month(@reduce_p_m.to_i)
+          @show_y_m = Date.today.prev_month(@reduce_p_m.to_i).strftime("%Y-%m")
+          @date_month = @r_day.strftime("%m").to_i
+          @day1 = @r_day.at_beginning_of_month.strftime
+          @beginning＿on_week = @r_day.at_beginning_of_month.wday
+          @day2 = @r_day.at_end_of_month.strftime
+          @day＿week = @r_day.wday
+
+      end
+
 
   end
 
