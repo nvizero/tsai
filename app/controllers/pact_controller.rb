@@ -19,7 +19,7 @@ class PactController < ApplicationController
 
   def search_member_name
 
-      aMember = Member.where(:name => params[:name]).first
+      aMember = Member.vip_access(user_vip_access , session).where(:name => params[:name]).first
       if !aMember.nil?
           # render :text => "#{aMember.name}/#{aMember.name.length}"
           render :text => "#{aMember.id}"
@@ -366,17 +366,17 @@ class PactController < ApplicationController
       if params[:type] == 'code'
 
           if !params[:old_data].nil?
-            @products = Product.where("code like ?", "%#{params[:code]}%").where.not(code: params[:old_data].split(',') )
+            @products = Product.vip_access(user_vip_access , session).where("code like ?", "%#{params[:code]}%").where.not(code: params[:old_data].split(',') )
           else
-            @products = Product.where("code like ?", "%#{params[:code]}%")
+            @products = Product.vip_access(user_vip_access , session).where("code like ?", "%#{params[:code]}%")
           end
 
       elsif params[:type] == 'title'
 
         if !params[:old_data].nil?
-          @products = Product.where("title like ?", "%#{params[:title]}%").where.not(title: params[:old_data].split(',') )
+          @products = Product.vip_access(user_vip_access , session).where("title like ?", "%#{params[:title]}%").where.not(title: params[:old_data].split(',') )
         else
-          @products = Product.where("title like ?", "%#{params[:title]}%")
+          @products = Product.vip_access(user_vip_access , session).where("title like ?", "%#{params[:title]}%")
         end
 
       end
@@ -387,7 +387,7 @@ class PactController < ApplicationController
   def member_list
 
       if params[:name]
-        @members = Member.where("name like ?", "%#{params[:name]}%").limit(20)
+        @members = Member.vip_access(user_vip_access , session).where("name like ?", "%#{params[:name]}%").limit(20)
       else
         @members = Member.limit(20)
       end
@@ -481,7 +481,7 @@ class PactController < ApplicationController
 
     wo = WaitOrder.find(params[:order_by_product_id])
     if wo
-      
+
          io_str = "\n"
          proInfo_str = "\n"
          #算庫存

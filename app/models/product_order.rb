@@ -15,6 +15,7 @@ class ProductOrder < ActiveRecord::Base
 
 
   scope :vip_access, lambda { |query , session |
+    
       if session[:vip_access]=='VIP'
           where(:create_user_id => query )
       elsif  session[:vip_access]=='admin'

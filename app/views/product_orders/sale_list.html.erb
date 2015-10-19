@@ -28,9 +28,15 @@
 
                 <form action="/search_sale_list" method="post" >
                     日期:
-                    <input type="text" name="date"
-                    value="<%= (!@pars[:date].nil? && @pars[:date].to_s.length > 0 ) ?@pars[:date] : '' %>"
-                    id="date"
+                    <input type="text" name="date_start"
+                    value="<%= (!@pars[:date_start].nil? && @pars[:date_start].to_s.length > 0 ) ?@pars[:date_start] : '' %>"
+                    id="date_start"
+                    >
+                    ~
+
+                    <input type="text" name="date_end"
+                    value="<%= (!@pars[:date_end].nil? && @pars[:date_end].to_s.length > 0 ) ?@pars[:date_end] : '' %>"
+                    id="date_end"
                     >
 
                     單號:
@@ -159,7 +165,10 @@
 <script src="/admin/js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 $('document').ready(function(){
-    $("#date").datepicker( { format: 'yyyy-mm-dd'} );
+
+    $("#date_end").datepicker( { format: 'yyyy-mm-dd'} );
+    $("#date_start").datepicker( { format: 'yyyy-mm-dd'} );
+
     $(".confirm_order").click(function(){
 
           var order_by_product_id = $(this).attr('id');

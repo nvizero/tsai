@@ -33,9 +33,13 @@ class ProductOrdersController < ApplicationController
   # GET /product_orders
   # GET /product_orders.json
   def index
+    @users=[]
+    User.all.each do |ur|
+        @users[ur.id] = ur.name
+    end
 
-    @mems = Member.all.count
-    @os   = OrderState.all.count
+    @mems  = Member.all.count
+    @os    = OrderState.all.count
 
     # 換
 
@@ -220,8 +224,13 @@ class ProductOrdersController < ApplicationController
       a_str = ''
 
       #
-      if !@pars[:date].nil? && @pars[:date].to_s.length > 0
-        a_str = ' `product_orders`.`order_day` = '+" '#{@pars[:date].strip}' "
+      if !@pars[:date_start].nil? && @pars[:date_start].to_s.length > 0
+        a_str = ' `product_orders`.`order_day` >= '+" '#{@pars[:date_start].strip}' "
+        @sql_str.push(a_str)
+      end
+
+      if !@pars[:date_end].nil? && @pars[:date_end].to_s.length > 0
+        a_str = ' `product_orders`.`order_day` <= '+" '#{@pars[:date_end].strip}' "
         @sql_str.push(a_str)
       end
 
@@ -261,6 +270,7 @@ class ProductOrdersController < ApplicationController
                              .select("wait_orders.product_id as product_id")
                              .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
                              .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
+                             .vip_access(@vip_access , session)
                              .where(@sql_schema)
 
           @pos = @pos1.page params[:page]
@@ -282,6 +292,7 @@ class ProductOrdersController < ApplicationController
                            .select("wait_orders.product_id as product_id")
                            .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
                            .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
+                           .vip_access(@vip_access , session)
 
 
         @pos = @pos1.page params[:page]
@@ -331,8 +342,13 @@ class ProductOrdersController < ApplicationController
       a_str = ''
 
       #
-      if !@pars[:date].nil? && @pars[:date].to_s.length > 0
-        a_str = ' `product_orders`.`order_day` = '+" '#{@pars[:date].strip}' "
+      if !@pars[:date_start].nil? && @pars[:date_start].to_s.length > 0
+        a_str = ' `product_orders`.`order_day` >= '+" '#{@pars[:date_start].strip}' "
+        @sql_str.push(a_str)
+      end
+
+      if !@pars[:date_end].nil? && @pars[:date_end].to_s.length > 0
+        a_str = ' `product_orders`.`order_day` <= '+" '#{@pars[:date_end].strip}' "
         @sql_str.push(a_str)
       end
 
@@ -371,6 +387,7 @@ class ProductOrdersController < ApplicationController
           @pos1 = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
                              .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
                              .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
+                             .vip_access(@vip_access , session)
                              .where(@sql_schema)
 
 
@@ -388,9 +405,10 @@ class ProductOrdersController < ApplicationController
           end
 
       else
-          @pos1 = ProductOrder.select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
+          @pos1 = ProductOrder.vip_access(@vip_access , session).select("* , wait_orders.num as num , wait_orders.price as price , wait_orders.total as total , wait_orders.product_name as product_name")
                              .joins(" JOIN `wait_orders` ON `product_orders`.`code` = `wait_orders`.`code`")
                              .joins(" JOIN `members` ON `product_orders`.`member_id` = `members`.`id`")
+                             .vip_access(@vip_access , session)
 
 
           @pos = @pos1.page params[:page]
