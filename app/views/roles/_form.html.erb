@@ -1,6 +1,3 @@
-
-
-
   <%= form_for(@role) do |f| %>
 
     <% if @role.errors.any? %>
@@ -42,8 +39,43 @@
                       <br>
 
                       <% @aces.each do |ace| %>
-                        <input type="checkbox" name="point[<%=ace.id %>]" value="1" <%=role_checkbox(@role.text , ace.id) %> >
-                        <%=ace.title %><br>
+
+                          <% if ace.id.to_i == 1  ||
+                                ace.id.to_i == 5  ||
+                                ace.id.to_i == 11 ||
+                                ace.id.to_i == 15 ||
+                                ace.id.to_i == 19 ||
+                                ace.id.to_i == 23 ||
+                                ace.id.to_i == 27 ||
+                                ace.id.to_i == 31 ||
+                                ace.id.to_i == 35 ||
+                                ace.id.to_i == 41 ||
+                                ace.id.to_i == 45 ||
+                                ace.id.to_i == 53
+                          %>
+                          <div class="col-md-6" style="margin:10px 0px 10px 0px">
+                        <% end %>
+                      <input type="checkbox" name="point[<%=ace.id %>]" value="1" <%=role_checkbox(@role.text , ace.id) %> >
+                        <%=ace.title %>
+                        <br>
+
+                        <% if ace.id.to_i == 4 ||
+                            ace.id.to_i == 10 ||
+                            ace.id.to_i == 14 ||
+                            ace.id.to_i == 18 ||
+                            ace.id.to_i == 22 ||
+                            ace.id.to_i == 26 ||
+                            ace.id.to_i == 30 ||
+                            ace.id.to_i == 34 ||
+                            ace.id.to_i == 40 ||
+                            ace.id.to_i == 44 ||
+                            ace.id.to_i == 52 ||
+                            ace.id.to_i == 55
+                        %>
+                        </div>
+
+                      <% end %>
+
                       <% end %>
 
                     </div>

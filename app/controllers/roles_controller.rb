@@ -14,7 +14,7 @@ class RolesController < ApplicationController
   def index
 
     @users_a = self.user_to_ar
-    
+
     # Role.all.each do |re|
     #     re.state = 'Y'
     #     re.save

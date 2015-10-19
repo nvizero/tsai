@@ -6,9 +6,8 @@
   <div class="row">
     <div class="col-xs-12">
         <div class="box">
-          [俊德<%=@d_user1.count%>/<%=@d_user1.to_sql%>]<br>
-          [嘉俊<%=@d_user2.count%>]<br>
-          [為明<%=@d_user3.count%>]<br>
+
+
             <h1><%=@show_y_m%></h1>
           <a href="/daily_18?month=<%=@date_month-1%>">上個月</a>
           <a href="/daily_18?month=<%=@date_month+1%>">下個月</a>
@@ -59,7 +58,6 @@
   (@day1.split('-')[2].to_i .. @day2.split('-')[2].to_i).each do |dd|
 %>
     <% if first_flag %>
-
         <td>
 
           <%=dd%><br>

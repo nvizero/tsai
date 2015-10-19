@@ -12,12 +12,12 @@
   <% end %>
 
 
-  <div class="field" <% if !@daily.id.nil?%> style="display:none;" <% end %> >
+  <div class="field"   >
     <%= f.label :day ,'日期' %><br>
     <%= f.date_select :day %>
   </div>
 
-  <div class="field"  <% if !@daily.id.nil?%> style="display:none;" <% end %> >
+  <div class="field"    >
     <%= f.label :day_type , '早上/下午'%>
     <%= f.select(:day_type, @time_type.collect {|p| [p[0..9], p[0..9]]} , { :selected =>@daily.day_type } , :class=>'form-control', :id => 'product_id' ) %>
   </div>
