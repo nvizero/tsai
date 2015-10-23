@@ -9,6 +9,7 @@ Tsai::Application.routes.draw do
   get '/daily_18' , :to => "dailies#daily_18"
 
   get '/del_19' , :to => "dailies#del_19"
+  # get '/user_mail' , :to => "users#whtest"
 
   post '/users/update_password' , :to => "users#update_password"
   post '/search_sale_list' , :to => "product_orders#sale_list"

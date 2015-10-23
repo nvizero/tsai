@@ -126,9 +126,16 @@ class DailiesController < ApplicationController
                           "price"=>1,
                           "total"=>300,
                           "product_code"=>"NULL")
+    #
+    #
+    # render :text=>'sandy
 
+    sandy = ''
+    # Access.all.each do |ac|
+    #   sandy+="#{ac.title}/#{ac.code}<br>"
+    # end
 
-    render :text=>'sandy'
+    render :text=>"#{sandy}"
   end
 
 

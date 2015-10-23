@@ -9,6 +9,7 @@
 
 
             <h1><%=@show_y_m%></h1>
+
           <a href="/daily_18?month=<%=@date_month-1%>">上個月</a>
           <a href="/daily_18?month=<%=@date_month+1%>">下個月</a>
           <% if judgment_access 'dailies/new' %>
@@ -17,9 +18,19 @@
 
           <br>
 
-<% empty_tds = (7-(7-@beginning＿on_week.to_i+1) ) %>
+<%
 
-<% with_tds = (7-@beginning＿on_week.to_i+1) %>
+  empty_tds = (7-(7-@beginning＿on_week.to_i+1) )
+  with_tds  = 0
+  base_i    = @show_y_m.to_s.split('-')[1].to_i
+
+  if (base_i == 2 || base_i == 3 || base_i == 11)
+    with_tds  = (7-@beginning＿on_week.to_i)
+  else
+    with_tds  = (7-@beginning＿on_week.to_i+1)
+  end
+
+%>
 
 <div class="box-body table-responsive" style="margin:20px 0px 0px 0px">
   <table id="example2" class="table table-bordered table-striped">
@@ -58,9 +69,9 @@
   (@day1.split('-')[2].to_i .. @day2.split('-')[2].to_i).each do |dd|
 %>
     <% if first_flag %>
-        <td>
 
-          <%=dd%><br>
+        <td>
+          <%=dd%> <br>
           <br>
           <%= simple_format match_day @all_days , "#{@day1.split('-')[0].to_i}-0#{@day1.split('-')[1].to_i}-0#{dd}"%>
         </td>
@@ -112,10 +123,8 @@
 
 
 
- <% @beginning＿on_week%>
 
 
-<% @day0%>
 
 
 <% @day_week%>

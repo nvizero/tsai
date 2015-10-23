@@ -125,6 +125,8 @@ class UsersController < ApplicationController
     @sotre_area = StoreArea.all
   end
 
+
+  
   # POST /users
   # POST /users.json
   def create

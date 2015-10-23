@@ -9,9 +9,12 @@ class ApplicationController < ActionController::Base
   end
 
 
+  def check_times
+      puts Date.now
+  end
+
   def user_to_ar
      users = User.all
-
      urs = []
      users.each do |ur|
        urs[ur.id] = ur.name
@@ -19,6 +22,13 @@ class ApplicationController < ActionController::Base
 
      return urs
 
+  end
+
+  def whtest
+    uu = User.find(2)
+    UserMailer.new_user(uu).deliver
+    render :text => "uu"
+    # render :text => "#{self.get_self_url[3]} -- GG"
   end
 
   #權限判斷
