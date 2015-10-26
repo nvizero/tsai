@@ -236,9 +236,9 @@ class ApplicationController < ActionController::Base
          end
 
          final_p_num = p_a_num - p_d_num
-         logger.fatal  " 彭珊迪 ～ #{final_p_num}  =  #{p_a_num}  -  #{p_d_num}"
+         logger.fatal  " 珊迪 #{final_p_num}  =  #{p_a_num}  -  #{p_d_num}"
 
-        logger.fatal  " love sandy #{new_pios[0]['count_num']} "
+        logger.fatal  "   #{new_pios[0]['count_num']} "
         #庫存數    大於  訂單數
         strHead     =   "OUT"
         sHead       =   get_pro_in_outs_code(strHead)
@@ -376,16 +376,30 @@ class ApplicationController < ActionController::Base
 
       # logger.fatal "\nRemain num =  #{remain_num.to_i}"
       # logger.fatal "\npio_one[object] =  #{pio_one.id}"
-      pio_adds    = ProductInOut.where( :product_id => pio_one.product_id,
-                           :is_finish => 'N',
-                           :serial => pio_one.serial,
-                           :in_or_out =>'add')
+      pio_adds    = ProductInOut.where(
+                                   :product_id => pio_one.product_id,
+                                   :is_finish => 'N',
+                                   :serial => pio_one.serial,
+                                   :in_or_out =>'add'
+                                )
+                                 .group(:level)
+                                 .group(:store_area_id)
+                                 .group(:serial)
+                                 .group(:save_date)
+                                 .order("save_date ASC")
 
 
-      pio_reduces = ProductInOut.where( :product_id => pio_one.product_id,
-                           :is_finish => 'N',
-                           :serial => pio_one.serial,
-                           :in_or_out =>'reduce')
+      pio_reduces = ProductInOut.where(
+                                   :product_id => pio_one.product_id,
+                                   :is_finish => 'N',
+                                   :serial => pio_one.serial,
+                                   :in_or_out =>'reduce'
+                                 )
+                                 .group(:level)
+                                 .group(:store_area_id)
+                                 .group(:serial)
+                                 .group(:save_date)
+                                 .order("save_date ASC")
 
        p_a_num = 0
        pio_adds.each do |t_add|

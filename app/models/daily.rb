@@ -1,6 +1,6 @@
 class Daily < ActiveRecord::Base
 
-  paginates_per 10
+  paginates_per 20
 
   scope :live, lambda { where("dailies.state = 'Y' ") }
   scope :stoped  , lambda { where("dailies.state = 'N' ") }
