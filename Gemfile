@@ -60,3 +60,6 @@ gem 'whenever', :require => false
 
 gem 'delayed_job_active_record'
 gem 'clockwork'
+group :development do
+  gem "better_errors"
+end

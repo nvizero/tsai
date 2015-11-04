@@ -30,7 +30,6 @@
 
 %>
 
-
 <div class="box-body table-responsive" style="margin:20px 0px 0px 0px">
   <table id="example2" class="table table-bordered table-striped">
 
@@ -72,7 +71,8 @@
         <td>
           <%=dd%> <br>
           <br>
-          <%= simple_format match_day @all_days , "#{@day1.split('-')[0].to_i}-0#{@day1.split('-')[1].to_i}-0#{dd}"%>
+          <%= simple_format match_day @all_days , "#{@day1.split('-')[0].to_i}-#{@day1.split('-')[1].to_i}-0#{dd}"%>
+          
         </td>
 
         <% if with_tds.to_i == dd %>
@@ -114,6 +114,7 @@
 
             %>
             <%= simple_format match_day @all_days , "#{@day1.split('-')[0].to_i}-#{the_month}-#{the_day}"%>
+
           </td>
 
     <% end %>

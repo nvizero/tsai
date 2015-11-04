@@ -66,6 +66,24 @@ class DailiesController < ApplicationController
                         "code"=>"IN-20150919-00003", "create_user_id"=>"2",
                         "state"=>"Y" , "in_come_check"=>'Y' )
 
+    ProductInOut.create("product_id"=>"1",
+                        "serial"=>"555",
+                        "in_or_out"=>"add",
+                        "in_out_type_id"=>"1",
+                        "store_area_id"=>"qw", "level"=>"good",
+                        "save_date"=>"2015-08-1", "num"=>"10",
+                        "code"=>"IN-20150919-00004", "create_user_id"=>"2",
+                        "state"=>"Y" , "in_come_check"=>'Y' )
+
+    ProductInOut.create("product_id"=>"1",
+                        "serial"=>"55aa",
+                        "in_or_out"=>"add",
+                        "in_out_type_id"=>"1",
+                        "store_area_id"=>"qw", "level"=>"good",
+                        "save_date"=>"2015-08-1", "num"=>"30",
+                        "code"=>"IN-20150919-00005", "create_user_id"=>"2",
+                        "state"=>"Y" , "in_come_check"=>'Y' )
+
     ProductOrder.create( "code" => 'ORDER-20150922-00001' ,
                          "order_state_id" => 1,
                          "member_id" => 1,
@@ -125,6 +143,36 @@ class DailiesController < ApplicationController
                           "updated_at"=>'2015-09-22 06:04:25',
                           "price"=>1,
                           "total"=>300,
+                          "product_code"=>"NULL")
+
+    ProductOrder.create( "code" => 'ORDER-20150925-00002' ,
+                         "order_state_id" => 1,
+                         "member_id" => 1,
+                         "state" => 'Y',
+                         "create_user_id" => 2,
+                         "modify_user_id" => 2,
+                        "stop_user_id" => "NULL",
+                        "stoped_at"  => "NULL",
+                        "created_at" => '2015-09-22 06:09:34',
+                        "updated_at" => '2015-09-22 06:09:34',
+                        "order_day"  => '2015-09-22',
+                        "total"      => 40,
+                        "pay_type_id"=> 1,
+                        "future_day" => '2015-09-22',
+                        "confirm_order" => 'N')
+
+
+    OrderByProduct.create("product_id"=>1,
+                          "code"=>'ORDER-20150925-00002',
+                          "num"=>40,
+                          "create_user_id"=>2,
+                          "modify_user_id"=>"NULL",
+                          "stop_user_id"=>"NULL",
+                          "stoped_at"=>"NULL",
+                          "created_at"=>'2015-09-22 06:04:25',
+                          "updated_at"=>'2015-09-22 06:04:25',
+                          "price"=>1,
+                          "total"=>40,
                           "product_code"=>"NULL")
     #
     #
