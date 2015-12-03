@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020074352) do
+ActiveRecord::Schema.define(version: 20151130035904) do
 
   create_table "accesses", force: true do |t|
     t.string   "title"
@@ -116,6 +116,10 @@ ActiveRecord::Schema.define(version: 20151020074352) do
     t.datetime "stoped_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "phone",          limit: 20
+    t.string   "company",        limit: 200
+    t.string   "contect",        limit: 40
+    t.integer  "serial"
   end
 
   create_table "msgs", force: true do |t|

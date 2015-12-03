@@ -24,6 +24,26 @@
     <%= f.text_field :address , :class=>'form-control' %>
   </div>
 
+  <div class="form-group">
+    <font color="red" ><%= f.label :phone, '手機' %></label>
+    <%= f.text_field :phone , :class=>'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <font color="red" ><%= f.label :company, '公司' %></label>
+    <%= f.text_field :company , :class=>'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <font color="red" ><%= f.label :contect, '聯絡人' %></label>
+    <%= f.text_field :contect , :class=>'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <font color="red" ><%= f.label :serial, '統編' %></label>
+    <%= f.text_field :serial , :class=>'form-control' %>
+  </div>
+
 
 
     <%= f.hidden_field :state , :value=>'Y' %>

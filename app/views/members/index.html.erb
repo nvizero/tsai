@@ -44,6 +44,11 @@
       <th><%= sortable "tel" ,'電話' %></th>
       <th><%= sortable "address" ,'住址' %></th>
 
+      <th><%= sortable "phone" ,'電話' %></th>
+      <th><%= sortable "company" ,'公司' %></th>
+      <th><%= sortable "contect" ,'聯絡人' %></th>
+      <th><%= sortable "serial" ,'統編' %></th>
+
       <th></th>
     </tr>
   </thead>
@@ -56,6 +61,11 @@
         <td><%= member.name %></td>
         <td><%= member.tel %></td>
         <td><%= member.address %></td>
+
+        <td><%= member.phone %></td>
+        <td><%= member.company %></td>
+        <td><%= member.contect %></td>
+        <td><%= member.serial %></td>
 
         <td>
           <% if member.state == 'Y' %>
