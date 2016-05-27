@@ -63,3 +63,7 @@ gem 'clockwork'
 group :development do
   gem "better_errors"
 end
+
+gem 'devise'
+gem 'omniauth-facebook'
+gem 'settingslogic' #管理我們的秘密key

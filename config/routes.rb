@@ -1,7 +1,9 @@
 Tsai::Application.routes.draw do
 
+  devise_for :members
   resources :dailies
 
+  root "dashboard#index"
   # resources :wait_orders
   get '/sale_list', :to => "product_orders#sale_list"
   get '/sale_compare', :to => "product_orders#sale_compare"
@@ -55,8 +57,9 @@ Tsai::Application.routes.draw do
   resources :trades
   resources :users
 
-  get "dashboard/index"
-  root "dashboard#index"
+  # get "dashboard/index"
+
+
 
   # get 'cc', :to => "users#cc"
 
