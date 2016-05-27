@@ -1,6 +1,13 @@
 Tsai::Application.routes.draw do
 
   devise_for :members
+
+  # devise_for :members, :controllers => { :registrations => "devise/registrations" }, :skip => [:registrations, :sessions] do
+  #   get    'signup' => 'devise/registrations#new',     :as => :new_member_registration_path
+  #   post   'signup' => 'devise/registrations#create',  :as => :member_registration_path
+  #   delete 'signup' => 'devise/registrations#destroy', :as => :destroy_member_registration_path
+  # end
+
   resources :dailies
 
   root "dashboard#index"
@@ -95,12 +102,15 @@ Tsai::Application.routes.draw do
 
   post 'product_list_code'  , :to=> "pact#product_list_code"
   post 'get_random_str'     , :to=> "pact#get_random_str"
-  post 'member_list'  , :to=> "pact#member_list"
+
   post 'search_product_info'  , :to=> "pact#search_product_info"
-  post 'find_member_name'  , :to=> "pact#find_member_name"
+
   post 'post_to_out_order' , :to=> "pact#post_to_out_order"
 
+
+  post 'find_member_name'  , :to=> "pact#find_member_name"
   post 'search_member_name' , :to =>"pact#search_member_name"
+  post 'member_list'  , :to=> "pact#member_list"
 
   post 'p_good_or_not'  , :to=> "pact#p_good_or_not"
   post 'post_order_data'  , :to=> "pact#post_order_data"

@@ -9,12 +9,25 @@ class MembersController < ApplicationController
   #取得一些基本資訊
   before_action :get_base_data
   #要登入
-  before_action :confirm_logged_in
+  # before_action :confirm_logged_in
 
 
 
   helper_method :sort_column, :sort_direction
 
+
+  def delete
+    reset_session
+    session.clear
+    redirect_to :controller =>'dashboard' , :action=>'index'
+  end
+   
+
+  def sign_out
+    reset_session
+    session.clear
+    redirect_to :controller =>'dashboard' , :action=>'index'
+  end
 
   # GET /members
   # GET /members.json

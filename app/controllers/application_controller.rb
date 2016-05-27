@@ -1,8 +1,13 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  before_action :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery with: :exception
+
   Time.zone = "Taipei"
+
+
+
 
   def get_self_url
      request.original_url.split('/')
@@ -60,13 +65,13 @@ class ApplicationController < ActionController::Base
 
   def confirm_logged_in
 
-      unless session[:user_id]
-        flash[:notice] = "會員專區請先登入!"
-        redirect_to(:controller => 'login', :action => 'login_form')
-        return false # halts the before_action
-      else
-        return true
-      end
+      # unless session[:user_id]
+      #   flash[:notice] = "會員專區請先登入!"
+      #   redirect_to(:controller => 'login', :action => 'login_form')
+      #   return false # halts the before_action
+      # else
+      #   return true
+      # end
 
   end
 
@@ -481,6 +486,12 @@ class ApplicationController < ActionController::Base
 
   end
 
+  protected
+
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:sign_up) << :name
+      devise_parameter_sanitizer.for(:account_update) << :name
+    end
 
 
 

@@ -1,19 +1,17 @@
 class Member < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
 
   paginates_per 10
 
 
-
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+         
   scope :stoped  , lambda { where("members.state = 'N' ") }
   scope :live, lambda { where("members.state = 'Y' ") }
 
-  validates :name,      :presence => { :message => "性名－不能空白" }
-  validates :tel,       :presence => { :message => "電話－不能空白" }
-  validates :address,   :presence => { :message => "住址－不能空白" }
+  # validates :name,      :presence => { :message => "性名－不能空白" }
+  # validates :tel,       :presence => { :message => "電話－不能空白" }
+  # validates :address,   :presence => { :message => "住址－不能空白" }
 
   scope :vip_access, lambda {|query , session |
       if session[:vip_access]=='VIP'
