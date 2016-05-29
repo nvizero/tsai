@@ -1,6 +1,7 @@
 Tsai::Application.routes.draw do
 
-  devise_for :rolls
+  # devise_for :rolls
+  devise_for :rolls, :controllers => { :omniauth_callbacks => "rolls/omniauth_callbacks" }
   # devise_for :members
 
   # devise_for :members, :controllers => { :registrations => "devise/registrations" }, :skip => [:registrations, :sessions] do

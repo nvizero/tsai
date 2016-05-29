@@ -1,0 +1,14 @@
+defaults: &defaults
+  app_name: "errorstaff.com"
+  facebook_app_id: "137763976637681"
+  facebook_secret: "3c0c46babfb1de0d03b6c3a1888b1e81"
+
+development:
+  <<: *defaults
+  domain: "http:/errorstaff.com" #最後 "/" 要拿掉
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
