@@ -1,6 +1,7 @@
 Tsai::Application.routes.draw do
 
-  devise_for :members
+  devise_for :rolls
+  # devise_for :members
 
   # devise_for :members, :controllers => { :registrations => "devise/registrations" }, :skip => [:registrations, :sessions] do
   #   get    'signup' => 'devise/registrations#new',     :as => :new_member_registration_path
@@ -9,7 +10,8 @@ Tsai::Application.routes.draw do
   # end
 
   resources :dailies
-
+  # members/sign_out
+  get '/members/sign_out', :to => "members#sign_out"
   root "dashboard#index"
   # resources :wait_orders
   get '/sale_list', :to => "product_orders#sale_list"

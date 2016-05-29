@@ -1,6 +1,7 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: member_registration_path(resource_name)) do |f| %>
+<%#= form_for(resource, as: resource_name, url: roll_registration_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: roll_registration_path) do |f| %>
   <%= devise_error_messages! %>
 
   <div class="field">

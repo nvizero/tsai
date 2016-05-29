@@ -64,6 +64,6 @@ group :development do
   gem "better_errors"
 end
 
-gem 'devise'
+gem "devise", "~> 3.4.1"
 gem 'omniauth-facebook'
 gem 'settingslogic' #管理我們的秘密key
